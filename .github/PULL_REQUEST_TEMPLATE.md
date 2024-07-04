@@ -1,8 +1,9 @@
 ## ✅ PR 체크 리스트
 
-- [] PR 제목: n주차 이름 | 작업사항 요약
+- [] PR 제목: n주차 | 작업사항 요약
+- [] Reviewers 설정
+- [] Assignees 설정
 - [] Labels 설정
-- [] Reviewers, Assignees 설정
 
 ## ✨ 작업사항
 
