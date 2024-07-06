@@ -83,7 +83,7 @@ const Content = styled.article`
   flex-flow: column nowrap;
   align-items: center;
 
-  padding: 24px 50px;
+  padding: 30px 50px;
 `;
 const Buttons = styled.article`
   display: grid;
