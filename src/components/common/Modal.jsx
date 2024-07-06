@@ -3,7 +3,27 @@ import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import styled from 'styled-components';
 
+// 모달 컴포넌트 사용법
+//
+// 1. 모달 활성화/비활성화 제어
+// (1-1) 부모 컴포넌트에 추가: const [modalShow, setModalShow] = useState(false);
+// (1-2) 부모 컴포넌트에 추가: {modalShow && (<Modal></Modal>)}
+//
+// 2. 모달 props
+// (2-1) actionText - 오른쪽 버튼의 텍스트
+// (2-2) handleModalAction - 오른쪽 버튼을 click할 경우 실행하는 function
+// (2-3) setModalShow - 1-1의 setModalShow
+// 예시: <Modal actionText='취소하기' handleModalAction={api function} setModalShow={setModalShow}>
+//
+// 3. 모달 Content
+// (3-1) 부모 컴포넌트에서 <Modal></Modal> 안에 작성합니다.
+// 예시: <Modal>
+//         <span>펀딩 개설을 취소하시겠어요?</span>
+//         <small>펀딩에 참여한 친구들에게 알림이 전송돼요</small>
+//       </Modal>
+
 const Modal = (props) => {
+  // 모달 활성화 시 스크롤 방지
   useEffect(() => {
     document.body.style.cssText = `
         position: fixed;
