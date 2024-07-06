@@ -15,7 +15,7 @@ const LoginPage = () => {
   );
 };
 
-const Container = styled.main`
+const Container = styled.div`
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
