@@ -23,12 +23,13 @@ import styled from 'styled-components';
 //       </Modal>
 
 const Modal = (props) => {
-  // 모달 활성화 시 스크롤 방지
   useEffect(() => {
+    // 모달 활성화 시 스크롤 방지
     document.body.style.cssText = `
         position: fixed;
         top: -${window.scrollY}px;
         width: 100%;`;
+    // 모달 비활성화 시 이전 상태로 복원
     return () => {
       const scrollY = document.body.style.top;
       document.body.style.cssText = '';
