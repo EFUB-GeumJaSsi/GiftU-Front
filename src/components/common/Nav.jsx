@@ -15,7 +15,7 @@ import { ReactComponent as MypageIcon } from '../../assets/common/NavigationBar/
 export const NavBottom = styled.div`
   display: flex;
   position: fixed;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
   bottom: 0;
   z-index: 1000;
@@ -54,6 +54,7 @@ export const CircleBackground = styled.div`
 
 export const CircleBlack = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 
@@ -61,7 +62,8 @@ export const CircleBlack = styled.div`
   height: 64px;
 
   border-radius: 40px;
-  background-color: black;
+  background-color: ${({ $isActive }) =>
+    $isActive ? 'var(--jade-pri)' : 'black'};
 `;
 
 export const ItemContainer = styled(NavLink)`
@@ -75,12 +77,12 @@ export const ItemContainer = styled(NavLink)`
   height: 64px;
 
   text-decoration: none;
+  gap: 8px;
   color: var(--gray-400);
 
   p {
     font-size: 12px;
     line-height: 120%;
-    margin-top: 6px;
     color: var(--gray-400);
   }
 
@@ -88,104 +90,80 @@ export const ItemContainer = styled(NavLink)`
     width: 24px;
     height: 24px;
   }
-
-  &.active p {
-    color: black;
-  }
 `;
 
-const NavIcon = ({ Icon, GreyIcon, isActive }) => {
+export const NavIcon = ({ Icon, GreyIcon, isActive }) => {
   return isActive ? <Icon /> : <GreyIcon />;
 };
 
-function Nav() {
+export const NavItem = ({ to, Icon, GreyIcon, label, id }) => (
+  <ItemContainer
+    to={to}
+    className={({ isActive }) => (isActive ? 'active' : '')}
+  >
+    {({ isActive }) => (
+      <>
+        {id === 'funding' ? (
+          <CircleBlack $isActive={isActive}>
+            <NavIcon Icon={Icon} GreyIcon={GreyIcon} isActive={isActive} />
+            <p
+              style={{
+                color: isActive ? 'var(--jade-pri)' : 'var(--gray-400)',
+                position: 'absolute',
+                top: '73px',
+              }}
+            >
+              {label}
+            </p>
+          </CircleBlack>
+        ) : (
+          <>
+            <NavIcon Icon={Icon} GreyIcon={GreyIcon} isActive={isActive} />
+            <p style={{ color: isActive ? 'black' : 'var(--gray-400)' }}>
+              {label}
+            </p>
+          </>
+        )}
+      </>
+    )}
+  </ItemContainer>
+);
+
+const Nav = () => {
   return (
     <NavBottom>
-      <ItemContainer
-        to='/'
-        className={({ isActive }) => (isActive ? 'active' : '')}
-      >
-        {({ isActive }) => (
-          <>
-            <NavIcon
-              Icon={HomeIcon}
-              GreyIcon={GreyHomeIcon}
-              isActive={isActive}
-            />
-            <p>홈</p>
-          </>
-        )}
-      </ItemContainer>
-      <ItemContainer
+      <NavItem to='/' Icon={HomeIcon} GreyIcon={GreyHomeIcon} label='홈' />
+      <NavItem
         to='/friends'
-        className={({ isActive }) => (isActive ? 'active' : '')}
-      >
-        {({ isActive }) => (
-          <>
-            <NavIcon
-              Icon={FriendIcon}
-              GreyIcon={GreyFriendIcon}
-              isActive={isActive}
-            />
-            <p>친구</p>
-          </>
-        )}
-      </ItemContainer>
+        Icon={FriendIcon}
+        GreyIcon={GreyFriendIcon}
+        label='친구'
+      />
       <CircleContainer>
         <CircleBackground>
-          <CircleBlack>
-            <ItemContainer
-              to='/create-funding'
-              className={({ isActive }) => (isActive ? 'active' : '')}
-            >
-              {({ isActive }) => (
-                <>
-                  <NavIcon
-                    Icon={PresentIcon}
-                    GreyIcon={GreyPresentIcon}
-                    isActive={isActive}
-                  />
-                  <p style={{ position: 'absolute', bottom: '-25px' }}>
-                    펀딩 만들기
-                  </p>
-                </>
-              )}
-            </ItemContainer>
-          </CircleBlack>
+          <NavItem
+            to='/create-funding'
+            Icon={PresentIcon}
+            GreyIcon={GreyPresentIcon}
+            label='펀딩 만들기'
+            id='funding'
+          />
         </CircleBackground>
       </CircleContainer>
-      <ItemContainer
+      <NavItem
         to='/notifications'
-        className={({ isActive }) => (isActive ? 'active' : '')}
-      >
-        {({ isActive }) => (
-          <>
-            <NavIcon
-              Icon={AlarmIcon}
-              GreyIcon={GreyAlarmIcon}
-              isActive={isActive}
-            />
-            <p>알림</p>
-          </>
-        )}
-      </ItemContainer>
-      <ItemContainer
+        Icon={AlarmIcon}
+        GreyIcon={GreyAlarmIcon}
+        label='알림'
+      />
+      <NavItem
         to='/mypage'
-        className={({ isActive }) => (isActive ? 'active' : '')}
-      >
-        {({ isActive }) => (
-          <>
-            <NavIcon
-              Icon={MypageIcon}
-              GreyIcon={GreyMypageIcon}
-              isActive={isActive}
-            />
-            <p>마이</p>
-          </>
-        )}
-      </ItemContainer>
+        Icon={MypageIcon}
+        GreyIcon={GreyMypageIcon}
+        label='마이'
+      />
     </NavBottom>
   );
-}
+};
 
 export default Nav;
