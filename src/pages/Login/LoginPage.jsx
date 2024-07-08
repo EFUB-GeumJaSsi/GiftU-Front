@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import giftu from '../../assets/Login/giftu_logo.svg';
 import { ReactComponent as Kakao } from '../../assets/Login/kakao_logo.svg';
