@@ -5,8 +5,8 @@ const Button = ({ btnInfo }) => {
 
   // color: [배경 색, 글꼴 색]
   const btnColor = {
-    orange: ['var(--orange-pri)', 'white'],
-    jade: ['var(--jade-pri)', 'white'],
+    orange: ['var(--orange-pri)', 'var(--white)'],
+    jade: ['var(--jade-pri)', 'var(--white)'],
     gray: ['var(--gray-100)', 'var(--gray-400)'],
   };
 
