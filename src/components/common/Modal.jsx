@@ -38,7 +38,7 @@ const Modal = (props) => {
     };
   }, []);
 
-  return createPortal(
+  const ModalComponent = (
     <Background>
       <Container>
         <Content>{props.children}</Content>
@@ -53,9 +53,10 @@ const Modal = (props) => {
           <Action onClick={props.handleModalAction}>{props.actionText}</Action>
         </Buttons>
       </Container>
-    </Background>,
-    document.getElementById('modal'),
+    </Background>
   );
+
+  return createPortal(ModalComponent, document.getElementById('modal'));
 };
 
 const Background = styled.div`
