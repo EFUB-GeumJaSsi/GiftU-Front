@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import '../../global.css';
 
 const Button = ({ btnInfo }) => {
   const { text, color, width, onClick } = btnInfo;
