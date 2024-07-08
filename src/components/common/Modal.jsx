@@ -10,9 +10,9 @@ import styled from 'styled-components';
 //
 // 2. 모달 props
 // (2-1) actionText - 오른쪽 버튼의 텍스트
-// (2-2) handleModalAction - 오른쪽 버튼을 click할 경우 실행하는 function
+// (2-2) onClickAction - 오른쪽 버튼을 click할 경우 실행하는 function
 // (2-3) setModalShow - 1-1의 setModalShow
-// 예시: <Modal actionText='취소하기' handleModalAction={api function} setModalShow={setModalShow}>
+// 예시: <Modal actionText='취소하기' onClickAction={api function} setModalShow={setModalShow}>
 //
 // 3. 모달 Content
 // (3-1) 부모 컴포넌트에서 <Modal></Modal> 안에 작성합니다.
@@ -49,7 +49,7 @@ const Modal = (props) => {
           >
             돌아가기
           </Cancel>
-          <Action onClick={props.handleModalAction}>{props.actionText}</Action>
+          <Action onClick={props.onClickAction}>{props.actionText}</Action>
         </Buttons>
       </Container>
     </Background>
