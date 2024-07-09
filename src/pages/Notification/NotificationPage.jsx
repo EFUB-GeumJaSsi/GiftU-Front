@@ -93,7 +93,7 @@ const NavContainer = styled.div`
   gap: 8px;
 `;
 
-const ContentContainer = styled.div`
+const ContentContainer = styled.main`
   width: 335px;
   height: 756px;
   padding-top: 7px;
