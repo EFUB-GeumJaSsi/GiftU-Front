@@ -7,7 +7,7 @@ import NotiItem from '../../components/common/NotiItem';
 const NotificationPage = () => {
   const [notifications, setNotifications] = useState([
     {
-      name: '닉네임',
+      name: '닉네임은여기까지입니다',
       message: '님과 친구가 되었습니다',
       time: '00분 전',
     },
@@ -21,7 +21,12 @@ const NotificationPage = () => {
     <BodyContainer>
       <HeaderWord>알림</HeaderWord>
       <ContentContainer>
-      <NotiItem tagFirstName='친구' tagFirstLink='/friend' tagSecondName='펀딩' tagSecondLink='/funding' />
+        <NotiItem
+          tagFirstName='친구'
+          tagFirstLink='/friend'
+          tagSecondName='펀딩'
+          tagSecondLink='/funding'
+        />
         <EachContainer>
           {notifications.map((notification) => (
             <NotificationItem
@@ -57,10 +62,11 @@ const EachContainer = styled.div`
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
-  padding-top: 4px;
-  padding-left: 20px;
 `;
 
-
 const ContentContainer = styled.main`
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  gap: 16px;
 `;
