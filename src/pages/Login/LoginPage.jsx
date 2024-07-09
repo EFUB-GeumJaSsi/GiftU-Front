@@ -22,7 +22,6 @@ const Container = styled.div`
   gap: 22%;
 
   height: 100vh;
-  margin: 0 auto;
 
   box-sizing: border-box;
 `;
