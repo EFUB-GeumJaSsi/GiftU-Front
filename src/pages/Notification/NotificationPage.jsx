@@ -38,6 +38,9 @@ const Notification = () => {
 export default Notification;
 
 const BodyContainer = styled.div`
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 24px;
   width: 375px;
   height: 812px;
   top: 160px;
