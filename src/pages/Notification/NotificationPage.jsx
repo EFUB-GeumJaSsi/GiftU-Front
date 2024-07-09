@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import React, { useState } from 'react';
-import NotificationItem from './NotificationItem';
-import NotiItem from ~
-const Notification = () => {
+import NotificationItem from '../../components/Notification/NotificationItem';
+import NotiItem from '../../components/common/NotiItem';
+
+const NotificationPage = () => {
   const [notifications, setNotifications] = useState([
     {
       name: '닉네임',
@@ -35,7 +36,7 @@ const Notification = () => {
   );
 };
 
-export default Notification;
+export default NotificationPage;
 
 const BodyContainer = styled.div`
   padding-top: 43px;
