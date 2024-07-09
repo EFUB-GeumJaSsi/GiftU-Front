@@ -42,7 +42,6 @@ const BodyContainer = styled.div`
   flex-flow: column nowrap;
   gap: 24px;
   width: 375px;
-  height: 812px;
   top: 160px;
   left: 160px;
 `;
