@@ -45,7 +45,7 @@ const BodyContainer = styled.div`
   width: 375px;
 `;
 
-const HeaderWord = styled.div`
+const HeaderWord = styled.header`
   width: 39px;
   height: 31px;
   padding-top: 43px;
