@@ -56,6 +56,9 @@ const Text = styled.div`
   font-size: 16px;
   padding-left: 10px;
   gap: 4px;
+  width: 268px;
+  height: 22px;
+  overflow: hidden;
 `;
 const Time = styled.div`
   padding-left: 10px;
@@ -65,7 +68,15 @@ const Time = styled.div`
 `;
 const Name = styled.div`
   font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 40%;
 `;
 const Message = styled.div`
   font-weight: 400;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 50%;
 `;
