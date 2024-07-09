@@ -29,7 +29,6 @@ const BtnContainer = styled.button`
 
   text-align: center;
   color: ${(props) => (props.color ? props.color[1] : 'var(--gray-400)')};
-  font-family: Pretendard;
   font-size: 16px;
   font-weight: 600;
   line-height: 140%;

@@ -95,7 +95,6 @@ const Buttons = styled.article`
   border-top: 1px solid var(--gray-100);
 
   button {
-    font-family: Pretendard;
     font-size: 16px;
     font-weight: 500;
   }
