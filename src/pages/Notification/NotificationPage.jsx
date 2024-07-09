@@ -53,6 +53,9 @@ const HeaderWord = styled.header`
 `;
 
 const EachContainer = styled.div`
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
   padding-top: 4px;
   padding-left: 20px;
 `;
