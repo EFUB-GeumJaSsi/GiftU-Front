@@ -55,7 +55,6 @@ const HeaderWord = styled.header`
 const EachContainer = styled.div`
   padding-top: 4px;
   padding-left: 20px;
-  gap: 4px;
 `;
 
 const HeadBtn = styled.button`
