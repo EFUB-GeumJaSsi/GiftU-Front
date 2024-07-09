@@ -42,8 +42,6 @@ const BodyContainer = styled.div`
   flex-flow: column nowrap;
   gap: 24px;
   width: 375px;
-  top: 160px;
-  left: 160px;
 `;
 
 const HeaderWord = styled.div`
