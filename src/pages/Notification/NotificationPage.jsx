@@ -19,6 +19,7 @@ const Notification = () => {
   return (
     <BodyContainer>
       <HeaderWord>알림</HeaderWord>
+      <ContentContainer>
       <NavContainer>
         <HeadBtn>
           <StyledNavLink exact to='/' activeClassName='active'>
