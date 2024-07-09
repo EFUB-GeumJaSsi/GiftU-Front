@@ -20,23 +20,7 @@ const Notification = () => {
     <BodyContainer>
       <HeaderWord>알림</HeaderWord>
       <ContentContainer>
-      <NavContainer>
-        <HeadBtn>
-          <StyledNavLink exact to='/' activeClassName='active'>
-            전체
-          </StyledNavLink>
-        </HeadBtn>
-        <HeadBtn>
-          <StyledNavLink to='/friend' activeClassName='active'>
-            친구
-          </StyledNavLink>
-        </HeadBtn>
-        <HeadBtn>
-          <StyledNavLink to='/funding' activeClassName='active'>
-            펀딩
-          </StyledNavLink>
-        </HeadBtn>
-      </NavContainer>
+      <NotiItem tagFirstName='친구' tagFirstLink='/friend' tagSecondName='펀딩' tagSecondLink='/funding' />
         <EachContainer>
           {notifications.map((notification) => (
             <NotificationItem
