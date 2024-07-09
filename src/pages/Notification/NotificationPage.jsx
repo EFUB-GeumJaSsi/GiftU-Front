@@ -37,7 +37,6 @@ const Notification = () => {
           </StyledNavLink>
         </HeadBtn>
       </NavContainer>
-      <ContentContainer>
         <EachContainer>
           {notifications.map((notification) => (
             <NotificationItem
