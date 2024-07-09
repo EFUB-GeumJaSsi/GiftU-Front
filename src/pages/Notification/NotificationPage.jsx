@@ -46,8 +46,6 @@ const BodyContainer = styled.div`
 `;
 
 const HeaderWord = styled.header`
-  width: 39px;
-  height: 31px;
   padding-top: 43px;
   padding-left: 28px;
   font-size: 22px;
