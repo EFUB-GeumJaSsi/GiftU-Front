@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import React, { useState } from 'react';
 import NotificationItem from './NotificationItem';
-
+import NotiItem from ~
 const Notification = () => {
   const [notifications, setNotifications] = useState([
     {
