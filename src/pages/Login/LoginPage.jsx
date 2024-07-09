@@ -21,7 +21,6 @@ const Container = styled.div`
   justify-content: center;
   gap: 22%;
 
-  width: 375px;
   height: 100vh;
   margin: 0 auto;
 
