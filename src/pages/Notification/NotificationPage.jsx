@@ -60,41 +60,6 @@ const EachContainer = styled.div`
   padding-left: 20px;
 `;
 
-const HeadBtn = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 187px;
-  height: 29px;
-  border-radius: 15px;
-  background-color: #d6d9de;
-  color: white;
-`;
-
-const StyledNavLink = styled(NavLink)`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  color: white;
-  text-decoration: none;
-
-  &.active {
-    background-color: #67c5d2;
-    border-radius: 15px;
-  }
-`;
-
-const NavContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 187px;
-  height: 29px;
-  padding-top: 22px;
-  padding-left: 94px;
-  gap: 8px;
-`;
 
 const ContentContainer = styled.main`
 `;
