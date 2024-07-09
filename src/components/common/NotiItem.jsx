@@ -30,7 +30,7 @@ const HeadBtn = styled.button`
   width: 187px;
   height: 29px;
   border-radius: 15px;
-  background-color: #d6d9de;
+  background-color: var(--gray-300);
   color: white;
 `;
 
@@ -44,7 +44,7 @@ const StyledNavLink = styled(NavLink)`
   text-decoration: none;
 
   &.active {
-    background-color: #67c5d2;
+    background-color: var(--jade-pri);
     border-radius: 15px;
   }
 `;
