@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
-const NotiItem = () => {
+const NotiItem = ({
+  tagFirstName,
+  tagFirstLink,
+  tagSecondName,
+  tagSecondLink,
+}) => {
   return (
     <NavContainer>
       <HeadBtn>
@@ -9,13 +14,13 @@ const NotiItem = () => {
         </StyledNavLink>
       </HeadBtn>
       <HeadBtn>
-        <StyledNavLink to='/friend' activeClassName='active'>
-          친구
+        <StyledNavLink to={tagFirstLink} activeClassName='active'>
+          {tagFirstName}
         </StyledNavLink>
       </HeadBtn>
       <HeadBtn>
-        <StyledNavLink to='/funding' activeClassName='active'>
-          펀딩
+        <StyledNavLink to={tagSecondLink} activeClassName='active'>
+          {tagSecondName}
         </StyledNavLink>
       </HeadBtn>
     </NavContainer>
@@ -27,7 +32,7 @@ const HeadBtn = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 187px;
+  width: 57px;
   height: 29px;
   border-radius: 15px;
   background-color: var(--gray-300);
@@ -52,9 +57,5 @@ const StyledNavLink = styled(NavLink)`
 const NavContainer = styled.div`
   display: flex;
   justify-content: center;
-  width: 187px;
-  height: 29px;
-  padding-top: 22px;
-  padding-left: 94px;
   gap: 8px;
 `;
