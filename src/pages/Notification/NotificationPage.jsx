@@ -48,7 +48,7 @@ const BodyContainer = styled.div`
 const HeaderWord = styled.header`
   padding-left: 28px;
   font-size: 22px;
-  font-color: black;
+  color: var(--black);
   font-weight: 700;
 `;
 
