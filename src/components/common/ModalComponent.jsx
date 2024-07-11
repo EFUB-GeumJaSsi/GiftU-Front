@@ -1,7 +1,3 @@
-import styled from 'styled-components';
-import { useEffect } from 'react';
-import { createPortal } from 'react-dom';
-
 // 모달 컴포넌트 사용법
 //
 // 1. 모달 활성화/비활성화 제어
@@ -20,6 +16,10 @@ import { createPortal } from 'react-dom';
 //         <span>펀딩 개설을 취소하시겠어요?</span>
 //         <small>펀딩에 참여한 친구들에게 알림이 전송돼요</small>
 //       </ModalComponent>
+
+import styled from 'styled-components';
+import { useEffect } from 'react';
+import { createPortal } from 'react-dom';
 
 const ModalComponent = ({
   actionText,
