@@ -34,8 +34,8 @@ const ModalComponent = ({
       top: -${window.scrollY}px;
       width: 100%;
     `;
-    // 모달 비활성화 시 이전 상태로 복원
     return () => {
+      // 모달 비활성화 시 이전 상태로 복원
       const scrollY = document.body.style.top;
       document.body.style.cssText = '';
       window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
