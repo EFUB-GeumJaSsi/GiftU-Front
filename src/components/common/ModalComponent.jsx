@@ -1,6 +1,6 @@
 // 모달 컴포넌트 사용법
 //
-// 1. 모달 활성화/비활성화 제어
+// 1. 모달 열기/닫기 제어
 // (1-1) 부모 컴포넌트에 추가: const [modalShow, setModalShow] = useState(false);
 // (1-2) 부모 컴포넌트에 추가: {modalShow && (<ModalComponent></ModalComponent>)}
 //
@@ -28,14 +28,14 @@ const ModalComponent = ({
   children,
 }) => {
   useEffect(() => {
-    // 모달 활성화 시 스크롤 방지
+    // 모달 열기 시 스크롤 방지
     document.body.style.cssText = `
       position: fixed;
       top: -${window.scrollY}px;
       width: 100%;
     `;
     return () => {
-      // 모달 비활성화 시 이전 상태로 복원
+      // 모달 닫기 시 이전 상태로 복원
       const scrollY = document.body.style.top;
       document.body.style.cssText = '';
       window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
