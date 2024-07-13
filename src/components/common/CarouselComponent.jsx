@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 
-const CarouselComponent = ({ data, UI, direction }) => {
+const CarouselComponent = ({ data, pageWidth, pageItemDirection, UI }) => {
   const arraySlice = (array) => {
     const result = [];
     for (let i = 0; i < array.length; i += 2) {
@@ -26,18 +26,18 @@ const CarouselComponent = ({ data, UI, direction }) => {
       setFirstX(-1);
       setLastX(-1);
     }
-    console.log(currentPage);
   }, [firstX, lastX]);
   useEffect(() => {
     document
       .getElementById('carousel')
-      .scrollTo({ left: 375 * currentPage, behavior: 'smooth' });
+      .scrollTo({ left: pageWidth * currentPage, behavior: 'smooth' });
   }, [currentPage]);
 
   return (
     <SLayout>
       <SContentContainer
         id='carousel'
+        width={pageWidth}
         onPointerDown={(event) => {
           setFirstX(event.clientX);
         }}
@@ -47,21 +47,16 @@ const CarouselComponent = ({ data, UI, direction }) => {
         $currentPage={currentPage}
       >
         {slicedDataList.map((item, index) => (
-          <SPageContainer
-            key={index}
-            $direction={direction}
-            $margin={direction === 'row' ? 21.5 : 20}
-          >
-            <UI>{item[0]}</UI>
+          <SPageContainer key={index} direction={pageItemDirection}>
+            <UI data={item[0]} />
             <UI
+              data={item[1]}
               style={
                 data.length % 2 != 0 && index == slicedDataList.length - 1
                   ? { visibility: 'hidden' }
                   : {}
               }
-            >
-              {item[1]}
-            </UI>
+            />
           </SPageContainer>
         ))}
       </SContentContainer>
@@ -103,12 +98,13 @@ const SContentContainer = styled.div`
   display: flex;
   flex-direction: row;
   overflow: hidden;
+
+  width: ${({ width }) => width};
 `;
 const SPageContainer = styled.div`
   display: flex;
-  flex-direction: ${({ $direction }) => $direction};
+  flex-direction: ${({ direction }) => direction};
 
-  margin: 0 ${({ $margin }) => $margin}px;
   gap: 12px;
 `;
 const SPaginationFieldset = styled.fieldset`
