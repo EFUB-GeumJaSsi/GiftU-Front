@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
 import React, { useState } from 'react';
 import NotificationItem from '../../components/Notification/NotificationItem';
 import NotiItem from '../../components/common/NotiItem';
@@ -18,16 +17,16 @@ const NotificationPage = () => {
     },
   ]);
   return (
-    <BodyContainer>
-      <HeaderWord>알림</HeaderWord>
-      <ContentContainer>
+    <SLayout>
+      <SHeader>알림</SHeader>
+      <SItemContainer>
         <NotiItem
           tagFirstName='친구'
           tagFirstLink='/friend'
           tagSecondName='펀딩'
           tagSecondLink='/funding'
         />
-        <EachContainer>
+        <SBtnWrapper>
           {notifications.map((notification) => (
             <NotificationItem
               name={notification.name}
@@ -35,37 +34,35 @@ const NotificationPage = () => {
               time={notification.time}
             ></NotificationItem>
           ))}
-        </EachContainer>
-      </ContentContainer>
-    </BodyContainer>
+        </SBtnWrapper>
+      </SItemContainer>
+    </SLayout>
   );
 };
 
 export default NotificationPage;
 
-const BodyContainer = styled.div`
+const SLayout = styled.div`
   padding-top: 43px;
   display: flex;
   flex-flow: column nowrap;
   gap: 24px;
 `;
 
-const HeaderWord = styled.header`
+const SHeader = styled.header`
   padding-left: 28px;
   font-size: 22px;
   color: var(--black);
   font-weight: 700;
 `;
-
-const EachContainer = styled.div`
-  display: flex;
-  flex-flow: column nowrap;
-  align-items: center;
-`;
-
-const ContentContainer = styled.main`
+const SItemContainer = styled.main`
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
   gap: 16px;
+`;
+const SBtnWrapper = styled.div`
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
 `;
