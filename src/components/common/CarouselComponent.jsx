@@ -46,6 +46,12 @@ const CarouselComponent = ({ pageLength, pageWidth, children }) => {
         onPointerUp={(event) => {
           setLastX(event.clientX);
         }}
+        onTouchStart={(event) => {
+          setFirstX(event.changedTouches[0].clientX);
+        }}
+        onTouchEnd={(event) => {
+          setLastX(event.changedTouches[0].clientX);
+        }}
         $currentPage={currentPage}
       >
         {children}
