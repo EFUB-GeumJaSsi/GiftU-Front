@@ -3,21 +3,21 @@ import styled from 'styled-components';
 
 const NotificationItem = ({ image, name, message, time }) => {
   return (
-    <ItemBox>
+    <SLayout>
       <img src={image}></img>
-      <TextBox>
-        <Text>
-          <Name>{name}</Name>
-          <Message>{message}</Message>
-        </Text>
-        <Time>{time}</Time>
-      </TextBox>
-    </ItemBox>
+      <STextContainer>
+        <STextboxContainer>
+          <SNameWrapper>{name}</SNameWrapper>
+          <SMessageWrapper>{message}</SMessageWrapper>
+        </STextboxContainer>
+        <STimeWrapper>{time}</STimeWrapper>
+      </STextContainer>
+    </SLayout>
   );
 };
 export default NotificationItem;
 
-const ItemBox = styled.div`
+const SLayout = styled.div`
   img {
     width: 40px;
     height: 40px;
@@ -32,13 +32,13 @@ const ItemBox = styled.div`
   gap: 10px;
   border-bottom: 1px solid var(--gray-100);
 `;
-const TextBox = styled.div`
+const STextContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 5px;
 `;
-const Text = styled.div`
+const STextboxContainer = styled.div`
   display: flex;
   flex-direction: row;
   font-size: 16px;
@@ -47,22 +47,22 @@ const Text = styled.div`
   height: 22px;
   overflow: hidden;
 `;
-const Time = styled.div`
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--gray-500);
-`;
-const Name = styled.div`
+const SNameWrapper = styled.div`
   font-weight: 500;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 40%;
 `;
-const Message = styled.div`
+const SMessageWrapper = styled.div`
   font-weight: 400;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 50%;
+`;
+const STimeWrapper = styled.div`
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--gray-500);
 `;
