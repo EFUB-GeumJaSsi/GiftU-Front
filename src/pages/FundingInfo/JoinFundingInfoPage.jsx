@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { useState, useRef } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import BackHeader from '../../components/common/BackHeader';
 import TopFundingInfo from '../../components/FundingInfo/TopFundingInfo';
 import FundingComment from '../../components/FundingInfo/FundingComment';
@@ -31,9 +32,13 @@ const tempList = [
 ];
 
 const JoinFundingInfopage = () => {
-  const [isEnd, setIsEnd] = useState(false);
   const [isCommented, setIsCommented] = useState(false);
   const messageRef = useRef(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const params = searchParams.get('sort');
+
+  const tag = params === 'end' ? '종료' : 'D-10';
 
   const onFocusMessage = () => {
     messageRef.current.scrollIntoView({ behavior: 'smooth' });
@@ -56,9 +61,9 @@ const JoinFundingInfopage = () => {
     <>
       <BackHeader />
       <SLayout>
-        <TopFundingInfo color='orange' tag='D-10' />
+        <TopFundingInfo color='orange' tag={tag} />
         {isCommented && <FundingComment color='orange' />}
-        {isEnd ? (
+        {params === 'end' ? (
           <GoWriteButtonRead
             color='orange'
             price='15,000'
@@ -72,7 +77,7 @@ const JoinFundingInfopage = () => {
         <CongratsMessage list={tempList} ref={messageRef} />
       </SLayout>
       {/* 종료된 펀딩의 경우 하단 없음 */}
-      {!isEnd && <BottomBackground Button={Btn} />}
+      {params !== 'end' && <BottomBackground Button={Btn} />}
     </>
   );
 };

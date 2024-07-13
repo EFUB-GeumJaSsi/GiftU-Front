@@ -37,6 +37,8 @@ const OpenFundingInfoPage = () => {
 
   const params = searchParams.get('sort');
 
+  const tag = params === 'end' ? '종료' : 'D-10';
+
   const Btn =
     params === 'end' ? (
       <Button btnInfo={{ text: '선물 후기 작성하기', color: 'jade' }} />
@@ -50,7 +52,7 @@ const OpenFundingInfoPage = () => {
     <>
       <BackHeader />
       <SLayout>
-        <TopFundingInfo />
+        <TopFundingInfo tag={tag} />
         {params !== 'end' ? (
           <></>
         ) : isCommented ? (
