@@ -122,7 +122,7 @@ blockquote:before,
 blockquote:after,
 q:before,
 q:after {
-  content: "";
+  content: '';
   content: none;
 }
 table {
@@ -140,6 +140,9 @@ input {
   border: none;
   outline: none;
 }
-input[type="submit"] {
+input[type='submit'] {
   cursor: pointer;
+}
+span {
+  cursor: default;
 }
