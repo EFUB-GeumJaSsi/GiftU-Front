@@ -54,7 +54,14 @@ const ModalComponent = ({
           >
             돌아가기
           </SCancelButton>
-          <SActionButton onClick={onClickAction}>{actionText}</SActionButton>
+          <SActionButton
+            onClick={() => {
+              setModalShow(false);
+              onClickAction();
+            }}
+          >
+            {actionText}
+          </SActionButton>
         </SButtonContainer>
       </SSection>
     </SBackgroundDiv>
@@ -87,8 +94,6 @@ const SContentContainer = styled.div`
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
-
-  padding: 30px 50px;
 `;
 const SButtonContainer = styled.div`
   display: grid;
