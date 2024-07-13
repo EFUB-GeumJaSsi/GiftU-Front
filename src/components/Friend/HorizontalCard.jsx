@@ -1,22 +1,99 @@
 import styled from 'styled-components';
+import { useState } from 'react';
+import BottomModalComponent from '../../components/common/BottomModalComponent';
+import ModalComponent from '../common/ModalComponent';
+import ToastComponent from '../common/ToastComponent';
 import icn_birth from '../../assets/Friend/icn_birth.svg';
 import btn_delete from '../../assets/Friend/btn_delete_friend.svg';
+import icn_info from '../../assets/Friend/icn_info.svg';
 
 const HorizontalCard = ({ data = {} }) => {
   const { image, nickname, birthday } = data;
+  const [bottomModalShow, setBottomModalShow] = useState(false);
+  const [bottomModalOpen, setBottomModalOpen] = useState(false);
+  const [modalShow, setModalShow] = useState(false);
+  const [toastShow, setToastShow] = useState(false);
+
+  const handleBottomModalClose = () => {
+    setBottomModalOpen(false); // 바텀모달 닫기 애니메이션 효과
+    setTimeout(() => setBottomModalShow(false), 300); // 애니메이션 후 언마운트
+  };
 
   return (
     <SLayout>
       <SImg src={image} />
       <STextContainer>
-        <SB1>{nickname}</SB1>
-        <SC1>{birthday}</SC1>
+        <SCardNickname>{nickname}</SCardNickname>
+        <SCardBirthday>{birthday}</SCardBirthday>
       </STextContainer>
-      <SDeleteButton />
+      <SMenuBtn
+        onClick={() => {
+          setBottomModalShow(true);
+          setBottomModalOpen(true);
+        }}
+      />
+      {bottomModalShow && (
+        <BottomModalComponent
+          setBottomModalShow={setBottomModalShow}
+          parentOpen={bottomModalOpen}
+        >
+          <SBtnContainer>
+            <SDeleteBtn
+              onClick={() => {
+                handleBottomModalClose();
+                setModalShow(true);
+              }}
+            >
+              삭제하기
+            </SDeleteBtn>
+            <SCancelBtn onClick={handleBottomModalClose}>취소</SCancelBtn>
+          </SBtnContainer>
+        </BottomModalComponent>
+      )}
+      {modalShow && (
+        <ModalComponent
+          actionText='삭제하기'
+          onClickAction={() => {
+            setToastShow(true);
+          }}
+          setModalShow={setModalShow}
+        >
+          <SModalContainer>
+            <SInfoContainer>
+              <SImg src={image} />
+              <SModalNickname>{nickname}</SModalNickname>
+            </SInfoContainer>
+            <SWarnContainer>
+              <SWarnTitle>친구를 삭제하시겠어요?</SWarnTitle>
+              <SWarnText>친구와 주고받은 선물 기록이 사라져요.</SWarnText>
+              <SWarnText>나중에 다시 친구로 추가할 수 있어요.</SWarnText>
+            </SWarnContainer>
+          </SModalContainer>
+        </ModalComponent>
+      )}
+      {toastShow && <ToastComponent>삭제가 완료되었어요</ToastComponent>}
     </SLayout>
   );
 };
 
+// 텍스트 스타일
+const SB1 = styled.p`
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 140%;
+`;
+const SC1 = styled.small`
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 120%;
+`;
+const SC2 = styled.small`
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 120%;
+`;
+
+// 스타일 컴포넌트
 const SLayout = styled.div`
   display: flex;
   flex-flow: row nowrap;
@@ -45,21 +122,18 @@ const STextContainer = styled.div`
 
   gap: 8px;
 `;
-const SB1 = styled.p`
-  width: 200px;
-  color: var(--black);
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 140%;
+const SCardNickname = styled(SB1)`
   overflow: hidden;
-  white-space: nowrap;
+
+  width: 200px;
+
+  color: var(--black);
   text-overflow: ellipsis;
+
+  white-space: nowrap;
 `;
-const SC1 = styled.small`
+const SCardBirthday = styled(SC1)`
   color: var(--gray-500);
-  font-size: 12px;
-  font-weight: 600;
-  line-height: 120%;
   text-align: start;
 
   &::before {
@@ -68,12 +142,83 @@ const SC1 = styled.small`
     margin-right: 8px;
   }
 `;
-const SDeleteButton = styled.button`
+const SMenuBtn = styled.button`
   width: 28px;
   height: 36px;
   margin-left: auto;
 
   background-image: url(${btn_delete});
+`;
+const SBtnContainer = styled.div`
+  display: flex;
+  flex-flow: column nowrap;
+
+  margin-bottom: 24px;
+  gap: 16px;
+`;
+const SHorizontalBtn = styled.button`
+  width: 335px;
+  height: 64px;
+
+  border-radius: 16px;
+
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 140%;
+`;
+const SDeleteBtn = styled(SHorizontalBtn)`
+  background-color: rgba(255, 255, 255, 0.8);
+
+  color: var(--red);
+`;
+const SCancelBtn = styled(SHorizontalBtn)`
+  background-color: var(--white);
+
+  color: var(--black);
+`;
+const SModalContainer = styled.div`
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+
+  padding: 24px 0 16px 0;
+  gap: 16px;
+`;
+const SInfoContainer = styled.div`
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+
+  gap: 8px;
+`;
+const SModalNickname = styled(SB1)`
+  overflow: hidden;
+  text-align: center;
+
+  width: 160px;
+
+  color: var(--gray-500);
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+`;
+const SWarnContainer = styled.div`
+  display: flex;
+  flex-flow: column nowrap;
+
+  gap: 8px;
+`;
+const SWarnTitle = styled(SB1)`
+  text-align: center;
+`;
+const SWarnText = styled(SC2)`
+  color: var(--gray-500);
+
+  &::before {
+    content: url(${icn_info});
+    vertical-align: text-top;
+    margin-right: 4px;
+  }
 `;
 
 export default HorizontalCard;
