@@ -9,17 +9,17 @@ const NotiItem = ({
   return (
     <SLayout>
       <SBtn>
-        <StyledNavLink to='/' activeClassName='active'>
+        <StyledNavLink to='/' activeclassname='active'>
           전체
         </StyledNavLink>
       </SBtn>
       <SBtn>
-        <StyledNavLink to={tagFirstLink} activeClassName='active'>
+        <StyledNavLink to={tagFirstLink} activeclassname='active'>
           {tagFirstName}
         </StyledNavLink>
       </SBtn>
       <SBtn>
-        <StyledNavLink to={tagSecondLink} activeClassName='active'>
+        <StyledNavLink to={tagSecondLink} activeclassname='active'>
           {tagSecondName}
         </StyledNavLink>
       </SBtn>
