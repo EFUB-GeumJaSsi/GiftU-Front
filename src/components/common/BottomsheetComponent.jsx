@@ -7,7 +7,7 @@
 // 2. 바텀시트 props
 // (2-1) closeButton - 'bar' 또는 'cross' (기본 'bar')
 // (2-2) setBottomsheetShow - 1-1의 setBottomsheetShow
-// 예시: <BottomsheetComponent setBottomsheetShow={setBottomsheetShow}>
+// 예시: <BottomsheetComponent closeButton='cross' setBottomsheetShow={setBottomsheetShow}>
 //
 // 3. 바텀시트 내용
 // (3-1) 부모 컴포넌트에서 <BottomsheetComponent></BottomsheetComponent> 안에 작성합니다.
