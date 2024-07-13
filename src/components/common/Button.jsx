@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import '../../global.css';
 
 // btnInfo라는 객체를 props로 받습니다.
 // btnInfo에는 text, color, width, onClick 값을 설정할 수 있습니다.
@@ -40,7 +39,6 @@ const BtnContainer = styled.button`
 
   text-align: center;
   color: ${(props) => (props.color ? props.color[1] : 'var(--gray-400)')};
-  font-family: Pretendard;
   font-size: 16px;
   font-weight: 600;
   line-height: 140%;
