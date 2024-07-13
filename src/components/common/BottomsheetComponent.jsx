@@ -52,7 +52,13 @@ const BottomsheetComponent = ({
 
   const BottomsheetUI = (
     <SBackgroundDiv onClick={handleBottomsheetClose} $open={open}>
-      <SSection $open={open} $cross={closeButton === 'cross'}>
+      <SSection
+        onClick={(event) => {
+          event.stopPropagation();
+        }}
+        $open={open}
+        $cross={closeButton === 'cross'}
+      >
         {closeButton === 'cross' ? (
           <SCrossButton onClick={handleBottomsheetClose}>
             <CrossIcon />
