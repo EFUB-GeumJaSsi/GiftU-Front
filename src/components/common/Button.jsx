@@ -21,15 +21,15 @@ const Button = ({ btnInfo }) => {
   };
 
   return (
-    <BtnContainer color={btnColor[color]} width={width} onClick={onClick}>
+    <SWrapper color={btnColor[color]} width={width} onClick={onClick}>
       {text}
-    </BtnContainer>
+    </SWrapper>
   );
 };
 
 export default Button;
 
-const BtnContainer = styled.button`
+const SWrapper = styled.button`
   width: ${(props) => (props.width ? props.width : '335px')};
   height: 56px;
 
