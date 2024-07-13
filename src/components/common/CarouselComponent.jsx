@@ -1,24 +1,21 @@
-export const arrayChop = (array) => {
+// array를 number개의 아이템씩 잘라 새로운 배열로 반환하는 함수
+export const arrayChop = (array, number) => {
   const result = [];
-  for (let i = 0; i < array.length; i += 2) {
-    result.push(array.slice(i, i + 2));
+  for (let i = 0; i < array.length; i += number) {
+    result.push(array.slice(i, i + number));
   }
   return result;
 };
 
+// CarouselComponent
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 
-const CarouselComponent = ({ pageLength, children }) => {
-  const [carouselElement, setCarouselElement] = useState(null);
+const CarouselComponent = ({ pageLength, pageWidth, children }) => {
   const [firstX, setFirstX] = useState(-1);
   const [lastX, setLastX] = useState(-1);
   const [currentPage, setCurrentPage] = useState(0);
 
-  // 렌더링 후 state 초기화
-  useEffect(() => {
-    setCarouselElement(document.getElementById('carousel'));
-  }, []);
   // 스와이프 액션 감지
   useEffect(() => {
     if (firstX != -1 && lastX != -1) {
@@ -33,15 +30,14 @@ const CarouselComponent = ({ pageLength, children }) => {
   }, [firstX, lastX]);
   // 페이지 이동
   useEffect(() => {
-    carouselElement &&
-      carouselElement.scrollTo({
-        left: carouselElement.offsetWidth * currentPage,
-        behavior: 'smooth',
-      });
+    document.getElementById('carousel').scrollTo({
+      left: pageWidth * currentPage,
+      behavior: 'smooth',
+    });
   }, [currentPage]);
 
   return (
-    <SLayout>
+    <SLayout $pageWidth={pageWidth}>
       <SContentContainer
         id='carousel'
         onPointerDown={(event) => {
@@ -80,7 +76,7 @@ const SLayout = styled.div`
   flex-flow: column nowrap;
   justify-content: center;
 
-  width: 335px;
+  width: ${({ $pageWidth }) => $pageWidth}px;
   gap: 16px;
 
   // 드래그 및 선택 방지
