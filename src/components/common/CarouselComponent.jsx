@@ -1,43 +1,49 @@
+export const arrayChop = (array) => {
+  const result = [];
+  for (let i = 0; i < array.length; i += 2) {
+    result.push(array.slice(i, i + 2));
+  }
+  return result;
+};
+
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 
-const CarouselComponent = ({ data, pageWidth, pageItemDirection, UI }) => {
-  const arraySlice = (array) => {
-    const result = [];
-    for (let i = 0; i < array.length; i += 2) {
-      result.push(array.slice(i, i + 2));
-    }
-    return result;
-  };
-
-  const slicedDataList = arraySlice(data);
-  const [currentPage, setCurrentPage] = useState(0);
+const CarouselComponent = ({ pageLength, children }) => {
+  const [carouselElement, setCarouselElement] = useState(null);
   const [firstX, setFirstX] = useState(-1);
   const [lastX, setLastX] = useState(-1);
+  const [currentPage, setCurrentPage] = useState(0);
 
+  // 렌더링 후 state 초기화
+  useEffect(() => {
+    setCarouselElement(document.getElementById('carousel'));
+  }, []);
+  // 스와이프 액션 감지
   useEffect(() => {
     if (firstX != -1 && lastX != -1) {
       if (firstX - lastX < 0) {
         if (currentPage != 0) setCurrentPage(currentPage - 1);
       } else if (firstX - lastX > 0) {
-        if (currentPage != slicedDataList.length - 1)
-          setCurrentPage(currentPage + 1);
+        if (currentPage != pageLength - 1) setCurrentPage(currentPage + 1);
       }
       setFirstX(-1);
       setLastX(-1);
     }
   }, [firstX, lastX]);
+  // 페이지 이동
   useEffect(() => {
-    document
-      .getElementById('carousel')
-      .scrollTo({ left: pageWidth * currentPage, behavior: 'smooth' });
+    carouselElement &&
+      carouselElement.scrollTo({
+        left: carouselElement.offsetWidth * currentPage,
+        behavior: 'smooth',
+      });
   }, [currentPage]);
 
   return (
     <SLayout>
       <SContentContainer
         id='carousel'
-        width={pageWidth}
         onPointerDown={(event) => {
           setFirstX(event.clientX);
         }}
@@ -46,38 +52,24 @@ const CarouselComponent = ({ data, pageWidth, pageItemDirection, UI }) => {
         }}
         $currentPage={currentPage}
       >
-        {slicedDataList.map((item, index) => (
-          <SPageContainer key={index} direction={pageItemDirection}>
-            <UI data={item[0]} />
-            <UI
-              data={item[1]}
-              style={
-                data.length % 2 != 0 && index == slicedDataList.length - 1
-                  ? { visibility: 'hidden' }
-                  : {}
-              }
-            />
-          </SPageContainer>
-        ))}
+        {children}
       </SContentContainer>
       <SPaginationFieldset>
-        {Array.from({ length: slicedDataList.length }, (v, i) => i).map(
-          (pageNumber) => {
-            return (
-              <SRadioInput
-                key={pageNumber}
-                type='radio'
-                id={pageNumber}
-                name='pagination'
-                value={pageNumber}
-                checked={currentPage === pageNumber && 'checked'}
-                onChange={() => {
-                  setCurrentPage(pageNumber);
-                }}
-              />
-            );
-          },
-        )}
+        {Array.from({ length: pageLength }, (v, i) => i).map((pageNumber) => {
+          return (
+            <SRadioInput
+              key={pageNumber}
+              type='radio'
+              id={pageNumber}
+              name='pagination'
+              value={pageNumber}
+              checked={currentPage === pageNumber && 'checked'}
+              onChange={() => {
+                setCurrentPage(pageNumber);
+              }}
+            />
+          );
+        })}
       </SPaginationFieldset>
     </SLayout>
   );
@@ -87,8 +79,11 @@ const SLayout = styled.div`
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
+
+  width: 335px;
   gap: 16px;
 
+  // 드래그 및 선택 방지
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-use-select: none;
@@ -96,21 +91,14 @@ const SLayout = styled.div`
 `;
 const SContentContainer = styled.div`
   display: flex;
-  flex-direction: row;
-  overflow: hidden;
-
-  width: ${({ width }) => width};
-`;
-const SPageContainer = styled.div`
-  display: flex;
-  flex-direction: ${({ direction }) => direction};
-
-  gap: 12px;
+  overflow-x: hidden;
+  flex-flow: row nowrap;
 `;
 const SPaginationFieldset = styled.fieldset`
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
+
   gap: 4px;
 `;
 const SRadioInput = styled.input`
