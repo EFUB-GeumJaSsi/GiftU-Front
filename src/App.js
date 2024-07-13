@@ -1,9 +1,9 @@
 import React from 'react';
-import MyPage from '../src/pages/My/MyPage';
+import ListPage from './pages/MyOpenFunding/ListPage';
 const App = () => {
   return (
     <div className='App'>
-      <MyPage />
+      <ListPage />
     </div>
   );
 };
