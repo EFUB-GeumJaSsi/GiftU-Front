@@ -4,15 +4,15 @@ import { NavLink } from 'react-router-dom';
 
 // <NotiItem
 //  buttons={[
-//  { text: '전체', link: '/', activeColor: 'jade' },
-//  { text: '친구', link: '/first', activeColor: 'jade' },
-//  { text: '펀딩', link: '/second', activeColor: 'jade' },
+//  { text: '전체', link: '/', color: 'jade' },
+//  { text: '친구', link: '/first', color: 'jade' },
+//  { text: '펀딩', link: '/second', color: 'jade' },
 // ]}
 // />
-// 위의 코드는 예시입니다. text에 원하는 문구를 적고 ,link는 그대로 사용하고, activeColor에는 jade와 orange중에 선택해서 사용하면 됩니다.
+// 위의 코드는 예시입니다. text에 원하는 문구를 적고 ,link는 그대로 사용하고, color에는 jade와 orange중에 선택하면 됩니다.
 const NotiItem = ({ buttons }) => {
-  // activeColor: [배경 색, 글꼴 색]
-  const btnActiveColor = {
+  // color: [배경 색, 글꼴 색]
+  const btnColor = {
     orange: ['var(--orange-pri)', 'var(--white)'],
     jade: ['var(--jade-pri)', 'var(--white)'],
     gray: ['var(--gray-100)', 'var(--gray-400)'],
@@ -25,7 +25,7 @@ const NotiItem = ({ buttons }) => {
           <StyledNavLink
             to={btn.link}
             activeclassname='active'
-            activeColor={btnActiveColor[btn.activeColor]}
+            color={btnColor[btn.color]}
           >
             {btn.text}
           </StyledNavLink>
@@ -64,8 +64,8 @@ const StyledNavLink = styled(NavLink)`
   text-decoration: none;
 
   &.active {
-    background-color: ${(props) => props.activeColor[0]};
-    color: ${(props) => props.activeColor[1]};
+    background-color: ${(props) => props.color[0]};
+    color: ${(props) => props.color[1]};
     border-radius: 15px;
   }
 `;
