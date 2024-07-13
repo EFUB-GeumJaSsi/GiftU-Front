@@ -28,8 +28,9 @@ const NotificationPage = () => {
           ]}
         />
         <SBtnWrapper>
-          {notifications.map((notification) => (
+          {notifications.map((notification, index) => (
             <NotificationItem
+              key={index}
               name={notification.name}
               message={notification.message}
               time={notification.time}
