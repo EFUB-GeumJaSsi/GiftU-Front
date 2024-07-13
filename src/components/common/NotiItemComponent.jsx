@@ -9,7 +9,7 @@ const NotiItem = ({
   return (
     <SLayout>
       <SBtn>
-        <StyledNavLink exact to='/' activeClassName='active'>
+        <StyledNavLink to='/' activeClassName='active'>
           전체
         </StyledNavLink>
       </SBtn>
