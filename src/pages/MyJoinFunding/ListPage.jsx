@@ -53,10 +53,11 @@ const ListPage = () => {
       <BackHeader text='내가 참여한 펀딩' />
       <NotiItemWrapper>
         <NotiItem
-          tagFirstName='진행'
-          tagFirstLink='/isOngoing'
-          tagSecondName='종료'
-          tagSecondLink='/end'
+          buttons={[
+            { text: '전체', link: '/', color: 'orange' },
+            { text: '펀딩', link: '/isOngoing', color: 'orange' },
+            { text: '종료', link: '/end', color: 'orange' },
+          ]}
         />
       </NotiItemWrapper>
       <FundingComponent
