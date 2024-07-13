@@ -21,10 +21,11 @@ const NotificationPage = () => {
       <SHeader>알림</SHeader>
       <SItemContainer>
         <NotiItem
-          tagFirstName='친구'
-          tagFirstLink='/friend'
-          tagSecondName='펀딩'
-          tagSecondLink='/funding'
+          buttons={[
+            { text: '전체', link: '/', activeColor: 'jade' },
+            { text: '친구', link: '/first', activeColor: 'jade' },
+            { text: '펀딩', link: '/second', activeColor: 'jade' },
+          ]}
         />
         <SBtnWrapper>
           {notifications.map((notification) => (
