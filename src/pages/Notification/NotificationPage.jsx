@@ -22,9 +22,9 @@ const NotificationPage = () => {
       <SItemContainer>
         <NotiItem
           buttons={[
-            { text: '전체', link: '/', activeColor: 'jade' },
-            { text: '친구', link: '/first', activeColor: 'jade' },
-            { text: '펀딩', link: '/second', activeColor: 'jade' },
+            { text: '전체', link: '/', color: 'jade' },
+            { text: '친구', link: '/first', color: 'jade' },
+            { text: '펀딩', link: '/second', color: 'jade' },
           ]}
         />
         <SBtnWrapper>
