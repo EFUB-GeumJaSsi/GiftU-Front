@@ -98,7 +98,7 @@ const SSection = styled.section`
 
   width: 375px;
   height: 320px;
-  padding: ${({ $cross }) => ($cross ? '26px 24px' : '16px 20px')};
+  padding-top: ${({ $cross }) => ($cross ? '26px' : '16px')};
   gap: ${({ $cross }) => ($cross ? '0' : '32')}px;
 
   border-radius: 20px 20px 0px 0px;
