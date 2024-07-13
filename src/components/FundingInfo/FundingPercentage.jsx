@@ -245,6 +245,8 @@ const SButtonWrapper = styled.span`
   font-style: normal;
   font-weight: 500;
   line-height: 120%;
+
+  cursor: pointer;
 `;
 
 const FoldBtn = styled(Fold)`

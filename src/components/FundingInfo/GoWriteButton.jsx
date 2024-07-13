@@ -72,6 +72,8 @@ const STextWrapper = styled.span`
   font-weight: 400;
   line-height: 120%;
   text-align: left;
+
+  cursor: pointer;
 `;
 
 const SEmphaWrapper = styled(STextWrapper)`
