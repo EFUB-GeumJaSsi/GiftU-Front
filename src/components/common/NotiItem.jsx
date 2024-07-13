@@ -7,28 +7,34 @@ const NotiItem = ({
   tagSecondLink,
 }) => {
   return (
-    <NavContainer>
-      <HeadBtn>
+    <SLayout>
+      <SBtn>
         <StyledNavLink exact to='/' activeClassName='active'>
           전체
         </StyledNavLink>
-      </HeadBtn>
-      <HeadBtn>
+      </SBtn>
+      <SBtn>
         <StyledNavLink to={tagFirstLink} activeClassName='active'>
           {tagFirstName}
         </StyledNavLink>
-      </HeadBtn>
-      <HeadBtn>
+      </SBtn>
+      <SBtn>
         <StyledNavLink to={tagSecondLink} activeClassName='active'>
           {tagSecondName}
         </StyledNavLink>
-      </HeadBtn>
-    </NavContainer>
+      </SBtn>
+    </SLayout>
   );
 };
 export default NotiItem;
 
-const HeadBtn = styled.button`
+const SLayout = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+`;
+
+const SBtn = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -52,10 +58,4 @@ const StyledNavLink = styled(NavLink)`
     background-color: var(--jade-pri);
     border-radius: 15px;
   }
-`;
-
-const NavContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 8px;
 `;
