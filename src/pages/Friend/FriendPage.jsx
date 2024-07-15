@@ -30,6 +30,11 @@ const FriendPage = () => {
   const inputRef = useRef(null);
   const [email, setEmail] = useState('');
 
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+    setEmail('');
+  };
+
   // 바텀시트 렌더링 시 input 포커스
   useEffect(() => {
     inputRef.current?.focus();
@@ -92,12 +97,7 @@ const FriendPage = () => {
               <SH3>친구 추가</SH3>
               <SB3>친구의 이메일 주소를 입력해 주세요</SB3>
             </STextContainer>
-            <SForm
-              onSubmit={(event) => {
-                event.preventDefault();
-                setEmail('');
-              }}
-            >
+            <SForm onSubmit={handleFormSubmit}>
               <SInput
                 ref={inputRef}
                 type='email'
