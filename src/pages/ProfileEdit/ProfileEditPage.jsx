@@ -48,7 +48,13 @@ const [userInfo, setUserInfo] = useState({
         </SContentContainer>
         <SContentContainer>
           <STitleContainer>이메일</STitleContainer>
-          <STextWrapper placeholder='yyheeyeon@gmail.com' />
+          <STextWrapper
+            name='email'
+            placeholder='이메일을 입력해 주세요!'
+            value={userInfo.email}
+            onChange={handleInfoChange}
+          />
+
         </SContentContainer>
         <SContentContainer>
           <STitleContainer>생일</STitleContainer>
