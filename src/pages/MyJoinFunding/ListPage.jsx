@@ -51,7 +51,7 @@ const ListPage = () => {
   return (
     <SLayout>
       <BackHeader text='내가 참여한 펀딩' />
-      <NotiItemWrapper>
+      <SNotiItemWrapper>
         <NotiItem
           buttons={[
             { text: '전체', link: '/', color: 'orange' },
@@ -59,11 +59,13 @@ const ListPage = () => {
             { text: '종료', link: '/end', color: 'orange' },
           ]}
         />
-      </NotiItemWrapper>
-      <FundingComponent
-        results={filteredResults}
-        message='아직 참여한 펀딩이 없어요'
-      />
+      </SNotiItemWrapper>
+      <SListWrapper>
+        <FundingComponent
+          results={filteredResults}
+          message='아직 참여한 펀딩이 없어요'
+        />
+      </SListWrapper>
     </SLayout>
   );
 };
@@ -94,9 +96,13 @@ const SLayout = styled.div`
   align-items: center;
 `;
 
-const NotiItemWrapper = styled.div`
+const SNotiItemWrapper = styled.div`
   margin-top: 24px;
   margin-bottom: 20px;
+`;
+
+const SListWrapper = styled.div`
+  margin: 0 auto;
 `;
 
 export default ListPage;
