@@ -18,13 +18,13 @@
   --gray-500: #909294;
 
   font-family: Pretendard;
-
-  width: 375px;
-  margin: 0 auto;
 }
-
 * {
   font-family: Pretendard;
+}
+#root {
+  width: 375px;
+  margin: 0 auto;
 }
 
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css');

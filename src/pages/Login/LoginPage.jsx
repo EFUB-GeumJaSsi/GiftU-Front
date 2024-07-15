@@ -4,41 +4,41 @@ import { ReactComponent as Kakao } from '../../assets/Login/kakao_logo.svg';
 
 const LoginPage = () => {
   return (
-    <Container>
-      <Logo src={giftu} />
-      <Button>
+    <SLayout>
+      <SImg src={giftu} />
+      <SBtn>
         <Kakao />
         카카오 로그인
-      </Button>
-    </Container>
+      </SBtn>
+    </SLayout>
   );
 };
 
-const Container = styled.div`
+const SLayout = styled.div`
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
   justify-content: center;
-  gap: 22%;
 
   height: 100vh;
+  gap: 22%;
 
   box-sizing: border-box;
 `;
-const Logo = styled.img`
+const SImg = styled.img`
   width: 200px;
   height: 135px;
 `;
-const Button = styled.button`
+const SBtn = styled.button`
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
   vertical-align: middle;
-  gap: 66px;
 
   width: 280px;
   height: 48px;
   padding: 14px;
+  gap: 66px;
 
   border-radius: 6px;
   background-color: #fee500;
