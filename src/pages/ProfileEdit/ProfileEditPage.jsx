@@ -38,7 +38,13 @@ const [userInfo, setUserInfo] = useState({
       <SContentsContainer>
         <SContentContainer>
           <STitleContainer>닉네임</STitleContainer>
-          <STextWrapper placeholder='설정 전에는 자동 설정' />
+         <STextWrapper
+            name='nickname'
+            placeholder='닉네임을 입력해 주세요!'
+            value={userInfo.nickname}
+            onChange={handleInfoChange}
+          />
+
         </SContentContainer>
         <SContentContainer>
           <STitleContainer>이메일</STitleContainer>
