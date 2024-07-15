@@ -11,8 +11,8 @@ const ProfileEditPage = () => {
   const [showCalendar, setShowCalendar] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
 
- const [month, setMonth] = useState(new Date());
-const [userInfo, setUserInfo] = useState({
+  const [month, setMonth] = useState(new Date());
+  const [userInfo, setUserInfo] = useState({
     nickname: '닉네임',
     email: 'yyheeyeon@gmail.com',
     birthday: '',
@@ -21,8 +21,8 @@ const [userInfo, setUserInfo] = useState({
   const handleInfoChange = (e) => {
     setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
   };
- 
-    const handleDateSelect = (date) => {
+
+  const handleDateSelect = (date) => {
     if (!date) {
       setUserInfo({ ...userInfo, birthday: '' });
       setSelectedDate(undefined);
@@ -33,7 +33,6 @@ const [userInfo, setUserInfo] = useState({
       setShowCalendar(false);
     }
   };
-
 
   return (
     <SLayout>
@@ -47,13 +46,12 @@ const [userInfo, setUserInfo] = useState({
       <SContentsContainer>
         <SContentContainer>
           <STitleContainer>닉네임</STitleContainer>
-         <STextWrapper
+          <STextWrapper
             name='nickname'
             placeholder='닉네임을 입력해 주세요!'
             value={userInfo.nickname}
             onChange={handleInfoChange}
           />
-
         </SContentContainer>
         <SContentContainer>
           <STitleContainer>이메일</STitleContainer>
@@ -63,7 +61,6 @@ const [userInfo, setUserInfo] = useState({
             value={userInfo.email}
             onChange={handleInfoChange}
           />
-
         </SContentContainer>
         <SContentContainer>
           <STitleContainer>생일</STitleContainer>
@@ -81,6 +78,9 @@ const [userInfo, setUserInfo] = useState({
           {showCalendar && (
             <SCalendarWrapper>
               <DayPickerStyled
+                captionLayout='dropdown'
+                fromYear={2010}
+                toYear={2024}
                 month={month}
                 onMonthChange={setMonth}
                 mode='single'
@@ -89,7 +89,6 @@ const [userInfo, setUserInfo] = useState({
               />
             </SCalendarWrapper>
           )}
-
         </SContentContainer>
       </SContentsContainer>
       <SButtonWrapper>
