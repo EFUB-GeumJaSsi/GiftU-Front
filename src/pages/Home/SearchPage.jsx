@@ -72,12 +72,12 @@ const SSearchBoxContainer = styled.div`
   background-color: #f3f4f5;
 `;
 const STextBoxWrapper = styled.input`
-  height: 22px;
   width: 210px;
+  height: 22px;
   size: 16px;
-  weight: 500;
   margin-left: 5px;
   background-color: #f3f4f5;
+  weight: 500;
 `;
 const SBtnWrapper = styled.div`
   display: flex;
