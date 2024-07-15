@@ -11,6 +11,16 @@ const ProfileEditPage = () => {
   const [showCalendar, setShowCalendar] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
 
+const [userInfo, setUserInfo] = useState({
+    nickname: '닉네임',
+    email: 'yyheeyeon@gmail.com',
+    birthday: '',
+  });
+
+  const handleInfoChange = (e) => {
+    setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
+  };
+ 
   const handleDateSelect = (date) => {
     setSelectedDate(date);
     setShowCalendar(false);
