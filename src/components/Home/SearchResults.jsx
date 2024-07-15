@@ -59,8 +59,8 @@ const SResultItem = styled.div`
   img {
     width: 120px;
     height: 120px;
-    background-color: var(--gray-300);
     border-radius: 16px;
+    background-color: var(--gray-300);
   }
 `;
 
@@ -73,14 +73,14 @@ const SContentWrapper = styled.div`
   font-weight: 500;
   font-size: 14px;
   #title {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
     font-weight: 700;
     font-size: 17px;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 100%;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
   }
   #name {
     display: flex;
@@ -98,16 +98,16 @@ const SContentWrapper = styled.div`
     gap: 7px;
     margin-top: 3px;
     #stateTag {
+      padding: 4px 8px 4px 8px;
+      border-radius: 20px;
       background-color: var(--jade-sec);
       color: var(--jade-pri);
-      border-radius: 20px;
-      padding: 4px 8px 4px 8px;
     }
     #isFriend {
+      padding: 4px 8px 4px 8px;
+      border-radius: 20px;
       background-color: var(--orange-sec);
       color: var(--orange-pri);
-      border-radius: 20px;
-      padding: 4px 8px 4px 8px;
     }
   }
 `;
