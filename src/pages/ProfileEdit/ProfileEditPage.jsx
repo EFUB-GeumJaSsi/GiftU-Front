@@ -22,10 +22,18 @@ const [userInfo, setUserInfo] = useState({
     setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
   };
  
-  const handleDateSelect = (date) => {
-    setSelectedDate(date);
-    setShowCalendar(false);
+    const handleDateSelect = (date) => {
+    if (!date) {
+      setUserInfo({ ...userInfo, birthday: '' });
+      setSelectedDate(undefined);
+    } else {
+      setSelectedDate(date);
+      setMonth(date);
+      setUserInfo({ ...userInfo, birthday: format(date, 'yyyy-MM-dd') });
+      setShowCalendar(false);
+    }
   };
+
 
   return (
     <SLayout>
