@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const FundingSpan = ({
-  type = 'jade',
+  color = 'jade',
   name = '김이화',
   startDate = '2023.04.01',
   endDate = '2023.04.25',
@@ -9,7 +9,7 @@ const FundingSpan = ({
   return (
     <SLayout>
       <SContainer>
-        {type === 'orange' ? (
+        {color === 'orange' ? (
           <STitleWrapper>선물 수령인</STitleWrapper>
         ) : (
           <STitleWrapper>펀딩 개설자</STitleWrapper>
