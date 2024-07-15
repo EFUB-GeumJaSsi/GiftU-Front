@@ -160,6 +160,7 @@ const STextWrapper = styled.input`
   justify-content: center;
   height: 100%;
   padding: 15px;
+  border: 2px solid transparent;
   border-radius: 16px;
   color: var(--black);
   background-color: var(--gray-100);
@@ -168,7 +169,6 @@ const STextWrapper = styled.input`
   &::placeholder {
     color: var(--black);
   }
-  border: 2px solid transparent;
   &:focus {
     border: 2px solid var(--jade-pri);
     outline: none;
@@ -183,12 +183,12 @@ const SInput = styled.input`
   height: 90%;
   padding: 15px 50px 15px 15px;
   border-radius: 16px;
+  background-color: var(--gray-100);
+  font-weight: 500;
+  font-size: 16px;
   &::placeholder {
     color: var(--gray-400);
   }
-  font-weight: 500;
-  font-size: 16px;
-  background-color: var(--gray-100);
 `;
 
 const SBdayIconWrapper = styled.div`
