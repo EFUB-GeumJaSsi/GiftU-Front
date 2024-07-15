@@ -68,16 +68,19 @@ const [userInfo, setUserInfo] = useState({
             <SBdayIconWrapper>
               <Calendar></Calendar>
             </SBdayIconWrapper>
-            {showCalendar && (
-              <SCalendarWrapper>
-                <DayPickerStyled
-                  mode='single'
-                  selected={selectedDate}
-                  onSelect={handleDateSelect}
-                />
-              </SCalendarWrapper>
-            )}
           </SInputContainer>
+          {showCalendar && (
+            <SCalendarWrapper>
+              <DayPickerStyled
+                month={month}
+                onMonthChange={setMonth}
+                mode='single'
+                selected={selectedDate}
+                onSelect={handleDateSelect}
+              />
+            </SCalendarWrapper>
+          )}
+
         </SContentContainer>
       </SContentsContainer>
       <SButtonWrapper>
