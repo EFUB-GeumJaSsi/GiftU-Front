@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import { useSearchParams } from 'react-router-dom';
+import { useRef, useState } from 'react';
 import BackHeader from '../../components/common/BackHeader';
 import FundingSpan from '../../components/FundingInfo/FundingSpan';
 import TopFundingInfo from '../../components/FundingInfo/TopFundingInfo';
@@ -6,6 +8,13 @@ import FundingPercentage from '../../components/FundingInfo/FundingPercentage';
 import CongratsMessage from '../../components/FundingInfo/CongratsMessage';
 import BottomBackground from '../../components/common/BottomBackground';
 import Button from '../../components/common/Button';
+import Modal from '../../components/common/Modal';
+import {
+  GoWriteCommentButton,
+  GoWriteMessageButton,
+} from '../../components/FundingInfo/GoWriteButton';
+import FundingParticipants from '../../components/FundingInfo/FundingParticipants';
+import FundingComment from '../../components/FundingInfo/FundingComment';
 
 const tempList = [
   {
@@ -24,19 +33,102 @@ const tempList = [
   },
 ];
 
+const Btn = (funding, isEnd, setModalShow) => {
+  switch (funding) {
+    // 내가 참여한 펀딩
+    case 'join':
+      return (
+        <SBtnContainer>
+          <Button btnInfo={{ text: '참여 취소', width: '104px' }}></Button>
+          <Button
+            btnInfo={{
+              text: '축하 메시지 수정하기',
+              width: '223px',
+              color: 'orange',
+            }}
+          ></Button>
+        </SBtnContainer>
+      );
+    // 내가 개설한 펀딩
+    case 'open':
+      if (isEnd === 'true') {
+        return (
+          <Button btnInfo={{ text: '선물 후기 작성하기', color: 'jade' }} />
+        );
+      } else {
+        return (
+          <Button
+            btnInfo={{
+              text: '개설 취소하기',
+              onClick: () => setModalShow(true),
+            }}
+          />
+        );
+      }
+    default:
+      return <Button btnInfo={{ text: '선물하기', color: 'orange' }} />;
+  }
+};
+
+const ModalContent = () => (
+  <SModalContainer>
+    <SBigTextWrapper>펀딩 개설을 취소하시겠어요?</SBigTextWrapper>
+    <SSmallTextWrapper>
+      펀딩에 참여한 친구들에게 알림이 전송돼요
+    </SSmallTextWrapper>
+  </SModalContainer>
+);
+
 const FundingInfoPage = () => {
-  const Btn = <Button btnInfo={{ text: '선물하기', color: 'orange' }} />;
+  const [modalShow, setModalShow] = useState(false);
+  const [isCommented, setIsCommented] = useState(true);
+  const [wroteMessage, setWroteMessage] = useState(false);
+  const messageRef = useRef(null);
+  const [searchParams, setSearchParams] = useSearchParams({
+    funding: '',
+    end: '',
+  });
+
+  const funding = searchParams.get('funding');
+  const isEnd = searchParams.get('end');
+  const tag = isEnd === 'true' ? '종료' : 'D-10';
+  const color = funding === 'open' ? 'jade' : 'orange';
+
+  const onFocusMessage = () => {
+    messageRef.current.scrollIntoView({ behavior: 'smooth' });
+  };
 
   return (
     <>
       <BackHeader />
       <SLayout>
-        <TopFundingInfo color='orange' />
-        <FundingSpan type='orange' />
-        <FundingPercentage color='orange' />
-        <CongratsMessage list={tempList} />
+        <TopFundingInfo color={color} tag={tag} />
+        {isCommented && isEnd === 'true' && <FundingComment color={color} />}
+        {funding === 'join' ? (
+          <GoWriteMessageButton
+            color={color}
+            price='15,000'
+            onClick={onFocusMessage}
+            wroteMessage={wroteMessage}
+            isEnd={isEnd}
+          />
+        ) : (
+          funding === 'open' &&
+          isEnd === 'true' && <GoWriteCommentButton color={color} />
+        )}
+        <FundingSpan color={color} />
+        <FundingPercentage color={color} />
+        {funding === 'open' && <FundingParticipants />}
+        <CongratsMessage list={tempList} ref={messageRef} />
       </SLayout>
-      <BottomBackground Button={Btn} />
+      {!(isEnd === 'true' && funding === 'join') && (
+        <BottomBackground Button={Btn(funding, isEnd, setModalShow)} />
+      )}
+      {modalShow && (
+        <Modal actionText='취소하기' setModalShow={setModalShow}>
+          <ModalContent />
+        </Modal>
+      )}
     </>
   );
 };
@@ -50,4 +142,31 @@ const SLayout = styled.div`
   gap: 16px;
 
   padding: 16px 16px 40px 16px;
+`;
+
+const SBtnContainer = styled.div`
+  display: flex;
+  gap: 8px;
+`;
+
+const SModalContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+`;
+
+const SBigTextWrapper = styled.span`
+  color: var(--black);
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 140%;
+`;
+
+const SSmallTextWrapper = styled(SBigTextWrapper)`
+  color: var(--gray-500);
+  font-size: 12px;
+  line-height: 120%;
 `;
