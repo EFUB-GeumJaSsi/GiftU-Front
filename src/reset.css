@@ -144,3 +144,6 @@ input {
 input[type='submit'] {
   cursor: pointer;
 }
+span {
+  cursor: default;
+}
