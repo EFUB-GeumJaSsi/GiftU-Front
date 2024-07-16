@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import React, { useState } from 'react';
-import NotificationItem from '../../components/Notification/NotificationItem';
+import NotificationItem from '../../components/Notification/NotificationItemComponent;
 import TagSelectComponent from '../../components/common/TagSelectComponent';
 
 const NotificationPage = () => {
