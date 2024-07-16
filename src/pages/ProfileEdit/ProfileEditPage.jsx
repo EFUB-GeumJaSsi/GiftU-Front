@@ -79,7 +79,7 @@ const ProfileEditPage = () => {
             <SCalendarWrapper>
               <DayPickerStyled
                 captionLayout='dropdown'
-                fromYear={2010}
+                fromYear={1920}
                 toYear={2024}
                 month={month}
                 onMonthChange={setMonth}
