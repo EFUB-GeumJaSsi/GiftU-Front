@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import React, { useState } from 'react';
 import NotificationItem from '../../components/Notification/NotificationItem';
-import NotiItem from '../../components/common/NotiItem';
+import TagSelectComponent from '../../components/common/TagSelectComponent';
 
 const NotificationPage = () => {
   const [notifications, setNotifications] = useState([
@@ -20,7 +20,7 @@ const NotificationPage = () => {
     <SLayout>
       <SHeader>알림</SHeader>
       <SItemContainer>
-        <NotiItem
+        <TagSelectComponent
           buttons={[
             { text: '전체', link: '/', color: 'jade' },
             { text: '친구', link: '/first', color: 'jade' },

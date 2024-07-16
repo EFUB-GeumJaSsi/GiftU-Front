@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import FundingComponent from '../../components/common/FundingComponent';
-import NotiItem from '../../components/common/NotiItem';
+import TagSelectComponent from '../../components/common/TagSelectComponent';
 import BackHeader from '../../components/common/BackHeader';
 
 const ListPage = () => {
@@ -52,7 +52,7 @@ const ListPage = () => {
     <SLayout>
       <BackHeader text='내가 만든 펀딩' />
       <NotiItemWrapper>
-        <NotiItem
+        <TagSelectComponent
           buttons={[
             { text: '전체', link: '/', color: 'jade' },
             { text: '펀딩', link: '/isOngoing', color: 'jade' },
