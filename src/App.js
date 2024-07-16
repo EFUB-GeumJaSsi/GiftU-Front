@@ -1,11 +1,6 @@
-import { Route, Routes } from 'react-router-dom';
-import Nav from './components/common/Nav';
+import React from 'react';
 const App = () => {
-  return (
-    <div className='App'>
-      <Nav />
-    </div>
-  );
+  return <div className='App'></div>;
 };
 
 export default App;
