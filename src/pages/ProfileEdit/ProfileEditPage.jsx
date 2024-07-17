@@ -103,7 +103,9 @@ const ProfileEditPage = () => {
           </SContentContainer>
         </SContentsContainer>
       </SLayout>
-      <BottomBackground Button={Btn} />
+      <SBtnWrapper>
+        <BottomBackground Button={Btn} />
+      </SBtnWrapper>
     </>
   );
 };
@@ -115,14 +117,13 @@ const SLayout = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 16px 16px 218px 16px;
 `;
 
 const SImageContainer = styled.div`
   position: relative;
   width: 96px;
   height: 96px;
-  margin: 25px;
+  margin: 40px;
 `;
 
 const SImageWrapper = styled.div`
@@ -143,7 +144,7 @@ const SContentsContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   width: 335px;
-  gap: 24px;
+  gap: 25px;
 `;
 
 const SContentContainer = styled.div`
@@ -219,3 +220,7 @@ const SCalendarWrapper = styled.div`
   background-color: var(--white);
 `;
 const DayPickerStyled = styled(DayPicker)``;
+const SBtnWrapper = styled.div`
+  position: fixed;
+  bottom: 0;
+`;
