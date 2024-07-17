@@ -13,7 +13,6 @@ const SearchPage = () => {
       name: '김이화',
       endDate: '2024.09.16',
       stateTag: '진행중',
-      isFriend: '친구',
     },
     {
       image: '',
@@ -22,7 +21,6 @@ const SearchPage = () => {
       name: '김이화',
       endDate: '2024.09.16',
       stateTag: '진행중',
-      isFriend: '친구',
     },
   ];
   const onChange = (e) => {
