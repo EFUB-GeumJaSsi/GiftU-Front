@@ -5,6 +5,7 @@ import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
 import BackHeader from '../../components/common/BackHeader';
 import Button from '../../components/common/Button';
+import BottomBackground from '../../components/common/BottomBackground';
 import { ReactComponent as Camera } from '../../assets/common/camera.svg';
 import { ReactComponent as Calendar } from '../../assets/common/calendar.svg';
 const ProfileEditPage = () => {
@@ -33,68 +34,77 @@ const ProfileEditPage = () => {
       setShowCalendar(false);
     }
   };
+  const Btn = (
+    <Button
+      btnInfo={{
+        text: '저장',
+        width: '335px',
+        color: 'jade',
+      }}
+    ></Button>
+  );
 
   return (
-    <SLayout>
+    <>
       <BackHeader text='프로필 편집' />
-      <SImageContainer>
-        <SImageWrapper />
-        <SImageButtonWrapper>
-          <Camera></Camera>
-        </SImageButtonWrapper>
-      </SImageContainer>
-      <SContentsContainer>
-        <SContentContainer>
-          <STitleContainer>닉네임</STitleContainer>
-          <STextWrapper
-            name='nickname'
-            placeholder='닉네임을 입력해 주세요!'
-            value={userInfo.nickname}
-            onChange={handleInfoChange}
-          />
-        </SContentContainer>
-        <SContentContainer>
-          <STitleContainer>이메일</STitleContainer>
-          <STextWrapper
-            name='email'
-            placeholder='이메일을 입력해 주세요!'
-            value={userInfo.email}
-            onChange={handleInfoChange}
-          />
-        </SContentContainer>
-        <SContentContainer>
-          <STitleContainer>생일</STitleContainer>
-          <SInputContainer onClick={() => setShowCalendar(!showCalendar)}>
-            <SInput
-              type='text'
-              value={selectedDate ? format(selectedDate, 'yyyy-MM-dd') : ''}
-              placeholder='생일을 입력해 주세요!'
-              readOnly
+      <SLayout>
+        <SImageContainer>
+          <SImageWrapper />
+          <SImageButtonWrapper>
+            <Camera></Camera>
+          </SImageButtonWrapper>
+        </SImageContainer>
+        <SContentsContainer>
+          <SContentContainer>
+            <STitleContainer>닉네임</STitleContainer>
+            <STextWrapper
+              name='nickname'
+              placeholder='닉네임을 입력해 주세요!'
+              value={userInfo.nickname}
+              onChange={handleInfoChange}
             />
-            <SBdayIconWrapper>
-              <Calendar></Calendar>
-            </SBdayIconWrapper>
-          </SInputContainer>
-          {showCalendar && (
-            <SCalendarWrapper>
-              <DayPickerStyled
-                captionLayout='dropdown'
-                fromYear={1920}
-                toYear={2024}
-                month={month}
-                onMonthChange={setMonth}
-                mode='single'
-                selected={selectedDate}
-                onSelect={handleDateSelect}
+          </SContentContainer>
+          <SContentContainer>
+            <STitleContainer>이메일</STitleContainer>
+            <STextWrapper
+              name='email'
+              placeholder='이메일을 입력해 주세요!'
+              value={userInfo.email}
+              onChange={handleInfoChange}
+            />
+          </SContentContainer>
+          <SContentContainer>
+            <STitleContainer>생일</STitleContainer>
+            <SInputContainer onClick={() => setShowCalendar(!showCalendar)}>
+              <SInput
+                type='text'
+                value={selectedDate ? format(selectedDate, 'yyyy-MM-dd') : ''}
+                placeholder='생일을 입력해 주세요!'
+                readOnly
               />
-            </SCalendarWrapper>
-          )}
-        </SContentContainer>
-      </SContentsContainer>
-      <SButtonWrapper>
-        <Button btnInfo={{ text: '저장', color: 'jade' }} />
-      </SButtonWrapper>
-    </SLayout>
+              <SBdayIconWrapper>
+                <Calendar></Calendar>
+              </SBdayIconWrapper>
+            </SInputContainer>
+            {showCalendar && (
+              <SCalendarWrapper>
+                <DayPickerStyled
+                  captionLayout='dropdown'
+                  fromYear={1920}
+                  toYear={2024}
+                  month={month}
+                  onMonthChange={setMonth}
+                  mode='single'
+                  selected={selectedDate}
+                  onSelect={handleDateSelect}
+                />
+              </SCalendarWrapper>
+            )}
+          </SContentContainer>
+        </SContentsContainer>
+      </SLayout>
+      <BottomBackground Button={Btn} />
+    </>
   );
 };
 
@@ -105,7 +115,7 @@ const SLayout = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  position: fixed;
+  padding: 16px 16px 218px 16px;
 `;
 
 const SImageContainer = styled.div`
@@ -203,14 +213,6 @@ const SInputContainer = styled.div`
   position: relative;
   width: 100%;
 `;
-
-const SButtonWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  position: fixed;
-  bottom: 0;
-`;
-
 const SCalendarWrapper = styled.div`
   position: absolute;
   left: 0px;
