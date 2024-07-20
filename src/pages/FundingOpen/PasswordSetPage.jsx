@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { ReactComponent as OrangeLocker } from '../../assets/PasswordSet/icn_btn_no.svg';
 import { ReactComponent as BlueLocker } from '../../assets/PasswordSet/icn_btn_yes.svg';
@@ -11,19 +11,15 @@ import BottomSheetComponent from '../../components/common/BottomSheetComponent';
 const PasswordSetPage = () => {
   const [bottomSheetShow, setBottomSheetShow] = useState(false);
   const [password, setPassword] = useState(['', '', '', '']);
-  const inputRefs = useRef([]);
-  const location = useLocation();
   const navigate = useNavigate();
+
   const { register, handleSubmit, watch, setValue } = useForm({
     defaultValues: {
       visibility: '',
       password: '',
     },
   });
-  const handleSecondaryButtonClick = () => {
-    setBottomSheetShow(false);
-    document.getElementById('primaryButton').click();
-  };
+
   useEffect(() => {
     setValue('password', password.join(''));
   }, [password, setValue]);
@@ -47,11 +43,11 @@ const PasswordSetPage = () => {
   };
 
   const onSubmit = (data) => {
-    // const formData = {
-    //   // // ...location.state.formData,
-    //   // visibility: data.visibility,
-    //   // password: data.visibility === 'private' ? data.password : '',
-    // };
+    const formData = {
+      // // ...location.state.formData,
+      // visibility: data.visibility,
+      // password: data.visibility === 'private' ? data.password : '',
+    };
     console.log(data);
     navigate('/');
   };
@@ -126,18 +122,25 @@ const PasswordSetPage = () => {
               ))}
             </SPasswordInputContainer>
             <SButtonContainer>
-              <Button
-                btnInfo={{ text: '완료', color: 'jade', width: '335px' }}
+              <button
                 id='secondaryButton'
-                onClick={onSubmit}
-              />
+                type='button'
+                onClick={handleSubmit(onSubmit)}
+                className={'secondaryButton'}
+              >
+                완료
+              </button>
             </SButtonContainer>
           </BottomSheetComponent>
         )}
         <SButtonContainer>
           <Button
-            btnInfo={{ text: '완료', color: 'jade', width: '335px' }}
-            type='submit'
+            btnInfo={{
+              text: '완료',
+              color: 'jade',
+              width: '335px',
+              type: 'submit',
+            }}
             id='primaryButton'
           />
         </SButtonContainer>
@@ -148,29 +151,41 @@ const PasswordSetPage = () => {
 
 export default PasswordSetPage;
 
+export const SLocker = ({ color }) => {
+  return (
+    <SLockerBackground color={color}>
+      {color === 'orange' ? <OrangeLocker /> : <BlueLocker />}
+    </SLockerBackground>
+  );
+};
+
 const SLayout = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: white;
-  width: 100%;
-`;
 
-const SContentContainer = styled.div`
-  display: flex;
-  flex-direction: column;
   width: 100%;
-  background-color: white;
-  gap: 40px;
-`;
 
+  background-color: white;
+`;
 const SForm = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 24px;
-  margin: 24px 20px 0 20px;
+
   width: 335px;
+  margin: 24px 20px 0 20px;
+`;
+
+const SContentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+
+  width: 100%;
+
+  background-color: white;
 `;
 
 const SLabel = styled.label`
@@ -197,15 +212,17 @@ const SRadioInput = styled.input`
 `;
 
 const SRadioLabel = styled.label`
-  cursor: pointer;
-  background-color: var(--gray-100);
-  border-radius: 16px;
-  width: 335px;
-  height: 128px;
   display: flex;
   flex-direction: row;
   align-items: center;
   position: relative;
+
+  width: 335px;
+  height: 128px;
+
+  cursor: pointer;
+  background-color: var(--gray-100);
+  border-radius: 16px;
 
   &:hover {
     background-color: #535353;
@@ -216,50 +233,14 @@ const SRadioLabel = styled.label`
   }
 `;
 
-const SPasswordInputContainer = styled.div`
-  width: 100%;
-  display: flex;
-  gap: 8px;
-  justify-content: center;
-  margin-top: 32px;
-  margin-bottom: 64px;
-`;
-
-const SPasswordInput = styled.input`
-  border: none;
-  width: 56px;
-  height: 80px;
-  font-size: 16px;
-  border-radius: 4px;
-  background: var(--gray-100);
-  text-align: center;
-`;
-
-export const SLocker = ({ color }) => {
-  return (
-    <SLockerBackground color={color}>
-      {color === 'orange' ? <OrangeLocker /> : <BlueLocker />}
-    </SLockerBackground>
-  );
-};
-
-const SLockerBackground = styled.div`
-  background-color: ${(props) =>
-    props.color === 'orange' ? 'var(--orange-sec)' : 'var(--jade-sec)'};
-  width: 96px;
-  height: 96px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
 const STitleContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding-left: 20px;
-  width: 203px;
   gap: 13px;
+
+  width: 203px;
+  padding-left: 20px;
+
   h4 {
     color: black;
     font-size: 20px;
@@ -276,8 +257,43 @@ const STitleContainer = styled.div`
   }
 `;
 
+const SLockerBackground = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 96px;
+  height: 96px;
+
+  background-color: ${(props) =>
+    props.color === 'orange' ? 'var(--orange-sec)' : 'var(--jade-sec)'};
+  border-radius: 50%;
+`;
+
+const SPasswordInputContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+
+  width: 100%;
+  margin-top: 32px;
+  margin-bottom: 64px;
+`;
+
+const SPasswordInput = styled.input`
+  width: 56px;
+  height: 80px;
+
+  border: none;
+  font-size: 16px;
+  border-radius: 4px;
+  background: var(--gray-100);
+  text-align: center;
+`;
+
 const SButtonContainer = styled.div`
   display: flex;
   justify-content: center;
+
   width: 100%;
 `;

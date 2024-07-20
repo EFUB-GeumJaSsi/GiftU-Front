@@ -6,17 +6,25 @@ import Button from '../../components/common/Button';
 import { useNavigate } from 'react-router-dom';
 
 const FundingSet = () => {
+  const [currentDate, setCurrentDate] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     setValue,
     getValues,
     formState: { errors },
-  } = useForm();
-
-  const [currentDate, setCurrentDate] = useState('');
-  const [startDate, setStartDate] = useState('');
-  const navigate = useNavigate();
+  } = useForm({
+    defaultValues: {
+      title: '',
+      detail: '',
+      date: '',
+      addressNumber: '',
+      addressDetail1: '',
+      addressDetail2: '',
+    },
+  });
 
   useEffect(() => {
     const today = new Date().toISOString().split('T')[0];
@@ -73,10 +81,10 @@ const FundingSet = () => {
           )}
         </SContentContainer>
         <SContentContainer>
-          <SLabel htmlFor='date'>기간</SLabel>
+          <SLabel htmlFor='currentDate'>기간</SLabel>
           <SDateContainer>
             <SDateInput
-              id='date'
+              id='currentDate'
               {...register('currentDate', {
                 required: true,
               })}
@@ -103,18 +111,40 @@ const FundingSet = () => {
           )}
         </SContentContainer>
         <SContentContainer>
-          <SLabel htmlFor='address'>주소</SLabel>
+          <SLabel htmlFor='addressNumber'>주소</SLabel>
           <SAddressContainer>
-            <SAddressInput
-              id='address'
-              {...register('address', {
+            <SAdressNumberContainer>
+              <SAddressInput
+                id='addressNumber'
+                {...register('addressNumber', {
+                  required: '주소를 입력하세요',
+                })}
+                type='text'
+                placeholder='상세 주소를 입력하세요'
+              />
+              <Button
+                btnInfo={{
+                  text: '우편번호 찾기',
+                  color: 'jade',
+                  width: '118px',
+                }}
+              />
+            </SAdressNumberContainer>
+            <SAddressDetailInput
+              id='addressDetail1'
+              {...register('addressDetail1', {
+                required: '주소를 입력하세요',
+              })}
+              type='text'
+              placeholder='자동입력'
+            />
+            <SAddressDetailInput
+              id='addressDetail2'
+              {...register('addressDetail2', {
                 required: '주소를 입력하세요',
               })}
               type='text'
               placeholder='상세 주소를 입력하세요'
-            />
-            <Button
-              btnInfo={{ text: '우편번호 찾기', color: 'jade', width: '118px' }}
             />
           </SAddressContainer>
           {errors.address && (
@@ -124,7 +154,7 @@ const FundingSet = () => {
           )}
         </SContentContainer>
         <Button
-          btnInfo={{ text: '다음', color: 'orange', width: '335px' }}
+          btnInfo={{ text: '다음', color: 'jade', width: '335px' }}
           type='submit'
         />
       </SForm>
@@ -148,17 +178,16 @@ const SForm = styled.form`
   align-items: flex-start;
   gap: 24px;
 
-  margin: 24px 20px 0 20px;
-
   width: 335px;
+  margin: 24px 20px 0 20px;
 `;
 
 const SContentContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
-
   gap: 8px;
+
+  width: 100%;
 `;
 
 const SLabel = styled.label`
@@ -166,37 +195,6 @@ const SLabel = styled.label`
   font-size: 16px;
   color: var(--black);
 `;
-
-const SAddressContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 8px;
-
-  width: 100%;
-`;
-
-const SInput = styled.input`
-  background-color: var(--gray-100);
-  border-radius: 16px;
-`;
-
-const STextArea = styled.textarea`
-  background-color: var(--gray-100);
-  border-radius: 16px;
-
-  outline: none;
-  border-style: none;
-  resize: none;
-`;
-
-const SDateContainer = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-
-  width: 100%;
-`;
-
 const STitleInput = styled(SInput)`
   height: 64px;
   padding-left: 24px;
@@ -220,17 +218,66 @@ const SDetailInput = styled(STextArea)`
   font-size: 16px;
 `;
 
+const SDateContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+
+  width: 100%;
+`;
+
 const SDateInput = styled(SInput)`
-  padding: 21px 16px 21px 16px;
   width: 128px;
+  padding: 21px 16px 21px 16px;
 `;
 
 const SDateWrapper = styled.div`
   cursor: pointer;
 `;
 
+const SAddressContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  width: 100%;
+`;
+
+const SAdressNumberContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+
+  width: 100%;
+`;
+
+const SInput = styled.input`
+  background-color: var(--gray-100);
+  border-radius: 16px;
+  &:focus {
+    border: 2px solid var(--jade-pri);
+  }
+`;
+
+const STextArea = styled.textarea`
+  background-color: var(--gray-100);
+  border-radius: 16px;
+  outline: none;
+  border-style: none;
+  resize: none;
+  &:focus {
+    border: 2px solid var(--jade-pri);
+  }
+`;
+
 const SAddressInput = styled(SInput)`
   width: 209px;
   height: 64px;
   padding-left: 28px;
+`;
+
+const SAddressDetailInput = styled(SInput)`
+  width: 311px;
+  height: 64px;
+  padding-left: 24px;
 `;
