@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import BackHeader from '../../components/common/BackHeader';
 import BottomBackground from '../../components/common/BottomBackground';
 import FundingPercentage from '../../components/FundingInfo/FundingPercentage';
-import Button from '../../components/common/Button';
+import Button from '../../components/common/ButtonComponent';
 
 const GiftAddPage = () => {
   const Btn = (
