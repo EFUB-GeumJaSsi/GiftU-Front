@@ -117,6 +117,7 @@ const SModalContainer = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 12px;
+
   padding-top: 24px;
   padding-bottom: 24px;
 
@@ -124,6 +125,7 @@ const SModalContainer = styled.div`
     display: flex;
     align-items: center;
     gap: 3px;
+
     font-weight: 500;
     font-size: 16px;
     color: var(--gray-500);
@@ -134,6 +136,7 @@ const SProfileWrapper = styled.img`
   width: 56px;
   height: 56px;
   margin-bottom: 8px;
+
   border-radius: 50%;
   background-color: #d9d9d9;
 `;
@@ -142,11 +145,13 @@ const SLayout = styled.div`
   display: flex;
   flex-flow: column nowrap;
   gap: 24px;
+
   padding-top: 43px;
 `;
 
 const SHeader = styled.header`
   padding-left: 28px;
+
   color: var(--black);
   font-size: 22px;
   font-weight: 700;
