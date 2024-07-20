@@ -29,7 +29,7 @@ export default BottomBackground;
 
 const SLayout = styled.div`
   display: flex;
-  position: sticky;
+  position: fixed;
   bottom: 0;
   justify-content: center;
   align-items: center;
