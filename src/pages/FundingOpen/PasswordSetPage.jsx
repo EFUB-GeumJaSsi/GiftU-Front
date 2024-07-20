@@ -11,6 +11,7 @@ import BottomSheetComponent from '../../components/common/BottomSheetComponent';
 const PasswordSetPage = () => {
   const [bottomSheetShow, setBottomSheetShow] = useState(false);
   const [password, setPassword] = useState(['', '', '', '']);
+  const inputRefs = useRef([]);
   const navigate = useNavigate();
 
   const { register, handleSubmit, watch, setValue } = useForm({
