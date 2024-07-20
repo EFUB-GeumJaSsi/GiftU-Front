@@ -55,14 +55,18 @@ const SBtn = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
+
   width: 57px;
   height: 29px;
+
   border-radius: 15px;
-  cursor: pointer;
-  text-align: center;
-  line-height: 29px;
-  user-select: none;
   background-color: ${(props) =>
     props.isActive ? props.color[0] : 'var(--gray-300)'};
   color:var(--white)};
+
+  cursor: pointer;
+  line-height: 29px;
+  user-select: none;
+
 `;
