@@ -163,6 +163,24 @@ const FundingSet = () => {
 };
 
 export default FundingSet;
+const SInput = styled.input`
+  background-color: var(--gray-100);
+  border-radius: 16px;
+  &:focus {
+    border: 2px solid var(--jade-pri);
+  }
+`;
+
+const STextArea = styled.textarea`
+  background-color: var(--gray-100);
+  border-radius: 16px;
+  outline: none;
+  border-style: none;
+  resize: none;
+  &:focus {
+    border: 2px solid var(--jade-pri);
+  }
+`;
 
 const SLayout = styled.div`
   display: flex;
@@ -195,6 +213,7 @@ const SLabel = styled.label`
   font-size: 16px;
   color: var(--black);
 `;
+
 const STitleInput = styled(SInput)`
   height: 64px;
   padding-left: 24px;
@@ -249,25 +268,6 @@ const SAdressNumberContainer = styled.div`
   gap: 8px;
 
   width: 100%;
-`;
-
-const SInput = styled.input`
-  background-color: var(--gray-100);
-  border-radius: 16px;
-  &:focus {
-    border: 2px solid var(--jade-pri);
-  }
-`;
-
-const STextArea = styled.textarea`
-  background-color: var(--gray-100);
-  border-radius: 16px;
-  outline: none;
-  border-style: none;
-  resize: none;
-  &:focus {
-    border: 2px solid var(--jade-pri);
-  }
 `;
 
 const SAddressInput = styled(SInput)`
