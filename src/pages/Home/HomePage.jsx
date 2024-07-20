@@ -4,7 +4,7 @@ import icn_search from '../../assets/common/search.svg';
 const HomePage = () => {
   return (
     <SLayout>
-      <section>
+      <SSection>
         <SInput
           type='text'
           id='search-bar'
@@ -15,14 +15,18 @@ const HomePage = () => {
             console.log('검색 페이지 인풋필드 포커스');
           }}
         />
-      </section>
-      <section>
-        <SH2>곧 마감되는 펀딩</SH2>
-        <SB4>기간이 얼마 남지 않은 펀딩을 확인하세요!</SB4>
-      </section>
-      <section>
+      </SSection>
+      <SSection>
+        <STextWrapper>
+          <SH2>곧 마감되는 펀딩</SH2>
+          <SB4>기간이 얼마 남지 않은 펀딩을 확인하세요!</SB4>
+          {/* 캘린더 컴포넌트 */}
+        </STextWrapper>
+      </SSection>
+      <SSection>
         <SH2>참여 가능한 펀딩</SH2>
-      </section>
+        {/* 펀딩 목록 */}
+      </SSection>
     </SLayout>
   );
 };
@@ -42,7 +46,20 @@ const SB4 = styled.p`
 `;
 
 // 스타일 컴포넌트
-const SLayout = styled.div``;
+const SLayout = styled.div`
+  display: flex;
+  flex-flow: column nowrap;
+
+  width: fit-content;
+  margin: 0 auto;
+  gap: 24px;
+`;
+const SSection = styled.section`
+  display: flex;
+  flex-flow: column nowrap;
+
+  gap: 16px;
+`;
 const SInput = styled.input`
   width: 335px;
   height: 56px;
@@ -62,6 +79,12 @@ const SInput = styled.input`
     font-weight: 500;
     line-height: 140%;
   }
+`;
+const STextWrapper = styled.div`
+  display: flex;
+  flex-flow: column nowrap;
+
+  gap: 8px;
 `;
 
 export default HomePage;
