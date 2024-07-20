@@ -6,8 +6,6 @@ import Button from '../../components/common/Button';
 import icn_plus from '../../assets/FungingOpen/icn_plus.svg';
 
 const GiftSetPage = () => {
-  // local storage 초기화 후에 데이터 저장해야 함
-
   const [price, setPrice] = useState(null);
   const [url, setUrl] = useState(null);
   const [imageFile, setImageFile] = useState(null);
