@@ -63,10 +63,9 @@ const SBtn = styled.div`
   border-radius: 15px;
   background-color: ${(props) =>
     props.isActive ? props.color[0] : 'var(--gray-300)'};
-  color:var(--white)};
+  color: var(--white);
 
   cursor: pointer;
   line-height: 29px;
   user-select: none;
-
 `;
