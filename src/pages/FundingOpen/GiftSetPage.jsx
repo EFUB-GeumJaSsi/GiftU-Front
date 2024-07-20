@@ -1,11 +1,17 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import BackHeader from '../../components/common/BackHeader';
+import BottomBackground from '../../components/common/BottomBackground';
+import Button from '../../components/common/Button';
+import icn_plus from '../../assets/FungingOpen/icn_plus.svg';
 
 const GiftSetPage = () => {
   // local storage 초기화 후에 데이터 저장해야 함
 
   const [price, setPrice] = useState(null);
+  const [url, setUrl] = useState(null);
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
 
   const handlePriceChange = (event) => {
     let input = event.target.value;
@@ -20,6 +26,16 @@ const GiftSetPage = () => {
       setPrice(Number(input));
     }
   };
+  const handleUrlChange = (event) => {
+    setUrl(event.target.value);
+  };
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setImageFile(file);
+      setImagePreview(URL.createObjectURL(file));
+    }
+  };
 
   return (
     <SLayout>
@@ -27,11 +43,11 @@ const GiftSetPage = () => {
       <SForm>
         <fieldset>
           <SLegend>가격</SLegend>
-          <SInput
+          <STextInput
             type='tel'
             name='gift'
             id='gift-price'
-            maxLength='10'
+            maxLength='11'
             placeholder='선물의 가격을 입력해 주세요'
             value={price ? `${price.toLocaleString()}원` : ''}
             required
@@ -41,25 +57,43 @@ const GiftSetPage = () => {
         </fieldset>
         <fieldset>
           <SLegend>링크</SLegend>
-          <SInput
+          <STextInput
             type='url'
             name='gift'
             id='gift-url'
             placeholder='상품 링크를 붙여 넣어 주세요'
             required
+            onChange={handleUrlChange}
           />
         </fieldset>
         <fieldset>
           <SLegend>사진</SLegend>
-          <input
+          <SImageLabel htmlFor='gift-image'>
+            {imagePreview && <SImg src={imagePreview} />}
+          </SImageLabel>
+          <SImageInput
             type='file'
+            accept='image/*'
             name='gift'
             id='gift-image'
             placeholder='+'
             required
+            onChange={handleImageChange}
           />
         </fieldset>
       </SForm>
+      <BottomBackground
+        Button={
+          <Button
+            type='submit'
+            btnInfo={
+              price && url && imageFile
+                ? { text: '다음', color: 'jade' }
+                : { text: '선물 추가하기' }
+            }
+          />
+        }
+      />
     </SLayout>
   );
 };
@@ -88,11 +122,16 @@ const SLegend = styled.legend`
   line-height: 140%;
 `;
 const SInput = styled.input`
+  border-radius: 16px;
+  background-color: var(--gray-100);
+
+  &:focus {
+    border: 2px solid var(--jade-pri);
+  }
+`;
+const STextInput = styled(SInput)`
   width: 335px;
   padding: 21px 24px;
-
-  border-radius: 16px;
-  background: var(--gray-100);
 
   color: var(--black);
   font-size: 16px;
@@ -107,9 +146,30 @@ const SInput = styled.input`
     font-weight: 400;
     line-height: 140%;
   }
-  &:focus {
-    border: 2px solid var(--jade-pri);
-  }
+`;
+const SImageLabel = styled.label`
+  display: flex;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+
+  width: 120px;
+  height: 120px;
+
+  border-radius: 16px;
+  background-color: var(--gray-100);
+  background-image: url(${icn_plus});
+  background-repeat: no-repeat;
+  background-position: center;
+`;
+const SImg = styled.img`
+  width: 100%;
+
+  border-style: none;
+  border-radius: 16px;
+`;
+const SImageInput = styled.input`
+  display: none;
 `;
 
 export default GiftSetPage;
