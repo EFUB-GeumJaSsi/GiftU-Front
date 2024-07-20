@@ -86,7 +86,7 @@ const GiftSetPage = () => {
             type='submit'
             btnInfo={
               price && url && imageFile
-                ? { text: '다음', color: 'jade' }
+                ? { text: '다음', color: 'jade', onClick: '' }
                 : { text: '선물 추가하기' }
             }
           />
