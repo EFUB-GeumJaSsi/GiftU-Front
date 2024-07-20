@@ -1,60 +1,148 @@
 import styled from 'styled-components';
 import React, { useState } from 'react';
-import NotificationItem from '../../components/Notification/NotificationItemComponent;
+import NotificationItem from '../../components/Notification/NotificationItemComponent';
 import TagSelectComponent from '../../components/common/TagSelectComponent';
+import Modal from '../../components/common/ModalComponent';
+import { ReactComponent as IcnInfo } from '../../assets/Friend/icn_info.svg';
 
 const NotificationPage = () => {
+  const [modalShow, setModalShow] = useState(false);
+  const [modalContent, setModalContent] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState('전체');
   const [notifications, setNotifications] = useState([
     {
+      //예시로 아무 이미지나 넣어놓음
+      image:
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/480px-Google_%22G%22_logo.svg.png',
       name: '닉네임은여기까지입니다',
       message: '님과 친구가 되었습니다',
       time: '00분 전',
+      type: 'friend',
     },
     {
+      image: '',
       name: '펀딩 이름',
       message: '펀딩이 종료되었습니다',
       time: '00시간 전',
+      type: 'funding',
     },
   ]);
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category);
+  };
+  const fundingNotiClick = () => {
+    window.location.href = '/'; //나중에 이동할 주소 넣어야함
+  };
+  const friendNotiClick = (image, name) => {
+    setModalContent(
+      <SModalContainer>
+        <SProfileWrapper src={image}></SProfileWrapper>
+        <span>{name}</span>
+        <span style={{ color: 'var(--black)' }}>친구를 추가하시겠어요?</span>
+        <span style={{ fontSize: '12px' }}>
+          <IcnInfo></IcnInfo>추가된 친구는 [내 친구]에서 확인할 수 있어요
+        </span>
+      </SModalContainer>,
+    );
+    setModalShow(true);
+  };
+
+  const filterNoti = notifications.filter((notification) => {
+    if (selectedCategory === '전체') return true;
+    if (selectedCategory === '친구' && notification.type === 'friend')
+      return true;
+    if (selectedCategory === '펀딩' && notification.type === 'funding')
+      return true;
+    return false;
+  });
   return (
     <SLayout>
       <SHeader>알림</SHeader>
       <SItemContainer>
         <TagSelectComponent
           buttons={[
-            { text: '전체', link: '/', color: 'jade' },
-            { text: '친구', link: '/first', color: 'jade' },
-            { text: '펀딩', link: '/second', color: 'jade' },
+            {
+              text: '전체',
+              color: 'jade',
+            },
+            {
+              text: '친구',
+              color: 'jade',
+            },
+            {
+              text: '펀딩',
+              color: 'jade',
+            },
           ]}
+          onClick={handleCategoryChange}
         />
         <SBtnWrapper>
-          {notifications.map((notification, index) => (
+          {filterNoti.map((notification, index) => (
             <NotificationItem
               key={index}
+              image={notification.image}
               name={notification.name}
               message={notification.message}
               time={notification.time}
+              onClick={() =>
+                notification.type === 'friend'
+                  ? friendNotiClick(notification.image, notification.name)
+                  : fundingNotiClick()
+              }
             ></NotificationItem>
           ))}
         </SBtnWrapper>
       </SItemContainer>
+      {modalShow && (
+        <Modal actionText='추가하기' setModalShow={setModalShow}>
+          {modalContent}
+        </Modal>
+      )}
     </SLayout>
   );
 };
 
 export default NotificationPage;
+const SModalContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
 
+  padding-top: 24px;
+  padding-bottom: 24px;
+
+  span {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+
+    font-weight: 500;
+    font-size: 16px;
+    color: var(--gray-500);
+  }
+`;
+const SProfileWrapper = styled.img`
+  width: 56px;
+  height: 56px;
+  margin-bottom: 8px;
+
+  border-radius: 50%;
+  background-color: #d9d9d9;
+`;
 const SLayout = styled.div`
-  padding-top: 43px;
   display: flex;
   flex-flow: column nowrap;
   gap: 24px;
+
+  padding-top: 43px;
 `;
 
 const SHeader = styled.header`
   padding-left: 28px;
-  font-size: 22px;
+
   color: var(--black);
+  font-size: 22px;
   font-weight: 700;
 `;
 const SItemContainer = styled.main`
