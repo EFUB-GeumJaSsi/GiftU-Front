@@ -159,10 +159,11 @@ const SContainer = styled.div`
 
 const STextBox = styled.div`
   display: flex;
-  gap: 8px;
 `;
 
 const STextWrapper = styled.span`
+  margin-left: 8px;
+
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
