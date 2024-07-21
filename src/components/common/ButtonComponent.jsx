@@ -11,7 +11,7 @@ import styled from 'styled-components';
 // 예시 <Button btnInfo={{ text: '다음', color: 'jade' }} />
 
 const Button = ({ btnInfo }) => {
-  const { text, color, width, onClick } = btnInfo;
+  const { text, color, width, onClick, type } = btnInfo;
 
   // color: [배경 색, 글꼴 색]
   const btnColor = {
@@ -21,7 +21,12 @@ const Button = ({ btnInfo }) => {
   };
 
   return (
-    <SWrapper color={btnColor[color]} width={width} onClick={onClick}>
+    <SWrapper
+      type={type}
+      color={btnColor[color]}
+      width={width}
+      onClick={onClick}
+    >
       {text}
     </SWrapper>
   );
