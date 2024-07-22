@@ -1,5 +1,4 @@
 import { Route, Routes } from 'react-router-dom';
-import ListJoinPage from '../src/pages/MyJoinFunding/ListJoinPage';
 const App = () => {
   return (
     <div className='App'>
