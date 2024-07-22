@@ -120,6 +120,7 @@ const SLegend = styled.legend`
   line-height: 140%;
 `;
 const SInput = styled.input`
+  border: 2px solid transparent;
   border-radius: 16px;
   background-color: var(--gray-100);
 
