@@ -24,14 +24,14 @@ const ReviewEditPage = () => {
       <BackHeader text='선물후기'></BackHeader>
       <SContentsContainer>
         <FundingParticipants></FundingParticipants>
-        <SContentContainer>
-          <STitleContainer>선물 후기</STitleContainer>
-          <STextBoxWrapper
+        <SForm>
+          <SLegend>선물 후기</SLegend>
+          <STextarea
             placeholder='선물 후기를 작성해주세요!'
             value={reviewText}
             onChange={handleInputChange}
-          ></STextBoxWrapper>
-        </SContentContainer>
+          ></STextarea>
+        </SForm>
       </SContentsContainer>
       <SBtnWrapper>
         <BottomBackground Button={Btn} />
@@ -55,7 +55,7 @@ const SContentsContainer = styled.div`
   width: 335px;
   margin-top: 24px;
 `;
-const SContentContainer = styled.div`
+const SForm = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -66,7 +66,7 @@ const SContentContainer = styled.div`
   margin-top: 8px;
 `;
 
-const STitleContainer = styled.div`
+const SLegend = styled.legend`
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -80,7 +80,7 @@ const STitleContainer = styled.div`
   font-weight: 500;
 `;
 
-const STextBoxWrapper = styled.textarea`
+const STextarea = styled.textarea`
   display: flex;
   flex-direction: column;
 
