@@ -45,68 +45,66 @@ const ProfileEditPage = () => {
   );
 
   return (
-    <>
+    <SLayout>
       <BackHeader text='프로필 편집' />
-      <SLayout>
-        <SImageContainer>
-          <SImageWrapper />
-          <SImageButtonWrapper>
-            <Camera></Camera>
-          </SImageButtonWrapper>
-        </SImageContainer>
-        <SContentsContainer>
-          <SContentContainer>
-            <STitleContainer>닉네임</STitleContainer>
-            <STextWrapper
-              name='nickname'
-              placeholder='닉네임을 입력해 주세요!'
-              value={userInfo.nickname}
-              onChange={handleInfoChange}
+      <SImageContainer>
+        <SImageWrapper />
+        <SImageButtonWrapper>
+          <Camera></Camera>
+        </SImageButtonWrapper>
+      </SImageContainer>
+      <SContentContainer>
+        <SForm>
+          <SLegend>닉네임</SLegend>
+          <STextarea
+            name='nickname'
+            placeholder='닉네임을 입력해 주세요!'
+            value={userInfo.nickname}
+            onChange={handleInfoChange}
+          />
+        </SForm>
+        <SForm>
+          <SLegend>이메일</SLegend>
+          <STextarea
+            name='email'
+            placeholder='이메일을 입력해 주세요!'
+            value={userInfo.email}
+            onChange={handleInfoChange}
+          />
+        </SForm>
+        <SForm>
+          <SLegend>생일</SLegend>
+          <SInputContainer onClick={() => setShowCalendar(!showCalendar)}>
+            <SInput
+              type='text'
+              value={selectedDate ? format(selectedDate, 'yyyy-MM-dd') : ''}
+              placeholder='생일을 입력해 주세요!'
+              readOnly
             />
-          </SContentContainer>
-          <SContentContainer>
-            <STitleContainer>이메일</STitleContainer>
-            <STextWrapper
-              name='email'
-              placeholder='이메일을 입력해 주세요!'
-              value={userInfo.email}
-              onChange={handleInfoChange}
-            />
-          </SContentContainer>
-          <SContentContainer>
-            <STitleContainer>생일</STitleContainer>
-            <SInputContainer onClick={() => setShowCalendar(!showCalendar)}>
-              <SInput
-                type='text'
-                value={selectedDate ? format(selectedDate, 'yyyy-MM-dd') : ''}
-                placeholder='생일을 입력해 주세요!'
-                readOnly
+            <SBdayIconWrapper>
+              <Calendar></Calendar>
+            </SBdayIconWrapper>
+          </SInputContainer>
+          {showCalendar && (
+            <SCalendarWrapper>
+              <DayPickerStyled
+                captionLayout='dropdown'
+                fromYear={1920}
+                toYear={2024}
+                month={month}
+                onMonthChange={setMonth}
+                mode='single'
+                selected={selectedDate}
+                onSelect={handleDateSelect}
               />
-              <SBdayIconWrapper>
-                <Calendar></Calendar>
-              </SBdayIconWrapper>
-            </SInputContainer>
-            {showCalendar && (
-              <SCalendarWrapper>
-                <DayPickerStyled
-                  captionLayout='dropdown'
-                  fromYear={1920}
-                  toYear={2024}
-                  month={month}
-                  onMonthChange={setMonth}
-                  mode='single'
-                  selected={selectedDate}
-                  onSelect={handleDateSelect}
-                />
-              </SCalendarWrapper>
-            )}
-          </SContentContainer>
-        </SContentsContainer>
-      </SLayout>
+            </SCalendarWrapper>
+          )}
+        </SForm>
+      </SContentContainer>
       <SBtnWrapper>
         <BottomBackground Button={Btn} />
       </SBtnWrapper>
-    </>
+    </SLayout>
   );
 };
 
@@ -139,7 +137,7 @@ const SImageButtonWrapper = styled.div`
   right: 0;
 `;
 
-const SContentsContainer = styled.div`
+const SContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -147,7 +145,7 @@ const SContentsContainer = styled.div`
   gap: 25px;
 `;
 
-const SContentContainer = styled.div`
+const SForm = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -156,7 +154,7 @@ const SContentContainer = styled.div`
   gap: 8px;
 `;
 
-const STitleContainer = styled.div`
+const SLegend = styled.div`
   display: flex;
   flex-direction: column;
   width: 58px;
@@ -166,17 +164,19 @@ const STitleContainer = styled.div`
   color: var(--gray-400);
 `;
 
-const STextWrapper = styled.input`
+const STextarea = styled.textarea`
   display: flex;
   justify-content: center;
   height: 100%;
-  padding: 15px;
+  padding: 24px;
   border: 2px solid transparent;
   border-radius: 16px;
   color: var(--black);
   background-color: var(--gray-100);
   font-weight: 500;
   font-size: 16px;
+
+  resize: none;
   &::placeholder {
     color: var(--black);
   }
@@ -192,7 +192,7 @@ const SInput = styled.input`
   align-items: center;
   width: 100%;
   height: 90%;
-  padding: 15px 50px 15px 15px;
+  padding: 15px 50px 15px 24px;
   border-radius: 16px;
   background-color: var(--gray-100);
   font-weight: 500;
@@ -204,12 +204,13 @@ const SInput = styled.input`
 
 const SBdayIconWrapper = styled.div`
   position: absolute;
-  right: 15px;
+  right: 24px;
 `;
 
 const SInputContainer = styled.div`
   display: flex;
   align-items: center;
+
   margin-top: 8px;
   position: relative;
   width: 100%;
