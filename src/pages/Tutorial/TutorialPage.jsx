@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 import BackHeader from '../../components/common/BackHeader';
-import { ReactComponent as Present } from '../../assets/common/present.svg';
-import { ReactComponent as Slider } from '../../assets/common/fnd_slider.svg';
-import { ReactComponent as OpenLock } from '../../assets/common/icon_pw_no.svg';
-import { ReactComponent as ClosedLock } from '../../assets/common/icon_pw_yes.svg';
-import { ReactComponent as Slider2 } from '../../assets/common/fnd_slider2.svg';
-import { ReactComponent as Logo } from '../../assets/common/logo.svg';
-import { ReactComponent as Drop } from '../../assets/common/btn_drop.svg';
+import { ReactComponent as Present } from '../../assets/Tutorial/present.svg';
+import { ReactComponent as Slider } from '../../assets/Tutorial/fnd_slider.svg';
+import { ReactComponent as OpenLock } from '../../assets/Tutorial/icon_pw_no.svg';
+import { ReactComponent as ClosedLock } from '../../assets/Tutorial/icon_pw_yes.svg';
+import { ReactComponent as Slider2 } from '../../assets/Tutorial/fnd_slider2.svg';
+import { ReactComponent as Logo } from '../../assets/Tutorial/logo.svg';
+import { ReactComponent as Drop } from '../../assets/Tutorial/btn_drop.svg';
 import { ReactComponent as Calendar } from '../../assets/common/calendar.svg';
 const TutorialPage = () => {
   return (
