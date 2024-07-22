@@ -40,8 +40,6 @@ const SMain = styled.main`
   justify-content: center;
 
   gap: 24px;
-
-  transform: translateY(-72px);
 `;
 const SH3 = styled.h3`
   color: var(--black);
