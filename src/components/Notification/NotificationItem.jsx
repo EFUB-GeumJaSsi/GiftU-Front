@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const NotificationItem = ({ image, name, message, time, onClick }) => {
   return (
     <SLayout onClick={onClick}>
-      <img src={image}></img>
+      <SImg src={image}></SImg>
       <STextContainer>
         <STextboxContainer>
           <SNameWrapper>{name}</SNameWrapper>
@@ -29,14 +29,13 @@ const SLayout = styled.div`
   border-bottom: 1px solid var(--gray-100);
 
   cursor: pointer;
+`;
+const SImg = styled.img`
+  width: 40px;
+  height: 40px;
 
-  img {
-    width: 40px;
-    height: 40px;
-
-    border-radius: 50%;
-    background-color: #d4d4d4;
-  }
+  border-radius: 50%;
+  background-color: #d4d4d4;
 `;
 const STextContainer = styled.div`
   display: flex;
