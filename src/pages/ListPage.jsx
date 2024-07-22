@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import FundingComponent from '../../components/common/FundingComponent';
-import TagSelectComponent from '../../components/common/TagSelectComponent';
-import BackHeader from '../../components/common/BackHeader';
+import FundingComponent from '../components/common/FundingComponent';
+import TagSelectComponent from '../components/common/TagSelectComponent';
+import BackHeader from '../components/common/BackHeader';
 
-const ListPage = () => {
+const ListPage = ({ headerText, buttons, message }) => {
   const [data, setData] = useState([]);
-
   const FundingList = [
     {
       image: '',
@@ -48,23 +47,15 @@ const ListPage = () => {
 
   const filteredResults = filterResults(data, filter);
 
+  console.log({ headerText });
   return (
     <SLayout>
-      <BackHeader text='내가 참여한 펀딩' />
+      <BackHeader text={headerText} />
       <SNotiItemWrapper>
-        <TagSelectComponent
-          buttons={[
-            { text: '전체', link: '/', color: 'orange' },
-            { text: '펀딩', link: '/isOngoing', color: 'orange' },
-            { text: '종료', link: '/end', color: 'orange' },
-          ]}
-        />
+        <TagSelectComponent buttons={buttons} />
       </SNotiItemWrapper>
       <SListWrapper>
-        <FundingComponent
-          results={filteredResults}
-          message='아직 참여한 펀딩이 없어요'
-        />
+        <FundingComponent results={filteredResults} message={message} />
       </SListWrapper>
     </SLayout>
   );
