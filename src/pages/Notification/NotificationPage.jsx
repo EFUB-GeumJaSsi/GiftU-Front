@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import React, { useState } from 'react';
-import NotificationItem from '../../components/Notification/NotificationItemComponent';
+import NotificationItem from '../../components/Notification/NotificationItem';
 import TagSelectComponent from '../../components/common/TagSelectComponent';
 import Modal from '../../components/common/ModalComponent';
 import { ReactComponent as IcnInfo } from '../../assets/Friend/icn_info.svg';
