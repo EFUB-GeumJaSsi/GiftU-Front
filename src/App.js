@@ -1,9 +1,9 @@
 import { Route, Routes } from 'react-router-dom';
-import FundingSetPage from './pages/FundingOpen/FundingSetPage';
+import PasswordSetPage from './pages/FundingOpen/PasswordSetPage';
 const App = () => {
   return (
     <div className='App'>
-      <FundingSetPage />
+      <PasswordSetPage />
     </div>
   );
 };

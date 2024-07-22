@@ -1,79 +1,67 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
+import { useForm, FormProvider } from 'react-hook-form';
 import { ReactComponent as OrangeLocker } from '../../assets/PasswordSet/icn_btn_no.svg';
 import { ReactComponent as BlueLocker } from '../../assets/PasswordSet/icn_btn_yes.svg';
 import BackHeader from '../../components/common/BackHeader';
 import Button from '../../components/common/Button';
-import BottomSheetComponent from '../../components/common/BottomSheetComponent';
+import BottomBackground from '../../components/common/BottomBackground';
+import PasswordComponent from '../../components/common/PasswordComponent';
 
 const PasswordSetPage = () => {
   const [bottomSheetShow, setBottomSheetShow] = useState(false);
-  const [password, setPassword] = useState(['', '', '', '']);
-  const inputRefs = useRef([]);
   const navigate = useNavigate();
 
-  const { register, handleSubmit, watch, setValue } = useForm({
+  const methods = useForm({
     defaultValues: {
       visibility: '',
       password: '',
     },
+    mode: 'onChange',
   });
 
-  useEffect(() => {
-    setValue('password', password.join(''));
-  }, [password, setValue]);
-
-  const handlePasswordChange = (e, index) => {
-    const { value } = e.target;
-    if (/^\d?$/.test(value)) {
-      const newPassword = [...password];
-      newPassword[index] = value;
-      setPassword(newPassword);
-      if (value && index < 3) {
-        inputRefs.current[index + 1].focus();
-      }
-    }
-  };
-
-  const handleKeyDown = (e, index) => {
-    if (e.key === 'Backspace' && !password[index] && index > 0) {
-      inputRefs.current[index - 1].focus();
-    }
-  };
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { isValid },
+  } = methods;
 
   const onSubmit = (data) => {
     const formData = {
-      // // ...location.state.formData,
-      // visibility: data.visibility,
-      // password: data.visibility === 'private' ? data.password : '',
+      visibility: data.visibility,
+      password: data.visibility === 'private' ? data.password : '',
     };
     console.log(data);
     navigate('/');
   };
 
+  const visibility = watch('visibility');
+
   return (
-    <SLayout>
-      <BackHeader />
-      <SForm onSubmit={handleSubmit(onSubmit)}>
-        <SContentContainer>
-          <SLabel>공개 여부</SLabel>
-          <SRadiosContainer>
+    <FormProvider {...methods}>
+      <SLayout>
+        <BackHeader />
+        <SForm onSubmit={handleSubmit(onSubmit)}>
+          <fieldset>
+            <SLegend>공개 여부</SLegend>
             <SRadioContainer>
               <SRadioInput
                 type='radio'
                 name='visibility'
                 id='public'
                 value='public'
-                {...register('visibility')}
+                {...register('visibility', {
+                  required: true,
+                })}
                 onClick={() => setBottomSheetShow(false)}
               />
               <SRadioLabel htmlFor='public'>
-                <STitleContainer>
+                <STextContainer>
                   <h4>공개</h4>
                   <p>누구나 펀딩에 참여할 수 있어요</p>
-                </STitleContainer>
+                </STextContainer>
                 <SLocker color='orange' />
               </SRadioLabel>
             </SRadioContainer>
@@ -83,76 +71,57 @@ const PasswordSetPage = () => {
                 name='visibility'
                 id='private'
                 value='private'
-                {...register('visibility')}
+                {...register('visibility', {
+                  required: true,
+                })}
                 onClick={() => setBottomSheetShow(true)}
               />
               <SRadioLabel htmlFor='private'>
-                <STitleContainer>
+                <STextContainer>
                   <h4>비공개</h4>
                   <p>
                     비밀번호를 입력한 사람만 <br />
                     펀딩에 참여할 수 있어요
                   </p>
-                </STitleContainer>
+                </STextContainer>
                 <SLocker color='blue' />
               </SRadioLabel>
             </SRadioContainer>
-          </SRadiosContainer>
-        </SContentContainer>
-        {bottomSheetShow && (
-          <BottomSheetComponent
-            closeButton='cross'
-            setBottomSheetShow={setBottomSheetShow}
-          >
-            <STitleContainer>
-              <h4>비밀번호 입력</h4>
-              <p>4자리 숫자를 입력해주세요</p>
-            </STitleContainer>
-            <SPasswordInputContainer>
-              {password.map((digit, index) => (
-                <SPasswordInput
-                  {...register('password')}
-                  key={index}
-                  type='text'
-                  maxLength='1'
-                  value={digit}
-                  onChange={(e) => handlePasswordChange(e, index)}
-                  ref={(el) => (inputRefs.current[index] = el)}
-                  onKeyDown={(e) => handleKeyDown(e, index)}
+          </fieldset>
+          {bottomSheetShow && (
+            <PasswordComponent
+              setBottomSheetShow={setBottomSheetShow}
+              handleSubmit={handleSubmit(onSubmit)}
+              title='비밀번호 입력'
+              name='김이화'
+              passwordExact='2222'
+              color='orange'
+            />
+          )}
+          <SButtonContainer>
+            <BottomBackground
+              Button={
+                <Button
+                  disabled={!isValid}
+                  btnInfo={{
+                    text: '완료',
+                    color: 'jade',
+                    type: 'submit',
+                  }}
+                  id='primaryButton'
                 />
-              ))}
-            </SPasswordInputContainer>
-            <SButtonContainer>
-              <button
-                id='secondaryButton'
-                type='button'
-                onClick={handleSubmit(onSubmit)}
-                className={'secondaryButton'}
-              >
-                완료
-              </button>
-            </SButtonContainer>
-          </BottomSheetComponent>
-        )}
-        <SButtonContainer>
-          <Button
-            btnInfo={{
-              text: '완료',
-              color: 'jade',
-              width: '335px',
-              type: 'submit',
-            }}
-            id='primaryButton'
-          />
-        </SButtonContainer>
-      </SForm>
-    </SLayout>
+              }
+            />
+          </SButtonContainer>
+        </SForm>
+      </SLayout>
+    </FormProvider>
   );
 };
 
 export default PasswordSetPage;
 
-export const SLocker = ({ color }) => {
+const SLocker = ({ color }) => {
   return (
     <SLockerBackground color={color}>
       {color === 'orange' ? <OrangeLocker /> : <BlueLocker />}
@@ -162,71 +131,38 @@ export const SLocker = ({ color }) => {
 
 const SLayout = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  width: 100%;
-
-  background-color: white;
+  flex-flow: column nowrap;
+  height: 100vh;
 `;
+
 const SForm = styled.form`
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 24px;
-
+  flex-flow: column nowrap;
   width: 335px;
-  margin: 24px 20px 0 20px;
+  margin: 20px 20px 0px 20px;
 `;
 
-const SContentContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-
-  width: 100%;
-
-  background-color: white;
-`;
-
-const SLabel = styled.label`
-  font-weight: 500;
-  font-size: 16px;
+const SLegend = styled.legend`
+  margin-bottom: 40px;
   color: var(--black);
-`;
-
-const SRadiosContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  gap: 16px;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 140%;
 `;
 
 const SRadioContainer = styled.div`
   display: flex;
   flex-direction: row;
-  width: 100%;
+  margin-bottom: 16px;
 `;
 
 const SRadioInput = styled.input`
   display: none;
-`;
 
-const SRadioLabel = styled.label`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  position: relative;
-
-  width: 335px;
-  height: 128px;
-
-  cursor: pointer;
-  background-color: var(--gray-100);
-  border-radius: 16px;
-
-  &:hover {
+  &:checked + label {
     background-color: #535353;
+
     h4,
     p {
       color: white;
@@ -234,11 +170,21 @@ const SRadioLabel = styled.label`
   }
 `;
 
-const STitleContainer = styled.div`
+const SRadioLabel = styled.label`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 335px;
+  height: 128px;
+  cursor: pointer;
+  background-color: var(--gray-100);
+  border-radius: 16px;
+`;
+
+const STextContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 13px;
-
   width: 203px;
   padding-left: 20px;
 
@@ -250,11 +196,11 @@ const STitleContainer = styled.div`
     line-height: 140%;
   }
   p {
+    color: var(--gray-500);
     font-size: 14px;
     font-style: normal;
     font-weight: 500;
     line-height: 140%;
-    color: var(--gray-500);
   }
 `;
 
@@ -262,39 +208,15 @@ const SLockerBackground = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-
   width: 96px;
   height: 96px;
-
   background-color: ${(props) =>
     props.color === 'orange' ? 'var(--orange-sec)' : 'var(--jade-sec)'};
   border-radius: 50%;
 `;
 
-const SPasswordInputContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-
-  width: 100%;
-  margin-top: 32px;
-  margin-bottom: 64px;
-`;
-
-const SPasswordInput = styled.input`
-  width: 56px;
-  height: 80px;
-
-  border: none;
-  font-size: 16px;
-  border-radius: 4px;
-  background: var(--gray-100);
-  text-align: center;
-`;
-
 const SButtonContainer = styled.div`
   display: flex;
   justify-content: center;
-
   width: 100%;
 `;
