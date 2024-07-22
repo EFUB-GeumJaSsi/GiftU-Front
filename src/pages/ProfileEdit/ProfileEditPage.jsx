@@ -119,6 +119,7 @@ const SLayout = styled.div`
 
 const SImageContainer = styled.div`
   position: relative;
+
   width: 96px;
   height: 96px;
   margin: 40px;
@@ -127,6 +128,7 @@ const SImageContainer = styled.div`
 const SImageWrapper = styled.div`
   width: 100%;
   height: 100%;
+
   border-radius: 50%;
   background-color: var(--gray-300);
 `;
@@ -141,38 +143,46 @@ const SContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 335px;
   gap: 25px;
+
+  width: 335px;
 `;
 
 const SForm = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  gap: 8px;
+
   width: 335px;
   height: 94px;
-  gap: 8px;
 `;
 
 const SLegend = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 8px;
+
   width: 58px;
   height: 22px;
   padding: 0px 8px;
-  gap: 8px;
+
   color: var(--gray-400);
 `;
 
 const STextarea = styled.textarea`
   display: flex;
   justify-content: center;
+
   height: 100%;
   padding: 24px;
+
   border: 2px solid transparent;
   border-radius: 16px;
+
   color: var(--black);
   background-color: var(--gray-100);
+
   font-weight: 500;
   font-size: 16px;
 
@@ -190,11 +200,14 @@ const SInput = styled.input`
   display: flex;
   justify-content: center;
   align-items: center;
+
   width: 100%;
   height: 90%;
   padding: 15px 50px 15px 24px;
+
   border-radius: 16px;
   background-color: var(--gray-100);
+
   font-weight: 500;
   font-size: 16px;
   &::placeholder {
