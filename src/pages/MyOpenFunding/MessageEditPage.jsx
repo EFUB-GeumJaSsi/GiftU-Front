@@ -37,36 +37,30 @@ const MessageEditPage = () => {
     setMsgText(e.target.value);
   };
   return (
-    <>
+    <SLayout>
       <BackHeader text=''></BackHeader>
-      <SLayout>
-        <SContentsContainer>
-          <FundingPercentage color='orange'></FundingPercentage>
-          <SSmallContentContainer>
-            <STitleContainer>
-              금액 <span style={{ color: 'var(--orange-pri)' }}>*</span>
-            </STitleContainer>
-            <SSmallTextBoxWrapper>{tempList[0].price}</SSmallTextBoxWrapper>
-          </SSmallContentContainer>
-          <SSmallContentContainer>
-            <STitleContainer>
-              이름 <span style={{ color: 'var(--orange-pri)' }}>*</span>
-            </STitleContainer>
-            <SSmallTextBoxWrapper>{tempList[0].name}</SSmallTextBoxWrapper>
-          </SSmallContentContainer>
-          <SBigContentContainer>
-            <STitleContainer>축하메세지</STitleContainer>
-            <SBigTextBoxWrapper
-              onChange={handleInputChange}
-              value={MsgText}
-            ></SBigTextBoxWrapper>
-          </SBigContentContainer>
-        </SContentsContainer>
-      </SLayout>
+      <SContentContainer>
+        <FundingPercentage color='orange'></FundingPercentage>
+        <SSmallForm>
+          <SRequiredLegend>금액</SRequiredLegend>
+          <SSmallTextarea>{tempList[0].price}</SSmallTextarea>
+        </SSmallForm>
+        <SSmallForm>
+          <SRequiredLegend>이름</SRequiredLegend>
+          <SSmallTextarea>{tempList[0].name}</SSmallTextarea>
+        </SSmallForm>
+        <SBigForm>
+          <SOptionalLegend>축하메세지</SOptionalLegend>
+          <SBigTextarea
+            onChange={handleInputChange}
+            value={MsgText}
+          ></SBigTextarea>
+        </SBigForm>
+      </SContentContainer>
       <SBtnWrapper>
         <BottomBackground Button={Btn} />
       </SBtnWrapper>
-    </>
+    </SLayout>
   );
 };
 export default MessageEditPage;
@@ -75,19 +69,17 @@ const SLayout = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  padding: 0px 16px 130px 16px;
+  gap: 24px;
 `;
-const SContentsContainer = styled.div`
+const SContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 25px;
 
-  width: 335px;
-  margin-top: 24px;
+  width: fit-content;
 `;
-const SSmallContentContainer = styled.div`
+const SSmallForm = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -96,7 +88,24 @@ const SSmallContentContainer = styled.div`
   width: 335px;
   height: 94px;
 `;
-const SBigContentContainer = styled.div`
+const SRequiredLegend = styled.legend`
+  display: flex;
+  width: 76px;
+  height: 22px;
+  gap: 8px;
+
+  padding: 0px 8px 0px 8px;
+
+  color: var(--black);
+  font-size: 16px;
+  font-weight: 500;
+
+  &::after {
+    content: '*';
+    color: var(--orange-pri);
+  }
+`;
+const SBigForm = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -105,8 +114,7 @@ const SBigContentContainer = styled.div`
   width: 335px;
   height: 210px;
 `;
-
-const STitleContainer = styled.div`
+const SOptionalLegend = styled.legend`
   display: flex;
   width: 76px;
   height: 22px;
@@ -118,13 +126,13 @@ const STitleContainer = styled.div`
   font-size: 16px;
   font-weight: 500;
 `;
-const SSmallTextBoxWrapper = styled.div`
+const SSmallTextarea = styled.textarea`
   display: flex;
   flex-direction: column;
   justify-content: center;
   height: 64px;
 
-  padding: 20px;
+  padding: 24px;
 
   border: 2px solid transparent;
   border-radius: 16px;
@@ -133,13 +141,15 @@ const SSmallTextBoxWrapper = styled.div`
   color: var(--black);
   font-weight: 500;
   font-size: 16px;
+
+  resize: none;
 `;
-const SBigTextBoxWrapper = styled.textarea`
+const SBigTextarea = styled.textarea`
   display: flex;
   flex-direction: column;
 
   height: 180px;
-  padding: 20px;
+  padding: 24px;
 
   border: 2px solid transparent;
   border-radius: 16px;
