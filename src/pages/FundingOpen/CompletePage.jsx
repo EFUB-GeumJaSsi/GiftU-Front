@@ -26,6 +26,23 @@ const CompletePage = () => {
   );
 };
 
+// 텍스트 스타일
+const SH3 = styled.h3`
+  color: var(--black);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 140%;
+`;
+const SB2 = styled.p`
+  color: var(--gray-500);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 140%;
+  white-space: pre-line;
+  text-align: center;
+`;
+
+// 레이아웃 스타일
 const SLayout = styled.div`
   display: flex;
   flex-flow: column nowrap;
@@ -40,20 +57,6 @@ const SMain = styled.main`
   justify-content: center;
 
   gap: 24px;
-`;
-const SH3 = styled.h3`
-  color: var(--black);
-  font-size: 20px;
-  font-weight: 600;
-  line-height: 140%;
-`;
-const SB2 = styled.p`
-  color: var(--gray-500);
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 140%;
-  white-space: pre-line;
-  text-align: center;
 `;
 
 export default CompletePage;
