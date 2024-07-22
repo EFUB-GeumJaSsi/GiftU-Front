@@ -7,7 +7,9 @@
 // 2. 모달 props
 // (2-1) actionText - 오른쪽 버튼의 텍스트
 // (2-2) onClickAction - 오른쪽 버튼을 click할 경우 실행하는 function
-// (2-3) setModalShow - 1-1의 setModalShow
+// (2-3) cancelText - 왼쪽 버튼의 텍스트 (미지정 시 '돌아가기')
+// (2-4) onClickCancel - 왼쪽 버튼을 click할 경우 실행하는 function (미지정 시 모달만 닫음)
+// (2-5) setModalShow - 1-1의 setModalShow
 // 예시: <ModalComponent actionText='취소하기' onClickAction={api function} setModalShow={setModalShow}>
 //
 // 3. 모달 내용
@@ -24,6 +26,8 @@ import { createPortal } from 'react-dom';
 const ModalComponent = ({
   actionText,
   onClickAction,
+  cancelText,
+  onClickCancel,
   setModalShow,
   children,
 }) => {
@@ -50,9 +54,10 @@ const ModalComponent = ({
           <SCancelButton
             onClick={() => {
               setModalShow(false);
+              if (onClickCancel) onClickCancel();
             }}
           >
-            돌아가기
+            {cancelText ? cancelText : '돌아가기'}
           </SCancelButton>
           <SActionButton
             onClick={() => {
