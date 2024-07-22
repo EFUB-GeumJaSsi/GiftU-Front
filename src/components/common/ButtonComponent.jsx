@@ -22,10 +22,9 @@ const Button = ({ btnInfo, ...props }) => {
 
   return (
     <SWrapper
-      type={type}
       color={btnColor[color]}
       width={width}
-      onClick={onClick}
+      {...props}
     >
       {text}
     </SWrapper>
