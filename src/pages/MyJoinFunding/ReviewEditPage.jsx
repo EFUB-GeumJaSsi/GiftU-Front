@@ -22,7 +22,7 @@ const ReviewEditPage = () => {
   return (
     <SLayout>
       <BackHeader text='선물후기'></BackHeader>
-      <SContentsContainer>
+      <SContentContainer>
         <FundingParticipants></FundingParticipants>
         <SForm>
           <SLegend>선물 후기</SLegend>
@@ -32,7 +32,7 @@ const ReviewEditPage = () => {
             onChange={handleInputChange}
           ></STextarea>
         </SForm>
-      </SContentsContainer>
+      </SContentContainer>
       <SBtnWrapper>
         <BottomBackground Button={Btn} />
       </SBtnWrapper>
@@ -47,7 +47,7 @@ const SLayout = styled.div`
   align-items: center;
   gap: 24px;
 `;
-const SContentsContainer = styled.div`
+const SContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
