@@ -112,7 +112,7 @@ const SForm = styled.form`
   gap: 24px;
 `;
 const SLegend = styled.legend`
-  margin-bottom: 8px;
+  margin: 0 0 8px 8px;
 
   color: var(--black);
   font-size: 16px;
