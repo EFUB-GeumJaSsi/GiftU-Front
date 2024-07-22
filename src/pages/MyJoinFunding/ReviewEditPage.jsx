@@ -45,6 +45,7 @@ const SLayout = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 24px;
 `;
 const SContentsContainer = styled.div`
   display: flex;
@@ -53,7 +54,6 @@ const SContentsContainer = styled.div`
   gap: 24px;
 
   width: 335px;
-  margin-top: 24px;
 `;
 const SForm = styled.form`
   display: flex;
@@ -63,18 +63,9 @@ const SForm = styled.form`
 
   width: 335px;
   height: 210px;
-  margin-top: 8px;
 `;
 
 const SLegend = styled.legend`
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-
-  width: 76px;
-  height: 22px;
-  padding: 0px 8px 0px 8px;
-
   color: var(--black);
   font-size: 16px;
   font-weight: 500;
@@ -102,7 +93,6 @@ const STextarea = styled.textarea`
   }
   &:focus {
     border: 2px solid var(--jade-pri);
-    outline: none;
   }
 `;
 const SBtnWrapper = styled.div`
