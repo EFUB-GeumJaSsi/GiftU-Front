@@ -92,10 +92,8 @@ const PasswordSetPage = () => {
             <PasswordComponent
               setBottomSheetShow={setBottomSheetShow}
               handleSubmit={handleSubmit(onSubmit)}
-              title='비밀번호 입력'
-              name='김이화'
-              passwordExact='2222'
-              color='orange'
+              title='펀딩 개설'
+              color='jade'
             />
           )}
           <SButtonContainer>
