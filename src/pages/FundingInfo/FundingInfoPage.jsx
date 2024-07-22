@@ -35,7 +35,7 @@ const tempList = [
 const Btn = (funding, isEnd, setModalShow) => {
   switch (funding) {
     // 내가 참여한 펀딩
-    case 'join':
+    case 'joined':
       return (
         <SBtnContainer>
           <Button btnInfo={{ text: '참여 취소', width: '104px' }}></Button>
@@ -85,9 +85,9 @@ const FundingInfoPage = () => {
   const messageRef = useRef(null);
 
   // 상세 정보 조회 후 userId가 로그인 한 유저와 일치하는지 비교
-  // 일치하면 open, 불일치 시 contributers에서 유저 정보와 일치하는 userId가 있는지 확인 후 있으면 'join' 없으면 ''
-  const [funding, setFunding] = useState('join');
-  // 상세 정보 조회 후 fundingEndDate와 오늘 날짜 비교 후 태그 저장
+  // 일치하면 open, 불일치 시 contributers에서 유저 정보와 일치하는 userId가 있는지 확인 후 있으면 'joined' 없으면 'pre'
+  const [funding, setFunding] = useState(null);
+  // 상세 정보 조회 후 fundingStatus 확인
   const [isEnd, setIsEnd] = useState(false);
 
   const tag = isEnd ? '종료' : 'D-10';
@@ -103,7 +103,7 @@ const FundingInfoPage = () => {
       <SLayout isend={isEnd.toString()}>
         <TopFundingInfo color={color} tag={tag} />
         {isCommented && isEnd && <FundingComment color={color} />}
-        {funding === 'join' ? (
+        {funding === 'joined' ? (
           <GoWriteMessageButton
             color={color}
             price='15,000'

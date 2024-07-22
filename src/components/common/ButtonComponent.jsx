@@ -10,8 +10,8 @@ import styled from 'styled-components';
 //
 // 예시 <Button btnInfo={{ text: '다음', color: 'jade' }} />
 
-const Button = ({ btnInfo }) => {
-  const { text, color, width, onClick, type } = btnInfo;
+const Button = ({ btnInfo, onClick, type }) => {
+  const { text, color, width } = btnInfo;
 
   // color: [배경 색, 글꼴 색]
   const btnColor = {

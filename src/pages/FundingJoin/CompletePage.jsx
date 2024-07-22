@@ -15,11 +15,9 @@ const CompletePage = () => {
         <STextContainer>
           <SBigTextWrapper>펀딩 참여가 완료되었어요!</SBigTextWrapper>
           <SSmallTextWrapper>
-            내가 참여한 펀딩은
-            <br />
-            [마이]-[내가 참여한 펀딩]에서
-            <br />
-            확인할 수 있어요
+            {
+              '내가 참여한 펀딩은\n[마이]-[내가 참여한 펀딩]에서\n확인할 수 있어요'
+            }
           </SSmallTextWrapper>
         </STextContainer>
       </SLayout>
@@ -58,4 +56,5 @@ const SSmallTextWrapper = styled.p`
   font-size: 16px;
   font-weight: 400;
   line-height: 140%;
+  white-space: pre-line; 
 `;

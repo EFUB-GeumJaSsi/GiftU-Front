@@ -4,8 +4,6 @@ import BackHeader from '../../components/common/BackHeader';
 import BottomBackground from '../../components/common/BottomBackground';
 import Button from '../../components/common/ButtonComponent';
 import FundingPercentage from '../../components/FundingInfo/FundingPercentage';
-import { ReactComponent as OnRadio } from '../../assets/FundingJoin/btn_radio_on.svg';
-import { ReactComponent as OffRadio } from '../../assets/FundingJoin/btn_radio_off.svg';
 import { addComma } from '../../components/FundingInfo/FundingPercentage';
 
 const giftList = [
@@ -20,7 +18,6 @@ const FundingJoinPage = () => {
   const [price, setPrice] = useState();
   const [message, setMessage] = useState('');
   const [isDone, setIsDone] = useState(false);
-  const [isChecked, setIsChecked] = useState(true);
   const [name, setName] = useState('nickname');
   const [formattedPrice, setFormattedPrice] = useState('');
 
@@ -40,12 +37,7 @@ const FundingJoinPage = () => {
   };
 
   const handleRadioClick = (e) => {
-    setIsChecked(!isChecked);
-    setName(e.target.name);
-  };
-
-  const RadioBtn = ({ checked }) => {
-    return checked ? <OnRadio /> : <OffRadio />;
+    setName(e.target.value);
   };
 
   useEffect(() => {
@@ -90,22 +82,32 @@ const FundingJoinPage = () => {
               <SStarWrapper>*</SStarWrapper>
             </STextBox>
             <SButtonContainer>
-              <SButtonWrapperL
-                name='nickname'
-                checked={isChecked}
+              <SButtonWrapper
+                checked={name === 'nickname'}
                 onClick={handleRadioClick}
               >
-                <RadioBtn checked={isChecked} />
+                <input
+                  id='radio'
+                  type='radio'
+                  value='nickname'
+                  checked={name === 'nickname'}
+                  onChange={handleRadioClick}
+                />
                 닉네임
-              </SButtonWrapperL>
-              <SButtonWrapperR
-                name='anony'
-                checked={!isChecked}
+              </SButtonWrapper>
+              <SButtonWrapper
+                checked={name === 'anony'}
                 onClick={handleRadioClick}
               >
-                <RadioBtn checked={!isChecked} />
+                <input
+                  id='radio'
+                  type='radio'
+                  value='anony'
+                  checked={name === 'anony'}
+                  onChange={handleRadioClick}
+                />
                 익명
-              </SButtonWrapperR>
+              </SButtonWrapper>
             </SButtonContainer>
           </SContainer>
           <SContainer>
@@ -236,33 +238,48 @@ const STextareaWrapper = styled.textarea`
 `;
 
 const SButtonContainer = styled.div`
-  display: flex;
-  gap: 8px;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  column-gap: 8px;
 
-  input {
-    visibility: hidden;
+  input[type='radio'] {
+    -webkit-appearance: none; // 웹킷 브라우저에서 기본 스타일 제거
+    -moz-appearance: none; // 모질라 브라우저에서 기본 스타일 제거
+    appearance: none; // 기본 브라우저에서 기본 스타일 제거
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--orange-pri); // 체크되지 않았을 때의 테두리 색상
+    border-radius: 50%;
+    outline: none; // focus 시에 나타나는 기본 스타일 제거
+    cursor: pointer;
+  }
+
+  input[type='radio']:checked {
+    background-color: var(--orange-pri); // 체크 시 내부 원으로 표시될 색상
+    border: 7px solid var(--orange-sec); // 테두리가 아닌, 테두리와 원 사이의 색상
+    box-shadow: 0 0 0 2px var(--orange-pri); // 얘가 테두리가 됨
+    // 그림자로 테두리를 직접 만들어야 함 (퍼지는 정도를 0으로 주면 테두리처럼 보입니다.)
+    // 그림자가 없으면 그냥 설정한 색상이 꽉 찬 원으로만 나옵니다.
   }
 `;
 
-const SButtonWrapper = styled.button`
+const SButtonWrapper = styled.label`
   display: flex;
   align-items: center;
   gap: 16px;
+
+  padding-left: 16px;
+  height: 64px;
 
   border-radius: 16px;
   background: ${(props) =>
     props.checked ? 'var(--orange-sec)' : 'var(--gray-100)'};
 
+  color: ${(props) => (props.checked ? 'var(--black)' : 'var(--gray-400)')};
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
   line-height: 140%;
-`;
 
-const SButtonWrapperL = styled(SButtonWrapper)`
-  padding: 20px 121px 20px 16px;
-`;
-
-const SButtonWrapperR = styled(SButtonWrapper)`
-  padding: 20px 24px 20px 16px;
+  cursor: pointer;
 `;
