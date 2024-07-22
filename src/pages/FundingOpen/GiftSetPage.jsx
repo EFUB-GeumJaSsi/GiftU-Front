@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import BackHeader from '../../components/common/BackHeader';
+import PriceInputComponent from '../../components/common/PriceInputComponent';
 import BottomBackground from '../../components/common/BottomBackground';
 import Button from '../../components/common/Button';
 import icn_plus from '../../assets/FungingOpen/icn_plus.svg';
@@ -11,19 +12,6 @@ const GiftSetPage = () => {
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
 
-  const handlePriceChange = (event) => {
-    let input = event.target.value;
-    input = input.replace(/[^0-9]/gi, ''); // 숫자 외 모든 문자 제거
-    setPrice(Number(input));
-  };
-  const handlePriceKeydown = (event) => {
-    if (event.key === 'Backspace') {
-      let input = event.target.value;
-      input = input.replace(/[^0-9]/gi, ''); // 숫자 외 모든 문자 제거
-      input = input.slice(0, -1); // 마지막 숫자 삭제
-      setPrice(Number(input));
-    }
-  };
   const handleUrlChange = (event) => {
     setUrl(event.target.value);
   };
@@ -41,21 +29,20 @@ const GiftSetPage = () => {
       <SForm>
         <fieldset>
           <SLegend>가격</SLegend>
-          <STextInput
-            type='tel'
+          <PriceInputComponent
             name='gift'
             id='gift-price'
             maxLength='11'
             placeholder='선물의 가격을 입력해 주세요'
-            value={price ? `${price.toLocaleString()}원` : ''}
             required
-            onChange={handlePriceChange}
-            onKeyDown={handlePriceKeydown}
+            focusColor='var(--jade-pri)'
+            price={price}
+            setPrice={setPrice}
           />
         </fieldset>
         <fieldset>
           <SLegend>링크</SLegend>
-          <STextInput
+          <SUrlInput
             type='url'
             name='gift'
             id='gift-url'
@@ -119,18 +106,13 @@ const SLegend = styled.legend`
   font-weight: 500;
   line-height: 140%;
 `;
-const SInput = styled.input`
+const SUrlInput = styled.input`
+  width: 335px;
+  padding: 21px 24px;
+
   border: 2px solid transparent;
   border-radius: 16px;
   background-color: var(--gray-100);
-
-  &:focus {
-    border: 2px solid var(--jade-pri);
-  }
-`;
-const STextInput = styled(SInput)`
-  width: 335px;
-  padding: 21px 24px;
 
   color: var(--black);
   font-size: 16px;
@@ -138,6 +120,10 @@ const STextInput = styled(SInput)`
   line-height: 140%;
 
   box-sizing: border-box;
+
+  &:focus {
+    border: 2px solid var(--jade-pri);
+  }
 
   &::placeholder {
     color: var(--gray-400);
