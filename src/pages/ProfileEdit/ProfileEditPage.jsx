@@ -13,6 +13,8 @@ import { ReactComponent as ProfileIcon } from '../../assets/common/profile.svg';
 const ProfileEditPage = () => {
   const [showCalendar, setShowCalendar] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
 
   const [month, setMonth] = useState(new Date());
   const [userInfo, setUserInfo] = useState({
@@ -24,6 +26,13 @@ const ProfileEditPage = () => {
 
   const handleInfoChange = (e) => {
     setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
+  };
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImageFile(file);
+      setImagePreview(URL.createObjectURL(file));
+    }
   };
 
   const handleDateSelect = (date) => {
@@ -51,14 +60,20 @@ const ProfileEditPage = () => {
     <SLayout>
       <BackHeaderComponent text='프로필 편집' />
       <SImageContainer>
-        {userInfo.image === 'default' ? (
-          <StyledProfileIcon />
+        {imagePreview ? (
+          <SImgWrapper src={imagePreview} alt='Profile' />
         ) : (
-          <SImgWrapper src={userInfo.image} alt='Profile' />
+          <StyledProfileIcon />
         )}
-        <SImageButtonWrapper>
-          <Camera></Camera>
-        </SImageButtonWrapper>
+        <SImageLabel htmlFor='profile-image'>
+          <Camera />
+        </SImageLabel>
+        <SImageInput
+          type='file'
+          accept='image/*'
+          id='profile-image'
+          onChange={handleImageChange}
+        />
       </SImageContainer>
       <SForm>
         <SFieldset>
@@ -142,10 +157,20 @@ const StyledProfileIcon = styled(ProfileIcon)`
   border-radius: 50%;
 `;
 
-const SImageButtonWrapper = styled.div`
+const SImageLabel = styled.label`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   position: absolute;
   bottom: 0;
   right: 0;
+
+  cursor: pointer;
+`;
+
+const SImageInput = styled.input`
+  display: none;
 `;
 
 const SForm = styled.form`
