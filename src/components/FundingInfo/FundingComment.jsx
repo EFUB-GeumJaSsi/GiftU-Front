@@ -28,7 +28,6 @@ const SContainer = styled.div`
       : '2px solid var(--jade-pri)'};
   background: var(--gray-100);
 `;
-
 const STitleWrapper = styled.span`
   color: var(--gray-400);
   font-size: 14px;
@@ -36,7 +35,6 @@ const STitleWrapper = styled.span`
   font-weight: 500;
   line-height: 120%;
 `;
-
 const STextWrapper = styled.p`
   width: 291px;
   height: 78px;

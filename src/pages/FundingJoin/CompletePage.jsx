@@ -35,20 +35,17 @@ const SLayout = styled.div`
 
   height: 80vh;
 `;
-
 const STextContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 24px;
   text-align: center;
 `;
-
 const SBigTextWrapper = styled.span`
   font-size: 20px;
   font-weight: 600;
   line-height: 140%;
 `;
-
 const SSmallTextWrapper = styled.p`
   color: var(--gray-500);
   font-size: 16px;

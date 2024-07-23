@@ -123,7 +123,6 @@ const STextContainer = styled.div`
     line-height: 140%;
   }
 `;
-
 const SPasswordInputContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -132,7 +131,6 @@ const SPasswordInputContainer = styled.div`
   margin-top: 32px;
   margin-bottom: 12px;
 `;
-
 const SPasswordInput = styled.input`
   width: 56px;
   height: 80px;
@@ -142,7 +140,6 @@ const SPasswordInput = styled.input`
   background: var(--gray-100);
   text-align: center;
 `;
-
 const SSecondaryButton = styled.button`
   position: fixed;
   bottom: 0px;
@@ -160,7 +157,6 @@ const SSecondaryButton = styled.button`
   border-radius: 40px;
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
 `;
-
 const STextWrapper = styled.p`
   color: var(--red);
   text-align: center;

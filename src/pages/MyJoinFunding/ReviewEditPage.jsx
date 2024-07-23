@@ -64,13 +64,11 @@ const SForm = styled.form`
   width: 335px;
   height: 210px;
 `;
-
 const SLegend = styled.legend`
   color: var(--black);
   font-size: 16px;
   font-weight: 500;
 `;
-
 const STextarea = styled.textarea`
   display: flex;
   flex-direction: column;

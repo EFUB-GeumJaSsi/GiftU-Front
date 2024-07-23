@@ -130,14 +130,12 @@ const SLayout = styled.div`
   flex-flow: column nowrap;
   height: 100vh;
 `;
-
 const SForm = styled.form`
   display: flex;
   flex-flow: column nowrap;
   width: 335px;
   margin: 20px 20px 0px 20px;
 `;
-
 const SLegend = styled.legend`
   margin-bottom: 40px;
   color: var(--black);
@@ -146,13 +144,11 @@ const SLegend = styled.legend`
   font-weight: 500;
   line-height: 140%;
 `;
-
 const SRadioContainer = styled.div`
   display: flex;
   flex-direction: row;
   margin-bottom: 16px;
 `;
-
 const SRadioInput = styled.input`
   display: none;
 
@@ -165,7 +161,6 @@ const SRadioInput = styled.input`
     }
   }
 `;
-
 const SRadioLabel = styled.label`
   display: flex;
   flex-direction: row;
@@ -176,7 +171,6 @@ const SRadioLabel = styled.label`
   background-color: var(--gray-100);
   border-radius: 16px;
 `;
-
 const STextContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -199,7 +193,6 @@ const STextContainer = styled.div`
     line-height: 140%;
   }
 `;
-
 const SLockerBackground = styled.div`
   display: flex;
   align-items: center;
@@ -210,7 +203,6 @@ const SLockerBackground = styled.div`
     props.color === 'orange' ? 'var(--orange-sec)' : 'var(--jade-sec)'};
   border-radius: 50%;
 `;
-
 const SButtonContainer = styled.div`
   display: flex;
   justify-content: center;

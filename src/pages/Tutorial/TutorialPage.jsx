@@ -9,6 +9,7 @@ import { ReactComponent as Slider2 } from '../../assets/Tutorial/fnd_slider2.svg
 import { ReactComponent as Logo } from '../../assets/Tutorial/logo.svg';
 import { ReactComponent as Drop } from '../../assets/Tutorial/btn_drop.svg';
 import { ReactComponent as Calendar } from '../../assets/common/calendar.svg';
+
 const TutorialPage = () => {
   return (
     <>

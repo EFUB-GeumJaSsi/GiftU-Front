@@ -71,7 +71,6 @@ const getFilter = (pathname) => {
       return '전체';
   }
 };
-
 const filterResults = (data, filter) => {
   return data.filter((result) => {
     if (filter === '전체') return true;
@@ -86,12 +85,10 @@ const SLayout = styled.div`
   flex-direction: column;
   align-items: center;
 `;
-
 const SNotiItemWrapper = styled.div`
   margin-top: 24px;
   margin-bottom: 20px;
 `;
-
 const SListWrapper = styled.div`
   margin: 0 auto;
 `;

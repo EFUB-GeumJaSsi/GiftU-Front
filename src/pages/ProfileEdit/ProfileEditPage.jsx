@@ -115,7 +115,6 @@ const SLayout = styled.div`
   align-items: center;
   justify-content: center;
 `;
-
 const SImageContainer = styled.div`
   position: relative;
 
@@ -123,7 +122,6 @@ const SImageContainer = styled.div`
   height: 96px;
   margin: 40px;
 `;
-
 const SImageWrapper = styled.div`
   width: 100%;
   height: 100%;
@@ -131,13 +129,11 @@ const SImageWrapper = styled.div`
   border-radius: 50%;
   background-color: var(--gray-300);
 `;
-
 const SImageButtonWrapper = styled.div`
   position: absolute;
   bottom: 0;
   right: 0;
 `;
-
 const SContentContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -146,7 +142,6 @@ const SContentContainer = styled.div`
 
   width: 335px;
 `;
-
 const SForm = styled.form`
   display: flex;
   flex-direction: column;
@@ -156,7 +151,6 @@ const SForm = styled.form`
   width: 335px;
   height: 94px;
 `;
-
 const SLegend = styled.div`
   display: flex;
   flex-direction: column;
@@ -168,7 +162,6 @@ const SLegend = styled.div`
 
   color: var(--gray-400);
 `;
-
 const STextarea = styled.textarea`
   display: flex;
   justify-content: center;
@@ -194,7 +187,6 @@ const STextarea = styled.textarea`
     outline: none;
   }
 `;
-
 const SInput = styled.input`
   display: flex;
   justify-content: center;
@@ -213,12 +205,10 @@ const SInput = styled.input`
     color: var(--gray-400);
   }
 `;
-
 const SBdayIconWrapper = styled.div`
   position: absolute;
   right: 24px;
 `;
-
 const SInputContainer = styled.div`
   display: flex;
   align-items: center;

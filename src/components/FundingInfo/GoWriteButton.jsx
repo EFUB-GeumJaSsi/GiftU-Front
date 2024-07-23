@@ -65,13 +65,11 @@ const SLayout = styled.button`
   background: ${(props) =>
     props.color === 'orange' ? 'var(--orange-sec)' : 'var(--jade-pri)'};
 `;
-
 const SContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 4px;
 `;
-
 const STextWrapper = styled.span`
   color: ${(props) => (props.color ? 'var(--gray-500)' : 'var(--white)')};
   font-size: 14px;
@@ -82,18 +80,15 @@ const STextWrapper = styled.span`
 
   cursor: pointer;
 `;
-
 const SEmphaWrapper = styled(STextWrapper)`
   color: var(--orange-pri);
   font-weight: 500;
 `;
-
 const SBigTextWrapper = styled(STextWrapper)`
   font-size: 16px;
   font-weight: 600;
   line-height: 140%;
 `;
-
 const NextBtn = styled(Next)`
   fill: ${(props) =>
     props.color === 'orange' ? 'var(--orange-pri)' : 'var(--white)'};

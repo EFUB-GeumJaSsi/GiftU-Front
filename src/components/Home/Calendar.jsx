@@ -153,7 +153,6 @@ const SLayout = styled.div`
   background-color: #f7f4ed;
   border-radius: 20px;
 `;
-
 const SMonthWrapper = styled.span`
   display: inline-flex;
   justify-content: center;
@@ -169,12 +168,10 @@ const SMonthWrapper = styled.span`
   font-weight: 500;
   line-height: 120%;
 `;
-
 const SDayContainer = styled.div`
   display: flex;
   gap: 29px;
 `;
-
 const SDayWrapper = styled.span`
   width: 15px;
   height: 14px;
@@ -185,14 +182,12 @@ const SDayWrapper = styled.span`
   font-weight: 500;
   line-height: 120%;
 `;
-
 const SDateContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   grid-row-gap: 12px;
   grid-column-gap: 8px;
 `;
-
 const SDateWrapper = styled.span`
   display: flex;
   position: relative;
@@ -214,13 +209,11 @@ const SDateWrapper = styled.span`
 
   cursor: ${(props) => (props.funding ? 'pointer' : 'default')};
 `;
-
 const Tag = styled(TagIcon)`
   position: absolute;
   bottom: 27px;
   z-index: 999;
 `;
-
 const SSheetLayout = styled.div`
   display: flex;
   flex-direction: column;
@@ -230,13 +223,11 @@ const SSheetLayout = styled.div`
 
   padding: 32px 21px 18px 19px;
 `;
-
 const STitle = styled.span`
   font-size: 20px;
   font-weight: 700;
   line-height: 140%;
 `;
-
 const SItemLayout = styled.div`
   display: flex;
   flex-direction: column;

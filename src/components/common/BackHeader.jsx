@@ -33,7 +33,6 @@ const SContainer = styled.div`
 
   background-color: white;
 `;
-
 const BackBtn = styled(Back)`
   position: absolute;
   top: 40px;
@@ -41,7 +40,6 @@ const BackBtn = styled(Back)`
 
   cursor: pointer;
 `;
-
 const STextWrapper = styled.span`
   position: absolute;
   top: 43px;

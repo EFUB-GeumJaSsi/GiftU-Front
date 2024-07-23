@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import TagComponent from '../common/TagComponent';
+
 const SearchResults = ({ results }) => {
   return (
     <SResultsContainer>
@@ -65,7 +66,6 @@ const SResultItem = styled.div`
     background-color: var(--gray-300);
   }
 `;
-
 const SImageWrapper = styled.div``;
 const SContentWrapper = styled.div`
   display: flex;

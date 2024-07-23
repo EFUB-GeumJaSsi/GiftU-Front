@@ -27,20 +27,17 @@ const SItemContainer = styled.div`
 
   cursor: pointer;
 `;
-
 const SImageWrapper = styled.img`
   width: 48px;
   height: 48px;
 
   border-radius: 50%;
 `;
-
 const STextContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
 `;
-
 const STitleWrapper = styled.span`
   font-size: 16px;
   font-weight: 500;
@@ -56,7 +53,6 @@ const STitleWrapper = styled.span`
 
   cursor: pointer;
 `;
-
 const SNameWrapper = styled.span`
   color: var(--gray-500);
   font-size: 14px;

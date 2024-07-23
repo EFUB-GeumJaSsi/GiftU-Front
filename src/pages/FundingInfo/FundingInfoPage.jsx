@@ -140,12 +140,10 @@ const SLayout = styled.div`
   padding: ${(props) =>
     props.isend === 'true' ? '16px 16px 40px 16px' : '16px 16px 120px 16px'};
 `;
-
 const SBtnContainer = styled.div`
   display: flex;
   gap: 8px;
 `;
-
 const SModalContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -154,7 +152,6 @@ const SModalContainer = styled.div`
 
   padding: 32px 0 28px 0;
 `;
-
 const SBigTextWrapper = styled.span`
   color: var(--black);
   text-align: center;
@@ -163,7 +160,6 @@ const SBigTextWrapper = styled.span`
   font-weight: 500;
   line-height: 140%;
 `;
-
 const SSmallTextWrapper = styled(SBigTextWrapper)`
   color: var(--gray-500);
   font-size: 12px;

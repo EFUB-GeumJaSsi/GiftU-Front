@@ -5,15 +5,6 @@ import Button from '../../components/common/Button';
 import BottomBackground from '../../components/common/BottomBackground';
 import FundingPercentage from '../../components/FundingInfo/FundingPercentage';
 
-const Btn = (
-  <Button
-    btnInfo={{
-      text: '수정하기',
-      width: '335px',
-      color: 'orange',
-    }}
-  ></Button>
-);
 const tempList = [
   {
     name: '이름은최대8글자',
@@ -31,6 +22,16 @@ const tempList = [
       '축하 메시지가 표시될 거예요 메시지는 여러 줄이어도 모두 표시되도록 설정해 주세요',
   },
 ];
+
+const Btn = (
+  <Button
+    btnInfo={{
+      text: '수정하기',
+      width: '335px',
+      color: 'orange',
+    }}
+  ></Button>
+);
 const MessageEditPage = () => {
   const [MsgText, setMsgText] = useState(tempList[0].message);
 

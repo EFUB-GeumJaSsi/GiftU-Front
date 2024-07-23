@@ -37,14 +37,12 @@ const SBtnContainer = styled.div`
   flex-direction: column;
   gap: 12px;
 `;
-
 const SLayout = styled.div`
   display: flex;
   flex-direction: column;
   gap: 64px;
   padding: 24px 20px 180px 20px;
 `;
-
 const STitleWrapper = styled.span`
   font-size: 20px;
   font-style: normal;

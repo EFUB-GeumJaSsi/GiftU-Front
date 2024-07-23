@@ -30,7 +30,6 @@ const SContentboxContainer = styled.div`
 
   width: 344px;
 `;
-
 const STitleBoxContainer = styled.div`
   display: flex;
   flex-direction: row;

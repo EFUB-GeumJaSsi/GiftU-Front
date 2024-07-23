@@ -129,7 +129,6 @@ const SModalContainer = styled.div`
     color: var(--gray-500);
   }
 `;
-
 const SProfileWrapper = styled.img`
   width: 56px;
   height: 56px;
@@ -138,7 +137,6 @@ const SProfileWrapper = styled.img`
   border-radius: 50%;
   background-color: #d9d9d9;
 `;
-
 const SLayout = styled.div`
   display: flex;
   flex-flow: column nowrap;
@@ -146,7 +144,6 @@ const SLayout = styled.div`
 
   padding-top: 43px;
 `;
-
 const SHeader = styled.header`
   padding-left: 28px;
 
@@ -154,14 +151,12 @@ const SHeader = styled.header`
   font-size: 22px;
   font-weight: 700;
 `;
-
 const SItemContainer = styled.main`
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
   gap: 16px;
 `;
-
 const SBtnWrapper = styled.div`
   display: flex;
   flex-flow: column nowrap;
