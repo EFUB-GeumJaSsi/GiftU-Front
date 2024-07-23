@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import FundingComponent from '../components/common/FundingComponent';
-import TagSelectComponent from '../components/common/TagSelectComponent';
-import BackHeaderComponent from '../components/common/BackHeaderComponent';
+import FundingComponent from '../../components/common/FundingComponent';
+import TagSelectComponent from '../../components/common/TagSelectComponent';
+import BackHeaderComponent from '../../components/common/BackHeaderComponent';
 
 const ListPage = ({ headerText, buttons, message }) => {
   const [data, setData] = useState([]);

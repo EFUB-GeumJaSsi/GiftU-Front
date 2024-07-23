@@ -1,4 +1,4 @@
-import ListPage from '../ListPage';
+import ListPage from './ListPage';
 
 const ListOpenPage = () => {
   return (
