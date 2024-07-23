@@ -27,13 +27,13 @@ export const GoWriteMessageButton = ({
   return (
     <SLayout color={color} onClick={onClick}>
       <SContainer>
-        {wroteMessage === false && isEnd === 'false' ? (
+        {wroteMessage || isEnd ? (
           <>
             <STextWrapper color={color}>
               펀딩에 <SEmphaWrapper>{price}원</SEmphaWrapper> 기여했어요
             </STextWrapper>
             <SBigTextWrapper color={color}>
-              선물 받을 친구에게 메시지를 남겨보세요!
+              친구에게 남긴 메시지를 확인해 보세요!
             </SBigTextWrapper>
           </>
         ) : (
@@ -42,7 +42,7 @@ export const GoWriteMessageButton = ({
               펀딩에 <SEmphaWrapper>{price}원</SEmphaWrapper> 기여했어요
             </STextWrapper>
             <SBigTextWrapper color={color}>
-              친구에게 남긴 메시지를 확인해 보세요!
+              선물 받을 친구에게 메시지를 남겨보세요!
             </SBigTextWrapper>
           </>
         )}

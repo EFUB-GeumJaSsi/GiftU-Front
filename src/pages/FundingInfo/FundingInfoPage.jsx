@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { useSearchParams } from 'react-router-dom';
 import { useRef, useState } from 'react';
 import BackHeader from '../../components/common/BackHeader';
 import FundingSpan from '../../components/FundingInfo/FundingSpan';
@@ -7,8 +6,8 @@ import TopFundingInfo from '../../components/FundingInfo/TopFundingInfo';
 import FundingPercentage from '../../components/FundingInfo/FundingPercentage';
 import CongratsMessage from '../../components/FundingInfo/CongratsMessage';
 import BottomBackground from '../../components/common/BottomBackground';
-import Button from '../../components/common/Button';
-import Modal from '../../components/common/Modal';
+import Button from '../../components/common/ButtonComponent';
+import Modal from '../../components/common/ModalComponent';
 import {
   GoWriteCommentButton,
   GoWriteMessageButton,
@@ -36,7 +35,7 @@ const tempList = [
 const Btn = (funding, isEnd, setModalShow) => {
   switch (funding) {
     // 내가 참여한 펀딩
-    case 'join':
+    case 'joined':
       return (
         <SBtnContainer>
           <Button btnInfo={{ text: '참여 취소', width: '104px' }}></Button>
@@ -51,7 +50,7 @@ const Btn = (funding, isEnd, setModalShow) => {
       );
     // 내가 개설한 펀딩
     case 'open':
-      if (isEnd === 'true') {
+      if (isEnd) {
         return (
           <Button btnInfo={{ text: '선물 후기 작성하기', color: 'jade' }} />
         );
@@ -81,17 +80,17 @@ const ModalContent = () => (
 
 const FundingInfoPage = () => {
   const [modalShow, setModalShow] = useState(false);
-  const [isCommented, setIsCommented] = useState(true);
+  const [isCommented, setIsCommented] = useState(false);
   const [wroteMessage, setWroteMessage] = useState(false);
   const messageRef = useRef(null);
-  const [searchParams, setSearchParams] = useSearchParams({
-    funding: '',
-    end: '',
-  });
 
-  const funding = searchParams.get('funding');
-  const isEnd = searchParams.get('end');
-  const tag = isEnd === 'true' ? '종료' : 'D-10';
+  // 상세 정보 조회 후 userId가 로그인 한 유저와 일치하는지 비교
+  // 일치하면 open, 불일치 시 contributers에서 유저 정보와 일치하는 userId가 있는지 확인 후 있으면 'joined' 없으면 'pre'
+  const [funding, setFunding] = useState(null);
+  // 상세 정보 조회 후 fundingStatus 확인
+  const [isEnd, setIsEnd] = useState(false);
+
+  const tag = isEnd ? '종료' : 'D-10';
   const color = funding === 'open' ? 'jade' : 'orange';
 
   const onFocusMessage = () => {
@@ -101,10 +100,10 @@ const FundingInfoPage = () => {
   return (
     <>
       <BackHeader />
-      <SLayout>
+      <SLayout isend={isEnd.toString()}>
         <TopFundingInfo color={color} tag={tag} />
-        {isCommented && isEnd === 'true' && <FundingComment color={color} />}
-        {funding === 'join' ? (
+        {isCommented && isEnd && <FundingComment color={color} />}
+        {funding === 'joined' ? (
           <GoWriteMessageButton
             color={color}
             price='15,000'
@@ -113,15 +112,14 @@ const FundingInfoPage = () => {
             isEnd={isEnd}
           />
         ) : (
-          funding === 'open' &&
-          isEnd === 'true' && <GoWriteCommentButton color={color} />
+          funding === 'open' && isEnd && <GoWriteCommentButton color={color} />
         )}
         <FundingSpan color={color} />
         <FundingPercentage color={color} />
         {funding === 'open' && <FundingParticipants />}
         <CongratsMessage list={tempList} ref={messageRef} />
       </SLayout>
-      {!(isEnd === 'true' && funding === 'join') && (
+      {!(isEnd && funding !== 'open') && (
         <BottomBackground Button={Btn(funding, isEnd, setModalShow)} />
       )}
       {modalShow && (
@@ -141,7 +139,8 @@ const SLayout = styled.div`
   justify-content: center;
   gap: 16px;
 
-  padding: 16px 16px 40px 16px;
+  padding: ${(props) =>
+    props.isend === 'true' ? '16px 16px 40px 16px' : '16px 16px 120px 16px'};
 `;
 
 const SBtnContainer = styled.div`
@@ -154,6 +153,8 @@ const SModalContainer = styled.div`
   flex-direction: column;
   gap: 12px;
   align-items: center;
+
+  padding: 32px 0 28px 0;
 `;
 
 const SBigTextWrapper = styled.span`
