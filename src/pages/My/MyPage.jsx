@@ -2,10 +2,15 @@ import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import NavComponent from '../../components/common/NavComponent';
+import profile from '../../assets/My/icn_profile.svg';
 
 const MyPage = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState('');
+  const onErrorImg = (e) => {
+    e.target.src = profile;
+  };
+
   const User = {
     id: '1',
     picture: '',
@@ -47,7 +52,7 @@ const MyPage = () => {
       </SHeader>
       <SProfileContainer>
         <SImageWrapper>
-          <img src={user.picture} alt='userPicture' />
+          <img src={user.picture} alt='userPicture' onError={onErrorImg} />
         </SImageWrapper>
         <SMyProfileContent>
           <SMyEditBtn onClick={handleEdit}>편집</SMyEditBtn>
