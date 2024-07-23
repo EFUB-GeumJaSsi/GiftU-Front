@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { ReactComponent as ProfileDefault } from '../../assets/common/profile_default.svg';
 
 const FundingParticipants = ({
   name = '김이화',
@@ -17,7 +18,11 @@ const FundingParticipants = ({
 }) => {
   const participantItem = (it, idx) => (
     <SItemContainer key={idx}>
-      <SProfileWrapper src={it.image} alt='profile' />
+      {it.image ? (
+        <SProfileWrapper src={it.image} alt='profile' />
+      ) : (
+        <SProfileDefault alt='default' />
+      )}
       <SNameWrapper>{it.name}</SNameWrapper>
     </SItemContainer>
   );
@@ -96,6 +101,12 @@ const SProfileWrapper = styled.img`
 
   border-radius: 50%;
   background: var(--gray-300);
+`;
+const SProfileDefault = styled(ProfileDefault)`
+  width: 48px;
+  height: 48px;
+
+  border-radius: 50%;
 `;
 const SNameWrapper = styled.span`
   width: 61px;
