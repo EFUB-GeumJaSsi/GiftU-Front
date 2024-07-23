@@ -1,10 +1,9 @@
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useState } from 'react';
-import BackHeaderComponent from '../../components/common/BackHeaderComponent';
-import ButtonComponent from '../../components/common/ButtonComponent';
-import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
+import BackHeader from '../../components/common/BackHeader';
+import Button from '../../components/common/Button';
+import BottomBackground from '../../components/common/BottomBackground';
 import FundingPercentage from '../../components/FundingInfo/FundingPercentage';
-
 const tempList = [
   {
     name: '이름은최대8글자',
@@ -22,15 +21,14 @@ const tempList = [
       '축하 메시지가 표시될 거예요 메시지는 여러 줄이어도 모두 표시되도록 설정해 주세요',
   },
 ];
-
 const Btn = (
-  <ButtonComponent
+  <Button
     btnInfo={{
       text: '수정하기',
       width: '335px',
       color: 'orange',
     }}
-  ></ButtonComponent>
+  ></Button>
 );
 const MessageEditPage = () => {
   const [MsgText, setMsgText] = useState(tempList[0].message);
@@ -40,31 +38,32 @@ const MessageEditPage = () => {
   };
   return (
     <SLayout>
-      <BackHeaderComponent text=''></BackHeaderComponent>
-      <SContentContainer>
+      <BackHeader text=''></BackHeader>
+      <SForm>
         <FundingPercentage color='orange'></FundingPercentage>
-        <SSmallForm>
+        <SFieldset>
           <SRequiredLegend>금액</SRequiredLegend>
-          <SSmallTextarea>{tempList[0].price}</SSmallTextarea>
-        </SSmallForm>
-        <SSmallForm>
+          <SInput type='text' value={tempList[0].price} readonly />
+        </SFieldset>
+        <SFieldset>
           <SRequiredLegend>이름</SRequiredLegend>
-          <SSmallTextarea>{tempList[0].name}</SSmallTextarea>
-        </SSmallForm>
-        <SBigForm>
+          <SInput type='text' value={tempList[0].name} readonly></SInput>
+        </SFieldset>
+        <SFieldset>
           <SOptionalLegend>축하메세지</SOptionalLegend>
           <SBigTextarea
             onChange={handleInputChange}
             value={MsgText}
           ></SBigTextarea>
-        </SBigForm>
-      </SContentContainer>
+        </SFieldset>
+      </SForm>
       <SBtnWrapper>
-        <BottomBackgroundComponent Button={Btn} />
+        <BottomBackground Button={Btn} />
       </SBtnWrapper>
     </SLayout>
   );
 };
+export default MessageEditPage;
 
 const SLayout = styled.div`
   display: flex;
@@ -72,7 +71,7 @@ const SLayout = styled.div`
   align-items: center;
   gap: 24px;
 `;
-const SContentContainer = styled.div`
+const SForm = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -80,40 +79,11 @@ const SContentContainer = styled.div`
 
   width: fit-content;
 `;
-const SSmallForm = styled.form`
+const SFieldset = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 8px;
-
-  width: 335px;
-  height: 94px;
-`;
-const SRequiredLegend = styled.legend`
-  display: flex;
-  width: 76px;
-  height: 22px;
-  gap: 8px;
-
-  padding: 0px 8px 0px 8px;
-
-  color: var(--black);
-  font-size: 16px;
-  font-weight: 500;
-
-  &::after {
-    content: '*';
-    color: var(--orange-pri);
-  }
-`;
-const SBigForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 8px;
-
-  width: 335px;
-  height: 210px;
 `;
 const SOptionalLegend = styled.legend`
   display: flex;
@@ -122,18 +92,23 @@ const SOptionalLegend = styled.legend`
   gap: 8px;
 
   padding: 0px 8px 0px 8px;
-
   color: var(--black);
   font-size: 16px;
   font-weight: 500;
 `;
-const SSmallTextarea = styled.textarea`
+const SRequiredLegend = styled(SOptionalLegend)`
+  &::after {
+    content: '*';
+    color: var(--orange-pri);
+  }
+`;
+const SInput = styled.input`
   display: flex;
   flex-direction: column;
   justify-content: center;
   height: 64px;
 
-  padding: 24px;
+  padding: 0px 24px 0px 24px;
 
   border: 2px solid transparent;
   border-radius: 16px;
@@ -163,12 +138,9 @@ const SBigTextarea = styled.textarea`
   resize: none;
   &:focus {
     border: 2px solid var(--orange-pri);
-    outline: none;
   }
 `;
 const SBtnWrapper = styled.div`
   position: fixed;
   bottom: 0;
 `;
-
-export default MessageEditPage;
