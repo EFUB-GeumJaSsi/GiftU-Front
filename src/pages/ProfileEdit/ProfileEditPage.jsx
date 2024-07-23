@@ -5,6 +5,7 @@ import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
 import BackHeader from '../../components/common/BackHeader';
 import Button from '../../components/common/Button';
+import BottomBackground from '../../components/common/BottomBackground';
 import { ReactComponent as Camera } from '../../assets/common/camera.svg';
 import { ReactComponent as Calendar } from '../../assets/common/calendar.svg';
 const ProfileEditPage = () => {
@@ -33,6 +34,15 @@ const ProfileEditPage = () => {
       setShowCalendar(false);
     }
   };
+  const Btn = (
+    <Button
+      btnInfo={{
+        text: '저장',
+        width: '335px',
+        color: 'jade',
+      }}
+    ></Button>
+  );
 
   return (
     <SLayout>
@@ -43,27 +53,27 @@ const ProfileEditPage = () => {
           <Camera></Camera>
         </SImageButtonWrapper>
       </SImageContainer>
-      <SContentsContainer>
-        <SContentContainer>
-          <STitleContainer>닉네임</STitleContainer>
-          <STextWrapper
+      <SContentContainer>
+        <SForm>
+          <SLegend>닉네임</SLegend>
+          <STextarea
             name='nickname'
             placeholder='닉네임을 입력해 주세요!'
             value={userInfo.nickname}
             onChange={handleInfoChange}
           />
-        </SContentContainer>
-        <SContentContainer>
-          <STitleContainer>이메일</STitleContainer>
-          <STextWrapper
+        </SForm>
+        <SForm>
+          <SLegend>이메일</SLegend>
+          <STextarea
             name='email'
             placeholder='이메일을 입력해 주세요!'
             value={userInfo.email}
             onChange={handleInfoChange}
           />
-        </SContentContainer>
-        <SContentContainer>
-          <STitleContainer>생일</STitleContainer>
+        </SForm>
+        <SForm>
+          <SLegend>생일</SLegend>
           <SInputContainer onClick={() => setShowCalendar(!showCalendar)}>
             <SInput
               type='text'
@@ -89,11 +99,11 @@ const ProfileEditPage = () => {
               />
             </SCalendarWrapper>
           )}
-        </SContentContainer>
-      </SContentsContainer>
-      <SButtonWrapper>
-        <Button btnInfo={{ text: '저장', color: 'jade' }} />
-      </SButtonWrapper>
+        </SForm>
+      </SContentContainer>
+      <SBtnWrapper>
+        <BottomBackground Button={Btn} />
+      </SBtnWrapper>
     </SLayout>
   );
 };
@@ -105,19 +115,20 @@ const SLayout = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  position: fixed;
 `;
 
 const SImageContainer = styled.div`
   position: relative;
+
   width: 96px;
   height: 96px;
-  margin: 25px;
+  margin: 40px;
 `;
 
 const SImageWrapper = styled.div`
   width: 100%;
   height: 100%;
+
   border-radius: 50%;
   background-color: var(--gray-300);
 `;
@@ -128,44 +139,54 @@ const SImageButtonWrapper = styled.div`
   right: 0;
 `;
 
-const SContentsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 335px;
-  gap: 24px;
-`;
-
 const SContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  gap: 25px;
+
   width: 335px;
-  height: 94px;
-  gap: 8px;
 `;
 
-const STitleContainer = styled.div`
+const SForm = styled.form`
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+
+  width: 335px;
+  height: 94px;
+`;
+
+const SLegend = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
   width: 58px;
   height: 22px;
   padding: 0px 8px;
-  gap: 8px;
+
   color: var(--gray-400);
 `;
 
-const STextWrapper = styled.input`
+const STextarea = styled.textarea`
   display: flex;
   justify-content: center;
+
   height: 100%;
-  padding: 15px;
+  padding: 24px;
+
   border: 2px solid transparent;
   border-radius: 16px;
+
   color: var(--black);
   background-color: var(--gray-100);
+
   font-weight: 500;
   font-size: 16px;
+
+  resize: none;
   &::placeholder {
     color: var(--black);
   }
@@ -179,11 +200,14 @@ const SInput = styled.input`
   display: flex;
   justify-content: center;
   align-items: center;
+
   width: 100%;
   height: 90%;
-  padding: 15px 50px 15px 15px;
+  padding: 15px 50px 15px 24px;
+
   border-radius: 16px;
   background-color: var(--gray-100);
+
   font-weight: 500;
   font-size: 16px;
   &::placeholder {
@@ -193,27 +217,24 @@ const SInput = styled.input`
 
 const SBdayIconWrapper = styled.div`
   position: absolute;
-  right: 15px;
+  right: 24px;
 `;
 
 const SInputContainer = styled.div`
   display: flex;
   align-items: center;
+
   margin-top: 8px;
   position: relative;
   width: 100%;
 `;
-
-const SButtonWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  position: fixed;
-  bottom: 0;
-`;
-
 const SCalendarWrapper = styled.div`
   position: absolute;
   left: 0px;
   background-color: var(--white);
 `;
 const DayPickerStyled = styled(DayPicker)``;
+const SBtnWrapper = styled.div`
+  position: fixed;
+  bottom: 0;
+`;

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import TagComponent from '../common/TagComponent';
 const SearchResults = ({ results }) => {
   return (
     <SResultsContainer>
@@ -19,9 +20,12 @@ const SearchResults = ({ results }) => {
                 <SBoldWrapper>마감</SBoldWrapper>
                 {result.endDate}
               </div>
-              <div id='tag'>
-                <div id='stateTag'>{result.stateTag}</div>
-                <div id='isFriend'>{result.isFriend}</div>
+              <div>
+                {result.stateTag == '진행중' ? (
+                  <TagComponent text='진행중' color='orange'></TagComponent>
+                ) : (
+                  <TagComponent text='종료' color='gray'></TagComponent>
+                )}
               </div>
             </SContentWrapper>
           </SResultItem>
@@ -91,24 +95,6 @@ const SContentWrapper = styled.div`
     display: flex;
     flex-direction: row;
     gap: 4px;
-  }
-  #tag {
-    display: flex;
-    flex-direction: row;
-    gap: 7px;
-    margin-top: 3px;
-    #stateTag {
-      padding: 4px 8px 4px 8px;
-      border-radius: 20px;
-      background-color: var(--jade-sec);
-      color: var(--jade-pri);
-    }
-    #isFriend {
-      padding: 4px 8px 4px 8px;
-      border-radius: 20px;
-      background-color: var(--orange-sec);
-      color: var(--orange-pri);
-    }
   }
 `;
 const SBoldWrapper = styled.div`

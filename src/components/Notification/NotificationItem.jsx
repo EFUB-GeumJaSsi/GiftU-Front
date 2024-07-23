@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const NotificationItem = ({ image, name, message, time }) => {
+const NotificationItem = ({ image, name, message, time, onClick }) => {
   return (
-    <SLayout>
-      <img src={image}></img>
+    <SLayout onClick={onClick}>
+      <SImg src={image}/>
       <STextContainer>
         <STextboxContainer>
           <SNameWrapper>{name}</SNameWrapper>
@@ -18,19 +18,24 @@ const NotificationItem = ({ image, name, message, time }) => {
 export default NotificationItem;
 
 const SLayout = styled.div`
-  img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: #d4d4d4;
-  }
   display: flex;
   flex-direction: row;
   align-items: center;
+  gap: 10px;
+
   width: 335px;
   height: 72px;
-  gap: 10px;
+
   border-bottom: 1px solid var(--gray-100);
+
+  cursor: pointer;
+`;
+const SImg = styled.img`
+  width: 40px;
+  height: 40px;
+
+  border-radius: 50%;
+  background-color: #d4d4d4;
 `;
 const STextContainer = styled.div`
   display: flex;
@@ -41,10 +46,13 @@ const STextContainer = styled.div`
 const STextboxContainer = styled.div`
   display: flex;
   flex-direction: row;
-  font-size: 16px;
   gap: 4px;
+
   width: 268px;
   height: 22px;
+
+  font-size: 16px;
+
   overflow: hidden;
 `;
 const SNameWrapper = styled.div`
@@ -55,11 +63,13 @@ const SNameWrapper = styled.div`
   max-width: 40%;
 `;
 const SMessageWrapper = styled.div`
+  max-width: 50%;
+
   font-weight: 400;
   white-space: nowrap;
-  overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 50%;
+
+  overflow: hidden;
 `;
 const STimeWrapper = styled.div`
   font-size: 12px;

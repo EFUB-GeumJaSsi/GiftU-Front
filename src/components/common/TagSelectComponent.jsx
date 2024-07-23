@@ -22,7 +22,7 @@ const TagSelectComponent = ({ buttons }) => {
   return (
     <SLayout>
       {buttons.map((btn, index) => (
-        <SBtn key={index}>
+        <SBtn key={index} onClick={btn.onClick}>
           <StyledNavLink
             to={btn.link}
             activeclassname='active'
