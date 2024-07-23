@@ -22,7 +22,7 @@ const ReviewEditPage = () => {
     <SLayout>
       <BackHeaderComponent text='선물후기'></BackHeaderComponent>
       <SContentContainer>
-        <FundingParticipants></FundingParticipants>
+        <FundingParticipants />
         <SForm>
           <SLegend>선물 후기</SLegend>
           <STextarea
@@ -86,6 +86,7 @@ const STextarea = styled.textarea`
   }
   &:focus {
     border: 2px solid var(--jade-pri);
+    outline: none;
   }
 `;
 

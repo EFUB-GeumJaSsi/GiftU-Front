@@ -104,7 +104,7 @@ const ProfileEditPage = () => {
               readOnly
             />
             <SBdayIconWrapper>
-              <Calendar></Calendar>
+              <Calendar />
             </SBdayIconWrapper>
           </SInputContainer>
           {showCalendar && (

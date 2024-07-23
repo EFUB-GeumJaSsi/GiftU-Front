@@ -37,7 +37,7 @@ const MessageEditPage = () => {
   };
   return (
     <SLayout>
-      <BackHeaderComponent text=''></BackHeaderComponent>
+      <BackHeaderComponent text='축하메세지' />
       <SForm>
         <FundingPercentage color='orange'></FundingPercentage>
         <SFieldset>
