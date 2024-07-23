@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-// 인증이 필요 없는 요청 (단순 GET)
+// 인증이 필요 없는 요청
 const api = (options) => {
   const instance = axios.create({
     baseURL: `${process.env.SERVER_URL}`,
