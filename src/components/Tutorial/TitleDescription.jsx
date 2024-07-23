@@ -19,7 +19,6 @@ const TitleDescription = ({
   );
 };
 
-export default TitleDescription;
 const SLayout = styled.div`
   display: flex;
   flex-direction: column;
@@ -59,3 +58,5 @@ const STextWrapper = styled.div`
   font-size: 14px;
   color: var(--gray-500);
 `;
+
+export default TitleDescription;
