@@ -1,9 +1,7 @@
 ## ✅ PR 체크 리스트
 
 - [ ] PR 제목: n주차 | 작업사항 요약
-- [ ] Reviewers 설정
-- [ ] Assignees 설정
-- [ ] Labels 설정
+- [ ] Reviewers, Assignees, Labels, Milestone, Development 설정
 
 ## ✨ 작업사항
 
@@ -11,8 +9,7 @@
 
 ## 📸 구현 상태
 
-- 퍼블리싱: 스크린샷 첨부
-- API 연결: 동영상 첨부
+- 스크린샷, 동영상 등 첨부
 
 ## 💡 리뷰 요청사항
 
