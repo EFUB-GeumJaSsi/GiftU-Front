@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import BackHeader from '../../components/common/BackHeader';
+import BackHeaderComponent from '../../components/common/BackHeaderComponent';
 import TitleDescription from '../../components/Tutorial/TitleDescription';
 import { ReactComponent as Present } from '../../assets/Tutorial/present.svg';
 import { ReactComponent as Slider } from '../../assets/Tutorial/fnd_slider.svg';
@@ -13,7 +13,7 @@ import { ReactComponent as Calendar } from '../../assets/common/calendar.svg';
 const TutorialPage = () => {
   return (
     <>
-      <BackHeader text='튜토리얼' />
+      <BackHeaderComponent text='튜토리얼' />
       <SMakeFundingContainer>
         <SCategoryWrapper>펀딩 만들기</SCategoryWrapper>
         <TitleDescription

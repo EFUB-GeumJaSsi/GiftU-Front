@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
-import BackHeader from '../../components/common/BackHeader';
-import BottomBackground from '../../components/common/BottomBackground';
-import Button from '../../components/common/ButtonComponent';
+import BackHeaderComponent from '../../components/common/BackHeaderComponent';
+import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
+import ButtonComponent from '../../components/common/ButtonComponent';
 import FundingPercentage from '../../components/FundingInfo/FundingPercentage';
 import { addComma } from '../../components/FundingInfo/FundingPercentage';
 
@@ -46,7 +46,7 @@ const FundingJoinPage = () => {
 
   return (
     <>
-      <BackHeader />
+      <BackHeaderComponent />
       <SLayout>
         <FundingPercentage
           color='orange'
@@ -120,9 +120,9 @@ const FundingJoinPage = () => {
           </SContainer>
         </SSmallLayout>
       </SLayout>
-      <BottomBackground
+      <BottomBackgroundComponent
         Button={
-          <Button
+          <ButtonComponent
             btnInfo={
               price && isDone
                 ? { text: '결제하기', color: 'orange' }

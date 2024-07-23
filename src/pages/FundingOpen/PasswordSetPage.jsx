@@ -2,9 +2,9 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm, FormProvider } from 'react-hook-form';
-import BackHeader from '../../components/common/BackHeader';
-import Button from '../../components/common/Button';
-import BottomBackground from '../../components/common/BottomBackground';
+import BackHeaderComponent from '../../components/common/BackHeaderComponent';
+import ButtonComponent from '../../components/common/ButtonComponent';
+import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
 import PasswordComponent from '../../components/common/PasswordComponent';
 import { ReactComponent as OrangeLocker } from '../../assets/PasswordSet/icn_btn_no.svg';
 import { ReactComponent as BlueLocker } from '../../assets/PasswordSet/icn_btn_yes.svg';
@@ -42,7 +42,7 @@ const PasswordSetPage = () => {
   return (
     <FormProvider {...methods}>
       <SLayout>
-        <BackHeader />
+        <BackHeaderComponent />
         <SForm onSubmit={handleSubmit(onSubmit)}>
           <fieldset>
             <SLegend>공개 여부</SLegend>
@@ -97,9 +97,9 @@ const PasswordSetPage = () => {
             />
           )}
           <SButtonContainer>
-            <BottomBackground
+            <BottomBackgroundComponent
               Button={
-                <Button
+                <ButtonComponent
                   disabled={!isValid}
                   btnInfo={{
                     text: '완료',

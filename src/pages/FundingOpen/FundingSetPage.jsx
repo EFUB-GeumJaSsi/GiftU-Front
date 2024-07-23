@@ -2,9 +2,9 @@ import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import BackHeader from '../../components/common/BackHeader';
-import Button from '../../components/common/Button';
-import BottomBackground from '../../components/common/BottomBackground';
+import BackHeaderComponent from '../../components/common/BackHeaderComponent';
+import ButtonComponent from '../../components/common/ButtonComponent';
+import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
 
 const FundingSet = () => {
   const [currentDate, setCurrentDate] = useState('');
@@ -49,7 +49,7 @@ const FundingSet = () => {
 
   return (
     <SLayout>
-      <BackHeader />
+      <BackHeaderComponent />
       <SForm onSubmit={handleSubmit(onSubmit)}>
         <fieldset>
           <SLabel htmlFor='title'>제목</SLabel>
@@ -141,9 +141,9 @@ const FundingSet = () => {
             <SWarningWrapper>{errors.address.message}</SWarningWrapper>
           )}
         </fieldset>
-        <BottomBackground
+        <BottomBackgroundComponent
           Button={
-            <Button
+            <ButtonComponent
               disabled={!isValid}
               btnInfo={{
                 text: '완료',

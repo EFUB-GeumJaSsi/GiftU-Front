@@ -8,7 +8,7 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { ReactComponent as Back } from '../../assets/common/btn_back.svg';
 
-const BackHeader = ({ text, onClick }) => {
+const BackHeaderComponent = ({ text, onClick }) => {
   const navigate = useNavigate();
   const goBack = () => navigate(-1);
 
@@ -52,4 +52,4 @@ const STextWrapper = styled.span`
   line-height: 120%;
 `;
 
-export default BackHeader;
+export default BackHeaderComponent;

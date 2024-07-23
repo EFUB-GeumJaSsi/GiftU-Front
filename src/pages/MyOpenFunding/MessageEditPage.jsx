@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import BackHeader from '../../components/common/BackHeader';
-import Button from '../../components/common/Button';
-import BottomBackground from '../../components/common/BottomBackground';
+import BackHeaderComponent from '../../components/common/BackHeaderComponent';
+import ButtonComponent from '../../components/common/ButtonComponent';
+import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
 import FundingPercentage from '../../components/FundingInfo/FundingPercentage';
 
 const tempList = [
@@ -24,13 +24,13 @@ const tempList = [
 ];
 
 const Btn = (
-  <Button
+  <ButtonComponent
     btnInfo={{
       text: '수정하기',
       width: '335px',
       color: 'orange',
     }}
-  ></Button>
+  ></ButtonComponent>
 );
 const MessageEditPage = () => {
   const [MsgText, setMsgText] = useState(tempList[0].message);
@@ -40,7 +40,7 @@ const MessageEditPage = () => {
   };
   return (
     <SLayout>
-      <BackHeader text=''></BackHeader>
+      <BackHeaderComponent text=''></BackHeaderComponent>
       <SContentContainer>
         <FundingPercentage color='orange'></FundingPercentage>
         <SSmallForm>
@@ -60,7 +60,7 @@ const MessageEditPage = () => {
         </SBigForm>
       </SContentContainer>
       <SBtnWrapper>
-        <BottomBackground Button={Btn} />
+        <BottomBackgroundComponent Button={Btn} />
       </SBtnWrapper>
     </SLayout>
   );

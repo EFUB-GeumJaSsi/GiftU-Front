@@ -3,9 +3,9 @@ import { useState } from 'react';
 import { format } from 'date-fns';
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
-import BackHeader from '../../components/common/BackHeader';
-import Button from '../../components/common/Button';
-import BottomBackground from '../../components/common/BottomBackground';
+import BackHeaderComponent from '../../components/common/BackHeaderComponent';
+import ButtonComponent from '../../components/common/ButtonComponent';
+import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
 import { ReactComponent as Camera } from '../../assets/common/camera.svg';
 import { ReactComponent as Calendar } from '../../assets/common/calendar.svg';
 
@@ -36,18 +36,18 @@ const ProfileEditPage = () => {
     }
   };
   const Btn = (
-    <Button
+    <ButtonComponent
       btnInfo={{
         text: '저장',
         width: '335px',
         color: 'jade',
       }}
-    ></Button>
+    ></ButtonComponent>
   );
 
   return (
     <SLayout>
-      <BackHeader text='프로필 편집' />
+      <BackHeaderComponent text='프로필 편집' />
       <SImageContainer>
         <SImageWrapper />
         <SImageButtonWrapper>
@@ -103,7 +103,7 @@ const ProfileEditPage = () => {
         </SForm>
       </SContentContainer>
       <SBtnWrapper>
-        <BottomBackground Button={Btn} />
+        <BottomBackgroundComponent Button={Btn} />
       </SBtnWrapper>
     </SLayout>
   );

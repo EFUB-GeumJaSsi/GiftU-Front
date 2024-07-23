@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import FundingComponent from '../components/common/FundingComponent';
 import TagSelectComponent from '../components/common/TagSelectComponent';
-import BackHeader from '../components/common/BackHeader';
+import BackHeaderComponent from '../components/common/BackHeaderComponent';
 
 const ListPage = ({ headerText, buttons, message }) => {
   const [data, setData] = useState([]);
@@ -50,7 +50,7 @@ const ListPage = ({ headerText, buttons, message }) => {
   console.log({ headerText });
   return (
     <SLayout>
-      <BackHeader text={headerText} />
+      <BackHeaderComponent text={headerText} />
       <SNotiItemWrapper>
         <TagSelectComponent buttons={buttons} />
       </SNotiItemWrapper>

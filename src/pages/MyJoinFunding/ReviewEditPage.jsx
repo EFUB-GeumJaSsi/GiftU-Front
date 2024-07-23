@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import BackHeader from '../../components/common/BackHeader';
+import BackHeaderComponent from '../../components/common/BackHeaderComponent';
 import FundingParticipants from '../../components/FundingInfo/FundingParticipants';
-import Button from '../../components/common/Button';
-import BottomBackground from '../../components/common/BottomBackground';
+import ButtonComponent from '../../components/common/ButtonComponent';
+import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
 
 const ReviewEditPage = () => {
   const [reviewText, setReviewText] = useState('');
@@ -12,17 +12,17 @@ const ReviewEditPage = () => {
     setReviewText(e.target.value);
   };
   const Btn = (
-    <Button
+    <ButtonComponent
       btnInfo={{
         text: '완료',
         width: '335px',
         color: reviewText ? 'jade' : 'gray',
       }}
-    ></Button>
+    ></ButtonComponent>
   );
   return (
     <SLayout>
-      <BackHeader text='선물후기'></BackHeader>
+      <BackHeaderComponent text='선물후기'></BackHeaderComponent>
       <SContentContainer>
         <FundingParticipants></FundingParticipants>
         <SForm>
@@ -35,7 +35,7 @@ const ReviewEditPage = () => {
         </SForm>
       </SContentContainer>
       <SBtnWrapper>
-        <BottomBackground Button={Btn} />
+        <BottomBackgroundComponent Button={Btn} />
       </SBtnWrapper>
     </SLayout>
   );

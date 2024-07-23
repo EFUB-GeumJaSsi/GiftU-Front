@@ -1,15 +1,17 @@
 import styled from 'styled-components';
-import BackHeader from '../../components/common/BackHeader';
-import BottomBackground from '../../components/common/BottomBackground';
-import Button from '../../components/common/ButtonComponent';
+import BackHeaderComponent from '../../components/common/BackHeaderComponent';
+import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
+import ButtonComponent from '../../components/common/ButtonComponent';
 import { ReactComponent as GiftIcon } from '../../assets/FundingJoin/gift_icon.svg';
 
 const CompletePage = () => {
-  const Btn = <Button btnInfo={{ text: '홈으로 돌아가기', color: 'orange' }} />;
+  const Btn = (
+    <ButtonComponent btnInfo={{ text: '홈으로 돌아가기', color: 'orange' }} />
+  );
 
   return (
     <>
-      <BackHeader />
+      <BackHeaderComponent />
       <SLayout>
         <GiftIcon />
         <STextContainer>
@@ -21,7 +23,7 @@ const CompletePage = () => {
           </SSmallTextWrapper>
         </STextContainer>
       </SLayout>
-      <BottomBackground Button={Btn} />
+      <BottomBackgroundComponent Button={Btn} />
     </>
   );
 };

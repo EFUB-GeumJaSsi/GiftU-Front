@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 import { useRef, useState } from 'react';
-import BackHeader from '../../components/common/BackHeader';
+import BackHeaderComponent from '../../components/common/BackHeaderComponent';
 import FundingSpan from '../../components/FundingInfo/FundingSpan';
 import TopFundingInfo from '../../components/FundingInfo/TopFundingInfo';
 import FundingPercentage from '../../components/FundingInfo/FundingPercentage';
 import CongratsMessage from '../../components/FundingInfo/CongratsMessage';
-import BottomBackground from '../../components/common/BottomBackground';
-import Button from '../../components/common/ButtonComponent';
+import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
+import ButtonComponent from '../../components/common/ButtonComponent';
 import Modal from '../../components/common/ModalComponent';
 import {
   GoWriteCommentButton,
@@ -38,25 +38,29 @@ const Btn = (funding, isEnd, setModalShow) => {
     case 'joined':
       return (
         <SBtnContainer>
-          <Button btnInfo={{ text: '참여 취소', width: '104px' }}></Button>
-          <Button
+          <ButtonComponent
+            btnInfo={{ text: '참여 취소', width: '104px' }}
+          ></ButtonComponent>
+          <ButtonComponent
             btnInfo={{
               text: '축하 메시지 수정하기',
               width: '223px',
               color: 'orange',
             }}
-          ></Button>
+          ></ButtonComponent>
         </SBtnContainer>
       );
     // 내가 개설한 펀딩
     case 'open':
       if (isEnd) {
         return (
-          <Button btnInfo={{ text: '선물 후기 작성하기', color: 'jade' }} />
+          <ButtonComponent
+            btnInfo={{ text: '선물 후기 작성하기', color: 'jade' }}
+          />
         );
       } else {
         return (
-          <Button
+          <ButtonComponent
             btnInfo={{
               text: '개설 취소하기',
               onClick: () => setModalShow(true),
@@ -65,7 +69,9 @@ const Btn = (funding, isEnd, setModalShow) => {
         );
       }
     default:
-      return <Button btnInfo={{ text: '선물하기', color: 'orange' }} />;
+      return (
+        <ButtonComponent btnInfo={{ text: '선물하기', color: 'orange' }} />
+      );
   }
 };
 
@@ -99,7 +105,7 @@ const FundingInfoPage = () => {
 
   return (
     <>
-      <BackHeader />
+      <BackHeaderComponent />
       <SLayout isend={isEnd.toString()}>
         <TopFundingInfo color={color} tag={tag} />
         {isCommented && isEnd && <FundingComment color={color} />}
@@ -120,7 +126,7 @@ const FundingInfoPage = () => {
         <CongratsMessage list={tempList} ref={messageRef} />
       </SLayout>
       {!(isEnd && funding !== 'open') && (
-        <BottomBackground Button={Btn(funding, isEnd, setModalShow)} />
+        <BottomBackgroundComponent Button={Btn(funding, isEnd, setModalShow)} />
       )}
       {modalShow && (
         <Modal actionText='취소하기' setModalShow={setModalShow}>

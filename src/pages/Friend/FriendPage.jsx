@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import { arrayChop } from '../../components/common/CarouselComponent';
 import CarouselComponent from '../../components/common/CarouselComponent';
 import BottomSheetComponent from '../../components/common/BottomSheetComponent';
-import Button from '../../components/common/Button';
+import ButtonComponent from '../../components/common/ButtonComponent';
 import VerticalCard from '../../components/Friend/VerticalCard';
 import HorizontalCard from '../../components/Friend/HorizontalCard';
 import { ReactComponent as IcnUnion } from '../../assets/Friend/icn_union.svg';
@@ -107,7 +107,7 @@ const FriendPage = () => {
                   setEmail(event.target.value);
                 }}
               />
-              <Button
+              <ButtonComponent
                 type='submit'
                 btnInfo={
                   email ? { text: '완료', color: 'orange' } : { text: '완료' }

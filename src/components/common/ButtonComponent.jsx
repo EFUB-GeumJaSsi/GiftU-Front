@@ -6,11 +6,11 @@
 // width(생략 시 335px): 버튼 너비,
 // onClick: 이벤트 함수
 //
-// 예시 <Button btnInfo={{ text: '다음', color: 'jade' }} />
+// 예시 <ButtonComponent btnInfo={{ text: '다음', color: 'jade' }} />
 
 import styled from 'styled-components';
 
-const Button = ({ btnInfo, ...props }) => {
+const ButtonComponent = ({ btnInfo, ...props }) => {
   const { text, color, width } = btnInfo;
 
   // color: [배경 색, 글꼴 색]
@@ -42,4 +42,4 @@ const SWrapper = styled.button`
   line-height: 140%;
 `;
 
-export default Button;
+export default ButtonComponent;
