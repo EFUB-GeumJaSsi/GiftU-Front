@@ -144,13 +144,13 @@ const FundingSet = () => {
         <BottomBackgroundComponent
           Button={
             <ButtonComponent
+              type='submit'
               disabled={!isValid}
               btnInfo={{
                 text: '완료',
                 color: isValid ? 'jade' : 'gray',
                 width: '335px',
               }}
-              type='submit'
             />
           }
         />

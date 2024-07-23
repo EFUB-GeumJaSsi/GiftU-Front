@@ -63,8 +63,8 @@ const Btn = (funding, isEnd, setModalShow) => {
           <ButtonComponent
             btnInfo={{
               text: '개설 취소하기',
-              onClick: () => setModalShow(true),
             }}
+            onClick={() => setModalShow(true)}
           />
         );
       }

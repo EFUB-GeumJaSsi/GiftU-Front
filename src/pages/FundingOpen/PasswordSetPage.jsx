@@ -100,13 +100,13 @@ const PasswordSetPage = () => {
             <BottomBackgroundComponent
               Button={
                 <ButtonComponent
+                  id='primaryButton'
                   disabled={!isValid}
                   btnInfo={{
                     text: '완료',
                     color: 'jade',
                     type: 'submit',
                   }}
-                  id='primaryButton'
                 />
               }
             />
