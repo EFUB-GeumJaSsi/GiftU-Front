@@ -8,7 +8,6 @@ import ButtonComponent from '../../components/common/ButtonComponent';
 import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
 import { ReactComponent as Camera } from '../../assets/common/camera.svg';
 import { ReactComponent as Calendar } from '../../assets/common/calendar.svg';
-
 const ProfileEditPage = () => {
   const [showCalendar, setShowCalendar] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
@@ -47,15 +46,15 @@ const ProfileEditPage = () => {
 
   return (
     <SLayout>
-      <BackHeaderComponent text='프로필 편집' />
+      <BackHeader text='프로필 편집' />
       <SImageContainer>
         <SImageWrapper />
         <SImageButtonWrapper>
           <Camera></Camera>
         </SImageButtonWrapper>
       </SImageContainer>
-      <SContentContainer>
-        <SForm>
+      <SForm>
+        <SFieldset>
           <SLegend>닉네임</SLegend>
           <STextarea
             name='nickname'
@@ -63,8 +62,8 @@ const ProfileEditPage = () => {
             value={userInfo.nickname}
             onChange={handleInfoChange}
           />
-        </SForm>
-        <SForm>
+        </SFieldset>
+        <SFieldset>
           <SLegend>이메일</SLegend>
           <STextarea
             name='email'
@@ -72,8 +71,8 @@ const ProfileEditPage = () => {
             value={userInfo.email}
             onChange={handleInfoChange}
           />
-        </SForm>
-        <SForm>
+        </SFieldset>
+        <SFieldset>
           <SLegend>생일</SLegend>
           <SInputContainer onClick={() => setShowCalendar(!showCalendar)}>
             <SInput
@@ -100,10 +99,10 @@ const ProfileEditPage = () => {
               />
             </SCalendarWrapper>
           )}
-        </SForm>
-      </SContentContainer>
+        </SFieldset>
+      </SForm>
       <SBtnWrapper>
-        <BottomBackgroundComponent Button={Btn} />
+        <BottomBackground Button={Btn} />
       </SBtnWrapper>
     </SLayout>
   );
@@ -115,6 +114,7 @@ const SLayout = styled.div`
   align-items: center;
   justify-content: center;
 `;
+
 const SImageContainer = styled.div`
   position: relative;
 
@@ -122,6 +122,7 @@ const SImageContainer = styled.div`
   height: 96px;
   margin: 40px;
 `;
+
 const SImageWrapper = styled.div`
   width: 100%;
   height: 100%;
@@ -129,12 +130,14 @@ const SImageWrapper = styled.div`
   border-radius: 50%;
   background-color: var(--gray-300);
 `;
+
 const SImageButtonWrapper = styled.div`
   position: absolute;
   bottom: 0;
   right: 0;
 `;
-const SContentContainer = styled.div`
+
+const SForm = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -142,7 +145,8 @@ const SContentContainer = styled.div`
 
   width: 335px;
 `;
-const SForm = styled.form`
+
+const SFieldset = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -151,6 +155,7 @@ const SForm = styled.form`
   width: 335px;
   height: 94px;
 `;
+
 const SLegend = styled.div`
   display: flex;
   flex-direction: column;
@@ -162,6 +167,7 @@ const SLegend = styled.div`
 
   color: var(--gray-400);
 `;
+
 const STextarea = styled.textarea`
   display: flex;
   justify-content: center;
@@ -187,6 +193,7 @@ const STextarea = styled.textarea`
     outline: none;
   }
 `;
+
 const SInput = styled.input`
   display: flex;
   justify-content: center;
@@ -205,10 +212,12 @@ const SInput = styled.input`
     color: var(--gray-400);
   }
 `;
+
 const SBdayIconWrapper = styled.div`
   position: absolute;
   right: 24px;
 `;
+
 const SInputContainer = styled.div`
   display: flex;
   align-items: center;
