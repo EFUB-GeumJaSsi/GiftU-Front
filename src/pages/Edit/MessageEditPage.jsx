@@ -56,9 +56,7 @@ const MessageEditPage = () => {
           ></SBigTextarea>
         </SFieldset>
       </SForm>
-      <SBtnWrapper>
-        <BottomBackgroundComponent Button={Btn} />
-      </SBtnWrapper>
+      <BottomBackgroundComponent Button={Btn} />
     </SLayout>
   );
 };
@@ -73,6 +71,7 @@ const SForm = styled.div`
   flex-direction: column;
   justify-content: center;
   gap: 25px;
+
   width: fit-content;
 `;
 const SFieldset = styled.form`
@@ -83,10 +82,12 @@ const SFieldset = styled.form`
 `;
 const SOptionalLegend = styled.legend`
   display: flex;
+  gap: 8px;
+
   width: 76px;
   height: 22px;
-  gap: 8px;
   padding: 0px 8px 0px 8px;
+
   color: var(--black);
   font-size: 16px;
   font-weight: 500;
@@ -101,34 +102,42 @@ const SInput = styled.input`
   display: flex;
   flex-direction: column;
   justify-content: center;
+
   height: 64px;
   padding: 0px 24px 0px 24px;
+
   border: 2px solid transparent;
   border-radius: 16px;
+
   background-color: var(--gray-100);
+
   color: var(--black);
   font-weight: 500;
   font-size: 16px;
+
   resize: none;
 `;
 const SBigTextarea = styled.textarea`
   display: flex;
   flex-direction: column;
+
   height: 180px;
   padding: 24px;
+
   border: 2px solid transparent;
   border-radius: 16px;
   background-color: var(--gray-100);
+
   color: var(--black);
   font-weight: 500;
   font-size: 16px;
+
   resize: none;
+
   &:focus {
     border: 2px solid var(--orange-pri);
+    outline: none;
   }
 `;
-const SBtnWrapper = styled.div`
-  position: fixed;
-  bottom: 0;
-`;
+
 export default MessageEditPage;

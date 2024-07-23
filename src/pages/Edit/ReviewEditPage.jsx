@@ -32,9 +32,7 @@ const ReviewEditPage = () => {
           ></STextarea>
         </SForm>
       </SContentContainer>
-      <SBtnWrapper>
-        <BottomBackgroundComponent Button={Btn} />
-      </SBtnWrapper>
+      <BottomBackgroundComponent Button={Btn} />
     </SLayout>
   );
 };
@@ -49,6 +47,7 @@ const SContentContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   gap: 24px;
+
   width: 335px;
 `;
 const SForm = styled.form`
@@ -56,6 +55,7 @@ const SForm = styled.form`
   flex-direction: column;
   justify-content: center;
   gap: 8px;
+
   width: 335px;
   height: 210px;
 `;
@@ -67,25 +67,26 @@ const SLegend = styled.legend`
 const STextarea = styled.textarea`
   display: flex;
   flex-direction: column;
+
   height: 100%;
   padding: 20px;
+
   border: 2px solid transparent;
   border-radius: 16px;
   background-color: var(--gray-100);
+
   color: var(--black);
   font-weight: 500;
   font-size: 16px;
+
   resize: none;
+
   &::placeholder {
     color: var(--gray-400);
   }
   &:focus {
     border: 2px solid var(--jade-pri);
   }
-`;
-const SBtnWrapper = styled.div`
-  position: fixed;
-  bottom: 0;
 `;
 
 export default ReviewEditPage;
