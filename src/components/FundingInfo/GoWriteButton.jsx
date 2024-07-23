@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { ReactComponent as Next } from '../../assets/FundingInfo/icn_back.svg';
 
 // 후기 작성
-export const GoWriteCommentButton = ({ color, onClick }) => {
+const GoWriteCommentButton = ({ color, onClick }) => {
   return (
     <SLayout color={color} onClick={onClick}>
       <SContainer>
@@ -17,12 +17,12 @@ export const GoWriteCommentButton = ({ color, onClick }) => {
 };
 
 // 축하메시지 작성
-export const GoWriteMessageButton = ({
+const GoWriteMessageButton = ({
   color,
   price = '5,000',
   onClick,
   wroteMessage,
-  isEnd
+  isEnd,
 }) => {
   return (
     <SLayout color={color} onClick={onClick}>
@@ -65,13 +65,11 @@ const SLayout = styled.button`
   background: ${(props) =>
     props.color === 'orange' ? 'var(--orange-sec)' : 'var(--jade-pri)'};
 `;
-
 const SContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 4px;
 `;
-
 const STextWrapper = styled.span`
   color: ${(props) => (props.color ? 'var(--gray-500)' : 'var(--white)')};
   font-size: 14px;
@@ -82,19 +80,18 @@ const STextWrapper = styled.span`
 
   cursor: pointer;
 `;
-
 const SEmphaWrapper = styled(STextWrapper)`
   color: var(--orange-pri);
   font-weight: 500;
 `;
-
 const SBigTextWrapper = styled(STextWrapper)`
   font-size: 16px;
   font-weight: 600;
   line-height: 140%;
 `;
-
 const NextBtn = styled(Next)`
   fill: ${(props) =>
     props.color === 'orange' ? 'var(--orange-pri)' : 'var(--white)'};
 `;
+
+export { GoWriteCommentButton, GoWriteMessageButton };

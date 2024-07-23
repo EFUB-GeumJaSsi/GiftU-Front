@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import BackHeader from '../../components/common/BackHeader';
+import BackHeaderComponent from '../../components/common/BackHeaderComponent';
 import TitleDescription from '../../components/Tutorial/TitleDescription';
 import { ReactComponent as Present } from '../../assets/Tutorial/present.svg';
 import { ReactComponent as Slider } from '../../assets/Tutorial/fnd_slider.svg';
@@ -9,10 +9,11 @@ import { ReactComponent as Slider2 } from '../../assets/Tutorial/fnd_slider2.svg
 import { ReactComponent as Logo } from '../../assets/Tutorial/logo.svg';
 import { ReactComponent as Drop } from '../../assets/Tutorial/btn_drop.svg';
 import { ReactComponent as Calendar } from '../../assets/common/calendar.svg';
+
 const TutorialPage = () => {
   return (
     <>
-      <BackHeader text='튜토리얼' />
+      <BackHeaderComponent text='튜토리얼' />
       <SMakeFundingContainer>
         <SCategoryWrapper>펀딩 만들기</SCategoryWrapper>
         <TitleDescription
@@ -118,7 +119,6 @@ const TutorialPage = () => {
     </>
   );
 };
-export default TutorialPage;
 
 const SMakeFundingContainer = styled.div`
   display: flex;
@@ -234,3 +234,5 @@ const SPriceBtnContainer = styled.div`
 const SLogoWrapper = styled.div`
   padding: 40px;
 `;
+
+export default TutorialPage;

@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useForm } from 'react-hook-form';
-import BackHeader from '../../components/common/BackHeader';
-import Button from '../../components/common/Button';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import BottomBackground from '../../components/common/BottomBackground';
+import { useForm } from 'react-hook-form';
+import BackHeaderComponent from '../../components/common/BackHeaderComponent';
+import ButtonComponent from '../../components/common/ButtonComponent';
+import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
 
 const FundingSet = () => {
   const [currentDate, setCurrentDate] = useState('');
@@ -49,7 +49,7 @@ const FundingSet = () => {
 
   return (
     <SLayout>
-      <BackHeader />
+      <BackHeaderComponent />
       <SForm onSubmit={handleSubmit(onSubmit)}>
         <fieldset>
           <SLabel htmlFor='title'>제목</SLabel>
@@ -141,16 +141,16 @@ const FundingSet = () => {
             <SWarningWrapper>{errors.address.message}</SWarningWrapper>
           )}
         </fieldset>
-        <BottomBackground
+        <BottomBackgroundComponent
           Button={
-            <Button
+            <ButtonComponent
+              type='submit'
               disabled={!isValid}
               btnInfo={{
                 text: '완료',
                 color: isValid ? 'jade' : 'gray',
                 width: '335px',
               }}
-              type='submit'
             />
           }
         />
@@ -159,14 +159,11 @@ const FundingSet = () => {
   );
 };
 
-export default FundingSet;
-
 const SLayout = styled.div`
   display: flex;
   flex-flow: column nowrap;
   gap: 24px;
 `;
-
 const SForm = styled.form`
   display: flex;
   flex-flow: column nowrap;
@@ -175,7 +172,6 @@ const SForm = styled.form`
   width: 335px;
   margin: 0 auto;
 `;
-
 const SLabel = styled.label`
   display: block;
 
@@ -187,12 +183,10 @@ const SLabel = styled.label`
   font-weight: 500;
   line-height: 140%;
 `;
-
 const SInput = styled.input`
   background-color: var(--gray-100);
   border-radius: 16px;
 `;
-
 const STextInput = styled(SInput)`
   width: 335px;
 
@@ -207,7 +201,6 @@ const STextInput = styled(SInput)`
     border: 2px solid var(--jade-pri);
   }
 `;
-
 const SWarningWrapper = styled.div`
   margin-top: 8px;
   margin-left: 8px;
@@ -218,7 +211,6 @@ const SWarningWrapper = styled.div`
   font-weight: 500;
   line-height: 120%;
 `;
-
 const SDateContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -226,7 +218,6 @@ const SDateContainer = styled.div`
 
   width: 100%;
 `;
-
 const SCurrentDateInput = styled(SInput)`
   width: 160px;
   padding: 21px 22px;
@@ -242,7 +233,6 @@ const SDateInput = styled(SInput)`
     border: 2px solid var(--jade-pri);
   }
 `;
-
 const SAddressContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -250,7 +240,6 @@ const SAddressContainer = styled.div`
 
   width: 100%;
 `;
-
 const SAddressNumberContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -258,14 +247,12 @@ const SAddressNumberContainer = styled.div`
 
   width: 100%;
 `;
-
 const SAddressInput = styled(SInput)`
   width: 209px;
   padding: 21px 34px 21px 28px;
 
   box-sizing: border-box;
 `;
-
 const SButton = styled.button`
   align-self: center;
 
@@ -284,3 +271,5 @@ const SButton = styled.button`
     disabled ? 'var(--gray-500)' : 'var(--jade-pri)'};
   border-radius: 16px;
 `;
+
+export default FundingSet;

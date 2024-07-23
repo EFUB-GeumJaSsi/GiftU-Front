@@ -1,15 +1,17 @@
 import styled from 'styled-components';
-import BackHeader from '../../components/common/BackHeader';
-import BottomBackground from '../../components/common/BottomBackground';
-import Button from '../../components/common/ButtonComponent';
+import BackHeaderComponent from '../../components/common/BackHeaderComponent';
+import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
+import ButtonComponent from '../../components/common/ButtonComponent';
 import { ReactComponent as GiftIcon } from '../../assets/FundingJoin/gift_icon.svg';
 
 const CompletePage = () => {
-  const Btn = <Button btnInfo={{ text: '홈으로 돌아가기', color: 'orange' }} />;
+  const Btn = (
+    <ButtonComponent btnInfo={{ text: '홈으로 돌아가기', color: 'orange' }} />
+  );
 
   return (
     <>
-      <BackHeader />
+      <BackHeaderComponent />
       <SLayout>
         <GiftIcon />
         <STextContainer>
@@ -21,12 +23,10 @@ const CompletePage = () => {
           </SSmallTextWrapper>
         </STextContainer>
       </SLayout>
-      <BottomBackground Button={Btn} />
+      <BottomBackgroundComponent Button={Btn} />
     </>
   );
 };
-
-export default CompletePage;
 
 const SLayout = styled.div`
   display: flex;
@@ -37,24 +37,23 @@ const SLayout = styled.div`
 
   height: 80vh;
 `;
-
 const STextContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 24px;
   text-align: center;
 `;
-
 const SBigTextWrapper = styled.span`
   font-size: 20px;
   font-weight: 600;
   line-height: 140%;
 `;
-
 const SSmallTextWrapper = styled.p`
   color: var(--gray-500);
   font-size: 16px;
   font-weight: 400;
   line-height: 140%;
-  white-space: pre-line; 
+  white-space: pre-line;
 `;
+
+export default CompletePage;

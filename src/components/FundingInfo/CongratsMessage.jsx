@@ -14,8 +14,6 @@ const CongratsMessage = (props, ref) => {
   );
 };
 
-export default forwardRef(CongratsMessage);
-
 const SLayout = styled.div`
   display: flex;
   flex-direction: column;
@@ -28,12 +26,10 @@ const SLayout = styled.div`
   border-radius: 16px;
   background: var(--gray-100);
 `;
-
 const SContainer = styled.div`
   display: flex;
   gap: 8px;
 `;
-
 const STitleWrapper = styled.span`
   width: 97px;
   height: 17px;
@@ -44,7 +40,6 @@ const STitleWrapper = styled.span`
   font-weight: 500;
   line-height: 120%;
 `;
-
 const STextWrapper = styled.p`
   width: 190px;
 
@@ -54,3 +49,5 @@ const STextWrapper = styled.p`
   font-weight: 500;
   line-height: 120%;
 `;
+
+export default forwardRef(CongratsMessage);

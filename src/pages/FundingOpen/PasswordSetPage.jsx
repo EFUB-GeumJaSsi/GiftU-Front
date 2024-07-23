@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm, FormProvider } from 'react-hook-form';
+import BackHeaderComponent from '../../components/common/BackHeaderComponent';
+import ButtonComponent from '../../components/common/ButtonComponent';
+import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
+import PasswordComponent from '../../components/common/PasswordComponent';
 import { ReactComponent as OrangeLocker } from '../../assets/PasswordSet/icn_btn_no.svg';
 import { ReactComponent as BlueLocker } from '../../assets/PasswordSet/icn_btn_yes.svg';
-import BackHeader from '../../components/common/BackHeader';
-import Button from '../../components/common/Button';
-import BottomBackground from '../../components/common/BottomBackground';
-import PasswordComponent from '../../components/common/PasswordComponent';
 
 const PasswordSetPage = () => {
   const [bottomSheetShow, setBottomSheetShow] = useState(false);
@@ -42,7 +42,7 @@ const PasswordSetPage = () => {
   return (
     <FormProvider {...methods}>
       <SLayout>
-        <BackHeader />
+        <BackHeaderComponent />
         <SForm onSubmit={handleSubmit(onSubmit)}>
           <fieldset>
             <SLegend>공개 여부</SLegend>
@@ -97,16 +97,16 @@ const PasswordSetPage = () => {
             />
           )}
           <SButtonContainer>
-            <BottomBackground
+            <BottomBackgroundComponent
               Button={
-                <Button
+                <ButtonComponent
+                  id='primaryButton'
                   disabled={!isValid}
                   btnInfo={{
                     text: '완료',
                     color: 'jade',
                     type: 'submit',
                   }}
-                  id='primaryButton'
                 />
               }
             />
@@ -116,8 +116,6 @@ const PasswordSetPage = () => {
     </FormProvider>
   );
 };
-
-export default PasswordSetPage;
 
 const SLocker = ({ color }) => {
   return (
@@ -132,14 +130,12 @@ const SLayout = styled.div`
   flex-flow: column nowrap;
   height: 100vh;
 `;
-
 const SForm = styled.form`
   display: flex;
   flex-flow: column nowrap;
   width: 335px;
   margin: 20px 20px 0px 20px;
 `;
-
 const SLegend = styled.legend`
   margin-bottom: 40px;
   color: var(--black);
@@ -148,13 +144,11 @@ const SLegend = styled.legend`
   font-weight: 500;
   line-height: 140%;
 `;
-
 const SRadioContainer = styled.div`
   display: flex;
   flex-direction: row;
   margin-bottom: 16px;
 `;
-
 const SRadioInput = styled.input`
   display: none;
 
@@ -167,7 +161,6 @@ const SRadioInput = styled.input`
     }
   }
 `;
-
 const SRadioLabel = styled.label`
   display: flex;
   flex-direction: row;
@@ -178,7 +171,6 @@ const SRadioLabel = styled.label`
   background-color: var(--gray-100);
   border-radius: 16px;
 `;
-
 const STextContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -201,7 +193,6 @@ const STextContainer = styled.div`
     line-height: 140%;
   }
 `;
-
 const SLockerBackground = styled.div`
   display: flex;
   align-items: center;
@@ -212,9 +203,10 @@ const SLockerBackground = styled.div`
     props.color === 'orange' ? 'var(--orange-sec)' : 'var(--jade-sec)'};
   border-radius: 50%;
 `;
-
 const SButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
 `;
+
+export default PasswordSetPage;

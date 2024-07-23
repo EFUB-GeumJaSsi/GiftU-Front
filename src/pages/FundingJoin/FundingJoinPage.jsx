@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
-import BackHeader from '../../components/common/BackHeader';
-import BottomBackground from '../../components/common/BottomBackground';
-import Button from '../../components/common/ButtonComponent';
+import BackHeaderComponent from '../../components/common/BackHeaderComponent';
+import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
+import ButtonComponent from '../../components/common/ButtonComponent';
 import FundingPercentage from '../../components/FundingInfo/FundingPercentage';
 import { addComma } from '../../components/FundingInfo/FundingPercentage';
 
@@ -46,7 +46,7 @@ const FundingJoinPage = () => {
 
   return (
     <>
-      <BackHeader />
+      <BackHeaderComponent />
       <SLayout>
         <FundingPercentage
           color='orange'
@@ -120,9 +120,9 @@ const FundingJoinPage = () => {
           </SContainer>
         </SSmallLayout>
       </SLayout>
-      <BottomBackground
+      <BottomBackgroundComponent
         Button={
-          <Button
+          <ButtonComponent
             btnInfo={
               price && isDone
                 ? { text: '결제하기', color: 'orange' }
@@ -135,8 +135,6 @@ const FundingJoinPage = () => {
   );
 };
 
-export default FundingJoinPage;
-
 const SLayout = styled.div`
   display: flex;
   flex-direction: column;
@@ -145,24 +143,20 @@ const SLayout = styled.div`
 
   padding: 24px 20px 128px 20px;
 `;
-
 const SSmallLayout = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 24px;
 `;
-
 const SContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
 `;
-
 const STextBox = styled.div`
   display: flex;
 `;
-
 const STextWrapper = styled.span`
   margin-left: 8px;
 
@@ -171,7 +165,6 @@ const STextWrapper = styled.span`
   font-weight: 500;
   line-height: 140%;
 `;
-
 const SStarWrapper = styled(STextWrapper)`
   display: flex;
   justify-content: center;
@@ -181,7 +174,6 @@ const SStarWrapper = styled(STextWrapper)`
 
   color: var(--orange-pri);
 `;
-
 const SInputWrapper = styled.input`
   display: flex;
 
@@ -205,7 +197,6 @@ const SInputWrapper = styled.input`
     color: var(--gray-400);
   }
 `;
-
 const SWarningWrapper = styled.span`
   margin-left: 8px;
 
@@ -215,7 +206,6 @@ const SWarningWrapper = styled.span`
   font-weight: 500;
   line-height: 120%;
 `;
-
 const STextareaWrapper = styled.textarea`
   height: 132px;
   padding: 20px 24px;
@@ -236,7 +226,6 @@ const STextareaWrapper = styled.textarea`
     color: var(--gray-400);
   }
 `;
-
 const SButtonContainer = styled.div`
   display: grid;
   grid-template-columns: 2fr 1fr;
@@ -262,7 +251,6 @@ const SButtonContainer = styled.div`
     // 그림자가 없으면 그냥 설정한 색상이 꽉 찬 원으로만 나옵니다.
   }
 `;
-
 const SButtonWrapper = styled.label`
   display: flex;
   align-items: center;
@@ -283,3 +271,5 @@ const SButtonWrapper = styled.label`
 
   cursor: pointer;
 `;
+
+export default FundingJoinPage;

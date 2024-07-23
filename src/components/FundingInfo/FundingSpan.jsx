@@ -26,8 +26,6 @@ const FundingSpan = ({
   );
 };
 
-export default FundingSpan;
-
 const SLayout = styled.div`
   display: flex;
   flex-direction: column;
@@ -40,12 +38,10 @@ const SLayout = styled.div`
   border-radius: 16px;
   background: var(--gray-100);
 `;
-
 const SContainer = styled.div`
   display: flex;
   gap: 16px;
 `;
-
 const STitleWrapper = styled.span`
   width: 64px;
   height: 17px;
@@ -56,7 +52,6 @@ const STitleWrapper = styled.span`
   font-weight: 500;
   line-height: 120%;
 `;
-
 const STextWrapper = styled.span`
   color: var(--gray-500);
   font-size: 14px;
@@ -64,3 +59,5 @@ const STextWrapper = styled.span`
   font-weight: 500;
   line-height: 120%;
 `;
+
+export default FundingSpan;

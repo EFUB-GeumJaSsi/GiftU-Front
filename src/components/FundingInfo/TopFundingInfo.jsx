@@ -21,8 +21,6 @@ const TopFundingInfo = ({
   );
 };
 
-export default TopFundingInfo;
-
 const SLayout = styled.div`
   display: flex;
   flex-direction: column;
@@ -30,18 +28,15 @@ const SLayout = styled.div`
   align-items: center;
   gap: 16px;
 `;
-
 const SImageContainer = styled.div`
   position: relative;
 `;
-
 const SImageWrapper = styled.img`
   width: 312px;
   height: 312px;
 
   border-radius: 16px;
 `;
-
 const STagWrapper = styled.span`
   position: absolute;
   top: 20px;
@@ -58,20 +53,17 @@ const STagWrapper = styled.span`
   font-weight: 500;
   line-height: 140%;
 `;
-
 const STitleContainer = styled.div`
   justify-content: flex-start;
 
   width: 311px;
 `;
-
 const STitleWrapper = styled.span`
   font-size: 20px;
   font-style: normal;
   font-weight: 700;
   line-height: 140%;
 `;
-
 const STextWrapper = styled.p`
   width: 311px;
 
@@ -82,3 +74,5 @@ const STextWrapper = styled.p`
   line-height: 140%;
   word-break: break-all;
 `;
+
+export default TopFundingInfo;

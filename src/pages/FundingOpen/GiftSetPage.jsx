@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import BackHeader from '../../components/common/BackHeader';
+import BackHeaderComponent from '../../components/common/BackHeaderComponent';
 import PriceInputComponent from '../../components/common/PriceInputComponent';
-import BottomBackground from '../../components/common/BottomBackground';
-import Button from '../../components/common/Button';
+import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
+import ButtonComponent from '../../components/common/ButtonComponent';
 import icn_plus from '../../assets/FungingOpen/icn_plus.svg';
 
 const GiftSetPage = () => {
@@ -25,7 +25,7 @@ const GiftSetPage = () => {
 
   return (
     <SLayout>
-      <BackHeader />
+      <BackHeaderComponent />
       <SForm>
         <fieldset>
           <SLegend>가격</SLegend>
@@ -67,9 +67,9 @@ const GiftSetPage = () => {
           />
         </fieldset>
       </SForm>
-      <BottomBackground
+      <BottomBackgroundComponent
         Button={
-          <Button
+          <ButtonComponent
             type='submit'
             btnInfo={
               price && url && imageFile

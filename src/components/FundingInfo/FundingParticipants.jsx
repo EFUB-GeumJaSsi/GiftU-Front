@@ -17,11 +17,11 @@ const FundingParticipants = ({
 }) => {
   const participantItem = (it, idx) => (
     <SItemContainer key={idx}>
-      <SProfileWrapper src={it.image} alt='profile'/>
+      <SProfileWrapper src={it.image} alt='profile' />
       <SNameWrapper>{it.name}</SNameWrapper>
     </SItemContainer>
   );
-  
+
   return (
     <SLayout>
       <STextContainer>
@@ -38,8 +38,6 @@ const FundingParticipants = ({
   );
 };
 
-export default FundingParticipants;
-
 const SLayout = styled.div`
   display: flex;
   flex-direction: column;
@@ -50,7 +48,6 @@ const SLayout = styled.div`
   border-radius: 16px;
   background: var(--gray-100);
 `;
-
 const STextContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -58,14 +55,12 @@ const STextContainer = styled.div`
 
   margin: 20px 24px 0 24px;
 `;
-
 const STitleWrapper = styled.span`
   font-size: 17px;
   font-style: normal;
   font-weight: 700;
   line-height: 120%;
 `;
-
 const STextWrapper = styled.span`
   color: var(--gray-500);
   font-size: 14px;
@@ -73,11 +68,9 @@ const STextWrapper = styled.span`
   font-weight: 500;
   line-height: 120%;
 `;
-
 const SBoldTextWrapper = styled(STextWrapper)`
   color: var(--black);
 `;
-
 const SParticipantsContainer = styled.div`
   display: flex;
   overflow: scroll;
@@ -88,7 +81,6 @@ const SParticipantsContainer = styled.div`
     display: none;
   }
 `;
-
 const SItemContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -98,7 +90,6 @@ const SItemContainer = styled.div`
 
   padding: 16px 8px;
 `;
-
 const SProfileWrapper = styled.img`
   width: 48px;
   height: 48px;
@@ -106,7 +97,6 @@ const SProfileWrapper = styled.img`
   border-radius: 50%;
   background: var(--gray-300);
 `;
-
 const SNameWrapper = styled.span`
   width: 61px;
   height: 34px;
@@ -118,3 +108,5 @@ const SNameWrapper = styled.span`
   font-weight: 500;
   line-height: 120%;
 `;
+
+export default FundingParticipants;

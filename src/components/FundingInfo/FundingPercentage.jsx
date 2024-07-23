@@ -1,19 +1,18 @@
-import styled from 'styled-components';
-import { useState } from 'react';
-import { ReactComponent as Fold } from '../../assets/FundingInfo/fold 1.svg';
-
-export const addComma = (price) => {
-  const commaPrice = price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  return commaPrice;
-};
-
-
 // 축하메시지 수정 페이지에서 사용할 때 color, balance, giftList, joinPrice 넘겨주세요!
-
 // color(string): 프로그레스 바 색
 // balance(number): 달성까지 남은 금액
 // giftList(list): 가격대별 선물 리스트, 가격 오름차순 정렬
 // joinPrice(number): 펀딩 참여자가 참여한 금액
+
+const addComma = (price) => {
+  const commaPrice = price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  return commaPrice;
+};
+
+import styled from 'styled-components';
+import { useState } from 'react';
+import { ReactComponent as Fold } from '../../assets/FundingInfo/fold 1.svg';
+
 const FundingPercentage = ({
   type,
   color,
@@ -147,8 +146,6 @@ const FundingPercentage = ({
   );
 };
 
-export default FundingPercentage;
-
 const SLayout = styled.div`
   display: flex;
   flex-direction: column;
@@ -158,7 +155,6 @@ const SLayout = styled.div`
   border-radius: 16px;
   background: var(--gray-100);
 `;
-
 const STextContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -166,14 +162,12 @@ const STextContainer = styled.div`
 
   margin: 0 24px;
 `;
-
 const STitleWrapper = styled.span`
   font-size: 17px;
   font-style: normal;
   font-weight: 700;
   line-height: 120%;
 `;
-
 const STextWrapper = styled.span`
   color: var(--gray-500);
   font-size: 14px;
@@ -181,11 +175,9 @@ const STextWrapper = styled.span`
   font-weight: 500;
   line-height: 120%;
 `;
-
 const SBoldTextWrapper = styled(STextWrapper)`
   color: ${(props) => (props.joinPrice ? 'var(--orange-pri)' : 'var(--black)')};
 `;
-
 const SSmallTextWrapper = styled.span`
   margin-top: -4px;
 
@@ -195,7 +187,6 @@ const SSmallTextWrapper = styled.span`
   font-weight: 500;
   line-height: 120%;
 `;
-
 const SSliderContainer = styled.div`
   display: flex;
   align-items: center;
@@ -208,7 +199,6 @@ const SSliderContainer = styled.div`
   border-radius: 10px;
   background-color: var(--white);
 `;
-
 const SSliderWrapper = styled.progress`
   position: absolute;
   top: 62%;
@@ -230,7 +220,6 @@ const SSliderWrapper = styled.progress`
     border-radius: 30px;
   }
 `;
-
 const SPointContainer = styled.div`
   display: flex;
   position: absolute;
@@ -243,7 +232,6 @@ const SPointContainer = styled.div`
   justify-content: center;
   gap: 8px;
 `;
-
 const SPointTextWrapper = styled.span`
   min-height: 15px;
   min-width: 50px;
@@ -275,7 +263,6 @@ const SPointTextWrapper = styled.span`
     z-index: 999;
   }
 `;
-
 const SPointCircleWrapper = styled.div`
   width: 14px;
   height: 14px;
@@ -293,7 +280,6 @@ const SPointCircleWrapper = styled.div`
             : 'var(--jade-pri)'
           : 'var(--gray-300)'};
 `;
-
 const SButtonContainer = styled.button`
   display: flex;
   justify-content: center;
@@ -307,7 +293,6 @@ const SButtonContainer = styled.button`
   border-radius: 20px;
   background-color: var(--white);
 `;
-
 const SButtonWrapper = styled.span`
   color: ${(props) =>
     props.clicked
@@ -322,7 +307,6 @@ const SButtonWrapper = styled.span`
 
   cursor: pointer;
 `;
-
 const FoldBtn = styled(Fold)`
   fill: ${(props) =>
     props.clicked
@@ -331,14 +315,12 @@ const FoldBtn = styled(Fold)`
         : 'var(--jade-pri)'
       : 'var(--gray-400)'};
 `;
-
 const SItemLayout = styled.div`
   display: flex;
   flex-direction: column;
 
   margin: 16px 14px 0 14px;
 `;
-
 const SItemContainer = styled.div`
   display: flex;
   align-items: center;
@@ -348,7 +330,6 @@ const SItemContainer = styled.div`
   border-bottom: ${(props) =>
     props.idx !== props.length ? '1px solid var(--gray-300)' : '0'};
 `;
-
 const SImageWrapper = styled.img`
   width: 48px;
   height: 48px;
@@ -356,7 +337,6 @@ const SImageWrapper = styled.img`
   border-radius: 4px;
   background: var(--gray-300);
 `;
-
 const SItemTextContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -369,3 +349,6 @@ const SItemTextWrapper = styled.span`
   font-weight: 500;
   line-height: 120%;
 `;
+
+export default FundingPercentage;
+export { addComma };

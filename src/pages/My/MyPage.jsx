@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import NavComponent from '../../components/common/NavComponent';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import NavComponent from '../../components/common/NavComponent';
 
 const MyPage = () => {
   const navigate = useNavigate();
@@ -78,8 +78,6 @@ const MyPage = () => {
   );
 };
 
-export default MyPage;
-
 const SLayout = styled.div`
   display: flex;
   overflow: hidden;
@@ -90,7 +88,6 @@ const SLayout = styled.div`
 
   background-color: var(--gray-100);
 `;
-
 const SHeader = styled.header`
   display: block;
   align-self: flex-start;
@@ -103,7 +100,6 @@ const SHeader = styled.header`
     line-height: 140%;
   }
 `;
-
 const SProfileContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -114,7 +110,6 @@ const SProfileContainer = styled.div`
   height: 195px;
   margin-bottom: 39px;
 `;
-
 const SImageWrapper = styled.div`
   position: absolute;
   z-index: 11;
@@ -124,7 +119,6 @@ const SImageWrapper = styled.div`
 
   border-radius: 50%;
 `;
-
 const SMyProfileContent = styled.div`
   display: flex;
   flex-direction: column;
@@ -139,7 +133,6 @@ const SMyProfileContent = styled.div`
   border-radius: 16px;
   background: white;
 `;
-
 const SMyEditBtn = styled.button`
   display: flex;
   justify-content: center;
@@ -161,11 +154,9 @@ const SMyEditBtn = styled.button`
   font-weight: 500;
   line-height: 120%;
 `;
-
 const SNameWrapper = styled.div`
   margin-top: 56px;
 `;
-
 const SMyFriendBtn = styled.button`
   display: flex;
   justify-content: center;
@@ -182,7 +173,6 @@ const SMyFriendBtn = styled.button`
     color: var(--jade-pri);
   }
 `;
-
 const STextContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -199,7 +189,6 @@ const STextContainer = styled.div`
     line-height: 120%;
   }
 `;
-
 const SBtn = styled.button`
   align-self: flex-start;
 
@@ -209,7 +198,6 @@ const SBtn = styled.button`
   font-weight: 400;
   line-height: 140%;
 `;
-
 const SLine = styled.div`
   width: 335px;
   height: 1px;
@@ -219,7 +207,6 @@ const SLine = styled.div`
 
   background-color: var(--gray-200);
 `;
-
 const SDeleteAccountBtn = styled.button`
   align-self: flex-start;
 
@@ -235,3 +222,5 @@ const SDeleteAccountBtn = styled.button`
   line-height: 120%;
   text-decoration-line: underline;
 `;
+
+export default MyPage;

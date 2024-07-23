@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import FundingComponent from '../components/common/FundingComponent';
-import TagSelectComponent from '../components/common/TagSelectComponent';
-import BackHeader from '../components/common/BackHeader';
+import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import FundingComponent from '../../components/common/FundingComponent';
+import TagSelectComponent from '../../components/common/TagSelectComponent';
+import BackHeaderComponent from '../../components/common/BackHeaderComponent';
 
 const ListPage = ({ headerText, buttons, message }) => {
   const [data, setData] = useState([]);
@@ -50,7 +50,7 @@ const ListPage = ({ headerText, buttons, message }) => {
   console.log({ headerText });
   return (
     <SLayout>
-      <BackHeader text={headerText} />
+      <BackHeaderComponent text={headerText} />
       <SNotiItemWrapper>
         <TagSelectComponent buttons={buttons} />
       </SNotiItemWrapper>
@@ -71,7 +71,6 @@ const getFilter = (pathname) => {
       return '전체';
   }
 };
-
 const filterResults = (data, filter) => {
   return data.filter((result) => {
     if (filter === '전체') return true;
@@ -86,12 +85,10 @@ const SLayout = styled.div`
   flex-direction: column;
   align-items: center;
 `;
-
 const SNotiItemWrapper = styled.div`
   margin-top: 24px;
   margin-bottom: 20px;
 `;
-
 const SListWrapper = styled.div`
   margin: 0 auto;
 `;

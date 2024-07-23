@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useState } from 'react';
 import { format } from 'date-fns';
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
-import BackHeader from '../../components/common/BackHeader';
-import Button from '../../components/common/Button';
-import BottomBackground from '../../components/common/BottomBackground';
+import BackHeaderComponent from '../../components/common/BackHeaderComponent';
+import ButtonComponent from '../../components/common/ButtonComponent';
+import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
 import { ReactComponent as Camera } from '../../assets/common/camera.svg';
 import { ReactComponent as Calendar } from '../../assets/common/calendar.svg';
+
 const ProfileEditPage = () => {
   const [showCalendar, setShowCalendar] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
@@ -35,18 +36,18 @@ const ProfileEditPage = () => {
     }
   };
   const Btn = (
-    <Button
+    <ButtonComponent
       btnInfo={{
         text: '저장',
         width: '335px',
         color: 'jade',
       }}
-    ></Button>
+    ></ButtonComponent>
   );
 
   return (
     <SLayout>
-      <BackHeader text='프로필 편집' />
+      <BackHeaderComponent text='프로필 편집' />
       <SImageContainer>
         <SImageWrapper />
         <SImageButtonWrapper>
@@ -102,13 +103,11 @@ const ProfileEditPage = () => {
         </SForm>
       </SContentContainer>
       <SBtnWrapper>
-        <BottomBackground Button={Btn} />
+        <BottomBackgroundComponent Button={Btn} />
       </SBtnWrapper>
     </SLayout>
   );
 };
-
-export default ProfileEditPage;
 
 const SLayout = styled.div`
   display: flex;
@@ -116,7 +115,6 @@ const SLayout = styled.div`
   align-items: center;
   justify-content: center;
 `;
-
 const SImageContainer = styled.div`
   position: relative;
 
@@ -124,7 +122,6 @@ const SImageContainer = styled.div`
   height: 96px;
   margin: 40px;
 `;
-
 const SImageWrapper = styled.div`
   width: 100%;
   height: 100%;
@@ -132,13 +129,11 @@ const SImageWrapper = styled.div`
   border-radius: 50%;
   background-color: var(--gray-300);
 `;
-
 const SImageButtonWrapper = styled.div`
   position: absolute;
   bottom: 0;
   right: 0;
 `;
-
 const SContentContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -147,7 +142,6 @@ const SContentContainer = styled.div`
 
   width: 335px;
 `;
-
 const SForm = styled.form`
   display: flex;
   flex-direction: column;
@@ -157,7 +151,6 @@ const SForm = styled.form`
   width: 335px;
   height: 94px;
 `;
-
 const SLegend = styled.div`
   display: flex;
   flex-direction: column;
@@ -169,7 +162,6 @@ const SLegend = styled.div`
 
   color: var(--gray-400);
 `;
-
 const STextarea = styled.textarea`
   display: flex;
   justify-content: center;
@@ -195,7 +187,6 @@ const STextarea = styled.textarea`
     outline: none;
   }
 `;
-
 const SInput = styled.input`
   display: flex;
   justify-content: center;
@@ -214,12 +205,10 @@ const SInput = styled.input`
     color: var(--gray-400);
   }
 `;
-
 const SBdayIconWrapper = styled.div`
   position: absolute;
   right: 24px;
 `;
-
 const SInputContainer = styled.div`
   display: flex;
   align-items: center;
@@ -238,3 +227,5 @@ const SBtnWrapper = styled.div`
   position: fixed;
   bottom: 0;
 `;
+
+export default ProfileEditPage;

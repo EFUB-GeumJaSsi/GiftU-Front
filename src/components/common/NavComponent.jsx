@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { ReactComponent as GreyHomeIcon } from '../../assets/common/NavigationBar/grey_icn_home.svg';
@@ -48,93 +47,11 @@ const NavComponent = () => {
     </NavBottom>
   );
 };
-export default NavComponent;
 
-export const NavBottom = styled.div`
-  display: flex;
-  position: fixed;
-  justify-content: center;
-  align-items: center;
-  bottom: 0;
-  z-index: 1000;
-
-  width: 100%;
-  max-width: 375px;
-  height: 64px;
-
-  background-color: white;
-`;
-
-export const CircleContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1100;
-  bottom: -30px;
-
-  width: 80px;
-  height: 80px;
-`;
-
-export const CircleBackground = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  top: -40px;
-
-  width: 80px;
-  height: 80px;
-
-  border-radius: 40px;
-  background-color: white;
-`;
-
-export const CircleBlack = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  width: 64px;
-  height: 64px;
-
-  border-radius: 40px;
-  background-color: ${({ $isActive }) =>
-    $isActive ? 'var(--jade-pri)' : 'black'};
-`;
-
-export const ItemContainer = styled(NavLink)`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-
-  width: 67px;
-  height: 64px;
-
-  text-decoration: none;
-  gap: 8px;
-  color: var(--gray-400);
-
-  p {
-    font-size: 12px;
-    line-height: 120%;
-    color: var(--gray-400);
-  }
-
-  svg {
-    width: 24px;
-    height: 24px;
-  }
-`;
-
-export const NavIcon = ({ Icon, GreyIcon, isActive }) => {
+const NavIcon = ({ Icon, GreyIcon, isActive }) => {
   return isActive ? <Icon /> : <GreyIcon />;
 };
-
-export const NavItem = ({ to, Icon, GreyIcon, label, id }) => (
+const NavItem = ({ to, Icon, GreyIcon, label, id }) => (
   <ItemContainer
     to={to}
     className={({ isActive }) => (isActive ? 'active' : '')}
@@ -166,3 +83,81 @@ export const NavItem = ({ to, Icon, GreyIcon, label, id }) => (
     )}
   </ItemContainer>
 );
+
+const NavBottom = styled.div`
+  display: flex;
+  position: fixed;
+  justify-content: center;
+  align-items: center;
+  bottom: 0;
+  z-index: 1000;
+
+  width: 100%;
+  max-width: 375px;
+  height: 64px;
+
+  background-color: white;
+`;
+const CircleContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1100;
+  bottom: -30px;
+
+  width: 80px;
+  height: 80px;
+`;
+const CircleBackground = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: -40px;
+
+  width: 80px;
+  height: 80px;
+
+  border-radius: 40px;
+  background-color: white;
+`;
+const CircleBlack = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 64px;
+  height: 64px;
+
+  border-radius: 40px;
+  background-color: ${({ $isActive }) =>
+    $isActive ? 'var(--jade-pri)' : 'black'};
+`;
+const ItemContainer = styled(NavLink)`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+  width: 67px;
+  height: 64px;
+
+  text-decoration: none;
+  gap: 8px;
+  color: var(--gray-400);
+
+  p {
+    font-size: 12px;
+    line-height: 120%;
+    color: var(--gray-400);
+  }
+
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+`;
+
+export default NavComponent;

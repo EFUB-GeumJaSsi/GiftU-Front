@@ -1,3 +1,5 @@
+// 이 주석을 지우고 컴포넌트 사용법을 적어주세요
+
 import styled from 'styled-components';
 import TagComponent from './TagComponent';
 import { useNavigate } from 'react-router-dom';
@@ -52,12 +54,9 @@ const FundingComponent = ({ results = [], message, filter }) => {
   );
 };
 
-export default FundingComponent;
-
 const SLayout = styled.div`
   width: 100%;
 `;
-
 const SFundingsContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -68,7 +67,6 @@ const SFundingsContainer = styled.div`
   background-color: white;
   cursor: pointer;
 `;
-
 const SNoResultsWrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -83,7 +81,6 @@ const SNoResultsWrapper = styled.div`
     line-height: 140%;
   }
 `;
-
 const SFundingContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -93,7 +90,6 @@ const SFundingContainer = styled.div`
   background-color: white;
   cursor: pointer;
 `;
-
 const SImageContainer = styled.div`
   position: relative;
   width: 148px;
@@ -102,13 +98,11 @@ const SImageContainer = styled.div`
   border-radius: 16px;
   background: #d4d4d4;
 `;
-
 const STagWrapper = styled.div`
   position: absolute;
   top: 12px;
   right: 12px;
 `;
-
 const STitleWrapper = styled.div`
   width: 140px;
   height: 40px;
@@ -125,14 +119,12 @@ const STitleWrapper = styled.div`
     -webkit-box-orient: vertical;
   }
 `;
-
 const STextContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 4px;
   width: 140px;
 `;
-
 const STextWrapper = styled.div`
   display: flex;
   flex-direction: row;
@@ -148,3 +140,5 @@ const STextWrapper = styled.div`
     color: var(--gray-500);
   }
 `;
+
+export default FundingComponent;

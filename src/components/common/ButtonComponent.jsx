@@ -1,5 +1,3 @@
-import styled from 'styled-components';
-
 // btnInfo라는 객체를 props로 받습니다.
 // btnInfo에는 text, color, width, onClick 값을 설정할 수 있습니다.
 //
@@ -8,9 +6,11 @@ import styled from 'styled-components';
 // width(생략 시 335px): 버튼 너비,
 // onClick: 이벤트 함수
 //
-// 예시 <Button btnInfo={{ text: '다음', color: 'jade' }} />
+// 예시 <ButtonComponent btnInfo={{ text: '다음', color: 'jade' }} />
 
-const Button = ({ btnInfo, ...props }) => {
+import styled from 'styled-components';
+
+const ButtonComponent = ({ btnInfo, ...props }) => {
   const { text, color, width } = btnInfo;
 
   // color: [배경 색, 글꼴 색]
@@ -21,17 +21,11 @@ const Button = ({ btnInfo, ...props }) => {
   };
 
   return (
-    <SWrapper
-      color={btnColor[color]}
-      width={width}
-      {...props}
-    >
+    <SWrapper color={btnColor[color]} width={width} {...props}>
       {text}
     </SWrapper>
   );
 };
-
-export default Button;
 
 const SWrapper = styled.button`
   width: ${(props) => (props.width ? props.width : '335px')};
@@ -47,3 +41,5 @@ const SWrapper = styled.button`
   font-weight: 600;
   line-height: 140%;
 `;
+
+export default ButtonComponent;
