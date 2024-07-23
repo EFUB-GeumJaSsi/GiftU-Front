@@ -12,8 +12,6 @@ const TagComponent = ({ text, color }) => {
   return <SLayout color={btnColor[color]}>{text}</SLayout>;
 };
 
-export default TagComponent;
-
 const SLayout = styled.div`
   display: inline-flex;
   justify-content: center;
@@ -32,3 +30,5 @@ const SLayout = styled.div`
   font-weight: 600;
   line-height: 120%;
 `;
+
+export default TagComponent;

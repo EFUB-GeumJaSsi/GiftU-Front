@@ -159,8 +159,6 @@ const FundingSet = () => {
   );
 };
 
-export default FundingSet;
-
 const SLayout = styled.div`
   display: flex;
   flex-flow: column nowrap;
@@ -284,3 +282,5 @@ const SButton = styled.button`
     disabled ? 'var(--gray-500)' : 'var(--jade-pri)'};
   border-radius: 16px;
 `;
+
+export default FundingSet;

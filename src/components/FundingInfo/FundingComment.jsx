@@ -12,8 +12,6 @@ const FundingComment = ({
   );
 };
 
-export default FundingComment;
-
 const SContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -49,3 +47,5 @@ const STextWrapper = styled.p`
   font-weight: 500;
   line-height: 140%;
 `;
+
+export default FundingComment;

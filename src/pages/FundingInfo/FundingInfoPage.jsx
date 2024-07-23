@@ -131,8 +131,6 @@ const FundingInfoPage = () => {
   );
 };
 
-export default FundingInfoPage;
-
 const SLayout = styled.div`
   display: flex;
   flex-direction: column;
@@ -171,3 +169,5 @@ const SSmallTextWrapper = styled(SBigTextWrapper)`
   font-size: 12px;
   line-height: 120%;
 `;
+
+export default FundingInfoPage;

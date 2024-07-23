@@ -110,8 +110,6 @@ const NotificationPage = () => {
   );
 };
 
-export default NotificationPage;
-
 const SModalContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -169,3 +167,5 @@ const SBtnWrapper = styled.div`
   flex-flow: column nowrap;
   align-items: center;
 `;
+
+export default NotificationPage;

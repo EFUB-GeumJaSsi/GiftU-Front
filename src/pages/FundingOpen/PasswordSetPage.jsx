@@ -117,8 +117,6 @@ const PasswordSetPage = () => {
   );
 };
 
-export default PasswordSetPage;
-
 const SLocker = ({ color }) => {
   return (
     <SLockerBackground color={color}>
@@ -218,3 +216,5 @@ const SButtonContainer = styled.div`
   justify-content: center;
   width: 100%;
 `;
+
+export default PasswordSetPage;

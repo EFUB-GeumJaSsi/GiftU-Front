@@ -14,8 +14,6 @@ const CalendarFundingItem = ({ data = {} }) => {
   );
 };
 
-export default CalendarFundingItem;
-
 const SItemContainer = styled.div`
   display: flex;
   align-items: center;
@@ -67,3 +65,5 @@ const SNameWrapper = styled.span`
 
   cursor: pointer;
 `;
+
+export default CalendarFundingItem;

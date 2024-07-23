@@ -118,7 +118,6 @@ const TutorialPage = () => {
     </>
   );
 };
-export default TutorialPage;
 
 const SMakeFundingContainer = styled.div`
   display: flex;
@@ -234,3 +233,5 @@ const SPriceBtnContainer = styled.div`
 const SLogoWrapper = styled.div`
   padding: 40px;
 `;
+
+export default TutorialPage;

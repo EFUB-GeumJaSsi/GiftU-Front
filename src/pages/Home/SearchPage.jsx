@@ -52,8 +52,6 @@ const SearchPage = () => {
   );
 };
 
-export default SearchPage;
-
 const SLayout = styled.div``;
 const SSearchContainer = styled.div`
   display: flex;
@@ -96,3 +94,5 @@ const HLine = styled.div`
   border: 1px solid #f3f4f5;
   margin-bottom: 10px;
 `;
+
+export default SearchPage;

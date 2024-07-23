@@ -54,8 +54,6 @@ const FundingComponent = ({ results = [], message, filter }) => {
   );
 };
 
-export default FundingComponent;
-
 const SLayout = styled.div`
   width: 100%;
 `;
@@ -150,3 +148,5 @@ const STextWrapper = styled.div`
     color: var(--gray-500);
   }
 `;
+
+export default FundingComponent;

@@ -26,8 +26,6 @@ const CompletePage = () => {
   );
 };
 
-export default CompletePage;
-
 const SLayout = styled.div`
   display: flex;
   flex-direction: column;
@@ -56,5 +54,7 @@ const SSmallTextWrapper = styled.p`
   font-size: 16px;
   font-weight: 400;
   line-height: 140%;
-  white-space: pre-line; 
+  white-space: pre-line;
 `;
+
+export default CompletePage;

@@ -101,8 +101,6 @@ const PasswordComponent = ({
   );
 };
 
-export default PasswordComponent;
-
 const STextContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -173,3 +171,5 @@ const STextWrapper = styled.p`
   font-weight: 500;
   line-height: 120%;
 `;
+
+export default PasswordComponent;

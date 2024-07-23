@@ -40,7 +40,6 @@ const ReviewEditPage = () => {
     </SLayout>
   );
 };
-export default ReviewEditPage;
 
 const SLayout = styled.div`
   display: flex;
@@ -100,3 +99,5 @@ const SBtnWrapper = styled.div`
   position: fixed;
   bottom: 0;
 `;
+
+export default ReviewEditPage;

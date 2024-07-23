@@ -23,7 +23,6 @@ const TitleDescription = ({
   );
 };
 
-export default TitleDescription;
 const SContentboxContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -66,3 +65,5 @@ const SExplainWrapper = styled.div`
   font-size: 14px;
   color: var(--gray-500);
 `;
+
+export default TitleDescription;

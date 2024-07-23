@@ -35,8 +35,6 @@ const SearchResults = ({ results }) => {
   );
 };
 
-export default SearchResults;
-
 const SResultsContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -101,3 +99,5 @@ const SBoldWrapper = styled.div`
   color: var(--gray-500);
   font-weight: 500;
 `;
+
+export default SearchResults;

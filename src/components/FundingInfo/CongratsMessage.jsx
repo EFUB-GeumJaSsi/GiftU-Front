@@ -14,8 +14,6 @@ const CongratsMessage = (props, ref) => {
   );
 };
 
-export default forwardRef(CongratsMessage);
-
 const SLayout = styled.div`
   display: flex;
   flex-direction: column;
@@ -54,3 +52,5 @@ const STextWrapper = styled.p`
   font-weight: 500;
   line-height: 120%;
 `;
+
+export default forwardRef(CongratsMessage);

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { ReactComponent as Next } from '../../assets/FundingInfo/icn_back.svg';
 
 // 후기 작성
-export const GoWriteCommentButton = ({ color, onClick }) => {
+const GoWriteCommentButton = ({ color, onClick }) => {
   return (
     <SLayout color={color} onClick={onClick}>
       <SContainer>
@@ -17,12 +17,12 @@ export const GoWriteCommentButton = ({ color, onClick }) => {
 };
 
 // 축하메시지 작성
-export const GoWriteMessageButton = ({
+const GoWriteMessageButton = ({
   color,
   price = '5,000',
   onClick,
   wroteMessage,
-  isEnd
+  isEnd,
 }) => {
   return (
     <SLayout color={color} onClick={onClick}>
@@ -98,3 +98,5 @@ const NextBtn = styled(Next)`
   fill: ${(props) =>
     props.color === 'orange' ? 'var(--orange-pri)' : 'var(--white)'};
 `;
+
+export { GoWriteCommentButton, GoWriteMessageButton };

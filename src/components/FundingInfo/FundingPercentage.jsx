@@ -1,19 +1,18 @@
-import styled from 'styled-components';
-import { useState } from 'react';
-import { ReactComponent as Fold } from '../../assets/FundingInfo/fold 1.svg';
-
-export const addComma = (price) => {
-  const commaPrice = price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  return commaPrice;
-};
-
-
 // 축하메시지 수정 페이지에서 사용할 때 color, balance, giftList, joinPrice 넘겨주세요!
-
 // color(string): 프로그레스 바 색
 // balance(number): 달성까지 남은 금액
 // giftList(list): 가격대별 선물 리스트, 가격 오름차순 정렬
 // joinPrice(number): 펀딩 참여자가 참여한 금액
+
+const addComma = (price) => {
+  const commaPrice = price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  return commaPrice;
+};
+
+import styled from 'styled-components';
+import { useState } from 'react';
+import { ReactComponent as Fold } from '../../assets/FundingInfo/fold 1.svg';
+
 const FundingPercentage = ({
   type,
   color,
@@ -146,8 +145,6 @@ const FundingPercentage = ({
     </SLayout>
   );
 };
-
-export default FundingPercentage;
 
 const SLayout = styled.div`
   display: flex;
@@ -369,3 +366,6 @@ const SItemTextWrapper = styled.span`
   font-weight: 500;
   line-height: 120%;
 `;
+
+export default FundingPercentage;
+export { addComma };

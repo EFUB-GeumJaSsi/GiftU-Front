@@ -14,7 +14,6 @@ const NotificationItem = ({ image, name, message, time, onClick }) => {
     </SLayout>
   );
 };
-export default NotificationItem;
 
 const SLayout = styled.div`
   display: flex;
@@ -75,3 +74,5 @@ const STimeWrapper = styled.div`
   font-weight: 500;
   color: var(--gray-500);
 `;
+
+export default NotificationItem;

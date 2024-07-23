@@ -140,8 +140,6 @@ const Calendar = () => {
   );
 };
 
-export default Calendar;
-
 const SLayout = styled.div`
   display: flex;
   flex-direction: column;
@@ -246,3 +244,5 @@ const SItemLayout = styled.div`
   justify-content: center;
   gap: 12px;
 `;
+
+export default Calendar;

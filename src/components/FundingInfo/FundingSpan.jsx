@@ -26,8 +26,6 @@ const FundingSpan = ({
   );
 };
 
-export default FundingSpan;
-
 const SLayout = styled.div`
   display: flex;
   flex-direction: column;
@@ -64,3 +62,5 @@ const STextWrapper = styled.span`
   font-weight: 500;
   line-height: 120%;
 `;
+
+export default FundingSpan;

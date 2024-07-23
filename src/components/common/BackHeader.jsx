@@ -20,8 +20,6 @@ const BackHeader = ({ text, onClick }) => {
   );
 };
 
-export default BackHeader;
-
 const SContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -55,3 +53,5 @@ const STextWrapper = styled.span`
   font-weight: 500;
   line-height: 120%;
 `;
+
+export default BackHeader;

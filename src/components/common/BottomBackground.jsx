@@ -21,8 +21,6 @@ const BottomBackground = ({ Button }) => {
   return <SLayout>{Button}</SLayout>;
 };
 
-export default BottomBackground;
-
 const SLayout = styled.div`
   display: flex;
   position: fixed;
@@ -36,3 +34,5 @@ const SLayout = styled.div`
   border-top: 1px solid var(--gray-100);
   background: var(--white);
 `;
+
+export default BottomBackground;

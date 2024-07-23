@@ -135,8 +135,6 @@ const FundingJoinPage = () => {
   );
 };
 
-export default FundingJoinPage;
-
 const SLayout = styled.div`
   display: flex;
   flex-direction: column;
@@ -283,3 +281,5 @@ const SButtonWrapper = styled.label`
 
   cursor: pointer;
 `;
+
+export default FundingJoinPage;

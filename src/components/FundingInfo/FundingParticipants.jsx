@@ -17,11 +17,11 @@ const FundingParticipants = ({
 }) => {
   const participantItem = (it, idx) => (
     <SItemContainer key={idx}>
-      <SProfileWrapper src={it.image} alt='profile'/>
+      <SProfileWrapper src={it.image} alt='profile' />
       <SNameWrapper>{it.name}</SNameWrapper>
     </SItemContainer>
   );
-  
+
   return (
     <SLayout>
       <STextContainer>
@@ -37,8 +37,6 @@ const FundingParticipants = ({
     </SLayout>
   );
 };
-
-export default FundingParticipants;
 
 const SLayout = styled.div`
   display: flex;
@@ -118,3 +116,5 @@ const SNameWrapper = styled.span`
   font-weight: 500;
   line-height: 120%;
 `;
+
+export default FundingParticipants;

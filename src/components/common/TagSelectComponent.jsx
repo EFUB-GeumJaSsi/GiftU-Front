@@ -35,8 +35,6 @@ const TagSelectComponent = ({ buttons }) => {
   );
 };
 
-export default TagSelectComponent;
-
 const SLayout = styled.div`
   display: flex;
   justify-content: center;
@@ -67,3 +65,5 @@ const StyledNavLink = styled(NavLink)`
     border-radius: 15px;
   }
 `;
+
+export default TagSelectComponent;

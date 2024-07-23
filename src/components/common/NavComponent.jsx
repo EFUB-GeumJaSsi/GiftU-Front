@@ -47,9 +47,8 @@ const NavComponent = () => {
     </NavBottom>
   );
 };
-export default NavComponent;
 
-export const NavBottom = styled.div`
+const NavBottom = styled.div`
   display: flex;
   position: fixed;
   justify-content: center;
@@ -64,7 +63,7 @@ export const NavBottom = styled.div`
   background-color: white;
 `;
 
-export const CircleContainer = styled.div`
+const CircleContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -75,7 +74,7 @@ export const CircleContainer = styled.div`
   height: 80px;
 `;
 
-export const CircleBackground = styled.div`
+const CircleBackground = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -89,7 +88,7 @@ export const CircleBackground = styled.div`
   background-color: white;
 `;
 
-export const CircleBlack = styled.div`
+const CircleBlack = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -103,7 +102,7 @@ export const CircleBlack = styled.div`
     $isActive ? 'var(--jade-pri)' : 'black'};
 `;
 
-export const ItemContainer = styled(NavLink)`
+const ItemContainer = styled(NavLink)`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -129,11 +128,11 @@ export const ItemContainer = styled(NavLink)`
   }
 `;
 
-export const NavIcon = ({ Icon, GreyIcon, isActive }) => {
+const NavIcon = ({ Icon, GreyIcon, isActive }) => {
   return isActive ? <Icon /> : <GreyIcon />;
 };
 
-export const NavItem = ({ to, Icon, GreyIcon, label, id }) => (
+const NavItem = ({ to, Icon, GreyIcon, label, id }) => (
   <ItemContainer
     to={to}
     className={({ isActive }) => (isActive ? 'active' : '')}
@@ -165,3 +164,5 @@ export const NavItem = ({ to, Icon, GreyIcon, label, id }) => (
     )}
   </ItemContainer>
 );
+
+export default NavComponent;

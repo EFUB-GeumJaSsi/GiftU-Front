@@ -27,8 +27,6 @@ const Button = ({ btnInfo, ...props }) => {
   );
 };
 
-export default Button;
-
 const SWrapper = styled.button`
   width: ${(props) => (props.width ? props.width : '335px')};
   height: 56px;
@@ -43,3 +41,5 @@ const SWrapper = styled.button`
   font-weight: 600;
   line-height: 140%;
 `;
+
+export default Button;

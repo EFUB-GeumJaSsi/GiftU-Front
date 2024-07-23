@@ -64,7 +64,6 @@ const MessageEditPage = () => {
     </SLayout>
   );
 };
-export default MessageEditPage;
 
 const SLayout = styled.div`
   display: flex;
@@ -170,3 +169,5 @@ const SBtnWrapper = styled.div`
   position: fixed;
   bottom: 0;
 `;
+
+export default MessageEditPage;

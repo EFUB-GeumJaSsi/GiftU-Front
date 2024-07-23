@@ -11,7 +11,7 @@ const GiftAddPage = () => {
       <Button btnInfo={{ color: 'jade', text: '펀딩 만들기' }} />
     </SBtnContainer>
   );
-  
+
   // 추가한 선물마다 번호를 매겨서 가장 나중에 추가한 선물 구분
   const giftList = [
     { price: 10000, title: '선물', num: 0 },
@@ -25,18 +25,12 @@ const GiftAddPage = () => {
       <BackHeader />
       <SLayout>
         <STitleWrapper>선물을 추가했어요!</STitleWrapper>
-        <FundingPercentage
-          color='jade'
-          giftList={giftList}
-          type='add'
-        />
+        <FundingPercentage color='jade' giftList={giftList} type='add' />
       </SLayout>
       <BottomBackground Button={Btn} />
     </>
   );
 };
-
-export default GiftAddPage;
 
 const SBtnContainer = styled.div`
   display: flex;
@@ -57,3 +51,5 @@ const STitleWrapper = styled.span`
   font-weight: 700;
   line-height: 140%;
 `;
+
+export default GiftAddPage;

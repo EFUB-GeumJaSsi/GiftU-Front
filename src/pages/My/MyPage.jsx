@@ -78,8 +78,6 @@ const MyPage = () => {
   );
 };
 
-export default MyPage;
-
 const SLayout = styled.div`
   display: flex;
   overflow: hidden;
@@ -235,3 +233,5 @@ const SDeleteAccountBtn = styled.button`
   line-height: 120%;
   text-decoration-line: underline;
 `;
+
+export default MyPage;

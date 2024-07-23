@@ -21,8 +21,6 @@ const TopFundingInfo = ({
   );
 };
 
-export default TopFundingInfo;
-
 const SLayout = styled.div`
   display: flex;
   flex-direction: column;
@@ -82,3 +80,5 @@ const STextWrapper = styled.p`
   line-height: 140%;
   word-break: break-all;
 `;
+
+export default TopFundingInfo;

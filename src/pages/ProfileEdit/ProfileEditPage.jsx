@@ -109,8 +109,6 @@ const ProfileEditPage = () => {
   );
 };
 
-export default ProfileEditPage;
-
 const SLayout = styled.div`
   display: flex;
   flex-direction: column;
@@ -239,3 +237,5 @@ const SBtnWrapper = styled.div`
   position: fixed;
   bottom: 0;
 `;
+
+export default ProfileEditPage;
