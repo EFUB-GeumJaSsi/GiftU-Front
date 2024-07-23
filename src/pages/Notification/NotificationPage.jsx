@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import NotificationItem from '../../components/Notification/NotificationItem';
 import TagSelectComponent from '../../components/common/TagSelectComponent';
 import Modal from '../../components/common/ModalComponent';

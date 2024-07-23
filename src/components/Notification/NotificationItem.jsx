@@ -1,10 +1,9 @@
-import React from 'react';
 import styled from 'styled-components';
 
 const NotificationItem = ({ image, name, message, time, onClick }) => {
   return (
     <SLayout onClick={onClick}>
-      <SImg src={image}/>
+      <SImg src={image} />
       <STextContainer>
         <STextboxContainer>
           <SNameWrapper>{name}</SNameWrapper>

@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
 import styled from 'styled-components';
-import { ReactComponent as Search } from '../../assets/common/search.svg';
+import { useState } from 'react';
 import SearchResults from '../../components/Home/SearchResults';
+import { ReactComponent as Search } from '../../assets/common/search.svg';
+
 const SearchPage = () => {
   const [search, setSearch] = useState('');
   const [results, setResults] = useState([]);

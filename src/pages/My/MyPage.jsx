@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import NavComponent from '../../components/common/NavComponent';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import NavComponent from '../../components/common/NavComponent';
 
 const MyPage = () => {
   const navigate = useNavigate();

@@ -14,8 +14,8 @@
 )}
 */
 
-import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
+import { useRef, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import BottomSheetComponent from '../../components/common/BottomSheetComponent';
 

@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useState } from 'react';
 import BackHeader from '../../components/common/BackHeader';
 import Button from '../../components/common/Button';
 import BottomBackground from '../../components/common/BottomBackground';
 import FundingPercentage from '../../components/FundingInfo/FundingPercentage';
+
 const Btn = (
   <Button
     btnInfo={{

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useState } from 'react';
 import { format } from 'date-fns';
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
@@ -8,6 +8,7 @@ import Button from '../../components/common/Button';
 import BottomBackground from '../../components/common/BottomBackground';
 import { ReactComponent as Camera } from '../../assets/common/camera.svg';
 import { ReactComponent as Calendar } from '../../assets/common/calendar.svg';
+
 const ProfileEditPage = () => {
   const [showCalendar, setShowCalendar] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);

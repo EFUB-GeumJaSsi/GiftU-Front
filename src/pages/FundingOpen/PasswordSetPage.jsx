@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm, FormProvider } from 'react-hook-form';
-import { ReactComponent as OrangeLocker } from '../../assets/PasswordSet/icn_btn_no.svg';
-import { ReactComponent as BlueLocker } from '../../assets/PasswordSet/icn_btn_yes.svg';
 import BackHeader from '../../components/common/BackHeader';
 import Button from '../../components/common/Button';
 import BottomBackground from '../../components/common/BottomBackground';
 import PasswordComponent from '../../components/common/PasswordComponent';
+import { ReactComponent as OrangeLocker } from '../../assets/PasswordSet/icn_btn_no.svg';
+import { ReactComponent as BlueLocker } from '../../assets/PasswordSet/icn_btn_yes.svg';
 
 const PasswordSetPage = () => {
   const [bottomSheetShow, setBottomSheetShow] = useState(false);

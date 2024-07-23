@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import BackHeader from '../../components/common/BackHeader';
 import Button from '../../components/common/Button';
-import { useNavigate } from 'react-router-dom';
 import BottomBackground from '../../components/common/BottomBackground';
 
 const FundingSet = () => {

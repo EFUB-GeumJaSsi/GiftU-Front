@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
+import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import FundingComponent from '../components/common/FundingComponent';
 import TagSelectComponent from '../components/common/TagSelectComponent';
 import BackHeader from '../components/common/BackHeader';

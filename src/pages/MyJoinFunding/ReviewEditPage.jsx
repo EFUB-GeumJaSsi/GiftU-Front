@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useState } from 'react';
 import BackHeader from '../../components/common/BackHeader';
 import FundingParticipants from '../../components/FundingInfo/FundingParticipants';
 import Button from '../../components/common/Button';
 import BottomBackground from '../../components/common/BottomBackground';
+
 const ReviewEditPage = () => {
   const [reviewText, setReviewText] = useState('');
 
