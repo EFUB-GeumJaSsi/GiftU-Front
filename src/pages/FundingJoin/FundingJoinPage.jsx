@@ -5,6 +5,7 @@ import BottomBackgroundComponent from '../../components/common/BottomBackgroundC
 import ButtonComponent from '../../components/common/ButtonComponent';
 import FundingPercentage from '../../components/FundingInfo/FundingPercentage';
 import { addComma } from '../../components/FundingInfo/FundingPercentage';
+import PriceInputComponent from '../../components/common/PriceInputComponent';
 
 const giftList = [
   { image: '', title: '선물 제목', price: 20000 },
@@ -15,7 +16,7 @@ const giftList = [
 
 const FundingJoinPage = () => {
   const [balance, setBalance] = useState(84000);
-  const [price, setPrice] = useState();
+  const [price, setPrice] = useState(null);
   const [message, setMessage] = useState('');
   const [isDone, setIsDone] = useState(false);
   const [name, setName] = useState('nickname');
@@ -36,7 +37,7 @@ const FundingJoinPage = () => {
     setFormattedPrice(price ? `${addComma(price)}원` : '');
   };
 
-  const handleRadioClick = (e) => {
+  const handleRadioChange = (e) => {
     setName(e.target.value);
   };
 
@@ -58,16 +59,16 @@ const FundingJoinPage = () => {
               : undefined
           }
         />
-        <SSmallLayout>
+        <SForm>
           <SContainer>
-            <STextBox>
+            <STextBox htmlFor='price'>
               <STextWrapper>금액</STextWrapper>
               <SStarWrapper>*</SStarWrapper>
             </STextBox>
-            <SInputWrapper
-              value={formattedPrice}
-              onChange={handlePriceChange}
-              onBlur={handlePriceBlur}
+            <PriceInputComponent
+              focusColor='var(--orange-pri)'
+              price={price}
+              setPrice={setPrice}
               placeholder='펀딩에 참여할 금액을 입력해 주세요'
             />
             {price > balance && (
@@ -82,43 +83,38 @@ const FundingJoinPage = () => {
               <SStarWrapper>*</SStarWrapper>
             </STextBox>
             <SButtonContainer>
-              <SButtonWrapper
-                checked={name === 'nickname'}
-                onClick={handleRadioClick}
-              >
+              <SButtonWrapper htmlFor='nickname' checked={name === 'nickname'}>
                 <input
-                  id='radio'
+                  id='nickname'
                   type='radio'
                   value='nickname'
                   checked={name === 'nickname'}
-                  onChange={handleRadioClick}
+                  onChange={handleRadioChange}
                 />
                 닉네임
               </SButtonWrapper>
-              <SButtonWrapper
-                checked={name === 'anony'}
-                onClick={handleRadioClick}
-              >
+              <SButtonWrapper htmlFor='anony' checked={name === 'anony'}>
                 <input
-                  id='radio'
+                  id='anony'
                   type='radio'
                   value='anony'
                   checked={name === 'anony'}
-                  onChange={handleRadioClick}
+                  onChange={handleRadioChange}
                 />
                 익명
               </SButtonWrapper>
             </SButtonContainer>
           </SContainer>
           <SContainer>
-            <STextWrapper>축하메시지</STextWrapper>
+            <STextWrapper htmlFor='message'>축하메시지</STextWrapper>
             <STextareaWrapper
+              id='message'
               value={message}
               onChange={handleMessageChange}
               placeholder='친구에게 전달될 메시지를 입력해 주세요'
             />
           </SContainer>
-        </SSmallLayout>
+        </SForm>
       </SLayout>
       <BottomBackgroundComponent
         Button={
@@ -143,18 +139,20 @@ const SLayout = styled.div`
 
   padding: 24px 20px 128px 20px;
 `;
-const SSmallLayout = styled.div`
+const SForm = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 24px;
 `;
-const SContainer = styled.div`
+
+const SContainer = styled.fieldset`
   display: flex;
   flex-direction: column;
   gap: 8px;
 `;
-const STextBox = styled.div`
+
+const STextBox = styled.label`
   display: flex;
 `;
 const STextWrapper = styled.span`
