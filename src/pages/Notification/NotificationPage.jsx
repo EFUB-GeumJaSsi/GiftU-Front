@@ -4,22 +4,20 @@ import NotificationItem from '../../components/Notification/NotificationItem';
 import TagSelectComponent from '../../components/common/TagSelectComponent';
 import Modal from '../../components/common/ModalComponent';
 import { ReactComponent as IcnInfo } from '../../assets/Friend/icn_info.svg';
-
 const NotificationPage = () => {
   const [modalShow, setModalShow] = useState(false);
   const [modalContent, setModalContent] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState('전체');
   const [notifications, setNotifications] = useState([
     {
-      image:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/480px-Google_%22G%22_logo.svg.png',
+      image: 'default',
       name: '닉네임은여기까지입니다',
       message: '님과 친구가 되었습니다',
       time: '00분 전',
       type: 'friend',
     },
     {
-      image: '',
+      image: 'default',
       name: '펀딩 이름',
       message: '펀딩이 종료되었습니다',
       time: '00시간 전',
@@ -34,7 +32,7 @@ const NotificationPage = () => {
   const friendNotiClick = (image, name) => {
     setModalContent(
       <SModalContainer>
-        <SProfileWrapper src={image} alt={`${name}'s profile`} />
+        <SProfileWrapper src={image} />
         <span>{name}</span>
         <span style={{ color: 'var(--black)' }}>친구를 추가하시겠어요?</span>
         <span style={{ fontSize: '12px' }}>
@@ -135,7 +133,6 @@ const SProfileWrapper = styled.img`
   margin-bottom: 8px;
 
   border-radius: 50%;
-  background-color: #d9d9d9;
 `;
 const SLayout = styled.div`
   display: flex;

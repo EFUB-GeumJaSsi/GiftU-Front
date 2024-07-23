@@ -8,12 +8,15 @@ import ButtonComponent from '../../components/common/ButtonComponent';
 import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
 import { ReactComponent as Camera } from '../../assets/common/camera.svg';
 import { ReactComponent as Calendar } from '../../assets/common/calendar.svg';
+import { ReactComponent as ProfileIcon } from '../../assets/common/profile.svg';
+
 const ProfileEditPage = () => {
   const [showCalendar, setShowCalendar] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
 
   const [month, setMonth] = useState(new Date());
   const [userInfo, setUserInfo] = useState({
+    image: 'default',
     nickname: '닉네임',
     email: 'yyheeyeon@gmail.com',
     birthday: '',
@@ -46,9 +49,13 @@ const ProfileEditPage = () => {
 
   return (
     <SLayout>
-      <BackHeader text='프로필 편집' />
+      <BackHeaderComponent text='프로필 편집' />
       <SImageContainer>
-        <SImageWrapper />
+        {userInfo.image === 'default' ? (
+          <StyledProfileIcon />
+        ) : (
+          <SImgWrapper src={userInfo.image} alt='Profile' />
+        )}
         <SImageButtonWrapper>
           <Camera></Camera>
         </SImageButtonWrapper>
@@ -101,9 +108,7 @@ const ProfileEditPage = () => {
           )}
         </SFieldset>
       </SForm>
-      <SBtnWrapper>
-        <BottomBackground Button={Btn} />
-      </SBtnWrapper>
+      <BottomBackgroundComponent Button={Btn} />
     </SLayout>
   );
 };
@@ -117,18 +122,24 @@ const SLayout = styled.div`
 
 const SImageContainer = styled.div`
   position: relative;
-
   width: 96px;
   height: 96px;
   margin: 40px;
 `;
 
-const SImageWrapper = styled.div`
-  width: 100%;
-  height: 100%;
+const SImgWrapper = styled.img`
+  display: flex;
+
+  width: 96px;
+  height: 96px;
 
   border-radius: 50%;
   background-color: var(--gray-300);
+`;
+const StyledProfileIcon = styled(ProfileIcon)`
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
 `;
 
 const SImageButtonWrapper = styled.div`
@@ -232,9 +243,5 @@ const SCalendarWrapper = styled.div`
   background-color: var(--white);
 `;
 const DayPickerStyled = styled(DayPicker)``;
-const SBtnWrapper = styled.div`
-  position: fixed;
-  bottom: 0;
-`;
 
 export default ProfileEditPage;
