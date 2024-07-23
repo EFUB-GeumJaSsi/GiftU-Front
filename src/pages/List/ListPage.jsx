@@ -1,83 +1,74 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import FundingComponent from '../../components/common/FundingComponent';
 import TagSelectComponent from '../../components/common/TagSelectComponent';
 import BackHeaderComponent from '../../components/common/BackHeaderComponent';
 
 const ListPage = ({ headerText, buttons, message }) => {
-  const [data, setData] = useState([]);
+  const [fundingList, setFundingList] = useState([]);
+  const navigate = useNavigate();
   const FundingList = [
-    {
-      image: '',
-      title: '펀딩 제목은 두 줄까지 보여요 가나다라마바사 아자차카',
-      name: '김이화',
-      endDate: '2024.09.01',
-      isOngoing: false,
-    },
-    {
-      image: '',
-      title: '펀딩 제목은 두 줄까지 보여요',
-      name: '김이화',
-      endDate: '2024.09.01',
-      isOngoing: false,
-    },
-    {
-      image: '',
-      title: '펀딩 제목은 두 줄까지 보여요',
-      name: '김이화',
-      endDate: '2024.09.01',
-      isOngoing: false,
-    },
-    {
-      image: '',
-      title: '펀딩 제목은 두 줄까지 보여요',
-      name: '김이화',
-      endDate: '2024.09.01',
-      isOngoing: false,
-    },
+    // {
+    //   fundingId: 1,
+    //   launcherNickname: '퍼비',
+    //   fundingTitle: '제목1',
+    //   fundingEndDate: '2024-09-18',
+    //   status: 'IN_PROGRESS',
+    //   fundingImageUrl:
+    //     'https://localhost:8080/image/d953fdec-b85f-4ce9-b7f5-7a',
+    // },
+    // {
+    //   fundingId: 2,
+    //   launcherNickname: '퍼비',
+    //   fundingTitle: '제목3',
+    //   fundingEndDate: '2024-09-18',
+    //   status: 'IN_PROGRESS',
+    //   fundingImageUrl:
+    //     'https://localhost:8080/image/d953fdec-b85f-4ce9-b7f5-7a',
+    // },
+    // {
+    //   fundingId: 4,
+    //   launcherNickname: '퍼비',
+    //   fundingTitle: '제목4',
+    //   fundingEndDate: '2024-09-18',
+    //   status: 'IN_PROGRESS',
+    //   fundingImageUrl:
+    //     'https://localhost:8080/image/d953fdec-b85f-4ce9-b7f5-7a',
+    // },
   ];
 
   useEffect(() => {
-    setData(FundingList);
+    setFundingList(FundingList);
   }, []);
 
-  const { pathname } = useLocation();
-  const filter = getFilter(pathname);
+  const handleClick = (funding) => {
+    funding.status === 'IN_PROGRESS'
+      ? navigate(`/funding-detail/${funding.fundingId}/isOngoing`)
+      : navigate(`/funding-detail/${funding.fundingId}/end`);
+  };
 
-  const filteredResults = filterResults(data, filter);
-
-  console.log({ headerText });
   return (
     <SLayout>
       <BackHeaderComponent text={headerText} />
       <SNotiItemWrapper>
         <TagSelectComponent buttons={buttons} />
       </SNotiItemWrapper>
-      <SListWrapper>
-        <FundingComponent results={filteredResults} message={message} />
-      </SListWrapper>
+      {fundingList.length === 0 ? (
+        <SNoResultsWrapper>{message}</SNoResultsWrapper>
+      ) : (
+        <SFundingContainer>
+          {fundingList.map((funding, index) => (
+            <FundingComponent
+              result={funding}
+              key={index}
+              onClick={() => handleClick(funding)}
+            />
+          ))}
+        </SFundingContainer>
+      )}
     </SLayout>
   );
-};
-
-const getFilter = (pathname) => {
-  switch (pathname) {
-    case '/isOngoing':
-      return '진행';
-    case '/end':
-      return '종료';
-    default:
-      return '전체';
-  }
-};
-const filterResults = (data, filter) => {
-  return data.filter((result) => {
-    if (filter === '전체') return true;
-    if (filter === '진행') return result.isOngoing;
-    if (filter === '종료') return !result.isOngoing;
-    return false;
-  });
 };
 
 const SLayout = styled.div`
@@ -85,12 +76,33 @@ const SLayout = styled.div`
   flex-direction: column;
   align-items: center;
 `;
+
 const SNotiItemWrapper = styled.div`
   margin-top: 24px;
   margin-bottom: 20px;
 `;
-const SListWrapper = styled.div`
-  margin: 0 auto;
+
+const SFundingContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 7px;
+  row-gap: 8px;
+
+  cursor: pointer;
+`;
+const SNoResultsWrapper = styled.p`
+  display: flex;
+  justify-content: center;
+  padding-top: 246px;
+
+  width: 100%;
+  height: 100vh;
+
+  background-color: var(--gray-100);
+  color: var(--gray-500);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 140%;
 `;
 
 export default ListPage;
