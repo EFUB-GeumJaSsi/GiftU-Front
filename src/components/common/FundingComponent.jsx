@@ -1,3 +1,5 @@
+// 이 주석을 지우고 컴포넌트 사용법을 적어주세요
+
 import styled from 'styled-components';
 import TagComponent from './TagComponent';
 import { useNavigate } from 'react-router-dom';

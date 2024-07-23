@@ -1,7 +1,3 @@
-import React from 'react';
-import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
-
 // <TagSelectComponent
 //  buttons={[
 //  { text: '전체', link: '/', color: 'jade' },
@@ -10,6 +6,10 @@ import { NavLink } from 'react-router-dom';
 //  ]}
 // />
 // 위의 코드는 예시입니다. text에 원하는 문구를 적고, link는 그대로 사용하고, color는 jade와 orange 중에 선택하면 됩니다.
+
+import React from 'react';
+import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
 
 const TagSelectComponent = ({ buttons }) => {
   // color: [배경 색, 글꼴 색]

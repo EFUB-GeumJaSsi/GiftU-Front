@@ -1,15 +1,7 @@
-import React, { useRef, useState } from 'react';
-import styled from 'styled-components';
-import { useFormContext } from 'react-hook-form';
-import BottomSheetComponent from '../../components/common/BottomSheetComponent';
-
 /*
+부모 컴포넌트에 const [bottomSheetShow, setBottomSheetShow] = useState(false); 하고 사용하시면 됩니다.
 
-
-부모 컴포넌트에 
- const [bottomSheetShow, setBottomSheetShow] = useState(false); 하고 사용하시면 됩니다. 
-
- 사용예시: 
+사용 예시:
 {bottomSheetShow && (
   <PasswordComponent
     setBottomSheetShow={setBottomSheetShow}
@@ -20,8 +12,12 @@ import BottomSheetComponent from '../../components/common/BottomSheetComponent';
     color='orange'
   />
 )}
-
 */
+
+import React, { useRef, useState } from 'react';
+import styled from 'styled-components';
+import { useFormContext } from 'react-hook-form';
+import BottomSheetComponent from '../../components/common/BottomSheetComponent';
 
 const PasswordComponent = ({
   setBottomSheetShow,

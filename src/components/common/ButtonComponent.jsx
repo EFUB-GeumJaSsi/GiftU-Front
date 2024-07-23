@@ -1,5 +1,3 @@
-import styled from 'styled-components';
-
 // btnInfo라는 객체를 props로 받습니다.
 // btnInfo에는 text, color, width, onClick 값을 설정할 수 있습니다.
 //
@@ -9,6 +7,8 @@ import styled from 'styled-components';
 // onClick: 이벤트 함수
 //
 // 예시 <Button btnInfo={{ text: '다음', color: 'jade' }} />
+
+import styled from 'styled-components';
 
 const Button = ({ btnInfo, ...props }) => {
   const { text, color, width } = btnInfo;
@@ -21,11 +21,7 @@ const Button = ({ btnInfo, ...props }) => {
   };
 
   return (
-    <SWrapper
-      color={btnColor[color]}
-      width={width}
-      {...props}
-    >
+    <SWrapper color={btnColor[color]} width={width} {...props}>
       {text}
     </SWrapper>
   );
