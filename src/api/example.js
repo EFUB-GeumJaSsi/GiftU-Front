@@ -3,7 +3,7 @@ import { api, apiAuth } from './api';
 // GET 요청 예시
 export const getExample = async () => {
   try {
-    const response = await api.get(`/요청 주소`);
+    const response = await apiAuth.get(`/요청 주소`);
     return Promise.resolve(response);
   } catch (error) {
     return Promise.resolve(error);
