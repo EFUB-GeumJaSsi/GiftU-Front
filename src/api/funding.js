@@ -3,6 +3,14 @@ import { api, apiAuth } from './api';
 // 펀딩 개설
 
 // 펀딩 상세
+export const getFundingInfo = async (fundingId) => {
+  try {
+    const response = await api.get(`/fundings/${fundingId}`);
+    return Promise.resolve(response);
+  } catch (error) {
+    return Promise.resolve(error);
+  }
+};
 
 // 펀딩 참여 전 비밀번호
 
