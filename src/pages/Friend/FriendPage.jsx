@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 import { useState, useEffect, useRef } from 'react';
 import { arrayChop } from '../../components/common/CarouselComponent';
+import {
+  postFriendRequest,
+  getFriendList,
+  deleteFriend,
+} from '../../api/friend.js';
 import CarouselComponent from '../../components/common/CarouselComponent';
 import BottomSheetComponent from '../../components/common/BottomSheetComponent';
 import ButtonComponent from '../../components/common/ButtonComponent';
@@ -8,24 +13,11 @@ import VerticalCard from '../../components/Friend/VerticalCard';
 import HorizontalCard from '../../components/Friend/HorizontalCard';
 import { ReactComponent as IcnUnion } from '../../assets/Friend/icn_union.svg';
 
-// const data = null;
-const data = [
-  {
-    nickname: '닉네임1',
-    birthday: '3월 18일',
-  },
-  {
-    nickname: '닉네임2',
-    birthday: '5월 14일',
-  },
-  {
-    nickname: '닉네임999999999999999999999999',
-    birthday: '12월 21일',
-  },
-];
-
 const FriendPage = () => {
-  const chopedDataList = data && arrayChop(data, 2);
+  const [friendList, setFriendList] = useState(null);
+  const [giftFriendList, setGiftFriendList] = useState(null);
+  const chopedGiftFriendList = giftFriendList && arrayChop(giftFriendList, 2);
+
   const [bottomSheetShow, setBottomSheetShow] = useState(false);
   const inputRef = useRef(null);
   const [email, setEmail] = useState('');
@@ -35,6 +27,15 @@ const FriendPage = () => {
     setEmail('');
   };
 
+  useEffect(() => {
+    getFriendList()
+      .then((res) => {
+        setFriendList(res.data.friends);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   // 바텀시트 렌더링 시 input 포커스
   useEffect(() => {
     inputRef.current?.focus();
@@ -43,15 +44,18 @@ const FriendPage = () => {
   return (
     <SLayout>
       <SH1 as='header'>친구</SH1>
-      {data && (
+      {giftFriendList && (
         <SSection>
           <ST1>나에게 선물한 친구</ST1>
-          <CarouselComponent pageLength={chopedDataList.length} pageWidth={335}>
-            {chopedDataList.map((item, index) => (
+          <CarouselComponent
+            pageLength={chopedGiftFriendList.length}
+            pageWidth={335}
+          >
+            {chopedGiftFriendList.map((item, index) => (
               <SPageContainer key={index}>
                 <VerticalCard data={item[0]} />
-                {index === chopedDataList.length - 1 &&
-                data.length % 2 !== 0 ? (
+                {index === chopedGiftFriendList.length - 1 &&
+                giftFriendList.length % 2 !== 0 ? (
                   <div style={{ visibility: 'hidden' }}>
                     <VerticalCard />
                   </div>
@@ -75,9 +79,9 @@ const FriendPage = () => {
             친구 추가
           </SAddBtn>
         </STopContainer>
-        {data ? (
+        {friendList ? (
           <SUl>
-            {data.map((item, index) => (
+            {friendList.map((item, index) => (
               <li key={index}>
                 <HorizontalCard data={item} />
               </li>
