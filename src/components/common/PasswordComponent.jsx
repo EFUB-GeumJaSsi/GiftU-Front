@@ -1,35 +1,32 @@
 /*
-부모 컴포넌트에 const [bottomSheetShow, setBottomSheetShow] = useState(false); 하고 사용하시면 됩니다.
-
-사용 예시:
-{bottomSheetShow && (
-  <PasswordComponent
-    setBottomSheetShow={setBottomSheetShow}
-    handleSubmit={handleSubmit(onSubmit)}
-    title='비밀번호 입력'
-    name='김이화'
-    passwordExact='2222'
-    color='orange'
-  />
-)}
+  부모 컴포넌트에 패스워드가 유효하다면 어느 창으로 이동할지 passwordIsValid()로 설정해주시면 됩니다.
+   function passwordIsValid() {
+      navigate('/');
+  }
+  {bottomSheetShow && (
+    <PasswordComponent
+      setBottomSheetShow={setBottomSheetShow}
+      passwardExact={'1234'}
+      validPassword={() => passwordIsValid()}
+      color='orange'
+    />
+  )}
 */
 
 import styled from 'styled-components';
 import { useRef, useState } from 'react';
-import { useFormContext } from 'react-hook-form';
 import BottomSheetComponent from '../../components/common/BottomSheetComponent';
 
 const PasswordComponent = ({
   setBottomSheetShow,
-  handleSubmit,
-  title,
+  passwordSet,
+  validPassword,
   name,
   passwordExact,
   color,
 }) => {
   const [password, setPassword] = useState(['', '', '', '']);
   const inputRefs = useRef([]);
-  const { register } = useFormContext();
   const [errorMessage, setErrorMessage] = useState('');
 
   const handlePasswordChange = (e, index) => {
@@ -54,12 +51,16 @@ const PasswordComponent = ({
 
   const handlePasswordSubmit = () => {
     const enteredPassword = password.join('');
-    if (enteredPassword !== passwordExact) {
+    if (passwordExact === 'Set') {
+      passwordSet(enteredPassword);
+    } else if (enteredPassword !== passwordExact) {
       setErrorMessage('비밀번호가 틀립니다.');
     } else {
       setErrorMessage('');
+      validPassword();
     }
   };
+
   return (
     <BottomSheetComponent
       closeButton='cross'
@@ -67,7 +68,7 @@ const PasswordComponent = ({
       style={{ position: 'absolute' }}
     >
       <STextContainer>
-        <h4>{title}</h4>
+        <h4>비밀번호 입력</h4>
         {name ? (
           <p>펀딩을 개설한 {name}님께 비밀번호를 요청하세요</p>
         ) : (
@@ -77,7 +78,6 @@ const PasswordComponent = ({
       <SPasswordInputContainer>
         {password.map((digit, index) => (
           <SPasswordInput
-            {...register(name)}
             key={index}
             type='text'
             maxLength='1'
@@ -91,9 +91,10 @@ const PasswordComponent = ({
       {errorMessage && <STextWrapper>{errorMessage}</STextWrapper>}
 
       <SSecondaryButton
+        type='button'
         disabled={!isPasswordComplete}
-        onClick={handlePasswordSubmit}
         color={color}
+        onClick={() => handlePasswordSubmit()}
       >
         완료
       </SSecondaryButton>
