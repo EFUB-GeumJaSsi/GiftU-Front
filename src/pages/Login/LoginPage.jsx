@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { KAKAO_AUTH_URL } from '../../api/oauth';
 import { ReactComponent as GiftuLogo } from '../../assets/Login/giftu_logo.svg';
 import kakao_logo from '../../assets/Login/kakao_logo.svg';
 
@@ -6,7 +7,7 @@ const LoginPage = () => {
   return (
     <SLayout>
       <SGiftuLogo />
-      <SBtn>카카오 로그인</SBtn>
+      <SKakaoLogin href={KAKAO_AUTH_URL}>카카오 로그인</SKakaoLogin>
     </SLayout>
   );
 };
@@ -23,10 +24,13 @@ const SLayout = styled.div`
 const SGiftuLogo = styled(GiftuLogo)`
   width: 200px;
 `;
-const SBtn = styled.button`
+const SKakaoLogin = styled.a`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   width: 280px;
   height: 48px;
-  padding: 14px;
 
   border-radius: 6px;
   background-color: #fee500;
@@ -36,7 +40,7 @@ const SBtn = styled.button`
 
   color: #181600;
   font-size: 15px;
-  font-weight: 400;
+  font-weight: 600;
 `;
 
 export default LoginPage;
