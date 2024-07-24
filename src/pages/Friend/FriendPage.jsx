@@ -33,7 +33,7 @@ const FriendPage = () => {
         setFriendList(res.data.friends);
       })
       .catch((err) => {
-        console.log(err);
+        console.error(error);
       });
   }, []);
   // 바텀시트 렌더링 시 input 포커스
