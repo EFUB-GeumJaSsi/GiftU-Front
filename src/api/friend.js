@@ -14,9 +14,9 @@ export const postFriendRequest = async (email) => {
         },
       },
     );
-    return Promise.resolve(response);
+    return response;
   } catch (error) {
-    return Promise.resolve(error);
+    throw error;
   }
 };
 
@@ -26,9 +26,9 @@ export const postFriendAccept = async (friendTableId) => {
     const response = await apiAuth.post(
       `/friends/accept?friendTableId=${friendTableId}`,
     );
-    return Promise.resolve(response);
+    return response;
   } catch (error) {
-    return Promise.resolve(error);
+    throw error;
   }
 };
 
@@ -38,9 +38,9 @@ export const postFriendReject = async (friendTableId) => {
     const response = await apiAuth.post(
       `/friends/reject?friendTableId=${friendTableId}`,
     );
-    return Promise.resolve(response);
+    return response;
   } catch (error) {
-    return Promise.resolve(error);
+    throw error;
   }
 };
 
@@ -48,9 +48,9 @@ export const postFriendReject = async (friendTableId) => {
 export const getFriendList = async () => {
   try {
     const response = await apiAuth.get(`/friends`);
-    return Promise.resolve(response);
+    return response;
   } catch (error) {
-    return Promise.resolve(error);
+    throw error;
   }
 };
 
@@ -61,8 +61,8 @@ export const getFriendList = async () => {
 export const deleteFriend = async (friendId) => {
   try {
     const response = await apiAuth.delete(`/friends/${friendId}`);
-    return Promise.resolve(response);
+    return response;
   } catch (error) {
-    return Promise.resolve(error);
+    throw error;
   }
 };

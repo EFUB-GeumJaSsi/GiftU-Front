@@ -4,9 +4,9 @@ import { api, apiAuth } from './api';
 export const getExample = async () => {
   try {
     const response = await apiAuth.get(`/요청 주소`);
-    return Promise.resolve(response);
+    return response;
   } catch (error) {
-    return Promise.resolve(error);
+    throw error;
   }
 };
 
@@ -25,9 +25,9 @@ export const postExample = async (title, content) => {
         },
       },
     );
-    return Promise.resolve(response);
+    return response;
   } catch (error) {
-    return Promise.resolve(error);
+    throw error;
   }
 };
 
@@ -46,9 +46,9 @@ export const patchExample = async (title, content) => {
         },
       },
     );
-    return Promise.resolve(response);
+    return response;
   } catch (error) {
-    return Promise.resolve(error);
+    throw error;
   }
 };
 
@@ -56,8 +56,8 @@ export const patchExample = async (title, content) => {
 export const deleteExample = async () => {
   try {
     const response = await apiAuth.delete(`/요청 주소`);
-    return Promise.resolve(response);
+    return response;
   } catch (error) {
-    return Promise.resolve(error);
+    throw error;
   }
 };

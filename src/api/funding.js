@@ -6,9 +6,9 @@ import { api, apiAuth } from './api';
 export const getFundingInfo = async (fundingId) => {
   try {
     const response = await api.get(`/fundings/${fundingId}`);
-    return Promise.resolve(response);
+    return response;
   } catch (error) {
-    return Promise.resolve(error);
+    throw error;
   }
 };
 
