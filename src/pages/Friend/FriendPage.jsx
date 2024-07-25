@@ -5,19 +5,23 @@ import { postFriendRequest, getFriendList } from '../../api/friend.js';
 import CarouselComponent from '../../components/common/CarouselComponent';
 import BottomSheetComponent from '../../components/common/BottomSheetComponent';
 import ButtonComponent from '../../components/common/ButtonComponent';
+import ToastComponent from '../../components/common/ToastComponent.jsx';
 import VerticalCard from '../../components/Friend/VerticalCard';
 import HorizontalCard from '../../components/Friend/HorizontalCard';
 import { ReactComponent as IcnUnion } from '../../assets/Friend/icn_union.svg';
 
 const FriendPage = () => {
+  // 친구 페이지 데이터
   const [friendList, setFriendList] = useState([]);
   const [carouselFriendList, setCarouselFriendList] = useState(null);
   const chopedCarouselFriendList =
     carouselFriendList && arrayChop(carouselFriendList, 2);
+  // 바텀시트 관련
   const [bottomSheetShow, setBottomSheetShow] = useState(false);
   const inputRef = useRef(null);
   const [email, setEmail] = useState('');
 
+  // handle 함수
   const handleFormSubmit = (event) => {
     event.preventDefault();
     setEmail('');
