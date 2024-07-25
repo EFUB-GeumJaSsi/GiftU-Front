@@ -13,6 +13,7 @@ const HorizontalCard = ({ data = {} }) => {
   const [bottomModalOpen, setBottomModalOpen] = useState(false);
   const [modalShow, setModalShow] = useState(false);
   const [toastShow, setToastShow] = useState(false);
+  const [toastContent, setToastContent] = useState(null);
 
   const handleBottomModalClose = () => {
     setBottomModalOpen(false); // 바텀모달 닫기 애니메이션 효과
@@ -71,7 +72,11 @@ const HorizontalCard = ({ data = {} }) => {
           </SModalContainer>
         </ModalComponent>
       )}
-      {toastShow && <ToastComponent>삭제가 완료되었어요</ToastComponent>}
+      {toastShow && (
+        <ToastComponent setToastShow={setToastShow}>
+          {toastContent}
+        </ToastComponent>
+      )}
     </SLayout>
   );
 };
