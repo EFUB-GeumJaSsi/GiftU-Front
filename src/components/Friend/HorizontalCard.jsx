@@ -7,8 +7,7 @@ import icn_birth from '../../assets/Friend/icn_birth.svg';
 import btn_delete from '../../assets/Friend/btn_delete_friend.svg';
 import icn_info from '../../assets/Friend/icn_info.svg';
 
-const HorizontalCard = ({ data = {} }) => {
-  const { image, nickname, birthday } = data;
+const HorizontalCard = ({ friendId, nickname, birthday, image }) => {
   const [bottomModalShow, setBottomModalShow] = useState(false);
   const [bottomModalOpen, setBottomModalOpen] = useState(false);
   const [modalShow, setModalShow] = useState(false);
