@@ -24,21 +24,44 @@ const FriendPage = () => {
   const [toastShow, setToastShow] = useState(false);
   const [toastContent, setToastContent] = useState(null);
 
+  // API 연결
+  const readFriendList = async () => {
+    try {
+      const response = await getFriendList();
+      setFriendList(response.data.friends);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const readCarouselFriendList = async () => {
+    try {
+      // const response = await 개발 중
+      setCarouselFriendList();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const createFriendRequest = async (email) => {
+    try {
+      const response = await postFriendRequest(email);
+      setToastContent('친구 요청이 전송되었습니다.');
+    } catch (error) {
+      console.error(error);
+      setToastContent(error.message);
+    }
+  };
   // handle 함수
   const handleFormSubmit = (event) => {
     event.preventDefault();
+    createFriendRequest(email);
     setToastShow(true);
     setEmail('');
   };
 
+  // 최초 렌더링 시 데이터 read
   useEffect(() => {
-    getFriendList()
-      .then((res) => {
-        setFriendList(res.data.friends);
-      })
-      .catch((err) => {
-        console.error(error);
-      });
+    readFriendList();
   }, []);
   // 바텀시트 렌더링 시 input 포커스
   useEffect(() => {
