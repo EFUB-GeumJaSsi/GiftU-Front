@@ -117,6 +117,7 @@ const FriendPage = () => {
                 ref={inputRef}
                 type='email'
                 name='friend-email'
+                value={email}
                 required
                 onChange={(event) => {
                   setEmail(event.target.value);
