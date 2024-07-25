@@ -10,9 +10,7 @@ export const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id
 export const getKakaoAccessToken = async (code) => {
   try {
     const response = await api.get(`/api/oauth/kakao`, {
-      params: {
-        code: code,
-      },
+      params: { code: code },
     });
     return response;
   } catch (error) {

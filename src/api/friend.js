@@ -3,17 +3,7 @@ import { api, apiAuth } from './api';
 // 친구 요청
 export const postFriendRequest = async (email) => {
   try {
-    const response = await apiAuth.post(
-      `/friends/request`,
-      {
-        email: email,
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      },
-    );
+    const response = await apiAuth.post(`/friends/request`, { email: email });
     return response;
   } catch (error) {
     throw error;
@@ -23,9 +13,9 @@ export const postFriendRequest = async (email) => {
 // 친구 요청 수락
 export const postFriendAccept = async (friendTableId) => {
   try {
-    const response = await apiAuth.post(
-      `/friends/accept?friendTableId=${friendTableId}`,
-    );
+    const response = await apiAuth.post(`/friends/accept`, {
+      params: { friendTableId: friendTableId },
+    });
     return response;
   } catch (error) {
     throw error;
@@ -35,9 +25,9 @@ export const postFriendAccept = async (friendTableId) => {
 // 친구 요청 거절
 export const postFriendReject = async (friendTableId) => {
   try {
-    const response = await apiAuth.post(
-      `/friends/reject?friendTableId=${friendTableId}`,
-    );
+    const response = await apiAuth.post(`/friends/reject`, {
+      params: { friendTableId: friendTableId },
+    });
     return response;
   } catch (error) {
     throw error;
