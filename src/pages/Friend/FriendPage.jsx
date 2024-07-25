@@ -83,7 +83,12 @@ const FriendPage = () => {
           <SUl>
             {friendList.map((item, index) => (
               <li key={index}>
-                <HorizontalCard data={item} />
+                <HorizontalCard
+                  friendId={item.friendId}
+                  nickname={item.nickname}
+                  birthday={item.birthday}
+                  image={item.userImageUrl}
+                />
               </li>
             ))}
           </SUl>
