@@ -13,7 +13,7 @@ export const postFriendRequest = async (email) => {
 // 친구 요청 수락
 export const postFriendAccept = async (friendTableId) => {
   try {
-    const response = await apiAuth.post(`/friends/accept`, {
+    const response = await apiAuth.post(`/friends/accept`, null, {
       params: { friendTableId: friendTableId },
     });
     return response;
@@ -25,7 +25,7 @@ export const postFriendAccept = async (friendTableId) => {
 // 친구 요청 거절
 export const postFriendReject = async (friendTableId) => {
   try {
-    const response = await apiAuth.post(`/friends/reject`, {
+    const response = await apiAuth.post(`/friends/reject`, null, {
       params: { friendTableId: friendTableId },
     });
     return response;
