@@ -8,7 +8,7 @@ const OAuthRedirectPage = () => {
   const navigate = useNavigate();
   const code = new URL(window.location.href).searchParams.get('code');
 
-  const fetchToken = async () => {
+  const readToken = async () => {
     try {
       const response = await getKakaoAccessToken(code);
       localStorage.setItem('giftu-token', response.data.accessToken);
@@ -20,7 +20,7 @@ const OAuthRedirectPage = () => {
   };
 
   useEffect(() => {
-    fetchToken();
+    readToken();
   }, []);
 
   return (
