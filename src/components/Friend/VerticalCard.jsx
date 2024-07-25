@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 
-const VerticalCard = ({ data = {} }) => {
-  const { image, nickname, birthday } = data;
-
+const VerticalCard = ({ friendId, nickname, birthday, image }) => {
   return (
     <SLayout>
       <SImg src={image} />

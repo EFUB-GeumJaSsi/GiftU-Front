@@ -53,14 +53,24 @@ const FriendPage = () => {
           >
             {chopedGiftFriendList.map((item, index) => (
               <SPageContainer key={index}>
-                <VerticalCard data={item[0]} />
+                <VerticalCard
+                  friendId={item[0].friendId}
+                  nickname={item[0].nickname}
+                  birthday={item[0].birthday}
+                  image={item[0].userImageUrl}
+                />
                 {index === chopedGiftFriendList.length - 1 &&
                 giftFriendList.length % 2 !== 0 ? (
                   <div style={{ visibility: 'hidden' }}>
                     <VerticalCard />
                   </div>
                 ) : (
-                  <VerticalCard data={item[1]} />
+                  <VerticalCard
+                    friendId={item[1].friendId}
+                    nickname={item[1].nickname}
+                    birthday={item[1].birthday}
+                    image={item[1].userImageUrl}
+                  />
                 )}
               </SPageContainer>
             ))}
