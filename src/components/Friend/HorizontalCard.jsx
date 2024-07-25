@@ -19,6 +19,9 @@ const HorizontalCard = ({ data = {} }) => {
     setBottomModalOpen(false); // 바텀모달 닫기 애니메이션 효과
     setTimeout(() => setBottomModalShow(false), 300); // 애니메이션 후 언마운트
   };
+  const handleDeleteClick = () => {
+    setToastShow(true);
+  };
 
   return (
     <SLayout>
@@ -54,9 +57,7 @@ const HorizontalCard = ({ data = {} }) => {
       {modalShow && (
         <ModalComponent
           actionText='삭제하기'
-          onClickAction={() => {
-            setToastShow(true);
-          }}
+          onClickAction={handleDeleteClick}
           setModalShow={setModalShow}
         >
           <SModalContainer>
