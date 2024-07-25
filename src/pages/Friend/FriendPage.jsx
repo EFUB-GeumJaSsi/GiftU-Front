@@ -1,11 +1,7 @@
 import styled from 'styled-components';
 import { useState, useEffect, useRef } from 'react';
 import { arrayChop } from '../../components/common/CarouselComponent';
-import {
-  postFriendRequest,
-  getFriendList,
-  deleteFriend,
-} from '../../api/friend.js';
+import { postFriendRequest, getFriendList } from '../../api/friend.js';
 import CarouselComponent from '../../components/common/CarouselComponent';
 import BottomSheetComponent from '../../components/common/BottomSheetComponent';
 import ButtonComponent from '../../components/common/ButtonComponent';
