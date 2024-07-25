@@ -19,11 +19,7 @@ export const postExample = async (title, content) => {
         title: title,
         content: content,
       },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      },
+      { headers: { 'Content-Type': 'application/json' } }, // 필요한 경우 추가 헤더 설정
     );
     return response;
   } catch (error) {
@@ -32,19 +28,12 @@ export const postExample = async (title, content) => {
 };
 
 // PATCH 요청 예시
-export const patchExample = async (title, content) => {
+export const patchExample = async (content) => {
   try {
     const response = await apiAuth.patch(
       `/요청 주소`,
-      {
-        title: title,
-        content: content,
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      },
+      { content: content },
+      { headers: { 'Content-Type': 'application/json' } }, // 필요한 경우 추가 헤더 설정
     );
     return response;
   } catch (error) {
