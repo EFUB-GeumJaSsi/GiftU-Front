@@ -15,6 +15,8 @@ const HorizontalCard = ({ data = {} }) => {
   const [toastShow, setToastShow] = useState(false);
   const [toastContent, setToastContent] = useState(null);
 
+  // API 연결
+  // handle 함수
   const handleBottomModalClose = () => {
     setBottomModalOpen(false); // 바텀모달 닫기 애니메이션 효과
     setTimeout(() => setBottomModalShow(false), 300); // 애니메이션 후 언마운트
