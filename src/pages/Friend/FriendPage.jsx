@@ -15,9 +15,9 @@ import { ReactComponent as IcnUnion } from '../../assets/Friend/icn_union.svg';
 
 const FriendPage = () => {
   const [friendList, setFriendList] = useState(null);
-  const [giftFriendList, setGiftFriendList] = useState(null);
-  const chopedGiftFriendList = giftFriendList && arrayChop(giftFriendList, 2);
-
+  const [carouselFriendList, setCarouselFriendList] = useState(null);
+  const chopedCarouselFriendList =
+    carouselFriendList && arrayChop(carouselFriendList, 2);
   const [bottomSheetShow, setBottomSheetShow] = useState(false);
   const inputRef = useRef(null);
   const [email, setEmail] = useState('');
@@ -44,14 +44,14 @@ const FriendPage = () => {
   return (
     <SLayout>
       <SH1 as='header'>친구</SH1>
-      {giftFriendList && (
+      {carouselFriendList && (
         <SSection>
           <ST1>나에게 선물한 친구</ST1>
           <CarouselComponent
-            pageLength={chopedGiftFriendList.length}
+            pageLength={chopedCarouselFriendList.length}
             pageWidth={335}
           >
-            {chopedGiftFriendList.map((item, index) => (
+            {chopedCarouselFriendList.map((item, index) => (
               <SPageContainer key={index}>
                 <VerticalCard
                   friendId={item[0].friendId}
@@ -59,8 +59,8 @@ const FriendPage = () => {
                   birthday={item[0].birthday}
                   image={item[0].userImageUrl}
                 />
-                {index === chopedGiftFriendList.length - 1 &&
-                giftFriendList.length % 2 !== 0 ? (
+                {index === chopedCarouselFriendList.length - 1 &&
+                carouselFriendList.length % 2 !== 0 ? (
                   <div style={{ visibility: 'hidden' }}>
                     <VerticalCard />
                   </div>
