@@ -20,10 +20,14 @@ const FriendPage = () => {
   const [bottomSheetShow, setBottomSheetShow] = useState(false);
   const inputRef = useRef(null);
   const [email, setEmail] = useState('');
+  // 토스트 관련
+  const [toastShow, setToastShow] = useState(false);
+  const [toastContent, setToastContent] = useState(null);
 
   // handle 함수
   const handleFormSubmit = (event) => {
     event.preventDefault();
+    setToastShow(true);
     setEmail('');
   };
 
@@ -136,6 +140,11 @@ const FriendPage = () => {
             </SForm>
           </SBottomSheetContainer>
         </BottomSheetComponent>
+      )}
+      {toastShow && (
+        <ToastComponent setToastShow={setToastShow}>
+          {toastContent}
+        </ToastComponent>
       )}
     </SLayout>
   );
