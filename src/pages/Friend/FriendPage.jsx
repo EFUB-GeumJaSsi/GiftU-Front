@@ -14,7 +14,7 @@ import HorizontalCard from '../../components/Friend/HorizontalCard';
 import { ReactComponent as IcnUnion } from '../../assets/Friend/icn_union.svg';
 
 const FriendPage = () => {
-  const [friendList, setFriendList] = useState(null);
+  const [friendList, setFriendList] = useState([]);
   const [carouselFriendList, setCarouselFriendList] = useState(null);
   const chopedCarouselFriendList =
     carouselFriendList && arrayChop(carouselFriendList, 2);
@@ -89,7 +89,7 @@ const FriendPage = () => {
             친구 추가
           </SAddBtn>
         </STopContainer>
-        {friendList ? (
+        {friendList.length ? (
           <SUl>
             {friendList.map((item, index) => (
               <li key={index}>
