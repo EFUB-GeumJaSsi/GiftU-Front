@@ -35,7 +35,7 @@ const App = () => {
       <Route path='/api/oauth/kakao' element={<OAuthRedirectPage />} />
       <Route path='/' element={<HomePage />} />
       <Route path='/search' element={<SearchPage />} />
-      <Route path='/friend' element={<FriendPage />} />
+      <Route path='/friends' element={<FriendPage />} />
       <Route path='/notifications' element={<NotificationPage />} />
       <Route path='/my' element={<MyPage />} />
       <Route path='/my/edit' element={<ProfileEditPage />} />
