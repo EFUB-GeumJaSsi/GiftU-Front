@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { useState } from 'react';
+import { deleteFriend } from '../../api/friend';
 import BottomModalComponent from '../../components/common/BottomModalComponent';
 import ModalComponent from '../common/ModalComponent';
 import ToastComponent from '../common/ToastComponent';
@@ -15,12 +16,23 @@ const HorizontalCard = ({ friendId, nickname, birthday, image }) => {
   const [toastContent, setToastContent] = useState(null);
 
   // API 연결
+  const delFriend = async (friendId) => {
+    try {
+      const response = await deleteFriend(friendId);
+      setToastContent(response.data);
+      setTimeout(() => location.reload(true), 2000);
+    } catch (error) {
+      console.error(error);
+      setToastContent(error);
+    }
+  };
   // handle 함수
   const handleBottomModalClose = () => {
     setBottomModalOpen(false); // 바텀모달 닫기 애니메이션 효과
     setTimeout(() => setBottomModalShow(false), 300); // 애니메이션 후 언마운트
   };
   const handleDeleteClick = () => {
+    delFriend(friendId);
     setToastShow(true);
   };
 
