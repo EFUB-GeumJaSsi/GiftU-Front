@@ -23,7 +23,8 @@ const HorizontalCard = ({ friendId, nickname, birthday, image }) => {
       setTimeout(() => location.reload(true), 2000);
     } catch (error) {
       console.error(error);
-      setToastContent(error);
+      // 에러 코드에 따라 토스트 에러 메시지 설정
+      // setToastContent('');
     }
   };
   // handle 함수

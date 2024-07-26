@@ -48,7 +48,8 @@ const FriendPage = () => {
       setToastContent('친구 요청이 전송되었습니다.');
     } catch (error) {
       console.error(error);
-      setToastContent(error.message);
+      // 에러 코드에 따라 토스트 에러 메시지 설정
+      // setToastContent('');
     }
   };
   // handle 함수
