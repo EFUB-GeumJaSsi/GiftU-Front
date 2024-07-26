@@ -28,7 +28,7 @@ const Btn = (
       width: '335px',
       color: 'orange',
     }}
-  ></ButtonComponent>
+  />
 );
 const MessageEditPage = () => {
   const [MsgText, setMsgText] = useState(tempList[0].message);
@@ -39,21 +39,18 @@ const MessageEditPage = () => {
     <SLayout>
       <BackHeaderComponent text='축하메세지' />
       <SForm>
-        <FundingPercentage color='orange'></FundingPercentage>
+        <FundingPercentage color='orange' />
         <SFieldset>
           <SRequiredLegend>금액</SRequiredLegend>
           <SInput type='text' value={tempList[0].price} readonly />
         </SFieldset>
         <SFieldset>
           <SRequiredLegend>이름</SRequiredLegend>
-          <SInput type='text' value={tempList[0].name} readonly></SInput>
+          <SInput type='text' value={tempList[0].name} readonly />
         </SFieldset>
         <SFieldset>
           <SOptionalLegend>축하메세지</SOptionalLegend>
-          <SBigTextarea
-            onChange={handleInputChange}
-            value={MsgText}
-          ></SBigTextarea>
+          <SBigTextarea onChange={handleInputChange} value={MsgText} />
         </SFieldset>
       </SForm>
       <BottomBackgroundComponent Button={Btn} />

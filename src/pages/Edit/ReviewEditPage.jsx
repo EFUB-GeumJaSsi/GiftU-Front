@@ -16,7 +16,7 @@ const ReviewEditPage = () => {
         width: '335px',
         color: reviewText ? 'jade' : 'gray',
       }}
-    ></ButtonComponent>
+    />
   );
   return (
     <SLayout>
@@ -29,7 +29,7 @@ const ReviewEditPage = () => {
             placeholder='선물 후기를 작성해주세요!'
             value={reviewText}
             onChange={handleInputChange}
-          ></STextarea>
+          />
         </SForm>
       </SContentContainer>
       <BottomBackgroundComponent Button={Btn} />
