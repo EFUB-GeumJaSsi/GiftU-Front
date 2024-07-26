@@ -263,8 +263,8 @@ const SInputContainer = styled.div`
   width: 100%;
 `;
 const SCalendarWrapper = styled.div`
-  position: absolute;
-  left: 0px;
+  position: fixed;
+  bottom: 90px;
   background-color: var(--white);
 `;
 const DayPickerStyled = styled(DayPicker)``;
