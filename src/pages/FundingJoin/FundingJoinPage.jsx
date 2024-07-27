@@ -8,10 +8,10 @@ import { addComma } from '../../components/FundingInfo/FundingPercentage';
 import PriceInputComponent from '../../components/common/PriceInputComponent';
 
 const giftList = [
-  { image: '', title: '선물 제목', price: 20000 },
-  { image: '', title: '선물 제목', price: 65000 },
-  { image: '', title: '선물 제목', price: 84000 },
-  { image: '', title: '선물 제목', price: 130000 },
+  { image: '', title: '선물 제목', price: 200000 },
+  { image: '', title: '선물 제목', price: 500000 },
+  { image: '', title: '선물 제목', price: 840000 },
+  { image: '', title: '선물 제목', price: 1000000 },
 ];
 
 const FundingJoinPage = () => {
@@ -20,21 +20,9 @@ const FundingJoinPage = () => {
   const [message, setMessage] = useState('');
   const [isDone, setIsDone] = useState(false);
   const [name, setName] = useState('nickname');
-  const [formattedPrice, setFormattedPrice] = useState('');
-
-  const handlePriceChange = (e) => {
-    const { value } = e.target;
-    const finalNum = value.replace(/[^0-9]/g, '');
-    setPrice(finalNum);
-    setFormattedPrice(addComma(finalNum));
-  };
 
   const handleMessageChange = (e) => {
     setMessage(e.target.value);
-  };
-
-  const handlePriceBlur = () => {
-    setFormattedPrice(price ? `${addComma(price)}원` : '');
   };
 
   const handleRadioChange = (e) => {
@@ -42,7 +30,7 @@ const FundingJoinPage = () => {
   };
 
   useEffect(() => {
-    price > balance ? setIsDone(false) : setIsDone(true);
+    price <= balance ? setIsDone(true) : setIsDone(false);
   }, [price, balance]);
 
   return (
@@ -50,14 +38,11 @@ const FundingJoinPage = () => {
       <BackHeaderComponent />
       <SLayout>
         <FundingPercentage
-          color='orange'
-          balance={price && isDone ? balance - parseInt(price) : balance}
+          type='info'
+          color='var(--orange-pri)'
+          balance={price ? balance - parseInt(price) : balance}
           giftList={giftList}
-          joinPrice={
-            price && isDone
-              ? giftList[giftList.length - 1].price - (balance - price)
-              : undefined
-          }
+          joinPrice={price && isDone ? price : undefined}
         />
         <SForm>
           <SContainer>
@@ -172,29 +157,6 @@ const SStarWrapper = styled(STextWrapper)`
 
   color: var(--orange-pri);
 `;
-const SInputWrapper = styled.input`
-  display: flex;
-
-  height: 61px;
-  padding: 0 24px;
-
-  border-radius: 16px;
-  border: 2px solid var(--gray-100);
-  background: var(--gray-100);
-
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 140%;
-
-  &:focus {
-    border: 2px solid var(--orange-pri);
-  }
-
-  &::placeholder {
-    color: var(--gray-400);
-  }
-`;
 const SWarningWrapper = styled.span`
   margin-left: 8px;
 
@@ -218,10 +180,13 @@ const STextareaWrapper = styled.textarea`
   line-height: 140%;
 
   resize: none;
-  outline-color: var(--orange-pri);
 
   &::placeholder {
     color: var(--gray-400);
+  }
+
+  &:focus {
+    outline: 2px solid var(--orange-pri);
   }
 `;
 const SButtonContainer = styled.div`

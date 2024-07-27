@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import BackHeaderComponent from '../../components/common/BackHeaderComponent';
 import FundingSpan from '../../components/FundingInfo/FundingSpan';
 import TopFundingInfo from '../../components/FundingInfo/TopFundingInfo';
@@ -14,6 +14,7 @@ import {
 } from '../../components/FundingInfo/GoWriteButton';
 import FundingParticipants from '../../components/FundingInfo/FundingParticipants';
 import FundingComment from '../../components/FundingInfo/FundingComment';
+import PasswordComponent from '../../components/common/PasswordComponent';
 
 const tempList = [
   {
@@ -32,82 +33,117 @@ const tempList = [
   },
 ];
 
-const Btn = (funding, isEnd, setModalShow) => {
-  switch (funding) {
-    // 내가 참여한 펀딩
-    case 'joined':
-      return (
-        <SBtnContainer>
-          <ButtonComponent
-            btnInfo={{ text: '참여 취소', width: '104px' }}
-          ></ButtonComponent>
-          <ButtonComponent
-            btnInfo={{
-              text: '축하 메시지 수정하기',
-              width: '223px',
-              color: 'orange',
-            }}
-          ></ButtonComponent>
-        </SBtnContainer>
-      );
-    // 내가 개설한 펀딩
-    case 'open':
-      if (isEnd) {
-        return (
-          <ButtonComponent
-            btnInfo={{ text: '선물 후기 작성하기', color: 'jade' }}
-          />
-        );
-      } else {
-        return (
-          <ButtonComponent
-            btnInfo={{
-              text: '개설 취소하기',
-            }}
-            onClick={() => setModalShow(true)}
-          />
-        );
-      }
-    default:
-      return (
-        <ButtonComponent btnInfo={{ text: '선물하기', color: 'orange' }} />
-      );
-  }
-};
-
-const ModalContent = () => (
-  <SModalContainer>
-    <SBigTextWrapper>펀딩 개설을 취소하시겠어요?</SBigTextWrapper>
-    <SSmallTextWrapper>
-      펀딩에 참여한 친구들에게 알림이 전송돼요
-    </SSmallTextWrapper>
-  </SModalContainer>
-);
+const giftList = [
+  { image: '', title: '선물 제목', price: 30000 },
+  { image: '', title: '선물 제목', price: 65000 },
+  { image: '', title: '선물 제목', price: 84000 },
+  { image: '', title: '선물 제목', price: 130000 },
+];
 
 const FundingInfoPage = () => {
   const [modalShow, setModalShow] = useState(false);
   const [isCommented, setIsCommented] = useState(false);
   const [wroteMessage, setWroteMessage] = useState(false);
+  const [getPassword, setGetPassword] = useState('1234');
+  const [bottomSheetShow, setBottomSheetShow] = useState(false);
+  // 펀딩 개설자 유저 정보 조회 후 저장
+  const [name, setName] = useState('김이화');
   const messageRef = useRef(null);
-
+  const [image, setImage] = useState(
+    'https://image.vans.co.kr/cmsstatic/product/VN000CSE5T21_VN000CSE5T21_primary.jpg?browse',
+  );
   // 상세 정보 조회 후 userId가 로그인 한 유저와 일치하는지 비교
   // 일치하면 open, 불일치 시 contributers에서 유저 정보와 일치하는 userId가 있는지 확인 후 있으면 'joined' 없으면 'pre'
-  const [funding, setFunding] = useState(null);
+  const [funding, setFunding] = useState('open');
   // 상세 정보 조회 후 fundingStatus 확인
   const [isEnd, setIsEnd] = useState(false);
-
-  const tag = isEnd ? '종료' : 'D-10';
-  const color = funding === 'open' ? 'jade' : 'orange';
+  const [tag, setTag] = useState(isEnd ? '종료' : 'D-10');
+  const [color, setColor] = useState(
+    funding === 'open' ? 'var(--jade-pri)' : 'var(--orange-pri)',
+  );
+  const [password, setPassword] = useState(['', '', '', '']);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const onFocusMessage = () => {
     messageRef.current.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const handlePasswordSubmit = () => {
+    const enteredPassword = password.join('');
+    if (enteredPassword !== getPassword) {
+      setErrorMessage('비밀번호가 틀립니다.');
+      setPassword(['', '', '', '']);
+    } else {
+      setErrorMessage('');
+      console.log('다음 페이지 이동');
+    }
+  };
+
+  useEffect(() => {
+    if (getPassword) {
+      setBottomSheetShow(true);
+    }
+  }, [getPassword]);
+
+  const Btn = () => {
+    switch (funding) {
+      // 내가 참여한 펀딩
+      case 'joined':
+        return (
+          <SBtnContainer>
+            <ButtonComponent btnInfo={{ text: '참여 취소', width: '104px' }} />
+            <ButtonComponent
+              btnInfo={{
+                text: '축하 메시지 수정하기',
+                width: '223px',
+                color: 'orange',
+              }}
+            />
+          </SBtnContainer>
+        );
+      // 내가 개설한 펀딩
+      case 'open':
+        if (isEnd) {
+          return (
+            <ButtonComponent
+              btnInfo={{ text: '선물 후기 작성하기', color: 'jade' }}
+            />
+          );
+        } else {
+          return (
+            <ButtonComponent
+              btnInfo={{
+                text: '개설 취소하기',
+              }}
+              onClick={() => setModalShow(true)}
+            />
+          );
+        }
+      default:
+        return (
+          <ButtonComponent btnInfo={{ text: '선물하기', color: 'orange' }} />
+        );
+    }
+  };
+
+  const ModalContent = () => (
+    <SModalContainer>
+      <SBigTextWrapper>펀딩 개설을 취소하시겠어요?</SBigTextWrapper>
+      <SSmallTextWrapper>
+        펀딩에 참여한 친구들에게 알림이 전송돼요
+      </SSmallTextWrapper>
+    </SModalContainer>
+  );
+
   return (
     <>
       <BackHeaderComponent />
       <SLayout isend={isEnd.toString()}>
-        <TopFundingInfo color={color} tag={tag} />
+        {getPassword ? (
+          <TopFundingInfo />
+        ) : (
+          <TopFundingInfo color={color} tag={tag} image={image} />
+        )}
         {isCommented && isEnd && <FundingComment color={color} />}
         {funding === 'joined' ? (
           <GoWriteMessageButton
@@ -121,17 +157,34 @@ const FundingInfoPage = () => {
           funding === 'open' && isEnd && <GoWriteCommentButton color={color} />
         )}
         <FundingSpan color={color} />
-        <FundingPercentage color={color} />
+        <FundingPercentage
+          type='info'
+          color={color}
+          giftList={giftList}
+          balance={84000}
+        />
         {funding === 'open' && <FundingParticipants />}
         <CongratsMessage list={tempList} ref={messageRef} />
       </SLayout>
       {!(isEnd && funding !== 'open') && (
-        <BottomBackgroundComponent Button={Btn(funding, isEnd, setModalShow)} />
+        <BottomBackgroundComponent Button={Btn()} />
       )}
       {modalShow && (
         <Modal actionText='취소하기' setModalShow={setModalShow}>
           <ModalContent />
         </Modal>
+      )}
+      {funding === 'pre' && bottomSheetShow && (
+        <PasswordComponent
+          password={password}
+          setPassword={setPassword}
+          errorMessage={errorMessage}
+          handleSubmit={handlePasswordSubmit}
+          setBottomSheetShow={setBottomSheetShow}
+          title='비밀번호 입력'
+          name={name}
+          color='orange'
+        />
       )}
     </>
   );
