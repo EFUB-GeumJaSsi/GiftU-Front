@@ -121,7 +121,7 @@ const SPointContainer = styled.div`
   left: ${(props) =>
     props.price === 0
       ? '6px'
-      : `${(1 - (props.max - props.price) / props.max) * 228 + 7}px`};
+      : `${(1 - (props.max - props.price) / props.max) * 226 + 6}px`};
   flex-direction: column;
   align-items: center;
   justify-content: center;
