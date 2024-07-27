@@ -31,7 +31,8 @@ const SImageWrapper = styled.img`
   width: 48px;
   height: 48px;
 
-  border-radius: 50%;
+  background: #d4d4d4;
+  border-radius: 4px;
 `;
 const STextContainer = styled.div`
   display: flex;
