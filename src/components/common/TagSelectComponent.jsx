@@ -1,35 +1,42 @@
+// const [tag, setTag] = useState('전체');
+// const tags = ['전체', '친구', '펀딩'] ''안에 카테고리 입력;
+
+//TagSelectComponent가 필요한 곳에 아래와 같이 작성해서 사용
 // <TagSelectComponent
-//  buttons={[
-//  { text: '전체', link: '/', color: 'jade' },
-//  { text: '친구', link: '/first', color: 'jade' },
-//  { text: '펀딩', link: '/second', color: 'jade' },
-//  ]}
+//  tags={tags}
+//  selectedTag={tag}
+//  onTagChange={setTag}
+//  color='아무것도 입력 안하면 jade임. orange 필요하면 orange라고 입력'
 // />
-// 위의 코드는 예시입니다. text에 원하는 문구를 적고, link는 그대로 사용하고, color는 jade와 orange 중에 선택하면 됩니다.
 
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
 
-const TagSelectComponent = ({ buttons }) => {
+const TagSelectComponent = ({ tags, selectedTag, onTagChange, color }) => {
   // color: [배경 색, 글꼴 색]
   const btnColor = {
-    orange: ['var(--orange-pri)', 'var(--white)'],
-    jade: ['var(--jade-pri)', 'var(--white)'],
-    gray: ['var(--gray-100)', 'var(--gray-400)'],
+    orange: ['var(--orange-pri)', 'var(--gray-300)'],
+    jade: ['var(--jade-pri)', 'var(--gray-300)'],
   };
-
+  const selectedColor = btnColor[color] || btnColor['jade'];
   return (
     <SLayout>
-      {buttons.map((btn, index) => (
-        <SBtn key={index} onClick={btn.onClick}>
-          <StyledNavLink
-            to={btn.link}
-            activeclassname='active'
-            color={btnColor[btn.color]}
+      {tags.map((tag, index) => (
+        <div key={index}>
+          <SInput
+            type='radio'
+            name='tag'
+            id={tag}
+            defaultChecked={selectedTag === tag}
+            onChange={() => onTagChange(tag)}
+          />
+          <SLabel
+            htmlFor={tag}
+            selected={selectedTag === tag}
+            color={selectedColor}
           >
-            {btn.text}
-          </StyledNavLink>
-        </SBtn>
+            {tag}
+          </SLabel>
+        </div>
       ))}
     </SLayout>
   );
@@ -37,33 +44,28 @@ const TagSelectComponent = ({ buttons }) => {
 
 const SLayout = styled.div`
   display: flex;
+  flex-direction: row;
   justify-content: center;
-  gap: 8px;
+  gap: 10px;
 `;
-const SBtn = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 57px;
-  height: 29px;
-  border-radius: 15px;
-  background-color: var(--gray-300);
-  color: white;
-`;
-const StyledNavLink = styled(NavLink)`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  color: inherit;
-  text-decoration: none;
 
-  &.active {
-    background-color: ${(props) => props.color[0]};
-    color: ${(props) => props.color[1]};
-    border-radius: 15px;
-  }
+const SInput = styled.input`
+  display: none;
+
+  font-size: 14px;
+  font-weight: 500;
+`;
+
+const SLabel = styled.label`
+  padding: 6px 16px 6px 16px;
+
+  border-radius: 16px;
+  background-color: ${(props) =>
+    props.selected ? props.color[0] : props.color[1]};
+
+  color: var(--white);
+
+  cursor: pointer;
 `;
 
 export default TagSelectComponent;
