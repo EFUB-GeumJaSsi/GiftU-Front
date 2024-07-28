@@ -10,24 +10,55 @@ const addComma = (price) => {
 };
 
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import PriceProgressBar from './PriceProgressBar';
 import { ReactComponent as Fold } from '../../assets/FundingInfo/fold 1.svg';
+import { ReactComponent as Delete } from '../../assets/FungingOpen/delete_btn.svg';
 
 const FundingPercentage = ({
   type,
   color,
-  balance = 84000,
-  giftList = [
-    { image: '', title: '선물 제목', price: 30000 },
-    { image: '', title: '선물 제목', price: 65000 },
-    { image: '', title: '선물 제목', price: 84000 },
-    { image: '', title: '선물 제목', price: 130000 },
-  ],
+  balance,
+  giftList,
   joinPrice,
+  setIsTrue,
 }) => {
-  const [isClicked, setIsClicked] = useState(false);
   const maxPrice = giftList[giftList.length - 1].price;
   const percent = Math.round(((maxPrice - balance) / maxPrice) * 100);
+  const [list, setList] = useState(giftList ? giftList : []);
+  const [isClicked, setIsClicked] = useState(type === 'add' ? true : false);
+
+  const handleItemDelete = (e) => {
+    const targetIdx = list.findIndex(
+      (it, idx) => idx === parseInt(e.target.id) - 1,
+    );
+
+    if (targetIdx >= 0) {
+      const targetNum = list[targetIdx].num;
+      if (targetNum >= 0) {
+        // 선택 항목 삭제
+        const deleted = list.filter(
+          (it, idx) => idx !== parseInt(e.target.id) - 1,
+        );
+        // 리스트 num 항목 값 조정
+        const newList = deleted.map((it) =>
+          it.num >= targetNum ? { ...it, num: it.num - 1 } : it,
+        );
+        setList(newList);
+      }
+    }
+  };
+
+  // GfitAddPage 펀딩 만들기 버튼 활성화/비활성화 여부
+  useEffect(() => {
+    if (setIsTrue) {
+      if (list.length === 0) {
+        setIsTrue(false);
+      } else {
+        setIsTrue(true);
+      }
+    }
+  }, [setIsTrue, list]);
 
   const Text = () => {
     const EndedText = (
@@ -51,7 +82,7 @@ const FundingPercentage = ({
     );
 
     const AddGiftText = (
-      <SSmallTextWrapper>총 {giftList.length}개의 선물</SSmallTextWrapper>
+      <SSmallTextWrapper>총 {list.length}개의 선물</SSmallTextWrapper>
     );
 
     return type === 'add'
@@ -61,49 +92,14 @@ const FundingPercentage = ({
         : OngoingText;
   };
 
-  const ProgressPoint = ({ it, idx, type }) => (
-    <SPointContainer
-      key={idx}
-      idx={idx + 1}
-      length={giftList.length}
-      max={maxPrice}
-      price={it.price}
-    >
-      {idx === 0 ||
-      idx === giftList.length - 1 ||
-      idx === 'join' ||
-      it.num === giftList.length - 1 ? (
-        <SPointTextWrapper
-          idx={idx}
-          joinPrice={joinPrice}
-          color={color}
-          num={it.num && it.num}
-          length={giftList.length - 1}
-          type={type}
-        >
-          {addComma(it.price)}원
-        </SPointTextWrapper>
-      ) : (
-        <SPointTextWrapper></SPointTextWrapper>
-      )}
-      <SPointCircleWrapper
-        color={color}
-        price={it.price}
-        balance={maxPrice - balance}
-        type={type}
-        num={it.num && it.num}
-        length={giftList.length - 1}
-      />
-    </SPointContainer>
-  );
-
   const GiftItem = ({ it, idx }) => (
-    <SItemContainer key={idx} idx={idx + 1} length={giftList.length}>
+    <SItemContainer idx={idx + 1} length={list.length}>
       <SImageWrapper src={it.image} alt='img' />
       <SItemTextContainer>
         <SItemTextWrapper>{it.title}</SItemTextWrapper>
         <SItemTextWrapper>{addComma(it.price)}원</SItemTextWrapper>
       </SItemTextContainer>
+      {type === 'add' && <DeleteBtn id={idx + 1} onClick={handleItemDelete} />}
     </SItemContainer>
   );
 
@@ -112,23 +108,13 @@ const FundingPercentage = ({
       <STextContainer>
         <Text />
       </STextContainer>
-      <SSliderContainer>
-        <SSliderWrapper
-          class='progress'
-          id='progress'
-          value={percent}
-          min='0'
-          max='100'
-          color={color}
-        />
-        <ProgressPoint it={{ price: 0 }} type='none' />
-        {giftList.map((it, idx) => (
-          <ProgressPoint it={it} idx={idx} type={type} />
-        ))}
-        {joinPrice && (
-          <ProgressPoint it={{ price: joinPrice }} idx='join' type={type} />
-        )}
-      </SSliderContainer>
+      <PriceProgressBar
+        type={type}
+        color={color}
+        giftList={list}
+        balance={balance}
+        joinPrice={joinPrice}
+      />
       <SButtonContainer onClick={() => setIsClicked(!isClicked)}>
         <SButtonWrapper clicked={isClicked} color={color}>
           가격대별 선물 보기
@@ -137,9 +123,11 @@ const FundingPercentage = ({
       </SButtonContainer>
       {isClicked && (
         <SItemLayout>
-          {giftList.map((it, idx) => (
-            <GiftItem it={it} idx={idx} />
-          ))}
+          {list.length === 0 ? (
+            <SNoGiftWrapper>추가된 선물이 없습니다</SNoGiftWrapper>
+          ) : (
+            list.map((it, idx) => <GiftItem key={idx} it={it} idx={idx} />)
+          )}
         </SItemLayout>
       )}
     </SLayout>
@@ -187,99 +175,6 @@ const SSmallTextWrapper = styled.span`
   font-weight: 500;
   line-height: 120%;
 `;
-const SSliderContainer = styled.div`
-  display: flex;
-  align-items: center;
-  position: relative;
-
-  width: 311px;
-  height: 64px;
-  margin: 16px 12px 20px 12px;
-
-  border-radius: 10px;
-  background-color: var(--white);
-`;
-const SSliderWrapper = styled.progress`
-  position: absolute;
-  top: 62%;
-  left: 12%;
-
-  appearance: none;
-
-  &::-webkit-progress-bar {
-    background: var(--gray-300);
-    border-radius: 20px;
-
-    height: 8px;
-    width: 235px;
-  }
-
-  &::-webkit-progress-value {
-    background: ${(props) =>
-      props.color === 'orange' ? 'var(--orange-pri)' : 'var(--jade-pri)'};
-    border-radius: 30px;
-  }
-`;
-const SPointContainer = styled.div`
-  display: flex;
-  position: absolute;
-  left: ${(props) =>
-    props.idx === props.length
-      ? '235px'
-      : `${(1 - (props.max - props.price) / props.max) * 227 + 8}px`};
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-`;
-const SPointTextWrapper = styled.span`
-  min-height: 15px;
-  min-width: 50px;
-  margin: 0 8px;
-
-  background: transparent;
-  border-radius: 10px;
-
-  color: ${(props) =>
-    props.num !== props.length && props.type === 'add'
-      ? 'var(--gray-300)'
-      : props.color === 'jade'
-        ? 'var(--jade-pri)'
-        : props.idx === 'join'
-          ? 'var(--orange-pri)'
-          : !props.joinPrice
-            ? 'var(--gray-500)'
-            : 'var(--gray-300)'};
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 120%;
-  text-align: center;
-
-  cursor: default;
-  white-space: nowrap;
-
-  &:hover {
-    z-index: 999;
-  }
-`;
-const SPointCircleWrapper = styled.div`
-  width: 14px;
-  height: 14px;
-
-  border-radius: 50%;
-
-  background-color: ${(props) =>
-    props.num !== props.length && props.type === 'add'
-      ? 'var(--gray-300)'
-      : props.type === 'add'
-        ? 'var(--jade-pri)'
-        : props.price <= props.balance
-          ? props.color === 'orange'
-            ? 'var(--orange-pri)'
-            : 'var(--jade-pri)'
-          : 'var(--gray-300)'};
-`;
 const SButtonContainer = styled.button`
   display: flex;
   justify-content: center;
@@ -294,12 +189,7 @@ const SButtonContainer = styled.button`
   background-color: var(--white);
 `;
 const SButtonWrapper = styled.span`
-  color: ${(props) =>
-    props.clicked
-      ? props.color === 'orange'
-        ? 'var(--orange-pri)'
-        : 'var(--jade-pri)'
-      : 'var(--gray-400)'};
+  color: ${(props) => (props.clicked ? props.color : 'var(--gray-400)')};
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
@@ -308,12 +198,15 @@ const SButtonWrapper = styled.span`
   cursor: pointer;
 `;
 const FoldBtn = styled(Fold)`
-  fill: ${(props) =>
-    props.clicked
-      ? props.color === 'orange'
-        ? 'var(--orange-pri)'
-        : 'var(--jade-pri)'
-      : 'var(--gray-400)'};
+  fill: ${(props) => (props.clicked ? props.color : 'var(--gray-400)')};
+`;
+const SNoGiftWrapper = styled.span`
+  color: var(--gray-300);
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 120%;
 `;
 const SItemLayout = styled.div`
   display: flex;
@@ -323,6 +216,7 @@ const SItemLayout = styled.div`
 `;
 const SItemContainer = styled.div`
   display: flex;
+  position: relative;
   align-items: center;
   gap: 16px;
 
@@ -348,6 +242,12 @@ const SItemTextWrapper = styled.span`
   font-style: normal;
   font-weight: 500;
   line-height: 120%;
+`;
+const DeleteBtn = styled(Delete)`
+  position: absolute;
+  right: 8px;
+
+  cursor: pointer;
 `;
 
 export default FundingPercentage;
