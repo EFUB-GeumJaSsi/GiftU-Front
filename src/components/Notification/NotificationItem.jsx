@@ -1,9 +1,14 @@
 import styled from 'styled-components';
+import { ReactComponent as ProfileIcon } from '../../assets/common/profile.svg';
 
 const NotificationItem = ({ image, name, message, time, onClick }) => {
   return (
     <SLayout onClick={onClick}>
-      <SImg src={image} />
+      {image === 'default' ? (
+        <StyledProfileIcon />
+      ) : (
+        <SImg src={image} alt='Profile' />
+      )}
       <STextContainer>
         <STextboxContainer>
           <SNameWrapper>{name}</SNameWrapper>
@@ -28,6 +33,7 @@ const SLayout = styled.div`
 
   cursor: pointer;
 `;
+
 const SImg = styled.img`
   width: 40px;
   height: 40px;
@@ -35,12 +41,22 @@ const SImg = styled.img`
   border-radius: 50%;
   background-color: #d4d4d4;
 `;
+
+const StyledProfileIcon = styled(ProfileIcon)`
+  width: 40px;
+  height: 40px;
+
+  border-radius: 50%;
+  background-color: var(--gray-300);
+`;
+
 const STextContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 5px;
 `;
+
 const STextboxContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -53,6 +69,7 @@ const STextboxContainer = styled.div`
 
   overflow: hidden;
 `;
+
 const SNameWrapper = styled.div`
   font-weight: 500;
   white-space: nowrap;
@@ -60,6 +77,7 @@ const SNameWrapper = styled.div`
   text-overflow: ellipsis;
   max-width: 40%;
 `;
+
 const SMessageWrapper = styled.div`
   max-width: 50%;
 
@@ -69,6 +87,7 @@ const SMessageWrapper = styled.div`
 
   overflow: hidden;
 `;
+
 const STimeWrapper = styled.div`
   font-size: 12px;
   font-weight: 500;

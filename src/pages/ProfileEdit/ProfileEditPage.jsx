@@ -1,115 +1,158 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import { format } from 'date-fns';
-import { DayPicker } from 'react-day-picker';
-import 'react-day-picker/dist/style.css';
 import BackHeaderComponent from '../../components/common/BackHeaderComponent';
 import ButtonComponent from '../../components/common/ButtonComponent';
 import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
 import { ReactComponent as Camera } from '../../assets/common/camera.svg';
-import { ReactComponent as Calendar } from '../../assets/common/calendar.svg';
-const ProfileEditPage = () => {
-  const [showCalendar, setShowCalendar] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(null);
+import { ReactComponent as ProfileIcon } from '../../assets/common/profile.svg';
 
-  const [month, setMonth] = useState(new Date());
-  const [userInfo, setUserInfo] = useState({
-    nickname: '닉네임',
-    email: 'yyheeyeon@gmail.com',
-    birthday: '',
+const ProfileEditPage = () => {
+  const [currentDate, setCurrentDate] = useState('');
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    getValues,
+    watch,
+    formState: { errors, isValid },
+  } = useForm({
+    defaultValues: {
+      image: 'default',
+      nickname: '닉네임',
+      email: 'yyheeyeon@gmail.com',
+      birthday: '',
+    },
+    mode: 'onChange',
   });
+  useEffect(() => {
+    const today = new Date().toISOString().split('T')[0];
+    setCurrentDate(today);
+    setValue('currentDate', today);
+  }, [setValue]);
+
+  const onSubmit = (data) => {
+    console.log('Form Data:', data);
+  };
+
+  const birthday = watch('birthday');
+
+  useEffect(() => {
+    if (birthday) {
+      setValue('birthday', format(new Date(birthday), 'yyyy-MM-dd'));
+    }
+  }, [birthday, setValue]);
 
   const handleInfoChange = (e) => {
-    setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
+    setValue(e.target.name, e.target.value);
   };
 
-  const handleDateSelect = (date) => {
-    if (!date) {
-      setUserInfo({ ...userInfo, birthday: '' });
-      setSelectedDate(undefined);
-    } else {
-      setSelectedDate(date);
-      setMonth(date);
-      setUserInfo({ ...userInfo, birthday: format(date, 'yyyy-MM-dd') });
-      setShowCalendar(false);
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImageFile(file);
+      setImagePreview(URL.createObjectURL(file));
     }
   };
+
   const Btn = (
     <ButtonComponent
+      type='submit'
+      disabled={!isValid}
       btnInfo={{
         text: '저장',
         width: '335px',
-        color: 'jade',
+        color: isValid ? 'jade' : 'gray',
       }}
     ></ButtonComponent>
   );
 
   return (
     <SLayout>
-      <BackHeader text='프로필 편집' />
+      <BackHeaderComponent text='프로필 편집' />
       <SImageContainer>
-        <SImageWrapper />
-        <SImageButtonWrapper>
-          <Camera></Camera>
-        </SImageButtonWrapper>
+        {imagePreview ? (
+          <SImgWrapper src={imagePreview} alt='Profile' />
+        ) : (
+          <StyledProfileIcon />
+        )}
+        <SImageLabel htmlFor='profile-image'>
+          <Camera />
+        </SImageLabel>
+        <SImageInput
+          type='file'
+          accept='image/*'
+          id='profile-image'
+          onChange={handleImageChange}
+        />
       </SImageContainer>
-      <SForm>
+      <SForm onSubmit={handleSubmit(onSubmit)}>
         <SFieldset>
           <SLegend>닉네임</SLegend>
           <STextarea
             name='nickname'
             placeholder='닉네임을 입력해 주세요!'
-            value={userInfo.nickname}
+            {...register('nickname', {
+              required: '닉네임을 입력해 주세요!',
+              maxLength: {
+                value: 10,
+                message: '닉네임은 10자 이내로 입력해 주세요',
+              },
+            })}
             onChange={handleInfoChange}
           />
+          {errors.nickname && (
+            <SWarningWrapper>{errors.nickname.message}</SWarningWrapper>
+          )}
         </SFieldset>
         <SFieldset>
           <SLegend>이메일</SLegend>
           <STextarea
             name='email'
             placeholder='이메일을 입력해 주세요!'
-            value={userInfo.email}
+            {...register('email', {
+              required: '이메일을 입력해 주세요!',
+              pattern: {
+                value: /^\S+@\S+$/i,
+                message: '올바른 이메일 형식을 입력해 주세요',
+              },
+            })}
             onChange={handleInfoChange}
           />
-        </SFieldset>
-        <SFieldset>
-          <SLegend>생일</SLegend>
-          <SInputContainer onClick={() => setShowCalendar(!showCalendar)}>
-            <SInput
-              type='text'
-              value={selectedDate ? format(selectedDate, 'yyyy-MM-dd') : ''}
-              placeholder='생일을 입력해 주세요!'
-              readOnly
-            />
-            <SBdayIconWrapper>
-              <Calendar></Calendar>
-            </SBdayIconWrapper>
-          </SInputContainer>
-          {showCalendar && (
-            <SCalendarWrapper>
-              <DayPickerStyled
-                captionLayout='dropdown'
-                fromYear={1920}
-                toYear={2024}
-                month={month}
-                onMonthChange={setMonth}
-                mode='single'
-                selected={selectedDate}
-                onSelect={handleDateSelect}
-              />
-            </SCalendarWrapper>
+          {errors.email && (
+            <SWarningWrapper>{errors.email.message}</SWarningWrapper>
           )}
         </SFieldset>
+        <fieldset>
+          <SLegend>생일</SLegend>
+          <SInputContainer>
+            <SDateInput
+              placeholder=''
+              {...register('birthday', {
+                required: '생일을 입력해 주세요!',
+                validate: (value) =>
+                  value < getValues('currentDate') ||
+                  '오늘 이전의 날짜를 선택해주세요',
+              })}
+              type='date'
+            />
+          </SInputContainer>
+          {errors.birthday && (
+            <SWarningWrapper>{errors.birthday.message}</SWarningWrapper>
+          )}
+        </fieldset>
       </SForm>
-      <SBtnWrapper>
-        <BottomBackground Button={Btn} />
-      </SBtnWrapper>
+      <BottomBackgroundComponent Button={Btn} />
     </SLayout>
   );
 };
 
 const SLayout = styled.div`
   display: flex;
+  flex-flow: column nowrap;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -117,46 +160,60 @@ const SLayout = styled.div`
 
 const SImageContainer = styled.div`
   position: relative;
-
   width: 96px;
   height: 96px;
   margin: 40px;
 `;
 
-const SImageWrapper = styled.div`
-  width: 100%;
-  height: 100%;
+const SImgWrapper = styled.img`
+  display: flex;
+
+  width: 96px;
+  height: 96px;
 
   border-radius: 50%;
   background-color: var(--gray-300);
 `;
+const StyledProfileIcon = styled(ProfileIcon)`
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+`;
 
-const SImageButtonWrapper = styled.div`
+const SImageLabel = styled.label`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   position: absolute;
   bottom: 0;
   right: 0;
+
+  cursor: pointer;
+`;
+
+const SImageInput = styled.input`
+  display: none;
 `;
 
 const SForm = styled.form`
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 25px;
-
+  flex-flow: column nowrap;
+  gap: 30px;
   width: 335px;
+  margin: 0 auto;
 `;
 
-const SFieldset = styled.form`
+const SFieldset = styled.fieldset`
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 8px;
 
   width: 335px;
-  height: 94px;
 `;
 
-const SLegend = styled.div`
+const SLegend = styled.legend`
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -172,8 +229,7 @@ const STextarea = styled.textarea`
   display: flex;
   justify-content: center;
 
-  height: 100%;
-  padding: 24px;
+  padding: 20px 0px 3px 20px;
 
   border: 2px solid transparent;
   border-radius: 16px;
@@ -195,17 +251,8 @@ const STextarea = styled.textarea`
 `;
 
 const SInput = styled.input`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  width: 100%;
-  height: 90%;
-  padding: 15px 50px 15px 24px;
-
   border-radius: 16px;
   background-color: var(--gray-100);
-
   font-weight: 500;
   font-size: 16px;
   &::placeholder {
@@ -213,28 +260,28 @@ const SInput = styled.input`
   }
 `;
 
-const SBdayIconWrapper = styled.div`
-  position: absolute;
-  right: 24px;
-`;
-
 const SInputContainer = styled.div`
   display: flex;
   align-items: center;
-
-  margin-top: 8px;
-  position: relative;
+  margin-top: 3px;
   width: 100%;
 `;
-const SCalendarWrapper = styled.div`
-  position: absolute;
-  left: 0px;
-  background-color: var(--white);
+
+const SDateInput = styled(SInput)`
+  padding: 22px 20px 20px 20px;
+  width: 335px;
+  box-sizing: border-box;
 `;
-const DayPickerStyled = styled(DayPicker)``;
-const SBtnWrapper = styled.div`
-  position: fixed;
-  bottom: 0;
+
+const SWarningWrapper = styled.div`
+  margin-top: 8px;
+  margin-left: 8px;
+
+  color: var(--red);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 120%;
 `;
 
 export default ProfileEditPage;

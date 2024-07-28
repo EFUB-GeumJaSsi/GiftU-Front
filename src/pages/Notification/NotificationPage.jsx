@@ -8,33 +8,31 @@ import { ReactComponent as IcnInfo } from '../../assets/Friend/icn_info.svg';
 const NotificationPage = () => {
   const [modalShow, setModalShow] = useState(false);
   const [modalContent, setModalContent] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState('전체');
-  const [notifications, setNotifications] = useState([
+  const [tag, setTag] = useState('전체');
+
+  const tags = ['전체', '친구', '펀딩'];
+
+  const notifications = [
     {
-      image:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/480px-Google_%22G%22_logo.svg.png',
+      image: 'default',
       name: '닉네임은여기까지입니다',
       message: '님과 친구가 되었습니다',
       time: '00분 전',
-      type: 'friend',
+      type: '친구',
     },
     {
-      image: '',
+      image: 'default',
       name: '펀딩 이름',
       message: '펀딩이 종료되었습니다',
       time: '00시간 전',
-      type: 'funding',
+      type: '펀딩',
     },
-  ]);
-
-  const fundingNotiClick = () => {
-    window.location.href = '/'; //나중에 이동할 주소 넣어야함
-  };
+  ];
 
   const friendNotiClick = (image, name) => {
     setModalContent(
       <SModalContainer>
-        <SProfileWrapper src={image} alt={`${name}'s profile`} />
+        <SProfileWrapper src={image} alt='profile' />
         <span>{name}</span>
         <span style={{ color: 'var(--black)' }}>친구를 추가하시겠어요?</span>
         <span style={{ fontSize: '12px' }}>
@@ -45,16 +43,14 @@ const NotificationPage = () => {
     setModalShow(true);
   };
 
-  const handleCategoryChange = (category) => {
-    setSelectedCategory(category);
+  const fundingNotiClick = () => {
+    window.location.href = '/'; // 나중에 이동할 주소 넣어야함
   };
 
   const filteredNotifications = notifications.filter((notification) => {
-    if (selectedCategory === '전체') return true;
-    if (selectedCategory === '친구' && notification.type === 'friend')
-      return true;
-    if (selectedCategory === '펀딩' && notification.type === 'funding')
-      return true;
+    if (tag === '전체') return true;
+    if (tag === '친구' && notification.type === '친구') return true;
+    if (tag === '펀딩' && notification.type === '펀딩') return true;
     return false;
   });
 
@@ -63,26 +59,9 @@ const NotificationPage = () => {
       <SHeader>알림</SHeader>
       <SItemContainer>
         <TagSelectComponent
-          buttons={[
-            {
-              text: '전체',
-              link: '/',
-              color: 'jade',
-              onClick: () => handleCategoryChange('전체'),
-            },
-            {
-              text: '친구',
-              link: '/friend',
-              color: 'jade',
-              onClick: () => handleCategoryChange('친구'),
-            },
-            {
-              text: '펀딩',
-              link: '/funding',
-              color: 'jade',
-              onClick: () => handleCategoryChange('펀딩'),
-            },
-          ]}
+          tags={tags}
+          selectedTag={tag}
+          onTagChange={setTag}
         />
         <SBtnWrapper>
           {filteredNotifications.map((notification, index) => (
@@ -93,7 +72,7 @@ const NotificationPage = () => {
               message={notification.message}
               time={notification.time}
               onClick={() =>
-                notification.type === 'friend'
+                notification.type === '친구'
                   ? friendNotiClick(notification.image, notification.name)
                   : fundingNotiClick()
               }
@@ -129,14 +108,15 @@ const SModalContainer = styled.div`
     color: var(--gray-500);
   }
 `;
+
 const SProfileWrapper = styled.img`
   width: 56px;
   height: 56px;
   margin-bottom: 8px;
 
   border-radius: 50%;
-  background-color: #d9d9d9;
 `;
+
 const SLayout = styled.div`
   display: flex;
   flex-flow: column nowrap;
@@ -144,6 +124,7 @@ const SLayout = styled.div`
 
   padding-top: 43px;
 `;
+
 const SHeader = styled.header`
   padding-left: 28px;
 
@@ -151,12 +132,14 @@ const SHeader = styled.header`
   font-size: 22px;
   font-weight: 700;
 `;
+
 const SItemContainer = styled.main`
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
   gap: 16px;
 `;
+
 const SBtnWrapper = styled.div`
   display: flex;
   flex-flow: column nowrap;
