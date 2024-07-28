@@ -4,19 +4,23 @@
 // (1-1) 부모 컴포넌트에 추가: const [toastShow, setToastShow] = useState(false);
 // (1-2) 부모 컴포넌트에 추가: {toastShow && <ToastComponent></ToastComponent>}
 //
-// 2. 토스트 내용
-// (2-1) 부모 컴포넌트에서 <ToastComponent></ToastComponent> 안에 작성합니다.
+// 2. 토스트 props
+// (2-1) setToastShow - 1-1의 setToastShow
+//
+// 3. 토스트 내용
+// (3-1) 부모 컴포넌트에서 <ToastComponent></ToastComponent> 안에 작성합니다.
 // 예시: <ToastComponent>삭제가 완료되었어요</ToastComponent>
 
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
-const ToastComponent = ({ children }) => {
+const ToastComponent = ({ setToastShow, children }) => {
   const [toastOpen, setToastOpen] = useState(true);
 
   useEffect(() => {
     setTimeout(() => setToastOpen(false), 2000);
+    setTimeout(() => setToastShow(false), 1000);
   }, []);
 
   return createPortal(

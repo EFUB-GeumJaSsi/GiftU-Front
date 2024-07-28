@@ -6,7 +6,7 @@ import BackHeaderComponent from '../../components/common/BackHeaderComponent';
 import ButtonComponent from '../../components/common/ButtonComponent';
 import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
 
-const FundingSet = () => {
+const FundingSetPage = () => {
   const [currentDate, setCurrentDate] = useState('');
   const navigate = useNavigate();
   const [isButtonActive, setIsButtonActive] = useState(false);
@@ -272,4 +272,4 @@ const SButton = styled.button`
   border-radius: 16px;
 `;
 
-export default FundingSet;
+export default FundingSetPage;

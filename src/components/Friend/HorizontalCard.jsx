@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { useState } from 'react';
+import { deleteFriend } from '../../api/friend';
 import BottomModalComponent from '../../components/common/BottomModalComponent';
 import ModalComponent from '../common/ModalComponent';
 import ToastComponent from '../common/ToastComponent';
@@ -7,16 +8,33 @@ import icn_birth from '../../assets/Friend/icn_birth.svg';
 import btn_delete from '../../assets/Friend/btn_delete_friend.svg';
 import icn_info from '../../assets/Friend/icn_info.svg';
 
-const HorizontalCard = ({ data = {} }) => {
-  const { image, nickname, birthday } = data;
+const HorizontalCard = ({ friendId, nickname, birthday, image }) => {
   const [bottomModalShow, setBottomModalShow] = useState(false);
   const [bottomModalOpen, setBottomModalOpen] = useState(false);
   const [modalShow, setModalShow] = useState(false);
   const [toastShow, setToastShow] = useState(false);
+  const [toastContent, setToastContent] = useState(null);
 
+  // API 연결
+  const delFriend = async (friendId) => {
+    try {
+      const response = await deleteFriend(friendId);
+      setToastContent(response.data);
+      setTimeout(() => location.reload(true), 2000);
+    } catch (error) {
+      console.error(error);
+      // 에러 코드에 따라 토스트 에러 메시지 설정
+      // setToastContent('');
+    }
+  };
+  // handle 함수
   const handleBottomModalClose = () => {
     setBottomModalOpen(false); // 바텀모달 닫기 애니메이션 효과
     setTimeout(() => setBottomModalShow(false), 300); // 애니메이션 후 언마운트
+  };
+  const handleDeleteClick = () => {
+    delFriend(friendId);
+    setToastShow(true);
   };
 
   return (
@@ -53,9 +71,7 @@ const HorizontalCard = ({ data = {} }) => {
       {modalShow && (
         <ModalComponent
           actionText='삭제하기'
-          onClickAction={() => {
-            setToastShow(true);
-          }}
+          onClickAction={handleDeleteClick}
           setModalShow={setModalShow}
         >
           <SModalContainer>
@@ -71,7 +87,11 @@ const HorizontalCard = ({ data = {} }) => {
           </SModalContainer>
         </ModalComponent>
       )}
-      {toastShow && <ToastComponent>삭제가 완료되었어요</ToastComponent>}
+      {toastShow && (
+        <ToastComponent setToastShow={setToastShow}>
+          {toastContent}
+        </ToastComponent>
+      )}
     </SLayout>
   );
 };
