@@ -1,13 +1,15 @@
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import BackHeaderComponent from '../../components/common/BackHeaderComponent';
 import ButtonComponent from '../../components/common/ButtonComponent';
 import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
+import DaumPostcode from 'react-daum-postcode';
 
 const FundingSetPage = () => {
   const [currentDate, setCurrentDate] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const [isButtonActive, setIsButtonActive] = useState(false);
   const {
@@ -38,6 +40,16 @@ const FundingSetPage = () => {
   const onSubmit = (data) => {
     navigate('/password-set', { state: { formData: data } });
     console.log(data);
+  };
+
+  const completeHandler = (data) => {
+    setValue('addressNumber', data.zonecode);
+    setValue('addressDetail1', data.address);
+    setIsOpen(false);
+  };
+
+  const toggleHandler = () => {
+    setIsOpen((prevOpenState) => !prevOpenState);
   };
 
   const title = watch('title');
@@ -120,15 +132,19 @@ const FundingSetPage = () => {
                   required: '주소를 입력하세요',
                 })}
                 type='text'
-                placeholder='상세 주소를 입력하세요'
+                placeholder='우편 번호'
+                readOnly
               />
-              <SButton disabled={!isButtonActive}>우편번호 찾기</SButton>
+              <SButton disabled={!isButtonActive} onClick={toggleHandler}>
+                우편번호 찾기
+              </SButton>
             </SAddressNumberContainer>
             <STextInput
               id='addressDetail1'
               {...register('addressDetail1', { required: '주소를 입력하세요' })}
               type='text'
               placeholder='자동입력'
+              readOnly
             />
             <STextInput
               id='addressDetail2'
@@ -141,20 +157,28 @@ const FundingSetPage = () => {
             <SWarningWrapper>{errors.address.message}</SWarningWrapper>
           )}
         </fieldset>
-        <BottomBackgroundComponent
-          Button={
-            <ButtonComponent
-              type='submit'
-              disabled={!isValid}
-              btnInfo={{
-                text: '완료',
-                color: isValid ? 'jade' : 'gray',
-                width: '335px',
-              }}
-            />
-          }
-        />
       </SForm>
+      <BottomBackgroundComponent
+        Button={
+          <ButtonComponent
+            type='submit'
+            disabled={!isValid}
+            btnInfo={{
+              text: '다음',
+              color: isValid ? 'jade' : 'gray',
+              width: '335px',
+            }}
+          />
+        }
+      />
+      {isOpen && (
+        <SPostcodeContainer>
+          <DaumPostcode
+            onComplete={completeHandler}
+            style={{ width: '100%', height: '100%' }}
+          />
+        </SPostcodeContainer>
+      )}
     </SLayout>
   );
 };
@@ -162,15 +186,18 @@ const FundingSetPage = () => {
 const SLayout = styled.div`
   display: flex;
   flex-flow: column nowrap;
+  align-items: center;
   gap: 24px;
+
+  margin: 0 auto;
+  overflow-y: scroll;
 `;
 const SForm = styled.form`
   display: flex;
   flex-flow: column nowrap;
-  gap: 24px;
 
+  gap: 24px;
   width: 335px;
-  margin: 0 auto;
 `;
 const SLabel = styled.label`
   display: block;
@@ -179,7 +206,6 @@ const SLabel = styled.label`
   margin-bottom: 8px;
 
   font-size: 16px;
-  font-style: normal;
   font-weight: 500;
   line-height: 140%;
 `;
@@ -189,7 +215,6 @@ const SInput = styled.input`
 `;
 const STextInput = styled(SInput)`
   width: 335px;
-
   padding: 21px 24px;
 
   color: var(--black);
@@ -197,6 +222,7 @@ const STextInput = styled(SInput)`
   font-weight: 400;
   line-height: 140%;
   box-sizing: border-box;
+
   &:focus {
     border: 2px solid var(--jade-pri);
   }
@@ -207,7 +233,6 @@ const SWarningWrapper = styled.div`
 
   color: var(--red);
   font-size: 14px;
-  font-style: normal;
   font-weight: 500;
   line-height: 120%;
 `;
@@ -221,14 +246,13 @@ const SDateContainer = styled.div`
 const SCurrentDateInput = styled(SInput)`
   width: 160px;
   padding: 21px 22px;
-
   box-sizing: border-box;
 `;
 const SDateInput = styled(SInput)`
   width: 160px;
   padding: 21px 22px;
-
   box-sizing: border-box;
+
   &:focus {
     border: 2px solid var(--jade-pri);
   }
@@ -237,20 +261,19 @@ const SAddressContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
-
   width: 100%;
+
+  margin-bottom: 100px;
 `;
 const SAddressNumberContainer = styled.div`
   display: flex;
   flex-direction: row;
   gap: 8px;
-
   width: 100%;
 `;
 const SAddressInput = styled(SInput)`
   width: 209px;
   padding: 21px 34px 21px 28px;
-
   box-sizing: border-box;
 `;
 const SButton = styled.button`
@@ -259,17 +282,25 @@ const SButton = styled.button`
   width: 118px;
   height: 48px;
   padding: 13px 15px 13px 16px;
-  box-sizing: border-box;
 
+  box-sizing: border-box;
   color: white;
   font-size: 16px;
-  font-style: normal;
   font-weight: 600;
   line-height: 140%;
-
   background-color: ${({ disabled }) =>
     disabled ? 'var(--gray-500)' : 'var(--jade-pri)'};
   border-radius: 16px;
+  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
+`;
+const SPostcodeContainer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100vh;
+  z-index: 1000;
 `;
 
 export default FundingSetPage;

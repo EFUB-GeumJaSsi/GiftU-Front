@@ -9,6 +9,8 @@ import PasswordComponent from '../../components/common/PasswordComponent';
 import { ReactComponent as OrangeLocker } from '../../assets/PasswordSet/icn_btn_no.svg';
 import { ReactComponent as BlueLocker } from '../../assets/PasswordSet/icn_btn_yes.svg';
 
+let newPassword = '';
+
 const PasswordSetPage = () => {
   const [bottomSheetShow, setBottomSheetShow] = useState(false);
   const navigate = useNavigate();
@@ -29,15 +31,20 @@ const PasswordSetPage = () => {
   } = methods;
 
   const onSubmit = (data) => {
-    const formData = {
-      visibility: data.visibility,
-      password: data.visibility === 'private' ? data.password : '',
-    };
-    console.log(data);
-    navigate('/');
+    console.log('폼 제출', data);
   };
 
   const visibility = watch('visibility');
+
+  function setPassword(data) {
+    newPassword = data;
+    console.log(newPassword, visibility);
+    navigate('/');
+  }
+
+  // function passwordIsValid() {
+  //     navigate('/');
+  // }
 
   return (
     <FormProvider {...methods}>
@@ -91,8 +98,8 @@ const PasswordSetPage = () => {
           {bottomSheetShow && (
             <PasswordComponent
               setBottomSheetShow={setBottomSheetShow}
-              handleSubmit={handleSubmit(onSubmit)}
-              title='펀딩 개설'
+              passwordExact={'Set'}
+              passwordSet={(data) => setPassword(data)}
               color='jade'
             />
           )}
@@ -105,8 +112,8 @@ const PasswordSetPage = () => {
                   btnInfo={{
                     text: '완료',
                     color: 'jade',
-                    type: 'submit',
                   }}
+                  type='submit'
                 />
               }
             />
