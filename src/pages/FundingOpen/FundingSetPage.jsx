@@ -182,7 +182,6 @@ const FundingSetPage = () => {
     </SLayout>
   );
 };
-export default FundingSetPage;
 
 const SLayout = styled.div`
   display: flex;
@@ -193,7 +192,6 @@ const SLayout = styled.div`
   margin: 0 auto;
   overflow-y: scroll;
 `;
-
 const SForm = styled.form`
   display: flex;
   flex-flow: column nowrap;
@@ -201,7 +199,6 @@ const SForm = styled.form`
   gap: 24px;
   width: 335px;
 `;
-
 const SLabel = styled.label`
   display: block;
 
@@ -212,12 +209,10 @@ const SLabel = styled.label`
   font-weight: 500;
   line-height: 140%;
 `;
-
 const SInput = styled.input`
   background-color: var(--gray-100);
   border-radius: 16px;
 `;
-
 const STextInput = styled(SInput)`
   width: 335px;
   padding: 21px 24px;
@@ -232,7 +227,6 @@ const STextInput = styled(SInput)`
     border: 2px solid var(--jade-pri);
   }
 `;
-
 const SWarningWrapper = styled.div`
   margin-top: 8px;
   margin-left: 8px;
@@ -242,7 +236,6 @@ const SWarningWrapper = styled.div`
   font-weight: 500;
   line-height: 120%;
 `;
-
 const SDateContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -250,13 +243,11 @@ const SDateContainer = styled.div`
 
   width: 100%;
 `;
-
 const SCurrentDateInput = styled(SInput)`
   width: 160px;
   padding: 21px 22px;
   box-sizing: border-box;
 `;
-
 const SDateInput = styled(SInput)`
   width: 160px;
   padding: 21px 22px;
@@ -266,7 +257,6 @@ const SDateInput = styled(SInput)`
     border: 2px solid var(--jade-pri);
   }
 `;
-
 const SAddressContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -275,20 +265,17 @@ const SAddressContainer = styled.div`
 
   margin-bottom: 100px;
 `;
-
 const SAddressNumberContainer = styled.div`
   display: flex;
   flex-direction: row;
   gap: 8px;
   width: 100%;
 `;
-
 const SAddressInput = styled(SInput)`
   width: 209px;
   padding: 21px 34px 21px 28px;
   box-sizing: border-box;
 `;
-
 const SButton = styled.button`
   align-self: center;
 
@@ -306,7 +293,6 @@ const SButton = styled.button`
   border-radius: 16px;
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
 `;
-
 const SPostcodeContainer = styled.div`
   position: fixed;
   top: 0;
@@ -316,3 +302,5 @@ const SPostcodeContainer = styled.div`
   height: 100vh;
   z-index: 1000;
 `;
+
+export default FundingSetPage;

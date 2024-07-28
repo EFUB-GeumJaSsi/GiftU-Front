@@ -23,7 +23,7 @@ const TutorialPage = () => {
           description='금액대별로 원하는 선물을 추가할 수 있어요'
           component={() => (
             <SWhiteContainer>
-              <Slider></Slider>
+              <Slider />
             </SWhiteContainer>
           )}
         ></TitleDescription>
@@ -48,7 +48,7 @@ const TutorialPage = () => {
             <SContainer>
               <SDateContainer>2024.07.12</SDateContainer>
               <SDateContainer style={{ color: 'var(--gray-400)' }}>
-                펀딩 마감일 <Calendar></Calendar>
+                펀딩 마감일 <Calendar />
               </SDateContainer>
             </SContainer>
           )}
@@ -66,16 +66,16 @@ const TutorialPage = () => {
                 gap: '11px',
               }}
             >
-              <OpenLock></OpenLock>
+              <OpenLock />
               <SFourthTextWrapper>모두에게 공개</SFourthTextWrapper>
-              <ClosedLock></ClosedLock>
+              <ClosedLock />
               <SFourthTextWrapper>친구에게 공개</SFourthTextWrapper>
             </SWhiteContainer>
           )}
         ></TitleDescription>
       </SMakeFundingContainer>
       <SMiddleContainer>
-        <Present></Present>
+        <Present />
       </SMiddleContainer>
       <SJoinFundingContainer>
         <SCategoryWrapper>펀딩 참여하기</SCategoryWrapper>
@@ -96,7 +96,7 @@ const TutorialPage = () => {
               <Slider2></Slider2>
               <SPriceBtnContainer>
                 가격대별 선물 보기
-                <Drop></Drop>
+                <Drop />
               </SPriceBtnContainer>
             </SWhiteContainer>
           )}
@@ -113,7 +113,7 @@ const TutorialPage = () => {
           )}
         ></TitleDescription>
         <SLogoWrapper>
-          <Logo></Logo>
+          <Logo />
         </SLogoWrapper>
       </SJoinFundingContainer>
     </>

@@ -1,40 +1,69 @@
 import styled from 'styled-components';
 import { useState, useEffect, useRef } from 'react';
 import { arrayChop } from '../../components/common/CarouselComponent';
+import { postFriendRequest, getFriendList } from '../../api/friend.js';
 import CarouselComponent from '../../components/common/CarouselComponent';
 import BottomSheetComponent from '../../components/common/BottomSheetComponent';
 import ButtonComponent from '../../components/common/ButtonComponent';
+import ToastComponent from '../../components/common/ToastComponent.jsx';
 import VerticalCard from '../../components/Friend/VerticalCard';
 import HorizontalCard from '../../components/Friend/HorizontalCard';
 import { ReactComponent as IcnUnion } from '../../assets/Friend/icn_union.svg';
 
-// const data = null;
-const data = [
-  {
-    nickname: '닉네임1',
-    birthday: '3월 18일',
-  },
-  {
-    nickname: '닉네임2',
-    birthday: '5월 14일',
-  },
-  {
-    nickname: '닉네임999999999999999999999999',
-    birthday: '12월 21일',
-  },
-];
-
 const FriendPage = () => {
-  const chopedDataList = data && arrayChop(data, 2);
+  // 친구 페이지 데이터
+  const [friendList, setFriendList] = useState([]);
+  const [carouselFriendList, setCarouselFriendList] = useState(null);
+  const chopedCarouselFriendList =
+    carouselFriendList && arrayChop(carouselFriendList, 2);
+  // 바텀시트 관련
   const [bottomSheetShow, setBottomSheetShow] = useState(false);
   const inputRef = useRef(null);
   const [email, setEmail] = useState('');
+  // 토스트 관련
+  const [toastShow, setToastShow] = useState(false);
+  const [toastContent, setToastContent] = useState(null);
 
+  // API 연결
+  const readFriendList = async () => {
+    try {
+      const response = await getFriendList();
+      setFriendList(response.data.friends);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const readCarouselFriendList = async () => {
+    try {
+      // const response = await 개발 중
+      setCarouselFriendList();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const createFriendRequest = async (email) => {
+    try {
+      const response = await postFriendRequest(email);
+      setToastContent('친구 요청이 전송되었습니다.');
+    } catch (error) {
+      console.error(error);
+      // 에러 코드에 따라 토스트 에러 메시지 설정
+      // setToastContent('');
+    }
+  };
+  // handle 함수
   const handleFormSubmit = (event) => {
     event.preventDefault();
+    createFriendRequest(email);
+    setToastShow(true);
     setEmail('');
   };
 
+  // 최초 렌더링 시 데이터 read
+  useEffect(() => {
+    readFriendList();
+  }, []);
   // 바텀시트 렌더링 시 input 포커스
   useEffect(() => {
     inputRef.current?.focus();
@@ -43,20 +72,33 @@ const FriendPage = () => {
   return (
     <SLayout>
       <SH1 as='header'>친구</SH1>
-      {data && (
+      {carouselFriendList && (
         <SSection>
           <ST1>나에게 선물한 친구</ST1>
-          <CarouselComponent pageLength={chopedDataList.length} pageWidth={335}>
-            {chopedDataList.map((item, index) => (
+          <CarouselComponent
+            pageLength={chopedCarouselFriendList.length}
+            pageWidth={335}
+          >
+            {chopedCarouselFriendList.map((item, index) => (
               <SPageContainer key={index}>
-                <VerticalCard data={item[0]} />
-                {index === chopedDataList.length - 1 &&
-                data.length % 2 !== 0 ? (
+                <VerticalCard
+                  friendId={item[0].friendId}
+                  nickname={item[0].nickname}
+                  birthday={item[0].birthday}
+                  image={item[0].userImageUrl}
+                />
+                {index === chopedCarouselFriendList.length - 1 &&
+                carouselFriendList.length % 2 !== 0 ? (
                   <div style={{ visibility: 'hidden' }}>
                     <VerticalCard />
                   </div>
                 ) : (
-                  <VerticalCard data={item[1]} />
+                  <VerticalCard
+                    friendId={item[1].friendId}
+                    nickname={item[1].nickname}
+                    birthday={item[1].birthday}
+                    image={item[1].userImageUrl}
+                  />
                 )}
               </SPageContainer>
             ))}
@@ -75,11 +117,16 @@ const FriendPage = () => {
             친구 추가
           </SAddBtn>
         </STopContainer>
-        {data ? (
+        {friendList.length ? (
           <SUl>
-            {data.map((item, index) => (
+            {friendList.map((item, index) => (
               <li key={index}>
-                <HorizontalCard data={item} />
+                <HorizontalCard
+                  friendId={item.friendId}
+                  nickname={item.nickname}
+                  birthday={item.birthday}
+                  image={item.userImageUrl}
+                />
               </li>
             ))}
           </SUl>
@@ -102,6 +149,7 @@ const FriendPage = () => {
                 ref={inputRef}
                 type='email'
                 name='friend-email'
+                value={email}
                 required
                 onChange={(event) => {
                   setEmail(event.target.value);
@@ -116,6 +164,11 @@ const FriendPage = () => {
             </SForm>
           </SBottomSheetContainer>
         </BottomSheetComponent>
+      )}
+      {toastShow && (
+        <ToastComponent setToastShow={setToastShow}>
+          {toastContent}
+        </ToastComponent>
       )}
     </SLayout>
   );

@@ -36,7 +36,7 @@ const SearchPage = () => {
     <SLayout>
       <SSearchContainer>
         <SSearchBoxContainer>
-          <Search></Search>
+          <Search />
           <STextBoxWrapper
             type='text'
             placeholder='펀딩 이름,친구를 검색해보세요'
@@ -46,7 +46,7 @@ const SearchPage = () => {
         </SSearchBoxContainer>
         <SBtnWrapper>닫기</SBtnWrapper>
       </SSearchContainer>
-      <HLine></HLine>
+      <HLine />
       <SearchResults results={results}></SearchResults>
     </SLayout>
   );

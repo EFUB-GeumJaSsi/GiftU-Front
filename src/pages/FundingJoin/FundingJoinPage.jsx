@@ -5,43 +5,32 @@ import BottomBackgroundComponent from '../../components/common/BottomBackgroundC
 import ButtonComponent from '../../components/common/ButtonComponent';
 import FundingPercentage from '../../components/FundingInfo/FundingPercentage';
 import { addComma } from '../../components/FundingInfo/FundingPercentage';
+import PriceInputComponent from '../../components/common/PriceInputComponent';
 
 const giftList = [
-  { image: '', title: '선물 제목', price: 20000 },
-  { image: '', title: '선물 제목', price: 65000 },
-  { image: '', title: '선물 제목', price: 84000 },
-  { image: '', title: '선물 제목', price: 130000 },
+  { image: '', title: '선물 제목', price: 200000 },
+  { image: '', title: '선물 제목', price: 500000 },
+  { image: '', title: '선물 제목', price: 840000 },
+  { image: '', title: '선물 제목', price: 1000000 },
 ];
 
 const FundingJoinPage = () => {
   const [balance, setBalance] = useState(84000);
-  const [price, setPrice] = useState();
+  const [price, setPrice] = useState(null);
   const [message, setMessage] = useState('');
   const [isDone, setIsDone] = useState(false);
   const [name, setName] = useState('nickname');
-  const [formattedPrice, setFormattedPrice] = useState('');
-
-  const handlePriceChange = (e) => {
-    const { value } = e.target;
-    const finalNum = value.replace(/[^0-9]/g, '');
-    setPrice(finalNum);
-    setFormattedPrice(addComma(finalNum));
-  };
 
   const handleMessageChange = (e) => {
     setMessage(e.target.value);
   };
 
-  const handlePriceBlur = () => {
-    setFormattedPrice(price ? `${addComma(price)}원` : '');
-  };
-
-  const handleRadioClick = (e) => {
+  const handleRadioChange = (e) => {
     setName(e.target.value);
   };
 
   useEffect(() => {
-    price > balance ? setIsDone(false) : setIsDone(true);
+    price <= balance ? setIsDone(true) : setIsDone(false);
   }, [price, balance]);
 
   return (
@@ -49,25 +38,22 @@ const FundingJoinPage = () => {
       <BackHeaderComponent />
       <SLayout>
         <FundingPercentage
-          color='orange'
-          balance={price && isDone ? balance - parseInt(price) : balance}
+          type='info'
+          color='var(--orange-pri)'
+          balance={price ? balance - parseInt(price) : balance}
           giftList={giftList}
-          joinPrice={
-            price && isDone
-              ? giftList[giftList.length - 1].price - (balance - price)
-              : undefined
-          }
+          joinPrice={price && isDone ? price : undefined}
         />
-        <SSmallLayout>
+        <SForm>
           <SContainer>
-            <STextBox>
+            <STextBox htmlFor='price'>
               <STextWrapper>금액</STextWrapper>
               <SStarWrapper>*</SStarWrapper>
             </STextBox>
-            <SInputWrapper
-              value={formattedPrice}
-              onChange={handlePriceChange}
-              onBlur={handlePriceBlur}
+            <PriceInputComponent
+              focusColor='var(--orange-pri)'
+              price={price}
+              setPrice={setPrice}
               placeholder='펀딩에 참여할 금액을 입력해 주세요'
             />
             {price > balance && (
@@ -82,43 +68,38 @@ const FundingJoinPage = () => {
               <SStarWrapper>*</SStarWrapper>
             </STextBox>
             <SButtonContainer>
-              <SButtonWrapper
-                checked={name === 'nickname'}
-                onClick={handleRadioClick}
-              >
+              <SButtonWrapper htmlFor='nickname' checked={name === 'nickname'}>
                 <input
-                  id='radio'
+                  id='nickname'
                   type='radio'
                   value='nickname'
                   checked={name === 'nickname'}
-                  onChange={handleRadioClick}
+                  onChange={handleRadioChange}
                 />
                 닉네임
               </SButtonWrapper>
-              <SButtonWrapper
-                checked={name === 'anony'}
-                onClick={handleRadioClick}
-              >
+              <SButtonWrapper htmlFor='anony' checked={name === 'anony'}>
                 <input
-                  id='radio'
+                  id='anony'
                   type='radio'
                   value='anony'
                   checked={name === 'anony'}
-                  onChange={handleRadioClick}
+                  onChange={handleRadioChange}
                 />
                 익명
               </SButtonWrapper>
             </SButtonContainer>
           </SContainer>
           <SContainer>
-            <STextWrapper>축하메시지</STextWrapper>
+            <STextWrapper htmlFor='message'>축하메시지</STextWrapper>
             <STextareaWrapper
+              id='message'
               value={message}
               onChange={handleMessageChange}
               placeholder='친구에게 전달될 메시지를 입력해 주세요'
             />
           </SContainer>
-        </SSmallLayout>
+        </SForm>
       </SLayout>
       <BottomBackgroundComponent
         Button={
@@ -143,18 +124,20 @@ const SLayout = styled.div`
 
   padding: 24px 20px 128px 20px;
 `;
-const SSmallLayout = styled.div`
+const SForm = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 24px;
 `;
-const SContainer = styled.div`
+
+const SContainer = styled.fieldset`
   display: flex;
   flex-direction: column;
   gap: 8px;
 `;
-const STextBox = styled.div`
+
+const STextBox = styled.label`
   display: flex;
 `;
 const STextWrapper = styled.span`
@@ -173,29 +156,6 @@ const SStarWrapper = styled(STextWrapper)`
   margin-top: 2px;
 
   color: var(--orange-pri);
-`;
-const SInputWrapper = styled.input`
-  display: flex;
-
-  height: 61px;
-  padding: 0 24px;
-
-  border-radius: 16px;
-  border: 2px solid var(--gray-100);
-  background: var(--gray-100);
-
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 140%;
-
-  &:focus {
-    border: 2px solid var(--orange-pri);
-  }
-
-  &::placeholder {
-    color: var(--gray-400);
-  }
 `;
 const SWarningWrapper = styled.span`
   margin-left: 8px;
@@ -220,10 +180,13 @@ const STextareaWrapper = styled.textarea`
   line-height: 140%;
 
   resize: none;
-  outline-color: var(--orange-pri);
 
   &::placeholder {
     color: var(--gray-400);
+  }
+
+  &:focus {
+    outline: 2px solid var(--orange-pri);
   }
 `;
 const SButtonContainer = styled.div`
