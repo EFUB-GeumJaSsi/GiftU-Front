@@ -1,10 +1,10 @@
 import { apiAuth } from './api';
 
 // 선물 후기 생성
-export const postReview = async (reviewContent) => {
+export const postReview = async (fundingId, reviewContent) => {
   try {
     const response = await apiAuth.post(
-      `/fundings/{fundingId}/review`,
+      `/fundings/${fundingId}/review`,
       {
         reviewContent: reviewContent,
       },
@@ -15,10 +15,11 @@ export const postReview = async (reviewContent) => {
     throw error;
   }
 };
+
 // 선물 후기 조회
-export const getReview = async () => {
+export const getReview = async (fundingId) => {
   try {
-    const response = await apiAuth.get(`/fundings/{fundingId}/review`, {
+    const response = await apiAuth.get(`/fundings/${fundingId}/review`, {
       headers: { 'Content-Type': 'application/json' },
     });
     return response;
@@ -27,10 +28,10 @@ export const getReview = async () => {
   }
 };
 // 선물 후기 수정
-export const patchReview = async (reviewContent) => {
+export const patchReview = async (fundingId, reviewContent) => {
   try {
     const response = await apiAuth.patch(
-      `/fundings/{fundingId}/review`,
+      `/fundings/${fundingId}/review`,
       { reviewContent: reviewContent },
       { headers: { 'Content-Type': 'application/json' } },
     );
@@ -41,9 +42,9 @@ export const patchReview = async (reviewContent) => {
 };
 
 // 선물 후기 삭제
-export const deleteReview = async () => {
+export const deleteReview = async (fundingId) => {
   try {
-    const response = await apiAuth.delete(`/fundings/{fundingId}/review`, {
+    const response = await apiAuth.delete(`/fundings/${fundingId}/review`, {
       headers: { 'Content-Type': 'application/json' },
     });
     return response;
