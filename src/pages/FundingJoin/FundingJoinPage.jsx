@@ -91,7 +91,7 @@ const FundingJoinPage = () => {
             </SButtonContainer>
           </SContainer>
           <SContainer>
-            <STextWrapper htmlFor='message'>축하메시지</STextWrapper>
+            <STextSpan htmlFor='message'>축하메시지</STextSpan>
             <STextarea
               id='message'
               value={message}
