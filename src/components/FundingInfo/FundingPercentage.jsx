@@ -12,8 +12,8 @@ const addComma = (price) => {
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import PriceProgressBar from './PriceProgressBar';
+import DeleteBtn from './DeleteBtn';
 import { ReactComponent as Fold } from '../../assets/FundingInfo/fold 1.svg';
-import { ReactComponent as Delete } from '../../assets/FungingOpen/delete_btn.svg';
 
 const FundingPercentage = ({
   type,
@@ -28,28 +28,34 @@ const FundingPercentage = ({
   const [list, setList] = useState(giftList ? giftList : []);
   const [isClicked, setIsClicked] = useState(type === 'add' ? true : false);
 
+  // GiftAddPage 삭제버튼핸들러
   const handleItemDelete = (e) => {
-    const targetIdx = list.findIndex(
-      (it, idx) => idx === parseInt(e.target.id) - 1,
-    );
+    const { id } = e.target;
+    const targetIdx = list.findIndex((it, idx) => idx === parseInt(id) - 1);
 
     if (targetIdx >= 0) {
-      const targetNum = list[targetIdx].num;
-      if (targetNum >= 0) {
-        // 선택 항목 삭제
-        const deleted = list.filter(
-          (it, idx) => idx !== parseInt(e.target.id) - 1,
-        );
-        // 리스트 num 항목 값 조정
-        const newList = deleted.map((it) =>
-          it.num >= targetNum ? { ...it, num: it.num - 1 } : it,
-        );
-        setList(newList);
-      }
+      updateList(targetIdx, id);
     }
   };
 
-  // GfitAddPage 펀딩 만들기 버튼 활성화/비활성화 여부
+  // GiftAddPage 삭제할 아이템 제외 리스트 정리
+  const updateList = (targetIdx, id) => {
+    const targetNum = list[targetIdx].num;
+
+    const newList = list.reduce((result, it, idx) => {
+      if (idx === parseInt(id) - 1) return result;
+      if (it.num >= targetNum) {
+        result.push({ ...it, num: it.num - 1 });
+      } else {
+        result.push(it);
+      }
+      return result;
+    }, []);
+
+    setList(newList);
+  };
+
+  // GiftAddPage 펀딩 만들기 버튼 활성화/비활성화 여부
   useEffect(() => {
     if (setIsTrue) {
       if (list.length === 0) {
@@ -63,26 +69,26 @@ const FundingPercentage = ({
   const Text = () => {
     const EndedText = (
       <>
-        <STitleWrapper>100% 달성</STitleWrapper>
-        <STextWrapper>펀딩 목표를 달성했어요</STextWrapper>
+        <STitleSpan>100% 달성</STitleSpan>
+        <STextSpan>펀딩 목표를 달성했어요</STextSpan>
       </>
     );
 
     const OngoingText = (
       <>
-        <STitleWrapper>{percent}% 달성</STitleWrapper>
-        <STextWrapper>
+        <STitleSpan>{percent}% 달성</STitleSpan>
+        <STextSpan>
           100% 달성까지{' '}
-          <SBoldTextWrapper joinPrice={joinPrice}>
+          <SBoldTextSpan joinPrice={joinPrice}>
             {addComma(balance)}원
-          </SBoldTextWrapper>{' '}
+          </SBoldTextSpan>{' '}
           남았어요
-        </STextWrapper>
+        </STextSpan>
       </>
     );
 
     const AddGiftText = (
-      <SSmallTextWrapper>총 {list.length}개의 선물</SSmallTextWrapper>
+      <SSmallTextSpan>총 {list.length}개의 선물</SSmallTextSpan>
     );
 
     return type === 'add'
@@ -94,12 +100,14 @@ const FundingPercentage = ({
 
   const GiftItem = ({ it, idx }) => (
     <SItemContainer idx={idx + 1} length={list.length}>
-      <SImageWrapper src={it.image} alt='img' />
+      <SImg src={it.image} alt='img' />
       <SItemTextContainer>
-        <SItemTextWrapper>{it.title}</SItemTextWrapper>
-        <SItemTextWrapper>{addComma(it.price)}원</SItemTextWrapper>
+        <SItemTextSpan>{it.title}</SItemTextSpan>
+        <SItemTextSpan>{addComma(it.price)}원</SItemTextSpan>
       </SItemTextContainer>
-      {type === 'add' && <DeleteBtn id={idx + 1} onClick={handleItemDelete} />}
+      {type === 'add' && (
+        <DeleteBtn id={idx + 1} idx={idx + 1} onClick={handleItemDelete} />
+      )}
     </SItemContainer>
   );
 
@@ -116,15 +124,15 @@ const FundingPercentage = ({
         joinPrice={joinPrice}
       />
       <SButtonContainer onClick={() => setIsClicked(!isClicked)}>
-        <SButtonWrapper clicked={isClicked} color={color}>
+        <SBtn clicked={isClicked} color={color}>
           가격대별 선물 보기
-        </SButtonWrapper>
+        </SBtn>
         <FoldBtn clicked={isClicked} color={color} />
       </SButtonContainer>
       {isClicked && (
         <SItemLayout>
           {list.length === 0 ? (
-            <SNoGiftWrapper>추가된 선물이 없습니다</SNoGiftWrapper>
+            <SNoGiftSpan>추가된 선물이 없습니다</SNoGiftSpan>
           ) : (
             list.map((it, idx) => <GiftItem key={idx} it={it} idx={idx} />)
           )}
@@ -150,23 +158,23 @@ const STextContainer = styled.div`
 
   margin: 0 24px;
 `;
-const STitleWrapper = styled.span`
+const STitleSpan = styled.span`
   font-size: 17px;
   font-style: normal;
   font-weight: 700;
   line-height: 120%;
 `;
-const STextWrapper = styled.span`
+const STextSpan = styled.span`
   color: var(--gray-500);
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
   line-height: 120%;
 `;
-const SBoldTextWrapper = styled(STextWrapper)`
+const SBoldTextSpan = styled(STextSpan)`
   color: ${(props) => (props.joinPrice ? 'var(--orange-pri)' : 'var(--black)')};
 `;
-const SSmallTextWrapper = styled.span`
+const SSmallTextSpan = styled.span`
   margin-top: -4px;
 
   color: var(--gray-500);
@@ -188,7 +196,7 @@ const SButtonContainer = styled.button`
   border-radius: 20px;
   background-color: var(--white);
 `;
-const SButtonWrapper = styled.span`
+const SBtn = styled.span`
   color: ${(props) => (props.clicked ? props.color : 'var(--gray-400)')};
   font-size: 14px;
   font-style: normal;
@@ -200,7 +208,7 @@ const SButtonWrapper = styled.span`
 const FoldBtn = styled(Fold)`
   fill: ${(props) => (props.clicked ? props.color : 'var(--gray-400)')};
 `;
-const SNoGiftWrapper = styled.span`
+const SNoGiftSpan = styled.span`
   color: var(--gray-300);
   text-align: center;
   font-size: 14px;
@@ -224,7 +232,7 @@ const SItemContainer = styled.div`
   border-bottom: ${(props) =>
     props.idx !== props.length ? '1px solid var(--gray-300)' : '0'};
 `;
-const SImageWrapper = styled.img`
+const SImg = styled.img`
   width: 48px;
   height: 48px;
 
@@ -236,18 +244,12 @@ const SItemTextContainer = styled.div`
   flex-direction: column;
   gap: 6px;
 `;
-const SItemTextWrapper = styled.span`
+const SItemTextSpan = styled.span`
   color: var(--black);
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
   line-height: 120%;
-`;
-const DeleteBtn = styled(Delete)`
-  position: absolute;
-  right: 8px;
-
-  cursor: pointer;
 `;
 
 export default FundingPercentage;
