@@ -1,11 +1,11 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { startOfWeek, addDays } from 'date-fns';
-import { ReactComponent as TagIcon } from '../../assets/Home/tag_today.svg';
-import BottomSheetComponent from '../common/BottomSheetComponent';
 import { arrayChop } from '../common/CarouselComponent';
+import BottomSheetComponent from '../common/BottomSheetComponent';
 import CarouselComponent from '../common/CarouselComponent';
 import CalendarFundingItem from './CalendarFundingItem';
+import { ReactComponent as TagIcon } from '../../assets/Home/tag_today.svg';
 
 const fundings = [
   {
@@ -45,7 +45,6 @@ const Calendar = () => {
   });
   const days = ['월', '화', '수', '목', '금', '토', '일'];
   const dates = [];
-
   const date = new Date();
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
@@ -82,21 +81,21 @@ const Calendar = () => {
 
   return (
     <SLayout>
-      <SMonthWrapper>
+      <SMonthSpan>
         {year}년 {month}월
-      </SMonthWrapper>
-      <SDayContainer>
+      </SMonthSpan>
+      <SDayWrapper>
         {days.map((it, idx) => (
-          <SDayWrapper key={idx}>{it}</SDayWrapper>
+          <SDaySpan key={idx}>{it}</SDaySpan>
         ))}
-      </SDayContainer>
+      </SDayWrapper>
       <SDateContainer>
         {dates.map((it, idx) => {
           const isFundingEndDate = fundings.some(
             (item) => item.fundingEndDate === it,
           );
           return (
-            <SDateWrapper
+            <SDateSpan
               funding={isFundingEndDate}
               key={idx + 'date'}
               id={idx}
@@ -104,23 +103,23 @@ const Calendar = () => {
             >
               {it.split('-')[2]}
               {today === Number(it.split('-')[2]) && <Tag />}
-            </SDateWrapper>
+            </SDateSpan>
           );
         })}
       </SDateContainer>
       {bottomSheetShow && (
         <BottomSheetComponent setBottomSheetShow={setBottomSheetShow}>
           <SSheetLayout>
-            <STitle>
+            <SSpan>
               {selectedDate.month}월 {selectedDate.date}일 {selectedDate.day}
               요일
-            </STitle>
+            </SSpan>
             <CarouselComponent
               pageLength={chopedDataList.length}
               pageWidth={335}
             >
               {chopedDataList.map((it, idx) => (
-                <SItemLayout>
+                <SItemContainer key={it}>
                   <CalendarFundingItem data={it[0]} />
                   {idx === chopedDataList.length - 1 &&
                   selectedFundingList.length % 2 !== 0 ? (
@@ -130,7 +129,7 @@ const Calendar = () => {
                   ) : (
                     <CalendarFundingItem data={it[1]} />
                   )}
-                </SItemLayout>
+                </SItemContainer>
               ))}
             </CarouselComponent>
           </SSheetLayout>
@@ -153,7 +152,7 @@ const SLayout = styled.div`
   background-color: #f7f4ed;
   border-radius: 20px;
 `;
-const SMonthWrapper = styled.span`
+const SMonthSpan = styled.span`
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -168,11 +167,11 @@ const SMonthWrapper = styled.span`
   font-weight: 500;
   line-height: 120%;
 `;
-const SDayContainer = styled.div`
+const SDayWrapper = styled.div`
   display: flex;
   gap: 29px;
 `;
-const SDayWrapper = styled.span`
+const SDaySpan = styled.span`
   width: 15px;
   height: 14px;
 
@@ -188,7 +187,7 @@ const SDateContainer = styled.div`
   grid-row-gap: 12px;
   grid-column-gap: 8px;
 `;
-const SDateWrapper = styled.span`
+const SDateSpan = styled.span`
   display: flex;
   position: relative;
   justify-content: center;
@@ -223,12 +222,12 @@ const SSheetLayout = styled.div`
 
   padding: 32px 21px 18px 19px;
 `;
-const STitle = styled.span`
+const SSpan = styled.span`
   font-size: 20px;
   font-weight: 700;
   line-height: 140%;
 `;
-const SItemLayout = styled.div`
+const SItemContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
