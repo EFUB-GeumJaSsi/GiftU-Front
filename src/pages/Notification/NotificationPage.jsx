@@ -4,6 +4,7 @@ import NotificationItem from '../../components/Notification/NotificationItem';
 import TagSelectComponent from '../../components/common/TagSelectComponent';
 import Modal from '../../components/common/ModalComponent';
 import { ReactComponent as IcnInfo } from '../../assets/Friend/icn_info.svg';
+import { ReactComponent as ProfileIcon } from '../../assets/common/profile.svg';
 
 const NotificationPage = () => {
   const [modalShow, setModalShow] = useState(false);
@@ -32,7 +33,11 @@ const NotificationPage = () => {
   const friendNotiClick = (image, name) => {
     setModalContent(
       <SModalContainer>
-        <SProfileWrapper src={image} alt='profile' />
+        {image === 'default' ? (
+          <StyledProfileIcon />
+        ) : (
+          <SImg src={image} alt='Profile' />
+        )}
         <span>{name}</span>
         <span style={{ color: 'var(--black)' }}>친구를 추가하시겠어요?</span>
         <span style={{ fontSize: '12px' }}>
@@ -108,15 +113,13 @@ const SModalContainer = styled.div`
     color: var(--gray-500);
   }
 `;
-
-const SProfileWrapper = styled.img`
+const StyledProfileIcon = styled(ProfileIcon)`
   width: 56px;
   height: 56px;
-  margin-bottom: 8px;
 
   border-radius: 50%;
+  background-color: var(--gray-300);
 `;
-
 const SLayout = styled.div`
   display: flex;
   flex-flow: column nowrap;
