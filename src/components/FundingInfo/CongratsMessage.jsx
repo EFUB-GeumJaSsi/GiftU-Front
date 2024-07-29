@@ -6,8 +6,8 @@ const CongratsMessage = (props, ref) => {
     <SLayout ref={ref}>
       {props.list.map((it, idx) => (
         <SContainer key={idx}>
-          <STitleWrapper>{it.name}</STitleWrapper>
-          <STextWrapper>{it.message}</STextWrapper>
+          <STitleSpan>{it.name}</STitleSpan>
+          <STextSpan>{it.message}</STextSpan>
         </SContainer>
       ))}
     </SLayout>
@@ -30,7 +30,7 @@ const SContainer = styled.div`
   display: flex;
   gap: 8px;
 `;
-const STitleWrapper = styled.span`
+const STitleSpan = styled.span`
   width: 97px;
   height: 17px;
 
@@ -40,7 +40,7 @@ const STitleWrapper = styled.span`
   font-weight: 500;
   line-height: 120%;
 `;
-const STextWrapper = styled.p`
+const STextSpan = styled.p`
   width: 190px;
 
   color: var(--black);

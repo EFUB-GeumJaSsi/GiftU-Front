@@ -37,7 +37,7 @@ const PriceProgressBar = ({ type, color, giftList, balance, joinPrice }) => {
   // 3. 새로운 선물 등록 시
   const ProgressPoint = ({ it, idx, type }) => (
     <SPointContainer price={it.price} max={maxPrice} onClick={handleOnClick}>
-      <SPointTextWrapper
+      <SPointSpan
         idx={idx === 'join' ? idx : idx + 1}
         type={type}
         color={color}
@@ -48,8 +48,8 @@ const PriceProgressBar = ({ type, color, giftList, balance, joinPrice }) => {
         selected={selected}
       >
         {addComma(it.price)}원
-      </SPointTextWrapper>
-      <SPointCircleWrapper
+      </SPointSpan>
+      <SCircleDiv
         id={idx + 1}
         type={type}
         color={color}
@@ -63,8 +63,8 @@ const PriceProgressBar = ({ type, color, giftList, balance, joinPrice }) => {
   );
 
   return (
-    <SSliderContainer>
-      <SSliderWrapper
+    <SContainer>
+      <SSlider
         class='progress'
         id='progress'
         value={percent}
@@ -79,11 +79,11 @@ const PriceProgressBar = ({ type, color, giftList, balance, joinPrice }) => {
       {joinPrice && nowPrice <= maxPrice && (
         <ProgressPoint it={{ price: nowPrice }} idx='join' type={type} />
       )}
-    </SSliderContainer>
+    </SContainer>
   );
 };
 
-const SSliderContainer = styled.div`
+const SContainer = styled.div`
   display: flex;
   align-items: center;
   position: relative;
@@ -95,7 +95,7 @@ const SSliderContainer = styled.div`
   border-radius: 10px;
   background-color: var(--white);
 `;
-const SSliderWrapper = styled.progress`
+const SSlider = styled.progress`
   position: absolute;
   top: 62%;
   left: 11%;
@@ -127,7 +127,7 @@ const SPointContainer = styled.div`
   justify-content: center;
   gap: 8px;
 `;
-const SPointTextWrapper = styled.span`
+const SPointSpan = styled.span`
   min-height: 15px;
   min-width: 50px;
   margin: 0 8px;
@@ -174,7 +174,7 @@ const SPointTextWrapper = styled.span`
     z-index: 999;
   }
 `;
-const SPointCircleWrapper = styled.div`
+const SCircleDiv = styled.div`
   width: 14px;
   height: 14px;
 

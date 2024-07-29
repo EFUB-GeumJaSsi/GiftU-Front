@@ -128,10 +128,10 @@ const FundingInfoPage = () => {
 
   const ModalContent = () => (
     <SModalContainer>
-      <SBigTextWrapper>펀딩 개설을 취소하시겠어요?</SBigTextWrapper>
-      <SSmallTextWrapper>
+      <SBigSpan>펀딩 개설을 취소하시겠어요?</SBigSpan>
+      <SSmallSpan>
         펀딩에 참여한 친구들에게 알림이 전송돼요
-      </SSmallTextWrapper>
+      </SSmallSpan>
     </SModalContainer>
   );
 
@@ -211,7 +211,7 @@ const SModalContainer = styled.div`
 
   padding: 32px 0 28px 0;
 `;
-const SBigTextWrapper = styled.span`
+const SBigSpan = styled.span`
   color: var(--black);
   text-align: center;
   font-size: 16px;
@@ -219,7 +219,7 @@ const SBigTextWrapper = styled.span`
   font-weight: 500;
   line-height: 140%;
 `;
-const SSmallTextWrapper = styled(SBigTextWrapper)`
+const SSmallSpan = styled(SBigSpan)`
   color: var(--gray-500);
   font-size: 12px;
   line-height: 120%;
