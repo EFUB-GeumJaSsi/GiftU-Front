@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { addComma } from '../../components/FundingInfo/FundingPercentage';
+import { getColor, getBackgroundColor, getOpacity } from './stylefunction';
 
 const PriceProgressBar = ({ type, color, giftList, balance, joinPrice }) => {
   const maxPrice = giftList.length > 0 && giftList[giftList.length - 1].price;
@@ -41,6 +42,8 @@ const PriceProgressBar = ({ type, color, giftList, balance, joinPrice }) => {
         idx={idx === 'join' ? idx : idx + 1}
         type={type}
         color={color}
+        getColor={getColor}
+        getOpacity={getOpacity}
         length={giftList.length - 1}
         num={it.num && it.num}
         nextIdx={nextPrice.idx}
@@ -53,6 +56,7 @@ const PriceProgressBar = ({ type, color, giftList, balance, joinPrice }) => {
         id={idx + 1}
         type={type}
         color={color}
+        getBackgroundColor={getBackgroundColor}
         length={giftList.length - 1}
         num={it.num && it.num}
         price={it.price}
@@ -134,14 +138,7 @@ const SPointSpan = styled.span`
 
   background: var(--white);
 
-  color: ${(props) =>
-    props.nextIdx === props.idx
-      ? 'var(--gray-500)'
-      : props.idx === 'join'
-        ? 'var(--orange-pri)'
-        : props.type === 'info' || props.num !== props.length
-          ? 'var(--gray-300)'
-          : props.color};
+  color: ${(props) => props.getColor(props)};
   font-size: 12px;
   font-style: normal;
   font-weight: 500;
@@ -152,23 +149,8 @@ const SPointSpan = styled.span`
   white-space: nowrap;
 
   visibility: ${(props) => (props.type === 'none' ? 'hidden' : 'visible')};
-  opacity: ${(props) =>
-    props.idx == props.selected
-      ? '1'
-      : props.joinPrice && props.idx !== 'join'
-        ? '0'
-        : props.idx === props.nextIdx ||
-            props.idx === 'join' ||
-            props.num === props.length
-          ? '1'
-          : '0'};
+  opacity: ${(props) => getOpacity(props)};
 
-  z-index: ${(props) =>
-    props.idx === props.selected
-      ? '999'
-      : props.idx === 'join'
-        ? '900'
-        : '100'};
   &:hover {
     opacity: 1;
     z-index: 999;
@@ -179,17 +161,7 @@ const SCircleDiv = styled.div`
   height: 14px;
 
   border-radius: 50%;
-
-  background-color: ${(props) =>
-    props.num !== props.length && props.type === 'add'
-      ? 'var(--gray-300)'
-      : props.type === 'add'
-        ? 'var(--jade-pri)'
-        : props.id === 'join'
-          ? 'var(--orange-pri)'
-          : props.price <= props.balance
-            ? props.color
-            : 'var(--gray-300)'};
+  background-color: ${(props) => props.getBackgroundColor(props)};
 
   cursor: pointer;
 `;
