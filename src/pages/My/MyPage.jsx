@@ -60,7 +60,13 @@ const MyPage = () => {
             <p>{user.nickName}</p>
           </SNameWrapper>
           <SMyFriendBtn onClick={handleFriendList}>
-            친구 <p>{user.friendsCount}</p>명
+            친구
+            <span>
+              <span style={{ color: 'var(--jade-pri)' }}>
+                {user.friendsCount}
+              </span>
+              명
+            </span>
           </SMyFriendBtn>
         </SMyProfileContent>
       </SProfileContainer>

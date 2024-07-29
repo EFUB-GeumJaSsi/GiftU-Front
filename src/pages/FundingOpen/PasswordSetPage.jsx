@@ -144,6 +144,7 @@ const SForm = styled.form`
   margin: 20px 20px 0px 20px;
 `;
 const SLegend = styled.legend`
+  margin-left: 8px;
   margin-bottom: 40px;
   color: var(--black);
   font-size: 16px;
