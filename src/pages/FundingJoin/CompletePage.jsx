@@ -26,6 +26,8 @@ const CompletePage = () => {
 const SLayout = styled.div`
   display: flex;
   flex-flow: column nowrap;
+
+  height: 100%;
 `;
 
 export default CompletePage;

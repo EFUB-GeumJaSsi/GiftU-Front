@@ -213,6 +213,7 @@ const SLayout = styled.div`
   flex-flow: column nowrap;
 
   width: 335px;
+  height: 100%;
   margin: 0 auto;
   padding-top: 40px;
   padding-bottom: 104px;

@@ -231,6 +231,8 @@ const SLayout = styled.div`
   align-items: center;
   gap: 24px;
 
+  width: 100%;
+  height: 100%;
   margin: 0 auto;
 `;
 const SForm = styled.form`
@@ -350,7 +352,7 @@ const SPostcodeContainer = styled.div`
   left: 0;
 
   width: 100%;
-  height: 100svh;
+  height: 100%;
   z-index: 1000;
 `;
 

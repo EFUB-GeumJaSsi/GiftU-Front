@@ -35,6 +35,8 @@ const SLayout = styled.div`
   flex-flow: column nowrap;
   align-items: center;
   justify-content: center;
+
+  height: 100%;
 `;
 
 export default OAuthRedirectPage;
