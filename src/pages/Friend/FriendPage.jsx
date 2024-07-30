@@ -212,7 +212,7 @@ const SLayout = styled.div`
   width: 335px;
   height: 100%;
   margin: 0 auto;
-  padding-top: 40px;
+  padding: 40px 0 128px;
   gap: 24px;
 
   box-sizing: border-box;

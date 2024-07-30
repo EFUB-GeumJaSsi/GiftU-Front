@@ -94,6 +94,7 @@ const SLayout = styled.div`
   overflow: hidden;
   flex-direction: column;
   align-items: center;
+  padding: 40px 20px 128px 20px;
 
   background-color: var(--gray-100);
 `;

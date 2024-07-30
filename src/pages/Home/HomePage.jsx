@@ -53,7 +53,8 @@ const SLayout = styled.div`
   flex-flow: column nowrap;
 
   width: fit-content;
-  margin: 40px auto 0;
+  margin: 0 auto;
+  padding: 40px 0 128px;
   gap: 24px;
 `;
 const SSection = styled.section`

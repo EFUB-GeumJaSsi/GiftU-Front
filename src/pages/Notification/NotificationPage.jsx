@@ -125,9 +125,10 @@ const StyledProfileIcon = styled(ProfileIcon)`
 const SLayout = styled.div`
   display: flex;
   flex-flow: column nowrap;
-  gap: 24px;
 
-  padding-top: 43px;
+  margin: 0 auto;
+  padding: 40px 0 128px;
+  gap: 24px;
 `;
 
 const SHeader = styled.header`
