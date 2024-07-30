@@ -74,7 +74,7 @@ const STextBoxWrapper = styled.input`
   size: 16px;
   margin-left: 5px;
   background-color: #f3f4f5;
-  weight: 500;
+  font-weight: 500;
 `;
 const SBtnWrapper = styled.div`
   display: flex;
