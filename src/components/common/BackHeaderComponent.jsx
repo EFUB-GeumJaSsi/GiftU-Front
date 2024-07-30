@@ -13,17 +13,20 @@ const BackHeaderComponent = ({ text, onClick }) => {
   const goBack = () => navigate(-1);
 
   return (
-    <SContainer>
-      <BackBtn onClick={onClick ? onClick : goBack} />
-      <SSpan>{text}</SSpan>
-    </SContainer>
+    <>
+      <SContainer>
+        <BackBtn onClick={onClick ? onClick : goBack} />
+        <SSpan>{text}</SSpan>
+      </SContainer>
+      <SWrapper />
+    </>
   );
 };
 
 const SContainer = styled.div`
   display: flex;
   justify-content: center;
-  position: sticky;
+  position: fixed;
   top: 0;
   z-index: 999;
 
@@ -50,6 +53,11 @@ const SSpan = styled.span`
   font-style: normal;
   font-weight: 500;
   line-height: 120%;
+`;
+
+const SWrapper = styled.div`
+  height: 72px;
+  width: 100%;
 `;
 
 export default BackHeaderComponent;
