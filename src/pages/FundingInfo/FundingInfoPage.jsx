@@ -123,7 +123,7 @@ const FundingInfoPage = () => {
   return (
     <>
       <BackHeaderComponent />
-      <SLayout isend={isEnd.toString()}>
+      <SLayout $isEnd={isEnd.toString()}>
         <TopFundingInfo color={color} tag={tag} image={image} />
         {isCommented && isEnd && <FundingComment color={color} />}
         {funding === 'joined' ? (
@@ -176,7 +176,7 @@ const SLayout = styled.div`
   gap: 16px;
 
   padding: ${(props) =>
-    props.isend === 'true' ? '16px 16px 40px 16px' : '16px 16px 120px 16px'};
+    props.$isEnd === 'true' ? '16px 16px 40px 16px' : '16px 16px 120px 16px'};
 `;
 const SBtnContainer = styled.div`
   display: flex;
