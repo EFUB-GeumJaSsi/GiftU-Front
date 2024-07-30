@@ -137,7 +137,6 @@ const SLocker = ({ color }) => {
 const SLayout = styled.div`
   display: flex;
   flex-flow: column nowrap;
-  height: 100vh;
 `;
 const SForm = styled.form`
   display: flex;

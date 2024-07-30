@@ -18,7 +18,6 @@ const SLayout = styled.div`
   align-items: center;
   justify-content: center;
 
-  height: 100svh;
   gap: 22%;
 `;
 const SGiftuLogo = styled(GiftuLogo)`

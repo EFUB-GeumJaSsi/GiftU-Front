@@ -95,8 +95,6 @@ const SLayout = styled.div`
   flex-direction: column;
   align-items: center;
 
-  height: 812px;
-
   background-color: var(--gray-100);
 `;
 const SHeader = styled.header`
