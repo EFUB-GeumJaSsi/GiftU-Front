@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm, FormProvider } from 'react-hook-form';
 import BackHeaderComponent from '../../components/common/BackHeaderComponent';
@@ -13,6 +13,7 @@ let newPassword = '';
 
 const PasswordSetPage = () => {
   const [bottomSheetShow, setBottomSheetShow] = useState(false);
+
   const navigate = useNavigate();
 
   const methods = useForm({
@@ -23,12 +24,13 @@ const PasswordSetPage = () => {
     mode: 'onChange',
   });
 
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { isValid },
-  } = methods;
+  const { register, handleSubmit, watch, reset } = methods;
+
+  useEffect(() => {
+    if (!bottomSheetShow) {
+      reset();
+    }
+  }, [bottomSheetShow, reset]);
 
   const onSubmit = (data) => {
     console.log('폼 제출', data);
@@ -36,18 +38,21 @@ const PasswordSetPage = () => {
 
   const visibility = watch('visibility');
 
-  function setPassword(data) {
+  const setPassword = (data) => {
     newPassword = data;
     console.log(newPassword, visibility);
     navigate('/');
-  }
+  };
 
-  // function passwordIsValid() {
-  //     navigate('/');
-  // }
+  const isButtonDisabled = () => {
+    if (visibility === 'public') {
+      return false;
+    }
+    return true;
+  };
 
   return (
-    <FormProvider {...methods}>
+    <FormProvider>
       <SLayout>
         <BackHeaderComponent />
         <SForm onSubmit={handleSubmit(onSubmit)}>
@@ -62,7 +67,6 @@ const PasswordSetPage = () => {
                 {...register('visibility', {
                   required: true,
                 })}
-                onClick={() => setBottomSheetShow(false)}
               />
               <SRadioLabel htmlFor='public'>
                 <STextContainer>
@@ -107,13 +111,11 @@ const PasswordSetPage = () => {
             <BottomBackgroundComponent
               Button={
                 <ButtonComponent
-                  id='primaryButton'
-                  disabled={!isValid}
+                  disabled={isButtonDisabled() ? true : false}
                   btnInfo={{
                     text: '완료',
-                    color: 'jade',
+                    color: isButtonDisabled() ? 'grey' : 'jade',
                   }}
-                  type='submit'
                 />
               }
             />
@@ -144,6 +146,7 @@ const SForm = styled.form`
   margin: 20px 20px 0px 20px;
 `;
 const SLegend = styled.legend`
+  margin-left: 8px;
   margin-bottom: 40px;
   color: var(--black);
   font-size: 16px;

@@ -10,6 +10,7 @@ import DaumPostcode from 'react-daum-postcode';
 const FundingSetPage = () => {
   const [currentDate, setCurrentDate] = useState('');
   const [isOpen, setIsOpen] = useState(false);
+  const [isAddressOpen, setIsAddressOpen] = useState(false);
   const navigate = useNavigate();
   const [isButtonActive, setIsButtonActive] = useState(false);
   const {
@@ -24,6 +25,8 @@ const FundingSetPage = () => {
       title: '',
       detail: '',
       date: '',
+      name: '',
+      phoneNumber: '',
       addressNumber: '',
       addressDetail1: '',
       addressDetail2: '',
@@ -46,6 +49,7 @@ const FundingSetPage = () => {
     setValue('addressNumber', data.zonecode);
     setValue('addressDetail1', data.address);
     setIsOpen(false);
+    setIsAddressOpen(true);
   };
 
   const toggleHandler = () => {
@@ -54,17 +58,24 @@ const FundingSetPage = () => {
 
   const title = watch('title');
   const date = watch('date');
+  const name = watch('name');
+  const phoneNumber = watch('phoneNumber');
 
   useEffect(() => {
-    setIsButtonActive(title !== '' && date !== '');
-  }, [title, date]);
+    setIsButtonActive(
+      title !== '' && date !== '' && name !== '' && phoneNumber != '',
+    );
+  }, [title, date, name, phoneNumber]);
 
   return (
     <SLayout>
       <BackHeaderComponent />
       <SForm onSubmit={handleSubmit(onSubmit)}>
         <fieldset>
-          <SLabel htmlFor='title'>제목</SLabel>
+          <SLabel htmlFor='title'>
+            <p>제목</p>
+            <h5>*</h5>
+          </SLabel>
           <STextInput
             id='title'
             {...register('title', {
@@ -82,7 +93,9 @@ const FundingSetPage = () => {
           )}
         </fieldset>
         <fieldset>
-          <SLabel htmlFor='detail'>펀딩 소개</SLabel>
+          <SLabel htmlFor='detail'>
+            <p>펀딩 소개</p>
+          </SLabel>
           <STextInput
             id='detail'
             {...register('detail', {
@@ -99,7 +112,10 @@ const FundingSetPage = () => {
           )}
         </fieldset>
         <fieldset>
-          <SLabel htmlFor='currentDate'>기간</SLabel>
+          <SLabel htmlFor='currentDate'>
+            <p>기간</p>
+            <h5>*</h5>
+          </SLabel>
           <SDateContainer>
             <SCurrentDateInput
               id='currentDate'
@@ -123,35 +139,61 @@ const FundingSetPage = () => {
           )}
         </fieldset>
         <fieldset>
-          <SLabel htmlFor='addressNumber'>주소</SLabel>
+          <SLabel htmlFor='addressNumber'>
+            <p>배송 정보</p>
+            <h5>*</h5>
+          </SLabel>
           <SAddressContainer>
+            <STextInput
+              id='name'
+              {...register('name', {
+                required: '배송 정보를 입력하세요',
+              })}
+              type='text'
+              placeholder='이름을 입력해주세요'
+            />
+            <STextInput
+              id='phoneNumber'
+              {...register('phoneNumber', {
+                required: '배송 정보를 입력하세요',
+              })}
+              type='text'
+              placeholder='휴대폰 번호를 -없이 입력해주세요'
+            />
             <SAddressNumberContainer>
               <SAddressInput
                 id='addressNumber'
                 {...register('addressNumber', {
-                  required: '주소를 입력하세요',
+                  required: '배송 정보를 입력하세요',
                 })}
                 type='text'
-                placeholder='우편 번호'
+                placeholder='주소지를 입력해주세요'
                 readOnly
               />
               <SButton disabled={!isButtonActive} onClick={toggleHandler}>
                 우편번호 찾기
               </SButton>
             </SAddressNumberContainer>
-            <STextInput
-              id='addressDetail1'
-              {...register('addressDetail1', { required: '주소를 입력하세요' })}
-              type='text'
-              placeholder='자동입력'
-              readOnly
-            />
-            <STextInput
-              id='addressDetail2'
-              {...register('addressDetail2', { required: '주소를 입력하세요' })}
-              type='text'
-              placeholder='상세 주소를 입력하세요'
-            />
+            {isAddressOpen && (
+              <>
+                <STextInput
+                  id='addressDetail1'
+                  {...register('addressDetail1', {
+                    required: '배송 정보를 입력하세요',
+                  })}
+                  type='text'
+                  readOnly
+                />
+                <STextInput
+                  id='addressDetail2'
+                  {...register('addressDetail2', {
+                    required: '배송 정보를 입력하세요',
+                  })}
+                  type='text'
+                  placeholder='상세 주소를 입력하세요'
+                />
+              </>
+            )}
           </SAddressContainer>
           {errors.address && (
             <SWarningWrapper>{errors.address.message}</SWarningWrapper>
@@ -190,7 +232,6 @@ const SLayout = styled.div`
   gap: 24px;
 
   margin: 0 auto;
-  overflow-y: scroll;
 `;
 const SForm = styled.form`
   display: flex;
@@ -201,13 +242,23 @@ const SForm = styled.form`
 `;
 const SLabel = styled.label`
   display: block;
-
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   margin-left: 8px;
   margin-bottom: 8px;
 
   font-size: 16px;
+  font-style: normal;
   font-weight: 500;
   line-height: 140%;
+
+  h5 {
+    margin-left: 8px;
+    padding-top: 3px;
+
+    color: var(--jade-pri);
+  }
 `;
 const SInput = styled.input`
   background-color: var(--gray-100);
@@ -267,7 +318,7 @@ const SAddressContainer = styled.div`
 `;
 const SAddressNumberContainer = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-flow: row;
   gap: 8px;
   width: 100%;
 `;
