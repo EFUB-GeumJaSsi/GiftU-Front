@@ -90,10 +90,8 @@ const NavBottom = styled.div`
   justify-content: center;
   align-items: center;
   bottom: 0;
-  z-index: 1000;
 
   width: 100%;
-  max-width: 375px;
   height: 64px;
 
   background-color: white;
@@ -102,7 +100,6 @@ const CircleContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1100;
   bottom: -30px;
 
   width: 80px;
