@@ -90,7 +90,6 @@ const NavBottom = styled.div`
   position: fixed;
   bottom: 0;
   justify-content: center;
-  align-items: center;
 
   width: 100%;
   height: 64px;
