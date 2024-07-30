@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { arrayChop } from '../../components/common/CarouselComponent';
 import { postFriendRequest, getFriendList } from '../../api/friend.js';
 import CarouselComponent from '../../components/common/CarouselComponent';
@@ -18,7 +18,6 @@ const FriendPage = () => {
     carouselFriendList && arrayChop(carouselFriendList, 2);
   // 바텀시트 관련
   const [bottomSheetShow, setBottomSheetShow] = useState(false);
-  const inputRef = useRef(null);
   const [email, setEmail] = useState('');
   // 토스트 관련
   const [toastShow, setToastShow] = useState(false);
@@ -64,10 +63,6 @@ const FriendPage = () => {
   useEffect(() => {
     readFriendList();
   }, []);
-  // 바텀시트 렌더링 시 input 포커스
-  useEffect(() => {
-    inputRef.current?.focus();
-  });
 
   return (
     <SLayout>
@@ -146,11 +141,11 @@ const FriendPage = () => {
             </STextContainer>
             <SForm onSubmit={handleFormSubmit}>
               <SInput
-                ref={inputRef}
                 type='email'
                 name='friend-email'
                 value={email}
                 required
+                autoFocus
                 onChange={(event) => {
                   setEmail(event.target.value);
                 }}
