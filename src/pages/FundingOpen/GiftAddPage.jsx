@@ -30,9 +30,9 @@ const GiftAddPage = () => {
   );
 
   return (
-    <>
+    <SLayout>
       <BackHeaderComponent />
-      <SLayout>
+      <SContainer>
         <STitleWrapper>선물을 추가했어요!</STitleWrapper>
         <FundingPercentage
           type='add'
@@ -40,9 +40,9 @@ const GiftAddPage = () => {
           giftList={giftList}
           setIsTrue={setIsTrue}
         />
-      </SLayout>
+      </SContainer>
       <BottomBackgroundComponent Button={Btn} />
-    </>
+    </SLayout>
   );
 };
 
@@ -52,10 +52,13 @@ const SBtnContainer = styled.div`
   gap: 12px;
 `;
 const SLayout = styled.div`
+`;
+const SContainer = styled.div`
   display: flex;
   flex-direction: column;
+
+  margin: 24px 20px;
   gap: 64px;
-  padding: 24px 20px 180px 20px;
 `;
 const STitleWrapper = styled.span`
   margin-left: 8px;

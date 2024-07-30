@@ -73,23 +73,23 @@ const ProfileEditPage = () => {
   return (
     <SLayout>
       <BackHeaderComponent text='프로필 편집' />
-      <SImageContainer>
-        {imagePreview ? (
-          <SImgWrapper src={imagePreview} alt='Profile' />
-        ) : (
-          <StyledProfileIcon />
-        )}
-        <SImageLabel htmlFor='profile-image'>
-          <Camera />
-        </SImageLabel>
-        <SImageInput
-          type='file'
-          accept='image/*'
-          id='profile-image'
-          onChange={handleImageChange}
-        />
-      </SImageContainer>
       <SForm onSubmit={handleSubmit(onSubmit)}>
+        <SImageContainer>
+          {imagePreview ? (
+            <SImgWrapper src={imagePreview} alt='Profile' />
+          ) : (
+            <StyledProfileIcon />
+          )}
+          <SImageLabel htmlFor='profile-image'>
+            <Camera />
+          </SImageLabel>
+          <SImageInput
+            type='file'
+            accept='image/*'
+            id='profile-image'
+            onChange={handleImageChange}
+          />
+        </SImageContainer>
         <SFieldset>
           <SLegend>닉네임</SLegend>
           <STextarea
@@ -153,7 +153,6 @@ const ProfileEditPage = () => {
 const SLayout = styled.div`
   display: flex;
   flex-flow: column nowrap;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
 `;
@@ -162,12 +161,10 @@ const SImageContainer = styled.div`
   position: relative;
   width: 96px;
   height: 96px;
-  margin: 40px;
+  margin: 0 auto;
 `;
 
 const SImgWrapper = styled.img`
-  display: flex;
-
   width: 96px;
   height: 96px;
 
@@ -199,9 +196,9 @@ const SImageInput = styled.input`
 const SForm = styled.form`
   display: flex;
   flex-flow: column nowrap;
-  gap: 30px;
-  width: 335px;
-  margin: 0 auto;
+
+  margin: 32px auto;
+  gap: 24px;
 `;
 
 const SFieldset = styled.fieldset`
@@ -214,13 +211,7 @@ const SFieldset = styled.fieldset`
 `;
 
 const SLegend = styled.legend`
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-
-  width: 58px;
-  height: 22px;
-  padding: 0px 8px;
+  margin: 0 0 8px 8px;
 
   color: var(--gray-400);
 `;
@@ -241,6 +232,7 @@ const STextarea = styled.textarea`
   font-size: 16px;
 
   resize: none;
+
   &::placeholder {
     color: var(--black);
   }

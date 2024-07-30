@@ -226,21 +226,14 @@ const FundingSetPage = () => {
 };
 
 const SLayout = styled.div`
-  display: flex;
-  flex-flow: column nowrap;
-  align-items: center;
-  gap: 24px;
-
-  width: 100%;
-  height: 100%;
-  margin: 0 auto;
 `;
 const SForm = styled.form`
   display: flex;
   flex-flow: column nowrap;
 
-  gap: 24px;
   width: 335px;
+  margin: 24px auto;
+  gap: 24px;
 `;
 const SLabel = styled.label`
   display: block;

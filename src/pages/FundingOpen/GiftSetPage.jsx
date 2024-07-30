@@ -84,17 +84,13 @@ const GiftSetPage = () => {
 };
 
 const SLayout = styled.div`
-  display: flex;
-  flex-flow: column nowrap;
-
-  gap: 24px;
 `;
 const SForm = styled.form`
   display: flex;
   flex-flow: column nowrap;
 
   width: fit-content;
-  margin: 0 auto;
+  margin: 24px auto;
 
   gap: 24px;
 `;
