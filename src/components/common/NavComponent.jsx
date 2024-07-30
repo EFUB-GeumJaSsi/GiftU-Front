@@ -49,7 +49,7 @@ const NavComponent = () => {
 };
 
 const NavIcon = ({ Icon, GreyIcon, isActive }) => {
-  return isActive ? <Icon /> : <GreyIcon />;
+  return isActive ? <Icon /> : <GreyIcon />; //styled-components props로 처리할 것
 };
 const NavItem = ({ to, Icon, GreyIcon, label, id }) => (
   <ItemContainer
@@ -63,6 +63,7 @@ const NavItem = ({ to, Icon, GreyIcon, label, id }) => (
             <NavIcon Icon={Icon} GreyIcon={GreyIcon} isActive={isActive} />
             <p
               style={{
+                // 인라인 스타일 금지
                 color: isActive ? 'var(--jade-pri)' : 'var(--gray-400)',
                 position: 'absolute',
                 top: '73px',
