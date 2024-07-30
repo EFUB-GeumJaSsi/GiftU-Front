@@ -87,14 +87,14 @@ const NavItem = ({ to, Icon, GreyIcon, label, id }) => (
 const NavBottom = styled.div`
   display: flex;
   position: fixed;
+  bottom: 0;
   justify-content: center;
   align-items: center;
-  bottom: 0;
 
   width: 100%;
   height: 64px;
 
-  background-color: white;
+  background-color: var(--white);
 `;
 const CircleContainer = styled.div`
   display: flex;
