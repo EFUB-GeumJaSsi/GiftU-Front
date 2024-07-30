@@ -47,9 +47,7 @@ const MyPage = () => {
 
   return (
     <SLayout>
-      <SHeader>
-        <p>마이</p>
-      </SHeader>
+      <SHeader>마이</SHeader>
       <SProfileContainer>
         <SImageWrapper>
           <img src={user.picture} alt='userPicture' onError={onErrorImg} />
@@ -72,13 +70,13 @@ const MyPage = () => {
       </SProfileContainer>
 
       <STextContainer>
-        <h5>펀딩</h5>
+        <SB3>펀딩</SB3>
         <SBtn onClick={handleMyOpenFunding}>내가 만든 펀딩</SBtn>
         <SBtn onClick={handleMyJoinFunding}>내가 참여한 펀딩</SBtn>
       </STextContainer>
       <SLine></SLine>
       <STextContainer>
-        <h5>튜토리얼</h5>
+        <SB3>튜토리얼</SB3>
         <SBtn onClick={handleTutorial}>튜토리얼 보기</SBtn>
       </STextContainer>
       <SDeleteAccountBtn onClick={handleAccountDelete}>
@@ -91,24 +89,22 @@ const MyPage = () => {
 
 const SLayout = styled.div`
   display: flex;
-  overflow: hidden;
-  flex-direction: column;
-  align-items: center;
+  flex-flow: column nowrap;
+  align-items: start;
+
+  width: fit-content;
   padding: 40px 20px 128px 20px;
+  gap: 24px;
 
   background-color: var(--gray-100);
 `;
 const SHeader = styled.header`
-  display: block;
-  align-self: flex-start;
-  margin: 43px 0 24px 28px;
+  width: fit-content;
 
-  p {
-    color: var(--black);
-    font-size: 22px;
-    font-weight: 700;
-    line-height: 140%;
-  }
+  color: var(--black);
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 140%;
 `;
 const SProfileContainer = styled.div`
   display: flex;
@@ -118,7 +114,7 @@ const SProfileContainer = styled.div`
 
   width: 335px;
   height: 195px;
-  margin-bottom: 39px;
+  margin-bottom: 16px;
 `;
 const SImageWrapper = styled.div`
   position: absolute;
@@ -141,7 +137,7 @@ const SMyProfileContent = styled.div`
   height: 147px;
 
   border-radius: 16px;
-  background: white;
+  background-color: var(--white);
 `;
 const SMyEditBtn = styled.button`
   display: flex;
@@ -154,13 +150,11 @@ const SMyEditBtn = styled.button`
   width: 45px;
   height: 26px;
   padding: 6px 12px;
-  gap: 8px;
 
   border-radius: 20px;
-  background: var(--gray-300);
+  background-color: var(--gray-300);
 
   font-size: 12px;
-  font-style: normal;
   font-weight: 500;
   line-height: 120%;
 `;
@@ -185,26 +179,22 @@ const SMyFriendBtn = styled.button`
 `;
 const STextContainer = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-flow: column nowrap;
 
-  width: 335px;
-  padding: 0px 8px;
+  margin-left: 8px;
   gap: 24px;
-
-  h5 {
-    color: var(--gray-400);
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 120%;
-  }
+`;
+const SB3 = styled.p`
+  color: var(--gray-400);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 120%;
 `;
 const SBtn = styled.button`
-  align-self: flex-start;
+  width: fit-content;
 
   color: var(--black);
   font-size: 16px;
-  font-style: normal;
   font-weight: 400;
   line-height: 140%;
 `;
@@ -212,22 +202,13 @@ const SLine = styled.div`
   width: 335px;
   height: 1px;
 
-  margin-top: 20px;
-  margin-bottom: 20px;
-
   background-color: var(--gray-200);
 `;
 const SDeleteAccountBtn = styled.button`
-  align-self: flex-start;
-
-  margin-top: 90px;
-  margin-left: 20px;
-  padding: 8px;
-  gap: 8px;
+  margin: 90px 0 0 8px;
 
   color: var(--gray-400);
   font-size: 14px;
-  font-style: normal;
   font-weight: 500;
   line-height: 120%;
   text-decoration-line: underline;
