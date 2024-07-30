@@ -6,7 +6,7 @@ import BackHeaderComponent from '../../components/common/BackHeaderComponent';
 import ButtonComponent from '../../components/common/ButtonComponent';
 import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
 import { ReactComponent as Camera } from '../../assets/common/camera.svg';
-import { ReactComponent as ProfileIcon } from '../../assets/common/profile.svg';
+import { ReactComponent as ProfileIcon } from '../../assets/common/profile_default.svg';
 
 const ProfileEditPage = () => {
   const [currentDate, setCurrentDate] = useState('');

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import NavComponent from '../../components/common/NavComponent';
-import profile from '../../assets/My/icn_profile.svg';
+import profile from '../../assets/common/profile_default.svg';
 
 const MyPage = () => {
   const navigate = useNavigate();

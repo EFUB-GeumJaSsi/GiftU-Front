@@ -4,7 +4,7 @@ import NotificationItem from '../../components/Notification/NotificationItem';
 import TagSelectComponent from '../../components/common/TagSelectComponent';
 import Modal from '../../components/common/ModalComponent';
 import { ReactComponent as IcnInfo } from '../../assets/Friend/icn_info.svg';
-import { ReactComponent as ProfileIcon } from '../../assets/common/profile.svg';
+import { ReactComponent as ProfileIcon } from '../../assets/common/profile_default.svg';
 
 const NotificationPage = () => {
   const [modalShow, setModalShow] = useState(false);

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ReactComponent as ProfileDefault } from '../../assets/common/profile.svg';
+import { ReactComponent as ProfileDefault } from '../../assets/common/profile_default.svg';
 
 const FundingParticipants = ({
   name = '김이화',
@@ -32,8 +32,7 @@ const FundingParticipants = ({
       <STextContainer>
         <STitleSpan>{list.length}명이 참여했어요!</STitleSpan>
         <STextSpan>
-          가장 많이 기여한 사람은 <SBoldTextSpan>{name}</SBoldTextSpan>{' '}
-          님이에요
+          가장 많이 기여한 사람은 <SBoldTextSpan>{name}</SBoldTextSpan> 님이에요
         </STextSpan>
       </STextContainer>
       <SParticipantsContainer>
