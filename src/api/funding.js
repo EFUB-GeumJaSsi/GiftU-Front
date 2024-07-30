@@ -100,7 +100,7 @@ export const deleteParticipation = async (participationId) => {
 // 펀딩 리스트 조회(내가 개설한)
 export const getMyFunding = async (status) => {
   try {
-    response = await apiAuth.get('/fundings/list/${status}');
+    const response = await apiAuth.get(`/fundings/list/${status}`);
     return response;
   } catch (error) {
     throw error;
@@ -110,7 +110,7 @@ export const getMyFunding = async (status) => {
 // 펀딩 리스트 조회(내가 참여한)
 export const getJoinedFunding = async (status) => {
   try {
-    response = await apiAuth.get('/fundings/participation/${status}');
+    const response = await apiAuth.get(`/fundings/participation/${status}`);
     return response;
   } catch (error) {
     throw error;
@@ -120,7 +120,7 @@ export const getJoinedFunding = async (status) => {
 // 펀딩 리스트 조회(친구가 개설한)
 export const getFriendsFunding = async () => {
   try {
-    response = await apiAuth.get('/fundings/friends');
+    const response = await apiAuth.get(`/fundings/friends`);
     return response;
   } catch (error) {
     throw error;

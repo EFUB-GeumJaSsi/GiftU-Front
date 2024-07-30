@@ -230,10 +230,8 @@ const SLayout = styled.div`
   flex-flow: column nowrap;
   align-items: center;
   gap: 24px;
-  height: 100vh;
 
   margin: 0 auto;
-  overflow-y: scroll;
 `;
 const SForm = styled.form`
   display: flex;
