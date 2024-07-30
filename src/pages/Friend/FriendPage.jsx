@@ -9,6 +9,7 @@ import ToastComponent from '../../components/common/ToastComponent.jsx';
 import VerticalCard from '../../components/Friend/VerticalCard';
 import HorizontalCard from '../../components/Friend/HorizontalCard';
 import { ReactComponent as IcnUnion } from '../../assets/Friend/icn_union.svg';
+import NavComponent from '../../components/common/NavComponent.jsx';
 
 const FriendPage = () => {
   // 친구 페이지 데이터
@@ -129,6 +130,7 @@ const FriendPage = () => {
           <SGuideText>친구에게 초대 메시지를 보내보세요!</SGuideText>
         )}
       </SFriendSection>
+      <NavComponent />
       {bottomSheetShow && (
         <BottomSheetComponent
           closeButton='cross'
@@ -211,7 +213,6 @@ const SLayout = styled.div`
   height: 100%;
   margin: 0 auto;
   padding-top: 40px;
-  padding-bottom: 104px;
   gap: 24px;
 
   box-sizing: border-box;

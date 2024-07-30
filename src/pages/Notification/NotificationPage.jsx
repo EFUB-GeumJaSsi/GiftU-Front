@@ -5,6 +5,7 @@ import TagSelectComponent from '../../components/common/TagSelectComponent';
 import Modal from '../../components/common/ModalComponent';
 import { ReactComponent as IcnInfo } from '../../assets/Friend/icn_info.svg';
 import { ReactComponent as ProfileIcon } from '../../assets/common/profile_default.svg';
+import NavComponent from '../../components/common/NavComponent';
 
 const NotificationPage = () => {
   const [modalShow, setModalShow] = useState(false);
@@ -85,6 +86,7 @@ const NotificationPage = () => {
           ))}
         </SBtnWrapper>
       </SItemContainer>
+      <NavComponent />
       {modalShow && (
         <Modal actionText='추가하기' setModalShow={setModalShow}>
           {modalContent}
