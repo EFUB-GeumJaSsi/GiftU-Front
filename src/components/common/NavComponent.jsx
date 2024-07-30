@@ -93,11 +93,12 @@ const SBlank = styled.div`
 `;
 const NavBottom = styled.div`
   display: flex;
+  justify-content: center;
   position: fixed;
   bottom: 0;
   left: 50%;
 
-  width: fit-content;
+  width: 375px;
   height: 64px;
 
   background-color: var(--white);
