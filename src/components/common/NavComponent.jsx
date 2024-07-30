@@ -13,38 +13,41 @@ import { ReactComponent as MypageIcon } from '../../assets/common/NavigationBar/
 
 const NavComponent = () => {
   return (
-    <NavBottom>
-      <NavItem to='/' Icon={HomeIcon} GreyIcon={GreyHomeIcon} label='홈' />
-      <NavItem
-        to='/friends'
-        Icon={FriendIcon}
-        GreyIcon={GreyFriendIcon}
-        label='친구'
-      />
-      <CircleContainer>
-        <CircleBackground>
-          <NavItem
-            to='/create-funding'
-            Icon={PresentIcon}
-            GreyIcon={GreyPresentIcon}
-            label='펀딩 만들기'
-            id='funding'
-          />
-        </CircleBackground>
-      </CircleContainer>
-      <NavItem
-        to='/notifications'
-        Icon={AlarmIcon}
-        GreyIcon={GreyAlarmIcon}
-        label='알림'
-      />
-      <NavItem
-        to='/mypage'
-        Icon={MypageIcon}
-        GreyIcon={GreyMypageIcon}
-        label='마이'
-      />
-    </NavBottom>
+    <>
+      <SBlank />
+      <NavBottom>
+        <NavItem to='/' Icon={HomeIcon} GreyIcon={GreyHomeIcon} label='홈' />
+        <NavItem
+          to='/friends'
+          Icon={FriendIcon}
+          GreyIcon={GreyFriendIcon}
+          label='친구'
+        />
+        <CircleContainer id='circle'>
+          <CircleBackground>
+            <NavItem
+              to='/create-funding'
+              Icon={PresentIcon}
+              GreyIcon={GreyPresentIcon}
+              label='펀딩 만들기'
+              id='funding'
+            />
+          </CircleBackground>
+        </CircleContainer>
+        <NavItem
+          to='/notifications'
+          Icon={AlarmIcon}
+          GreyIcon={GreyAlarmIcon}
+          label='알림'
+        />
+        <NavItem
+          to='/mypage'
+          Icon={MypageIcon}
+          GreyIcon={GreyMypageIcon}
+          label='마이'
+        />
+      </NavBottom>
+    </>
   );
 };
 
@@ -85,13 +88,16 @@ const NavItem = ({ to, Icon, GreyIcon, label, id }) => (
   </ItemContainer>
 );
 
+const SBlank = styled.div`
+  height: 104px;
+`;
 const NavBottom = styled.div`
   display: flex;
   position: fixed;
   bottom: 0;
   justify-content: center;
 
-  width: 100%;
+  width: 375px;
   height: 64px;
 
   background-color: var(--white);
