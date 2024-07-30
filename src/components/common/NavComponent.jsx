@@ -95,9 +95,8 @@ const NavBottom = styled.div`
   display: flex;
   position: fixed;
   bottom: 0;
-  justify-content: center;
 
-  width: 375px;
+  width: fit-content;
   height: 64px;
 
   background-color: var(--white);
@@ -106,7 +105,6 @@ const CircleContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  bottom: -30px;
 
   width: 80px;
   height: 80px;
@@ -146,10 +144,10 @@ const ItemContainer = styled(NavLink)`
 
   width: 67px;
   height: 64px;
-
-  text-decoration: none;
   gap: 8px;
+
   color: var(--gray-400);
+  text-decoration: none;
 
   p {
     font-size: 12px;
