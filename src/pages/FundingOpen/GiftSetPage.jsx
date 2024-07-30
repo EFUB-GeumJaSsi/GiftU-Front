@@ -84,6 +84,7 @@ const GiftSetPage = () => {
 };
 
 const SLayout = styled.div`
+  padding-bottom: 88px;
 `;
 const SForm = styled.form`
   display: flex;

@@ -133,6 +133,7 @@ const SLocker = ({ color }) => {
 };
 
 const SLayout = styled.div`
+  padding-bottom: 88px;
 `;
 const SFieldset = styled.fieldset`
   width: fit-content;

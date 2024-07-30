@@ -155,6 +155,8 @@ const SLayout = styled.div`
   flex-flow: column nowrap;
   align-items: center;
   justify-content: center;
+
+  padding-bottom: 88px;
 `;
 
 const SImageContainer = styled.div`

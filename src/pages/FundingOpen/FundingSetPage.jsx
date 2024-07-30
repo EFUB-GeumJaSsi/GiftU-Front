@@ -226,6 +226,7 @@ const FundingSetPage = () => {
 };
 
 const SLayout = styled.div`
+  padding-bottom: 88px;
 `;
 const SForm = styled.form`
   display: flex;
@@ -308,8 +309,6 @@ const SAddressContainer = styled.div`
   flex-direction: column;
   gap: 8px;
   width: 100%;
-
-  margin-bottom: 100px;
 `;
 const SAddressNumberContainer = styled.div`
   display: flex;

@@ -52,6 +52,7 @@ const SBtnContainer = styled.div`
   gap: 12px;
 `;
 const SLayout = styled.div`
+  padding-bottom: 160px;
 `;
 const SContainer = styled.div`
   display: flex;
