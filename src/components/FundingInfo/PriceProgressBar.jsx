@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { addComma } from '../../components/FundingInfo/FundingPercentage';
+import { getColor, getBackgroundColor, getOpacity } from './stylefunction';
 
 const PriceProgressBar = ({ type, color, giftList, balance, joinPrice }) => {
   const maxPrice = giftList.length > 0 && giftList[giftList.length - 1].price;
@@ -37,10 +38,12 @@ const PriceProgressBar = ({ type, color, giftList, balance, joinPrice }) => {
   // 3. 새로운 선물 등록 시
   const ProgressPoint = ({ it, idx, type }) => (
     <SPointContainer price={it.price} max={maxPrice} onClick={handleOnClick}>
-      <SPointTextWrapper
+      <SPointSpan
         idx={idx === 'join' ? idx : idx + 1}
         type={type}
         color={color}
+        getColor={getColor}
+        getOpacity={getOpacity}
         length={giftList.length - 1}
         num={it.num && it.num}
         nextIdx={nextPrice.idx}
@@ -48,11 +51,12 @@ const PriceProgressBar = ({ type, color, giftList, balance, joinPrice }) => {
         selected={selected}
       >
         {addComma(it.price)}원
-      </SPointTextWrapper>
-      <SPointCircleWrapper
+      </SPointSpan>
+      <SCircleDiv
         id={idx + 1}
         type={type}
         color={color}
+        getBackgroundColor={getBackgroundColor}
         length={giftList.length - 1}
         num={it.num && it.num}
         price={it.price}
@@ -63,8 +67,8 @@ const PriceProgressBar = ({ type, color, giftList, balance, joinPrice }) => {
   );
 
   return (
-    <SSliderContainer>
-      <SSliderWrapper
+    <SContainer>
+      <SSlider
         class='progress'
         id='progress'
         value={percent}
@@ -79,11 +83,11 @@ const PriceProgressBar = ({ type, color, giftList, balance, joinPrice }) => {
       {joinPrice && nowPrice <= maxPrice && (
         <ProgressPoint it={{ price: nowPrice }} idx='join' type={type} />
       )}
-    </SSliderContainer>
+    </SContainer>
   );
 };
 
-const SSliderContainer = styled.div`
+const SContainer = styled.div`
   display: flex;
   align-items: center;
   position: relative;
@@ -95,7 +99,7 @@ const SSliderContainer = styled.div`
   border-radius: 10px;
   background-color: var(--white);
 `;
-const SSliderWrapper = styled.progress`
+const SSlider = styled.progress`
   position: absolute;
   top: 62%;
   left: 11%;
@@ -127,21 +131,14 @@ const SPointContainer = styled.div`
   justify-content: center;
   gap: 8px;
 `;
-const SPointTextWrapper = styled.span`
+const SPointSpan = styled.span`
   min-height: 15px;
   min-width: 50px;
   margin: 0 8px;
 
   background: var(--white);
 
-  color: ${(props) =>
-    props.nextIdx === props.idx
-      ? 'var(--gray-500)'
-      : props.idx === 'join'
-        ? 'var(--orange-pri)'
-        : props.type === 'info' || props.num !== props.length
-          ? 'var(--gray-300)'
-          : props.color};
+  color: ${(props) => props.getColor(props)};
   font-size: 12px;
   font-style: normal;
   font-weight: 500;
@@ -152,44 +149,19 @@ const SPointTextWrapper = styled.span`
   white-space: nowrap;
 
   visibility: ${(props) => (props.type === 'none' ? 'hidden' : 'visible')};
-  opacity: ${(props) =>
-    props.idx == props.selected
-      ? '1'
-      : props.joinPrice && props.idx !== 'join'
-        ? '0'
-        : props.idx === props.nextIdx ||
-            props.idx === 'join' ||
-            props.num === props.length
-          ? '1'
-          : '0'};
+  opacity: ${(props) => getOpacity(props)};
 
-  z-index: ${(props) =>
-    props.idx === props.selected
-      ? '999'
-      : props.idx === 'join'
-        ? '900'
-        : '100'};
   &:hover {
     opacity: 1;
     z-index: 999;
   }
 `;
-const SPointCircleWrapper = styled.div`
+const SCircleDiv = styled.div`
   width: 14px;
   height: 14px;
 
   border-radius: 50%;
-
-  background-color: ${(props) =>
-    props.num !== props.length && props.type === 'add'
-      ? 'var(--gray-300)'
-      : props.type === 'add'
-        ? 'var(--jade-pri)'
-        : props.id === 'join'
-          ? 'var(--orange-pri)'
-          : props.price <= props.balance
-            ? props.color
-            : 'var(--gray-300)'};
+  background-color: ${(props) => props.getBackgroundColor(props)};
 
   cursor: pointer;
 `;

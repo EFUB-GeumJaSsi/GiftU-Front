@@ -6,8 +6,8 @@ const FundingComment = ({
 }) => {
   return (
     <SContainer color={color}>
-      <STitleWrapper>선물 후기</STitleWrapper>
-      <STextWrapper>{comment}</STextWrapper>
+      <STitleSpan>선물 후기</STitleSpan>
+      <STextSpan>{comment}</STextSpan>
     </SContainer>
   );
 };
@@ -28,14 +28,14 @@ const SContainer = styled.div`
       : '2px solid var(--jade-pri)'};
   background: var(--gray-100);
 `;
-const STitleWrapper = styled.span`
+const STitleSpan = styled.span`
   color: var(--gray-400);
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
   line-height: 120%;
 `;
-const STextWrapper = styled.p`
+const STextSpan = styled.p`
   width: 291px;
   height: 78px;
 

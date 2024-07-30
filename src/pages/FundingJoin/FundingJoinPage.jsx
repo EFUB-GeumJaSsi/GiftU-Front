@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
+import { addComma } from '../../components/FundingInfo/FundingPercentage';
 import BackHeaderComponent from '../../components/common/BackHeaderComponent';
 import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
 import ButtonComponent from '../../components/common/ButtonComponent';
 import FundingPercentage from '../../components/FundingInfo/FundingPercentage';
-import { addComma } from '../../components/FundingInfo/FundingPercentage';
 import PriceInputComponent from '../../components/common/PriceInputComponent';
 
 const giftList = [
@@ -46,10 +46,10 @@ const FundingJoinPage = () => {
         />
         <SForm>
           <SContainer>
-            <STextBox htmlFor='price'>
-              <STextWrapper>금액</STextWrapper>
-              <SStarWrapper>*</SStarWrapper>
-            </STextBox>
+            <SLabel htmlFor='price'>
+              <STextSpan>금액</STextSpan>
+              <SStarSpan>*</SStarSpan>
+            </SLabel>
             <PriceInputComponent
               focusColor='var(--orange-pri)'
               price={price}
@@ -57,16 +57,16 @@ const FundingJoinPage = () => {
               placeholder='펀딩에 참여할 금액을 입력해 주세요'
             />
             {price > balance && (
-              <SWarningWrapper>
+              <SWarningSpan>
                 {addComma(balance)}원보다 적은 금액을 입력해 주세요
-              </SWarningWrapper>
+              </SWarningSpan>
             )}
           </SContainer>
           <SContainer>
-            <STextBox>
-              <STextWrapper>이름</STextWrapper>
-              <SStarWrapper>*</SStarWrapper>
-            </STextBox>
+            <SLabel>
+              <STextSpan>이름</STextSpan>
+              <SStarSpan>*</SStarSpan>
+            </SLabel>
             <SButtonContainer>
               <SButtonWrapper htmlFor='nickname' checked={name === 'nickname'}>
                 <input
@@ -91,8 +91,8 @@ const FundingJoinPage = () => {
             </SButtonContainer>
           </SContainer>
           <SContainer>
-            <STextWrapper htmlFor='message'>축하메시지</STextWrapper>
-            <STextareaWrapper
+            <STextSpan htmlFor='message'>축하메시지</STextSpan>
+            <STextarea
               id='message'
               value={message}
               onChange={handleMessageChange}
@@ -137,10 +137,10 @@ const SContainer = styled.fieldset`
   gap: 8px;
 `;
 
-const STextBox = styled.label`
+const SLabel = styled.label`
   display: flex;
 `;
-const STextWrapper = styled.span`
+const STextSpan = styled.span`
   margin-left: 8px;
 
   font-size: 16px;
@@ -148,7 +148,7 @@ const STextWrapper = styled.span`
   font-weight: 500;
   line-height: 140%;
 `;
-const SStarWrapper = styled(STextWrapper)`
+const SStarSpan = styled(STextSpan)`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -157,7 +157,7 @@ const SStarWrapper = styled(STextWrapper)`
 
   color: var(--orange-pri);
 `;
-const SWarningWrapper = styled.span`
+const SWarningSpan = styled.span`
   margin-left: 8px;
 
   color: var(--red);
@@ -166,7 +166,7 @@ const SWarningWrapper = styled.span`
   font-weight: 500;
   line-height: 120%;
 `;
-const STextareaWrapper = styled.textarea`
+const STextarea = styled.textarea`
   height: 132px;
   padding: 20px 24px;
 

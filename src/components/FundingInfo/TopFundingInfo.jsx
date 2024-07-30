@@ -1,22 +1,16 @@
 import styled from 'styled-components';
 
-const TopFundingInfo = ({
-  color,
-  tag = 'D-10',
-  image = 'https://image.vans.co.kr/cmsstatic/product/VN000CSE5T21_VN000CSE5T21_primary.jpg?browse',
-  title = '펀딩 제목',
-  infoText = '최대120자까지펀딩을소개해주세요펀딩을소개해주세요펀딩을소개해주세요펀딩을소개해주세요펀딩을소개해주세요펀딩을소개해주세요펀딩을소개해주세요펀딩을소개해주세요펀딩을소개해주세요펀딩을소개해주세요펀딩을소개해주세요펀딩을소개해주세요펀펀딩을',
-}) => {
+const TopFundingInfo = ({ color, tag, image, title, infoText }) => {
   return (
     <SLayout>
       <SImageContainer>
-        <SImageWrapper src={image} alt='funding' />
-        <STagWrapper color={color}>{tag}</STagWrapper>
+        <SImg src={image} alt='funding' />
+        {tag && <STagSpan color={color}>{tag}</STagSpan>}
       </SImageContainer>
-      <STitleContainer>
-        <STitleWrapper>{title}</STitleWrapper>
-      </STitleContainer>
-      <STextWrapper>{infoText}</STextWrapper>
+      <STitleWrapper>
+        <STitleSpan>{title}</STitleSpan>
+      </STitleWrapper>
+      <STextSpan>{infoText}</STextSpan>
     </SLayout>
   );
 };
@@ -31,13 +25,16 @@ const SLayout = styled.div`
 const SImageContainer = styled.div`
   position: relative;
 `;
-const SImageWrapper = styled.img`
+const SImg = styled.img`
+  min-width: 312px;
+  min-height: 312px;
   width: 312px;
   height: 312px;
 
+  background-color: var(--gray-400);
   border-radius: 16px;
 `;
-const STagWrapper = styled.span`
+const STagSpan = styled.span`
   position: absolute;
   top: 20px;
   right: 20px;
@@ -53,18 +50,18 @@ const STagWrapper = styled.span`
   font-weight: 500;
   line-height: 140%;
 `;
-const STitleContainer = styled.div`
+const STitleWrapper = styled.div`
   justify-content: flex-start;
 
   width: 311px;
 `;
-const STitleWrapper = styled.span`
+const STitleSpan = styled.span`
   font-size: 20px;
   font-style: normal;
   font-weight: 700;
   line-height: 140%;
 `;
-const STextWrapper = styled.p`
+const STextSpan = styled.p`
   width: 311px;
 
   color: var(--gray-500);

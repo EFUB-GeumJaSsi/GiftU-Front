@@ -6,10 +6,8 @@ const GoWriteCommentButton = ({ color, onClick }) => {
   return (
     <SLayout color={color} onClick={onClick}>
       <SContainer>
-        <STextWrapper>펀딩이 100% 달성되었어요</STextWrapper>
-        <SBigTextWrapper>
-          선물해 준 친구들에게 마음을 전해볼까요?
-        </SBigTextWrapper>
+        <STextSpan>펀딩이 100% 달성되었어요</STextSpan>
+        <SBigTextSpan>선물해 준 친구들에게 마음을 전해볼까요?</SBigTextSpan>
       </SContainer>
       <NextBtn color={color} />
     </SLayout>
@@ -29,21 +27,21 @@ const GoWriteMessageButton = ({
       <SContainer>
         {wroteMessage || isEnd ? (
           <>
-            <STextWrapper color={color}>
-              펀딩에 <SEmphaWrapper>{price}원</SEmphaWrapper> 기여했어요
-            </STextWrapper>
-            <SBigTextWrapper color={color}>
+            <STextSpan color={color}>
+              펀딩에 <SEmphaSpan>{price}원</SEmphaSpan> 기여했어요
+            </STextSpan>
+            <SBigTextSpan color={color}>
               친구에게 남긴 메시지를 확인해 보세요!
-            </SBigTextWrapper>
+            </SBigTextSpan>
           </>
         ) : (
           <>
-            <STextWrapper color={color}>
-              펀딩에 <SEmphaWrapper>{price}원</SEmphaWrapper> 기여했어요
-            </STextWrapper>
-            <SBigTextWrapper color={color}>
+            <STextSpan color={color}>
+              펀딩에 <SEmphaSpan>{price}원</SEmphaSpan> 기여했어요
+            </STextSpan>
+            <SBigTextSpan color={color}>
               선물 받을 친구에게 메시지를 남겨보세요!
-            </SBigTextWrapper>
+            </SBigTextSpan>
           </>
         )}
       </SContainer>
@@ -70,7 +68,7 @@ const SContainer = styled.div`
   flex-direction: column;
   gap: 4px;
 `;
-const STextWrapper = styled.span`
+const STextSpan = styled.span`
   color: ${(props) => (props.color ? 'var(--gray-500)' : 'var(--white)')};
   font-size: 14px;
   font-style: normal;
@@ -80,11 +78,11 @@ const STextWrapper = styled.span`
 
   cursor: pointer;
 `;
-const SEmphaWrapper = styled(STextWrapper)`
+const SEmphaSpan = styled(STextSpan)`
   color: var(--orange-pri);
   font-weight: 500;
 `;
-const SBigTextWrapper = styled(STextWrapper)`
+const SBigTextSpan = styled(STextSpan)`
   font-size: 16px;
   font-weight: 600;
   line-height: 140%;

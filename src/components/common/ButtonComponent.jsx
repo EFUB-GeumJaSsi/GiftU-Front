@@ -21,13 +21,13 @@ const ButtonComponent = ({ btnInfo, ...props }) => {
   };
 
   return (
-    <SWrapper color={btnColor[color]} width={width} {...props}>
+    <SBtn color={btnColor[color]} width={width} {...props}>
       {text}
-    </SWrapper>
+    </SBtn>
   );
 };
 
-const SWrapper = styled.button`
+const SBtn = styled.button`
   width: ${(props) => (props.width ? props.width : '335px')};
   height: 56px;
 

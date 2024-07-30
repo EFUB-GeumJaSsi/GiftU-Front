@@ -15,7 +15,7 @@ const BackHeaderComponent = ({ text, onClick }) => {
   return (
     <SContainer>
       <BackBtn onClick={onClick ? onClick : goBack} />
-      <STextWrapper>{text}</STextWrapper>
+      <SSpan>{text}</SSpan>
     </SContainer>
   );
 };
@@ -40,7 +40,7 @@ const BackBtn = styled(Back)`
 
   cursor: pointer;
 `;
-const STextWrapper = styled.span`
+const SSpan = styled.span`
   position: absolute;
   top: 43px;
 

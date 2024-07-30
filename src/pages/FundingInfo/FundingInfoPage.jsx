@@ -54,29 +54,16 @@ const FundingInfoPage = () => {
   );
   // 상세 정보 조회 후 userId가 로그인 한 유저와 일치하는지 비교
   // 일치하면 open, 불일치 시 contributers에서 유저 정보와 일치하는 userId가 있는지 확인 후 있으면 'joined' 없으면 'pre'
-  const [funding, setFunding] = useState('open');
+  const [funding, setFunding] = useState('pre');
   // 상세 정보 조회 후 fundingStatus 확인
   const [isEnd, setIsEnd] = useState(false);
   const [tag, setTag] = useState(isEnd ? '종료' : 'D-10');
   const [color, setColor] = useState(
     funding === 'open' ? 'var(--jade-pri)' : 'var(--orange-pri)',
   );
-  const [password, setPassword] = useState(['', '', '', '']);
-  const [errorMessage, setErrorMessage] = useState('');
 
   const onFocusMessage = () => {
     messageRef.current.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  const handlePasswordSubmit = () => {
-    const enteredPassword = password.join('');
-    if (enteredPassword !== getPassword) {
-      setErrorMessage('비밀번호가 틀립니다.');
-      setPassword(['', '', '', '']);
-    } else {
-      setErrorMessage('');
-      console.log('다음 페이지 이동');
-    }
   };
 
   useEffect(() => {
@@ -128,10 +115,8 @@ const FundingInfoPage = () => {
 
   const ModalContent = () => (
     <SModalContainer>
-      <SBigTextWrapper>펀딩 개설을 취소하시겠어요?</SBigTextWrapper>
-      <SSmallTextWrapper>
-        펀딩에 참여한 친구들에게 알림이 전송돼요
-      </SSmallTextWrapper>
+      <SBigSpan>펀딩 개설을 취소하시겠어요?</SBigSpan>
+      <SSmallSpan>펀딩에 참여한 친구들에게 알림이 전송돼요</SSmallSpan>
     </SModalContainer>
   );
 
@@ -139,11 +124,7 @@ const FundingInfoPage = () => {
     <>
       <BackHeaderComponent />
       <SLayout isend={isEnd.toString()}>
-        {getPassword ? (
-          <TopFundingInfo />
-        ) : (
-          <TopFundingInfo color={color} tag={tag} image={image} />
-        )}
+        <TopFundingInfo color={color} tag={tag} image={image} />
         {isCommented && isEnd && <FundingComment color={color} />}
         {funding === 'joined' ? (
           <GoWriteMessageButton
@@ -157,6 +138,7 @@ const FundingInfoPage = () => {
           funding === 'open' && isEnd && <GoWriteCommentButton color={color} />
         )}
         <FundingSpan color={color} />
+
         <FundingPercentage
           type='info'
           color={color}
@@ -176,12 +158,9 @@ const FundingInfoPage = () => {
       )}
       {funding === 'pre' && bottomSheetShow && (
         <PasswordComponent
-          password={password}
-          setPassword={setPassword}
-          errorMessage={errorMessage}
-          handleSubmit={handlePasswordSubmit}
+          passwordExact={getPassword}
           setBottomSheetShow={setBottomSheetShow}
-          title='비밀번호 입력'
+          validPassword={() => setBottomSheetShow(false)}
           name={name}
           color='orange'
         />
@@ -211,7 +190,7 @@ const SModalContainer = styled.div`
 
   padding: 32px 0 28px 0;
 `;
-const SBigTextWrapper = styled.span`
+const SBigSpan = styled.span`
   color: var(--black);
   text-align: center;
   font-size: 16px;
@@ -219,7 +198,7 @@ const SBigTextWrapper = styled.span`
   font-weight: 500;
   line-height: 140%;
 `;
-const SSmallTextWrapper = styled(SBigTextWrapper)`
+const SSmallSpan = styled(SBigSpan)`
   color: var(--gray-500);
   font-size: 12px;
   line-height: 120%;

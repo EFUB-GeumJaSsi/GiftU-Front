@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ReactComponent as ProfileDefault } from '../../assets/common/profile_default.svg';
+import { ReactComponent as ProfileDefault } from '../../assets/common/profile.svg';
 
 const FundingParticipants = ({
   name = '김이화',
@@ -19,22 +19,22 @@ const FundingParticipants = ({
   const participantItem = (it, idx) => (
     <SItemContainer key={idx}>
       {it.image ? (
-        <SProfileWrapper src={it.image} alt='profile' />
+        <SImg src={it.image} alt='profile' />
       ) : (
         <SProfileDefault alt='default' />
       )}
-      <SNameWrapper>{it.name}</SNameWrapper>
+      <SNameSpan>{it.name}</SNameSpan>
     </SItemContainer>
   );
 
   return (
     <SLayout>
       <STextContainer>
-        <STitleWrapper>{list.length}명이 참여했어요!</STitleWrapper>
-        <STextWrapper>
-          가장 많이 기여한 사람은 <SBoldTextWrapper>{name}</SBoldTextWrapper>{' '}
+        <STitleSpan>{list.length}명이 참여했어요!</STitleSpan>
+        <STextSpan>
+          가장 많이 기여한 사람은 <SBoldTextSpan>{name}</SBoldTextSpan>{' '}
           님이에요
-        </STextWrapper>
+        </STextSpan>
       </STextContainer>
       <SParticipantsContainer>
         {list.map((it, idx) => participantItem(it, idx))}
@@ -60,20 +60,20 @@ const STextContainer = styled.div`
 
   margin: 20px 24px 0 24px;
 `;
-const STitleWrapper = styled.span`
+const STitleSpan = styled.span`
   font-size: 17px;
   font-style: normal;
   font-weight: 700;
   line-height: 120%;
 `;
-const STextWrapper = styled.span`
+const STextSpan = styled.span`
   color: var(--gray-500);
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
   line-height: 120%;
 `;
-const SBoldTextWrapper = styled(STextWrapper)`
+const SBoldTextSpan = styled(STextSpan)`
   color: var(--black);
 `;
 const SParticipantsContainer = styled.div`
@@ -95,7 +95,7 @@ const SItemContainer = styled.div`
 
   padding: 16px 8px;
 `;
-const SProfileWrapper = styled.img`
+const SImg = styled.img`
   width: 48px;
   height: 48px;
 
@@ -108,7 +108,7 @@ const SProfileDefault = styled(ProfileDefault)`
 
   border-radius: 50%;
 `;
-const SNameWrapper = styled.span`
+const SNameSpan = styled.span`
   width: 61px;
   height: 34px;
 

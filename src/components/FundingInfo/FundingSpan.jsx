@@ -10,17 +10,17 @@ const FundingSpan = ({
     <SLayout>
       <SContainer>
         {color === 'orange' ? (
-          <STitleWrapper>선물 수령인</STitleWrapper>
+          <STitleSpan>선물 수령인</STitleSpan>
         ) : (
-          <STitleWrapper>펀딩 개설자</STitleWrapper>
+          <STitleSpan>펀딩 개설자</STitleSpan>
         )}
-        <STextWrapper>{name}</STextWrapper>
+        <STextSpan>{name}</STextSpan>
       </SContainer>
       <SContainer>
-        <STitleWrapper>펀딩 기간</STitleWrapper>
-        <STextWrapper>
+        <STitleSpan>펀딩 기간</STitleSpan>
+        <STextSpan>
           {startDate} ~ {endDate}
-        </STextWrapper>
+        </STextSpan>
       </SContainer>
     </SLayout>
   );
@@ -42,7 +42,7 @@ const SContainer = styled.div`
   display: flex;
   gap: 16px;
 `;
-const STitleWrapper = styled.span`
+const STitleSpan = styled.span`
   width: 64px;
   height: 17px;
 
@@ -52,7 +52,7 @@ const STitleWrapper = styled.span`
   font-weight: 500;
   line-height: 120%;
 `;
-const STextWrapper = styled.span`
+const STextSpan = styled.span`
   color: var(--gray-500);
   font-size: 14px;
   font-style: normal;
