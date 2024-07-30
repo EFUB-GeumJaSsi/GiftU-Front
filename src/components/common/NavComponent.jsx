@@ -95,11 +95,14 @@ const NavBottom = styled.div`
   display: flex;
   position: fixed;
   bottom: 0;
+  left: 50%;
 
   width: fit-content;
   height: 64px;
 
   background-color: var(--white);
+
+  transform: translate(-50%, 0);
 `;
 const CircleContainer = styled.div`
   display: flex;
