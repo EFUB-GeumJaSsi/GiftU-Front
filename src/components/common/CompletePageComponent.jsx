@@ -51,6 +51,7 @@ const SMain = styled.main`
   justify-content: center;
 
   gap: 24px;
+  margin-bottom: 88px;
 `;
 
 export default CompletePageComponent;
