@@ -23,13 +23,13 @@ const BottomBackgroundComponent = ({ Button }) => {
 
 const SLayout = styled.div`
   display: flex;
+  justify-content: center;
   position: fixed;
   bottom: 0;
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
 
-  padding: 8px 20px 24px 20px;
+  width: 375px;
+  padding-top: 8px;
+  padding-bottom: 24px;
 
   border-top: 1px solid var(--gray-100);
   background: var(--white);
