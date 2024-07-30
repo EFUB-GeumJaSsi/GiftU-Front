@@ -38,8 +38,9 @@ const SearchPage = () => {
         <SSearchBoxContainer>
           <Search />
           <STextBoxWrapper
-            type='text'
-            placeholder='펀딩 이름,친구를 검색해보세요'
+            type='search'
+            name='q'
+            placeholder='펀딩 이름, 친구를 검색해보세요'
             value={search}
             onChange={onChange}
           ></STextBoxWrapper>
