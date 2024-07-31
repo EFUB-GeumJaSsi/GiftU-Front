@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { ReactComponent as GreyHomeIcon } from '../../assets/common/NavigationBar/grey_icn_home.svg';
@@ -18,7 +17,7 @@ const NavComponent = () => {
         {({ isActive }) => (
           <>
             {isActive ? <HomeIcon /> : <GreyHomeIcon />}
-            <p className={isActive ? 'active' : ''}>홈</p>
+            <SP $isActive={isActive}>홈</SP>
           </>
         )}
       </SNavLink>
@@ -26,23 +25,21 @@ const NavComponent = () => {
         {({ isActive }) => (
           <>
             {isActive ? <FriendIcon /> : <GreyFriendIcon />}
-            <p className={isActive ? 'active' : ''}>친구</p>
+            <SP $isActive={isActive}>친구</SP>
           </>
         )}
       </SNavLink>
       <SFundingNavLink to='/funding/open'>
-        <SCirclecontainer>
-          <SSmallcontainer>
-            <PresentIcon />
-          </SSmallcontainer>
-        </SCirclecontainer>
-        <p>펀딩 만들기</p>
+        <SCircleWrapper>
+          <PresentIcon />
+        </SCircleWrapper>
+        <SFundingOpenP>펀딩 만들기</SFundingOpenP>
       </SFundingNavLink>
       <SNavLink to='/notifications'>
         {({ isActive }) => (
           <>
             {isActive ? <AlarmIcon /> : <GreyAlarmIcon />}
-            <p className={isActive ? 'active' : ''}>알림</p>
+            <SP $isActive={isActive}>알림</SP>
           </>
         )}
       </SNavLink>
@@ -50,7 +47,7 @@ const NavComponent = () => {
         {({ isActive }) => (
           <>
             {isActive ? <MypageIcon /> : <GreyMypageIcon />}
-            <p className={isActive ? 'active' : ''}>마이</p>
+            <SP $isActive={isActive}>마이</SP>
           </>
         )}
       </SNavLink>
@@ -59,17 +56,16 @@ const NavComponent = () => {
 };
 const SLayout = styled.div`
   display: flex;
-  justify-content: center;
   position: fixed;
   bottom: 0;
-  left: 50%;
+
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 
   width: 375px;
   height: 64px;
-
   background-color: var(--white);
-
-  transform: translate(-50%, 0);
 `;
 const SNavLink = styled(NavLink)`
   display: flex;
@@ -86,18 +82,13 @@ const SNavLink = styled(NavLink)`
   font-weight: 500;
   line-height: 120%;
 
-  p {
-    color: var(--gray-400);
-  }
-
   svg {
     width: 24px;
     height: 24px;
   }
-
-  &.active p {
-    color: var(--black);
-  }
+`;
+const SP = styled.p`
+  color: ${({ $isActive }) => ($isActive ? 'var(--black)' : 'var(--gray-400)')};
 `;
 const SFundingNavLink = styled(NavLink)`
   position: relative;
@@ -113,34 +104,24 @@ const SFundingNavLink = styled(NavLink)`
   font-style: normal;
   font-weight: 500;
   line-height: 120%;
-  p {
-    color: var(--jade-pri);
-    margin-top: 34px;
-  }
 `;
-const SCirclecontainer = styled.div`
+const SCircleWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   position: absolute;
   bottom: 44px;
 
-  width: 80px;
-  height: 80px;
-
-  background-color: white;
-  border-radius: 40px;
-`;
-const SSmallcontainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
   width: 64px;
   height: 64px;
 
   background-color: var(--jade-pri);
-  border-radius: 40px;
+  border-radius: 50%;
+  border: 8px solid var(--white);
+`;
+const SFundingOpenP = styled.p`
+  margin-top: 34px;
+  color: var(--gray-400);
 `;
 
 export default NavComponent;

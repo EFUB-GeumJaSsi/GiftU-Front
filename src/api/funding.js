@@ -4,20 +4,13 @@ import { api, apiAuth } from './api';
 export const postFunding = async (request, images) => {
   try {
     const formData = new FormData();
-    // console.log(request);
-    // console.log(images);
     formData.append(
       'fundingRequestDto',
       new Blob([JSON.stringify(request)], { type: 'application/json' }),
     );
-
     for (let i = 0; i < images.length; i++) {
       formData.append('giftImages', images[i]);
     }
-
-    // for (const x of formData.entries()) {
-    //   console.log(x);
-    // }
     const response = await apiAuth.post(`/fundings`, formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
