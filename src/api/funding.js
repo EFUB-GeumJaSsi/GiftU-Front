@@ -4,16 +4,13 @@ import { api, apiAuth } from './api';
 export const postFunding = async (request, images) => {
   try {
     const formData = new FormData();
-
     formData.append(
-      'request',
-      new Blob([JSON.stringfy(request), { type: 'application/json' }]),
+      'fundingRequestDto',
+      new Blob([JSON.stringify(request)], { type: 'application/json' }),
     );
-
     for (let i = 0; i < images.length; i++) {
-      formData.append('images', images[i]);
+      formData.append('giftImages', images[i]);
     }
-
     const response = await apiAuth.post(`/fundings`, formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
@@ -98,7 +95,7 @@ export const deleteParticipation = async (participationId) => {
 };
 
 // 펀딩 리스트 조회(내가 개설한)
-export const getMyFunding = async (status) => {
+export const getFundingsList = async (status) => {
   try {
     const response = await apiAuth.get(`/fundings/list/${status}`);
     return response;
@@ -108,7 +105,7 @@ export const getMyFunding = async (status) => {
 };
 
 // 펀딩 리스트 조회(내가 참여한)
-export const getJoinedFunding = async (status) => {
+export const getParticipationList = async (status) => {
   try {
     const response = await apiAuth.get(`/fundings/participation/${status}`);
     return response;
@@ -118,7 +115,7 @@ export const getJoinedFunding = async (status) => {
 };
 
 // 펀딩 리스트 조회(친구가 개설한)
-export const getFriendsFunding = async () => {
+export const getFriendsFundingList = async () => {
   try {
     const response = await apiAuth.get(`/fundings/friends`);
     return response;
