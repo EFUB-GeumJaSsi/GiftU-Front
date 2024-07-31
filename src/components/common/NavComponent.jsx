@@ -71,17 +71,18 @@ const SLayout = styled.div`
 const SNavLink = styled(NavLink)`
   display: flex;
   flex-flow: column;
-  justify-content: center;
   align-items: center;
 
   width: 67px;
   height: 64px;
-
+  padding: 9px 0;
   gap: 8px;
   font-size: 12px;
   font-style: normal;
   font-weight: 500;
   line-height: 120%;
+
+  box-sizing: border-box;
 
   svg {
     width: 24px;
@@ -91,15 +92,11 @@ const SNavLink = styled(NavLink)`
 const SP = styled.p`
   color: ${({ $isActive }) => ($isActive ? 'var(--black)' : 'var(--gray-400)')};
 `;
-const SFundingNavLink = styled(NavLink)`
+const SFundingNavLink = styled(SNavLink)`
+  justify-content: end;
   position: relative;
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: center;
-  align-items: center;
 
   width: 80px;
-  height: 104px;
 
   font-size: 12px;
   font-style: normal;
@@ -111,7 +108,7 @@ const SCircleWrapper = styled.div`
   justify-content: center;
   align-items: center;
   position: absolute;
-  bottom: 44px;
+  bottom: 24px;
 
   width: 64px;
   height: 64px;
@@ -121,7 +118,6 @@ const SCircleWrapper = styled.div`
   border: 8px solid var(--white);
 `;
 const SFundingOpenP = styled.p`
-  margin-top: 34px;
   color: var(--gray-400);
 `;
 
