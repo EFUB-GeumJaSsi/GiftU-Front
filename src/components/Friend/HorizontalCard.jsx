@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import { deleteFriend } from '../../api/friend';
+import { deleteFriendItem } from '../../api/friend';
 import BottomModalComponent from '../../components/common/BottomModalComponent';
 import ModalComponent from '../common/ModalComponent';
 import ToastComponent from '../common/ToastComponent';
@@ -18,7 +18,7 @@ const HorizontalCard = ({ friendId, nickname, birthday, image }) => {
   // API 연결
   const delFriend = async (friendId) => {
     try {
-      const response = await deleteFriend(friendId);
+      const response = await deleteFriendItem(friendId);
       setToastContent(response.data);
       setTimeout(() => location.reload(true), 2000);
     } catch (error) {

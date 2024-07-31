@@ -44,8 +44,8 @@ export const getFriendList = async () => {
   }
 };
 
-export const getFriendParticipated = async () => {
 // 최근 내 펀딩에 참여한 친구 조회
+export const getFriendParticipatedList = async () => {
   try {
     const response = await apiAuth.get(`/friends/participated`);
     return response;
@@ -55,7 +55,7 @@ export const getFriendParticipated = async () => {
 };
 
 // 친구 삭제
-export const deleteFriend = async (friendId) => {
+export const deleteFriendItem = async (friendId) => {
   try {
     const response = await apiAuth.delete(`/friends/${friendId}`);
     return response;
