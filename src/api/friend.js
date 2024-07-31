@@ -34,7 +34,7 @@ export const postFriendReject = async (friendTableId) => {
   }
 };
 
-// 친구 목록 조회
+// 친구 조회
 export const getFriendList = async () => {
   try {
     const response = await apiAuth.get(`/friends`);
@@ -44,8 +44,8 @@ export const getFriendList = async () => {
   }
 };
 
-// 최근 내 펀딩에 참여한 친구 목록 조회
 export const getFriendParticipated = async () => {
+// 최근 내 펀딩에 참여한 친구 조회
   try {
     const response = await apiAuth.get(`/friends/participated`);
     return response;
