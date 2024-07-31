@@ -56,16 +56,17 @@ const NavComponent = () => {
 };
 const SLayout = styled.div`
   display: flex;
+  justify-content: center;
   position: fixed;
   bottom: 0;
-
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
+  left: 50%;
 
   width: 375px;
   height: 64px;
+
   background-color: var(--white);
+
+  transform: translate(-50%, 0);
 `;
 const SNavLink = styled(NavLink)`
   display: flex;
