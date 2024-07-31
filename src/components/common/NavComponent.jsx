@@ -17,7 +17,7 @@ const NavComponent = () => {
         {({ isActive }) => (
           <>
             {isActive ? <HomeIcon /> : <GreyHomeIcon />}
-            <SP $isActive={isActive}>홈</SP>
+            <SSpan $isActive={isActive}>홈</SSpan>
           </>
         )}
       </SNavLink>
@@ -25,21 +25,21 @@ const NavComponent = () => {
         {({ isActive }) => (
           <>
             {isActive ? <FriendIcon /> : <GreyFriendIcon />}
-            <SP $isActive={isActive}>친구</SP>
+            <SSpan $isActive={isActive}>친구</SSpan>
           </>
         )}
       </SNavLink>
-      <SFundingNavLink to='/funding/open'>
+      <SFundingOpenNavLink to='/funding/open'>
         <SCircleWrapper>
           <PresentIcon />
         </SCircleWrapper>
-      </SFundingNavLink>
         펀딩 만들기
+      </SFundingOpenNavLink>
       <SNavLink to='/notifications'>
         {({ isActive }) => (
           <>
             {isActive ? <AlarmIcon /> : <GreyAlarmIcon />}
-            <SP $isActive={isActive}>알림</SP>
+            <SSpan $isActive={isActive}>알림</SSpan>
           </>
         )}
       </SNavLink>
@@ -47,7 +47,7 @@ const NavComponent = () => {
         {({ isActive }) => (
           <>
             {isActive ? <MypageIcon /> : <GreyMypageIcon />}
-            <SP $isActive={isActive}>마이</SP>
+            <SSpan $isActive={isActive}>마이</SSpan>
           </>
         )}
       </SNavLink>
@@ -85,13 +85,13 @@ const SNavLink = styled(NavLink)`
     height: 24px;
   }
 `;
-const SP = styled.p`
+const SSpan = styled.span`
   color: ${({ $isActive }) => ($isActive ? 'var(--black)' : 'var(--gray-400)')};
   font-size: 12px;
   font-weight: 500;
   line-height: 120%;
 `;
-const SFundingNavLink = styled(SNavLink)`
+const SFundingOpenNavLink = styled(SNavLink)`
   justify-content: end;
   position: relative;
 
