@@ -142,8 +142,6 @@ const SPasswordInput = styled.input`
   text-align: center;
 `;
 const SSecondaryButton = styled.button`
-  position: fixed;
-  bottom: 0px;
   width: 335px;
   height: 48px;
   margin-left: 24px;
