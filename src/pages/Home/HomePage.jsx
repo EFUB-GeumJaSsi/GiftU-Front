@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import icn_search from '../../assets/common/search.svg';
+import NavComponent from '../../components/common/NavComponent';
 
 const HomePage = () => {
   return (
@@ -27,6 +28,7 @@ const HomePage = () => {
         <SH2>참여 가능한 펀딩</SH2>
         {/* 펀딩 목록 */}
       </SSection>
+      <NavComponent />
     </SLayout>
   );
 };
@@ -51,7 +53,8 @@ const SLayout = styled.div`
   flex-flow: column nowrap;
 
   width: fit-content;
-  margin: 40px auto 0;
+  margin: 0 auto;
+  padding: 40px 0 128px;
   gap: 24px;
 `;
 const SSection = styled.section`

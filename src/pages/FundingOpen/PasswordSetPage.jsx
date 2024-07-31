@@ -55,8 +55,8 @@ const PasswordSetPage = () => {
     <FormProvider>
       <SLayout>
         <BackHeaderComponent />
-        <SForm onSubmit={handleSubmit(onSubmit)}>
-          <fieldset>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <SFieldset>
             <SLegend>공개 여부</SLegend>
             <SRadioContainer>
               <SRadioInput
@@ -98,7 +98,7 @@ const PasswordSetPage = () => {
                 <SLocker color='blue' />
               </SRadioLabel>
             </SRadioContainer>
-          </fieldset>
+          </SFieldset>
           {bottomSheetShow && (
             <PasswordComponent
               setBottomSheetShow={setBottomSheetShow}
@@ -107,20 +107,18 @@ const PasswordSetPage = () => {
               color='jade'
             />
           )}
-          <SButtonContainer>
-            <BottomBackgroundComponent
-              Button={
-                <ButtonComponent
-                  disabled={isButtonDisabled() ? true : false}
-                  btnInfo={{
-                    text: '완료',
-                    color: isButtonDisabled() ? 'grey' : 'jade',
-                  }}
-                />
-              }
-            />
-          </SButtonContainer>
-        </SForm>
+          <BottomBackgroundComponent
+            Button={
+              <ButtonComponent
+                disabled={isButtonDisabled() ? true : false}
+                btnInfo={{
+                  text: '완료',
+                  color: isButtonDisabled() ? 'grey' : 'jade',
+                }}
+              />
+            }
+          />
+        </form>
       </SLayout>
     </FormProvider>
   );
@@ -135,15 +133,11 @@ const SLocker = ({ color }) => {
 };
 
 const SLayout = styled.div`
-  display: flex;
-  flex-flow: column nowrap;
-  height: 100vh;
+  padding-bottom: 88px;
 `;
-const SForm = styled.form`
-  display: flex;
-  flex-flow: column nowrap;
-  width: 335px;
-  margin: 20px 20px 0px 20px;
+const SFieldset = styled.fieldset`
+  width: fit-content;
+  margin: 24px auto;
 `;
 const SLegend = styled.legend`
   margin-left: 8px;
@@ -212,11 +206,6 @@ const SLockerBackground = styled.div`
   background-color: ${(props) =>
     props.color === 'orange' ? 'var(--orange-sec)' : 'var(--jade-sec)'};
   border-radius: 50%;
-`;
-const SButtonContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 100%;
 `;
 
 export default PasswordSetPage;

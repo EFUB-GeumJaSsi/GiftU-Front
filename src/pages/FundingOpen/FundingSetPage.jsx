@@ -226,19 +226,15 @@ const FundingSetPage = () => {
 };
 
 const SLayout = styled.div`
-  display: flex;
-  flex-flow: column nowrap;
-  align-items: center;
-  gap: 24px;
-
-  margin: 0 auto;
+  padding-bottom: 88px;
 `;
 const SForm = styled.form`
   display: flex;
   flex-flow: column nowrap;
 
-  gap: 24px;
   width: 335px;
+  margin: 24px auto;
+  gap: 24px;
 `;
 const SLabel = styled.label`
   display: block;
@@ -313,8 +309,6 @@ const SAddressContainer = styled.div`
   flex-direction: column;
   gap: 8px;
   width: 100%;
-
-  margin-bottom: 100px;
 `;
 const SAddressNumberContainer = styled.div`
   display: flex;
@@ -350,7 +344,7 @@ const SPostcodeContainer = styled.div`
   left: 0;
 
   width: 100%;
-  height: 100vh;
+  height: 100%;
   z-index: 1000;
 `;
 

@@ -96,7 +96,6 @@ const SNoResultsWrapper = styled.p`
   padding-top: 246px;
 
   width: 100%;
-  height: 100vh;
 
   background-color: var(--gray-100);
   color: var(--gray-500);

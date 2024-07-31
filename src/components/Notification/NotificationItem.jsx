@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ReactComponent as ProfileIcon } from '../../assets/common/profile.svg';
+import { ReactComponent as ProfileIcon } from '../../assets/common/profile_default.svg';
 
 const NotificationItem = ({ image, name, message, time, onClick }) => {
   return (

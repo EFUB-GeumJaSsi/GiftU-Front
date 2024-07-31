@@ -21,7 +21,7 @@ const NavComponent = () => {
         GreyIcon={GreyFriendIcon}
         label='친구'
       />
-      <CircleContainer>
+      <CircleContainer id='circle'>
         <CircleBackground>
           <NavItem
             to='/create-funding'
@@ -49,7 +49,7 @@ const NavComponent = () => {
 };
 
 const NavIcon = ({ Icon, GreyIcon, isActive }) => {
-  return isActive ? <Icon /> : <GreyIcon />;
+  return isActive ? <Icon /> : <GreyIcon />; //styled-components props로 처리할 것
 };
 const NavItem = ({ to, Icon, GreyIcon, label, id }) => (
   <ItemContainer
@@ -63,6 +63,7 @@ const NavItem = ({ to, Icon, GreyIcon, label, id }) => (
             <NavIcon Icon={Icon} GreyIcon={GreyIcon} isActive={isActive} />
             <p
               style={{
+                // 인라인 스타일 금지
                 color: isActive ? 'var(--jade-pri)' : 'var(--gray-400)',
                 position: 'absolute',
                 top: '73px',
@@ -86,24 +87,22 @@ const NavItem = ({ to, Icon, GreyIcon, label, id }) => (
 
 const NavBottom = styled.div`
   display: flex;
-  position: fixed;
   justify-content: center;
-  align-items: center;
+  position: fixed;
   bottom: 0;
-  z-index: 1000;
+  left: 50%;
 
-  width: 100%;
-  max-width: 375px;
+  width: 375px;
   height: 64px;
 
-  background-color: white;
+  background-color: var(--white);
+
+  transform: translate(-50%, 0);
 `;
 const CircleContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1100;
-  bottom: -30px;
 
   width: 80px;
   height: 80px;
@@ -143,10 +142,10 @@ const ItemContainer = styled(NavLink)`
 
   width: 67px;
   height: 64px;
-
-  text-decoration: none;
   gap: 8px;
+
   color: var(--gray-400);
+  text-decoration: none;
 
   p {
     font-size: 12px;

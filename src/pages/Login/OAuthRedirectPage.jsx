@@ -36,7 +36,7 @@ const SLayout = styled.div`
   align-items: center;
   justify-content: center;
 
-  height: 100svh;
+  height: 100%;
 `;
 
 export default OAuthRedirectPage;

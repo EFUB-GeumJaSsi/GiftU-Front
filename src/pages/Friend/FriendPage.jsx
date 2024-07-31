@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { arrayChop } from '../../components/common/CarouselComponent';
 import { postFriendRequest, getFriendList } from '../../api/friend.js';
 import CarouselComponent from '../../components/common/CarouselComponent';
@@ -9,6 +9,7 @@ import ToastComponent from '../../components/common/ToastComponent.jsx';
 import VerticalCard from '../../components/Friend/VerticalCard';
 import HorizontalCard from '../../components/Friend/HorizontalCard';
 import { ReactComponent as IcnUnion } from '../../assets/Friend/icn_union.svg';
+import NavComponent from '../../components/common/NavComponent.jsx';
 
 const FriendPage = () => {
   // 친구 페이지 데이터
@@ -18,7 +19,6 @@ const FriendPage = () => {
     carouselFriendList && arrayChop(carouselFriendList, 2);
   // 바텀시트 관련
   const [bottomSheetShow, setBottomSheetShow] = useState(false);
-  const inputRef = useRef(null);
   const [email, setEmail] = useState('');
   // 토스트 관련
   const [toastShow, setToastShow] = useState(false);
@@ -64,10 +64,6 @@ const FriendPage = () => {
   useEffect(() => {
     readFriendList();
   }, []);
-  // 바텀시트 렌더링 시 input 포커스
-  useEffect(() => {
-    inputRef.current?.focus();
-  });
 
   return (
     <SLayout>
@@ -134,6 +130,7 @@ const FriendPage = () => {
           <SGuideText>친구에게 초대 메시지를 보내보세요!</SGuideText>
         )}
       </SFriendSection>
+      <NavComponent />
       {bottomSheetShow && (
         <BottomSheetComponent
           closeButton='cross'
@@ -146,11 +143,11 @@ const FriendPage = () => {
             </STextContainer>
             <SForm onSubmit={handleFormSubmit}>
               <SInput
-                ref={inputRef}
                 type='email'
                 name='friend-email'
                 value={email}
                 required
+                autoFocus
                 onChange={(event) => {
                   setEmail(event.target.value);
                 }}
@@ -213,10 +210,9 @@ const SLayout = styled.div`
   flex-flow: column nowrap;
 
   width: 335px;
-  height: 100vh;
+  height: 100%;
   margin: 0 auto;
-  padding-top: 40px;
-  padding-bottom: 104px;
+  padding: 40px 0 128px;
   gap: 24px;
 
   box-sizing: border-box;

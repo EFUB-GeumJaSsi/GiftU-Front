@@ -24,19 +24,8 @@
 }
 #root {
   width: 375px;
+  height: 100svh;
   margin: 0 auto;
-}
-
-.secondaryButton {
-  width: 335px;
-  height: 56px;
-  border-radius: 40px;
-  background-color: var(--jade-pri);
-  text-align: center;
-  color: var(--white);
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 140%;
 }
 
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css');

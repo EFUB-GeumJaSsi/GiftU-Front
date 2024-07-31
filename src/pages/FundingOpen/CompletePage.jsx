@@ -30,7 +30,7 @@ const SLayout = styled.div`
   display: flex;
   flex-flow: column nowrap;
 
-  height: 100vh;
+  height: 100%;
 `;
 
 export default CompletePage;
