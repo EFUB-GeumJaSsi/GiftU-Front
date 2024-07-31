@@ -5,9 +5,7 @@ export const postReview = async (fundingId, reviewContent) => {
   try {
     const response = await apiAuth.post(
       `/fundings/${fundingId}/review`,
-      {
-        reviewContent: reviewContent,
-      },
+      { reviewContent: reviewContent },
       { headers: { 'Content-Type': 'application/json' } },
     );
     return response;
@@ -27,6 +25,7 @@ export const getReview = async (fundingId) => {
     throw error;
   }
 };
+
 // 선물 후기 수정
 export const patchReview = async (fundingId, reviewContent) => {
   try {
