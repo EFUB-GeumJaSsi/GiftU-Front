@@ -1,16 +1,16 @@
 import styled from 'styled-components';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getKakaoAccessToken } from '../../api/oauth';
+import { getAccessTokenKakao } from '../../api/oauth';
 import SpinnerComponent from '../../components/common/SpinnerComponent';
 
 const OAuthRedirectPage = () => {
   const navigate = useNavigate();
   const code = new URL(window.location.href).searchParams.get('code');
 
-  const readToken = async () => {
+  const readAccessTokenKakao = async () => {
     try {
-      const response = await getKakaoAccessToken(code);
+      const response = await getAccessTokenKakao(code);
       localStorage.setItem('giftu-token', response.data.accessToken);
       navigate('/my/edit');
     } catch (error) {
@@ -20,7 +20,7 @@ const OAuthRedirectPage = () => {
   };
 
   useEffect(() => {
-    readToken();
+    readAccessTokenKakao();
   }, []);
 
   return (
