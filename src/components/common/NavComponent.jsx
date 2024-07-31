@@ -33,8 +33,8 @@ const NavComponent = () => {
         <SCircleWrapper>
           <PresentIcon />
         </SCircleWrapper>
-        <SFundingOpenP>펀딩 만들기</SFundingOpenP>
       </SFundingNavLink>
+        펀딩 만들기
       <SNavLink to='/notifications'>
         {({ isActive }) => (
           <>
@@ -70,17 +70,13 @@ const SLayout = styled.div`
 `;
 const SNavLink = styled(NavLink)`
   display: flex;
-  flex-flow: column;
+  flex-flow: column nowrap;
   align-items: center;
 
   width: 67px;
   height: 64px;
   padding: 9px 0;
   gap: 8px;
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 120%;
 
   box-sizing: border-box;
 
@@ -91,6 +87,9 @@ const SNavLink = styled(NavLink)`
 `;
 const SP = styled.p`
   color: ${({ $isActive }) => ($isActive ? 'var(--black)' : 'var(--gray-400)')};
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 120%;
 `;
 const SFundingNavLink = styled(SNavLink)`
   justify-content: end;
@@ -98,8 +97,8 @@ const SFundingNavLink = styled(SNavLink)`
 
   width: 80px;
 
+  color: var(--gray-400);
   font-size: 12px;
-  font-style: normal;
   font-weight: 500;
   line-height: 120%;
 `;
@@ -116,9 +115,6 @@ const SCircleWrapper = styled.div`
   background-color: var(--jade-pri);
   border-radius: 50%;
   border: 8px solid var(--white);
-`;
-const SFundingOpenP = styled.p`
-  color: var(--gray-400);
 `;
 
 export default NavComponent;
