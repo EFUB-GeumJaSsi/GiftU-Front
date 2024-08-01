@@ -129,11 +129,13 @@ const SPasswordInputContainer = styled.div`
 const SPasswordInput = styled.input`
   width: 56px;
   height: 80px;
-  font-size: 16px;
 
   border-radius: 4px;
   background-color: var(--gray-100);
 
+  color: var(--black);
+  font-size: 30px;
+  font-weight: 500;
   text-align: center;
 `;
 const SSecondaryButton = styled.button`
