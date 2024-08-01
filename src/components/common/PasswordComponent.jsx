@@ -65,7 +65,6 @@ const PasswordComponent = ({
     <BottomSheetComponent
       closeButton='cross'
       setBottomSheetShow={setBottomSheetShow}
-      style={{ position: 'absolute' }}
     >
       <STextContainer>
         <h4>비밀번호 입력</h4>
@@ -105,37 +104,29 @@ const PasswordComponent = ({
 const STextContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
   margin-left: 24px;
   margin-right: 24px;
   h4 {
     margin-bottom: 12px;
     color: black;
     font-size: 20px;
-    font-style: normal;
     font-weight: 600;
-    line-height: 140%;
   }
   p {
     color: var(--gray-500);
     font-size: 14px;
-    font-style: normal;
     font-weight: 500;
-    line-height: 140%;
   }
 `;
 const SPasswordInputContainer = styled.div`
   display: flex;
-  justify-content: center;
   gap: 8px;
-  width: 100%;
   margin-top: 32px;
   margin-bottom: 12px;
 `;
 const SPasswordInput = styled.input`
   width: 56px;
   height: 80px;
-  border: none;
   font-size: 16px;
   border-radius: 4px;
   background: var(--gray-100);
@@ -152,7 +143,6 @@ const SSecondaryButton = styled.button`
   color: white;
   font-size: 16px;
   font-weight: 600;
-  border: none;
   border-radius: 40px;
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
 `;
@@ -162,7 +152,6 @@ const STextWrapper = styled.p`
   margin-bottom: 35px;
 
   font-size: 14px;
-  font-style: normal;
   font-weight: 500;
   line-height: 120%;
 `;
