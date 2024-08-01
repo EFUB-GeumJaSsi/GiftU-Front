@@ -71,7 +71,7 @@ const CarouselComponent = ({ pageLength, pageWidth, children }) => {
       >
         {children}
       </SContentContainer>
-      <SPaginationFieldset>
+      <SPaginationFieldset $pageLength={pageLength}>
         {Array.from({ length: pageLength }, (v, i) => i).map((pageNumber) => {
           return (
             <SRadioInput
@@ -112,6 +112,8 @@ const SContentContainer = styled.div`
   flex-flow: row nowrap;
 `;
 const SPaginationFieldset = styled.fieldset`
+  visibility: ${({ $pageLength }) =>
+    $pageLength === 1 ? 'hidden' : 'visible'};
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
