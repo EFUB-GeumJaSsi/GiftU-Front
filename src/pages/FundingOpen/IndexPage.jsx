@@ -6,6 +6,7 @@ import PasswordSetPage from './PasswordSetPage';
 import CompletePage from './CompletePage';
 import HomePage from '../Home/HomePage';
 
+// 데이터 관리
 const DataContext = createContext();
 const DataProvider = ({ children }) => {
   const [fundingData, setFundingData] = useState({});
@@ -28,6 +29,7 @@ const DataProvider = ({ children }) => {
   );
 };
 
+// 페이지 관리
 const PageContext = createContext();
 const PageProvider = ({ children }) => {
   const [currentPage, setCurrentPage] = useState('GiftSetPage');
@@ -53,6 +55,7 @@ const PageRenderer = () => {
     case 'PasswordSetPage':
       return <PasswordSetPage />;
     case 'CompletePage':
+      // 펀딩 개설 POST
       return <CompletePage />;
     default:
       return <HomePage />;
