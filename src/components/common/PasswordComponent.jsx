@@ -1,16 +1,16 @@
 /*
-  부모 컴포넌트에 패스워드가 유효하다면 어느 창으로 이동할지 passwordIsValid()로 설정해주시면 됩니다.
-   function passwordIsValid() {
-      navigate('/');
-  }
-  {bottomSheetShow && (
-    <PasswordComponent
-      setBottomSheetShow={setBottomSheetShow}
-      passwardExact={'1234'}
-      validPassword={() => passwordIsValid()}
-      color='orange'
-    />
-  )}
+부모 컴포넌트에 패스워드가 유효하다면 어느 창으로 이동할지 passwordIsValid()로 설정해주시면 됩니다.
+function passwordIsValid() {
+  navigate('/');
+}
+{bottomSheetShow && (
+  <PasswordComponent
+    setBottomSheetShow={setBottomSheetShow}
+    passwardExact={'1234'}
+    validPassword={() => passwordIsValid()}
+    color='orange'
+  />
+)}
 */
 
 import styled from 'styled-components';
