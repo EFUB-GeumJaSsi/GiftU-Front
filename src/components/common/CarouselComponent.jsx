@@ -56,18 +56,10 @@ const CarouselComponent = ({ pageLength, pageWidth, children }) => {
     <SLayout $pageWidth={pageWidth}>
       <SContentContainer
         id='carousel'
-        onPointerDown={(event) => {
-          setFirstX(event.clientX);
-        }}
-        onPointerUp={(event) => {
-          setLastX(event.clientX);
-        }}
-        onTouchStart={(event) => {
-          setFirstX(event.changedTouches[0].clientX);
-        }}
-        onTouchEnd={(event) => {
-          setLastX(event.changedTouches[0].clientX);
-        }}
+        onPointerDown={(event) => setFirstX(event.clientX)}
+        onPointerUp={(event) => setLastX(event.clientX)}
+        onTouchStart={(event) => setFirstX(event.changedTouches[0].clientX)}
+        onTouchEnd={(event) => setLastX(event.changedTouches[0].clientX)}
       >
         {children}
       </SContentContainer>
