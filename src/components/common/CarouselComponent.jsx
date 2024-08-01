@@ -68,7 +68,6 @@ const CarouselComponent = ({ pageLength, pageWidth, children }) => {
         onTouchEnd={(event) => {
           setLastX(event.changedTouches[0].clientX);
         }}
-        $currentPage={currentPage}
       >
         {children}
       </SContentContainer>
