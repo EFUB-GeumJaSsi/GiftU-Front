@@ -47,7 +47,6 @@ const BottomSheetComponent = ({
         onClick={(event) => {
           event.stopPropagation();
         }}
-        $cross={closeButton === 'cross'}
       >
         {closeButton === 'cross' ? (
           <SCrossButton onClick={handleBottomSheetClose} />
@@ -63,8 +62,6 @@ const BottomSheetComponent = ({
 const SSection = styled.section`
   width: 375px;
   height: 320px;
-  padding-top: ${({ $cross }) => ($cross ? '26px' : '16px')};
-  gap: ${({ $cross }) => ($cross ? '0' : '32')}px;
 
   border-radius: 20px 20px 0px 0px;
   background-color: var(--white);
