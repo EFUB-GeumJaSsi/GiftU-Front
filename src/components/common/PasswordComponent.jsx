@@ -88,6 +88,7 @@ const PasswordComponent = ({
         ))}
       </SPasswordInputContainer>
       {errorMessage && <SErrorSpan>{errorMessage}</SErrorSpan>}
+      {/* ButtonComponent 사용하기 */}
       <SBtn
         type='submit'
         disabled={!isPasswordComplete}
