@@ -24,6 +24,7 @@ const PasswordComponent = ({
   name,
   passwordExact,
   color,
+  ...props
 }) => {
   const [password, setPassword] = useState(['', '', '', '']);
   const inputRefs = useRef([]);
@@ -65,6 +66,7 @@ const PasswordComponent = ({
     <BottomSheetComponent
       closeButton='cross'
       setBottomSheetShow={setBottomSheetShow}
+      {...props}
     >
       <SBottomSheetContainer>
         <STextContainer>
