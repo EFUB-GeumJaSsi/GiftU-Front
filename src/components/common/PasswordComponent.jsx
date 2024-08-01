@@ -158,7 +158,7 @@ const SPasswordInput = styled.input`
 `;
 const SBtn = styled.button`
   width: 335px;
-  height: 48px;
+  height: 56px;
 
   border-radius: 40px;
   background-color: ${({ disabled, color }) => {
