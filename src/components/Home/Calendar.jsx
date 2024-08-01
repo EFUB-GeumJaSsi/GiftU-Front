@@ -109,7 +109,7 @@ const Calendar = () => {
       </SDateContainer>
       {bottomSheetShow && (
         <BottomSheetComponent setBottomSheetShow={setBottomSheetShow}>
-          <SSheetLayout>
+          <SBottomSheetContainer>
             <SSpan>
               {selectedDate.month}월 {selectedDate.date}일 {selectedDate.day}
               요일
@@ -132,7 +132,7 @@ const Calendar = () => {
                 </SItemContainer>
               ))}
             </CarouselComponent>
-          </SSheetLayout>
+          </SBottomSheetContainer>
         </BottomSheetComponent>
       )}
     </SLayout>
@@ -213,7 +213,7 @@ const Tag = styled(TagIcon)`
   bottom: 27px;
   z-index: 999;
 `;
-const SSheetLayout = styled.div`
+const SBottomSheetContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
