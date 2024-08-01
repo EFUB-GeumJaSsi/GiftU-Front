@@ -1,13 +1,15 @@
 import styled from 'styled-components';
 import DaumPostcode from 'react-daum-postcode';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { PageContext } from './IndexPage';
 import BackHeaderComponent from '../../components/common/BackHeaderComponent';
 import ButtonComponent from '../../components/common/ButtonComponent';
 import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
 
 const FundingSetPage = () => {
+  const { setCurrentPage } = useContext(PageContext);
   const [currentDate, setCurrentDate] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [isAddressOpen, setIsAddressOpen] = useState(false);
@@ -51,6 +53,9 @@ const FundingSetPage = () => {
   const toggleHandler = () => {
     setIsOpen((prevOpenState) => !prevOpenState);
   };
+  const handleFormSubmit = () => {
+    setCurrentPage('PasswordSetPage');
+  };
 
   useEffect(() => {
     const today = new Date().toISOString().split('T')[0];
@@ -65,8 +70,8 @@ const FundingSetPage = () => {
 
   return (
     <SLayout>
-      <BackHeaderComponent />
-      <SForm onSubmit={handleSubmit(onSubmit)}>
+      <BackHeaderComponent onClick={() => setCurrentPage('GiftAddPage')} />
+      <SForm onSubmit={handleFormSubmit}>
         <fieldset>
           <SLabel htmlFor='title'>
             <p>제목</p>

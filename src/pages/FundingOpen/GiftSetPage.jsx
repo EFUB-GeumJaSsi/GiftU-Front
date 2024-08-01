@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { PageContext } from './IndexPage';
 import BackHeaderComponent from '../../components/common/BackHeaderComponent';
 import PriceInputComponent from '../../components/common/PriceInputComponent';
 import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
@@ -7,6 +8,7 @@ import ButtonComponent from '../../components/common/ButtonComponent';
 import icn_plus from '../../assets/FungingOpen/icn_plus.svg';
 
 const GiftSetPage = () => {
+  const { setCurrentPage } = useContext(PageContext);
   const [price, setPrice] = useState(null);
   const [url, setUrl] = useState(null);
   const [imageFile, setImageFile] = useState(null);
@@ -22,11 +24,14 @@ const GiftSetPage = () => {
       setImagePreview(URL.createObjectURL(file));
     }
   };
+  const handleFormSubmit = () => {
+    setCurrentPage('GiftAddPage');
+  };
 
   return (
     <SLayout>
       <BackHeaderComponent />
-      <SForm>
+      <SForm onSubmit={handleFormSubmit}>
         <fieldset>
           <SLegend>가격</SLegend>
           <PriceInputComponent
