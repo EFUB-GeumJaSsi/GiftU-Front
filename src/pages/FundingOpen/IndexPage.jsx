@@ -42,12 +42,18 @@ const PageProvider = ({ children }) => {
 };
 const PageRenderer = () => {
   const { currentPage } = useContext(PageContext);
+  const { giftData, imageData } = useContext(DataContext);
 
   switch (currentPage) {
     case 'GiftSetPage':
       return <GiftSetPage />;
     case 'GiftSetPage-back':
-      return <GiftSetPage data={'마지막으로 추가한 선물'} />; //수정!!!!!
+      return (
+        <GiftSetPage
+          lastGiftData={giftData[giftData.length - 1]}
+          lastImageData={imageData[imageData.length - 1]}
+        />
+      );
     case 'GiftAddPage':
       return <GiftAddPage />;
     case 'FundingSetPage':

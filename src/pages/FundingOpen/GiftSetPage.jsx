@@ -7,15 +7,24 @@ import BottomBackgroundComponent from '../../components/common/BottomBackgroundC
 import ButtonComponent from '../../components/common/ButtonComponent';
 import icn_plus from '../../assets/FungingOpen/icn_plus.svg';
 
-const GiftSetPage = () => {
+const GiftSetPage = ({
+  lastGiftData = {
+    giftName: null,
+    price: null,
+    giftUrl: null,
+  },
+  lastImageData = null,
+}) => {
   const { setCurrentPage } = useContext(PageContext);
   const { setGiftData, setImageData } = useContext(DataContext);
 
-  const [name, setName] = useState(null);
-  const [price, setPrice] = useState(null);
-  const [url, setUrl] = useState(null);
-  const [imageFile, setImageFile] = useState(null);
-  const [imagePreview, setImagePreview] = useState(null);
+  const [name, setName] = useState(lastGiftData.giftName);
+  const [price, setPrice] = useState(lastGiftData.price);
+  const [url, setUrl] = useState(lastGiftData.giftUrl);
+  const [imageFile, setImageFile] = useState(lastImageData);
+  const [imagePreview, setImagePreview] = useState(
+    lastImageData ? URL.createObjectURL(lastImageData) : null,
+  );
 
   const handleUrlChange = (event) => {
     setUrl(event.target.value);
@@ -28,15 +37,34 @@ const GiftSetPage = () => {
     }
   };
   const handleFormSubmit = () => {
-    setGiftData((prevData) => [
-      ...prevData,
-      {
-        giftName: name,
-        price: price,
-        giftUrl: url,
-      },
-    ]);
-    setImageData((prevItems) => [...prevItems, imageFile]);
+    if (lastGiftData) {
+      setGiftData((prevItems) => [
+        // 마지막 아이템 삭제
+        ...prevItems.slice(prevItems.length - 2),
+        // 수정 아이템 저장
+        {
+          giftName: name,
+          price: price,
+          giftUrl: url,
+        },
+      ]);
+      setImageData((prevItems) => [
+        // 마지막 아이템 삭제
+        ...prevItems.slice(prevItems.length - 2),
+        // 수정 아이템 저장
+        imageFile,
+      ]);
+    } else {
+      setGiftData((prevItems) => [
+        ...prevItems,
+        {
+          giftName: name,
+          price: price,
+          giftUrl: url,
+        },
+      ]);
+      setImageData((prevItems) => [...prevItems, imageFile]);
+    }
     setCurrentPage('GiftAddPage');
   };
 
@@ -64,6 +92,7 @@ const GiftSetPage = () => {
             name='gift'
             id='gift-url'
             placeholder='상품 링크를 붙여 넣어 주세요'
+            value={url}
             required
             onChange={handleUrlChange}
           />
