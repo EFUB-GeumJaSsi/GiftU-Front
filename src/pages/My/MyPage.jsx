@@ -3,46 +3,60 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import NavComponent from '../../components/common/NavComponent';
 import profile from '../../assets/common/profile_default.svg';
+import { deleteUser, getUserInfo } from '../../api/user';
 
 const MyPage = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState('');
-  const onErrorImg = (e) => {
+
+  const handleImg = (e) => {
     e.target.src = profile;
   };
 
-  const User = {
-    id: '1',
-    picture: '',
-    nickName: '차니',
-    friendsCount: '10',
+  const readUserInfo = async () => {
+    try {
+      const response = await getUserInfo();
+      setUser(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const delUser = async () => {
+    try {
+      const response = await deleteUser();
+      setTimeout(() => location.reload(true), 2000);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {
-    setUser(User);
+    readUserInfo();
   }, []);
 
   const handleEdit = () => {
-    navigate(`/edit/${user.id}`);
+    navigate(`/my/edit`);
   };
 
   const handleFriendList = () => {
-    navigate(`/friends/${user.id}`);
+    navigate(`/friends`);
   };
 
   const handleMyOpenFunding = () => {
-    navigate(`/myopenfunding/${user.id}`);
+    navigate(`/my/funding/open`);
   };
 
   const handleMyJoinFunding = () => {
-    navigate(`/myjoinfunding/${user.id}`);
+    navigate(`/my/funding/join`);
   };
 
   const handleTutorial = () => {
     navigate(`/tutorial`);
   };
   const handleAccountDelete = () => {
-    navigate(`/deleteaccount`);
+    delUser();
+    navigate(`/login`);
   };
 
   return (
@@ -50,18 +64,22 @@ const MyPage = () => {
       <SHeader>마이</SHeader>
       <SProfileContainer>
         <SImageWrapper>
-          <img src={user.picture} alt='userPicture' onError={onErrorImg} />
+          <img
+            src={user.userImageUrl || profile}
+            alt='userPicture'
+            onError={handleImg}
+          />
         </SImageWrapper>
         <SMyProfileContent>
           <SMyEditBtn onClick={handleEdit}>편집</SMyEditBtn>
           <SNameWrapper>
-            <p>{user.nickName}</p>
+            <p>{user.nickname}</p>
           </SNameWrapper>
           <SMyFriendBtn onClick={handleFriendList}>
             친구
             <span>
               <span style={{ color: 'var(--jade-pri)' }}>
-                {user.friendsCount}
+                {user.friendCount}
               </span>
               명
             </span>
