@@ -6,7 +6,8 @@
 //
 // 2. 바텀시트 props
 // (2-1) closeButton - 'bar' 또는 'cross' (기본 'bar')
-// (2-2) setBottomSheetShow - 1-1의 setBottomSheetShow
+// (2-2) action - 'transition' 또는 'back' (기본 'transition')
+// (2-3) setBottomSheetShow - 1-1의 setBottomSheetShow
 // 예시: <BottomSheetComponent closeButton='cross' setBottomSheetShow={setBottomSheetShow}>
 //
 // 3. 바텀시트 내용
@@ -23,6 +24,7 @@ import icn_cross from '../../assets/common/Bottomsheet/cross.svg';
 
 const BottomSheetComponent = ({
   closeButton,
+  action,
   setBottomSheetShow,
   children,
 }) => {
@@ -40,6 +42,7 @@ const BottomSheetComponent = ({
 
   return (
     <BottomModalComponent
+      backgroundAction={!(action === 'back')}
       setBottomModalShow={setBottomSheetShow}
       parentOpen={bottomSheetOpen}
     >
