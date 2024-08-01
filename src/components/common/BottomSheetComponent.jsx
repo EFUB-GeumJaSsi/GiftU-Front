@@ -33,11 +33,23 @@ const BottomSheetComponent = ({
   const [bottomSheetOpen, setBottomSheetOpen] = useState(false);
 
   const handleBottomSheetClose = () => {
-    setBottomSheetOpen(false); // 바텀시트 닫기 애니메이션 효과
-    setTimeout(() => setBottomSheetShow(false), 300); // 애니메이션 후 언마운트
+    switch (action) {
+      case 'transition':
+        setBottomSheetOpen(false); // 바텀시트 닫기 애니메이션 효과
+        setTimeout(() => setBottomSheetShow(false), 300); // 애니메이션 후 언마운트
+        break;
+      case 'back':
+        navigate(-1); // 페이지 뒤로가기
+        break;
+    }
   };
-  const handlePageBack = () => {
-    navigate(-1); // 페이지 뒤로가기
+  const renderCloseButton = () => {
+    switch (closeButton) {
+      case 'bar':
+        return <SBarButton onClick={handleBottomSheetClose} />;
+      case 'cross':
+        return <SCrossButton onClick={handleBottomSheetClose} />;
+    }
   };
 
   useEffect(() => {
@@ -46,7 +58,7 @@ const BottomSheetComponent = ({
 
   return (
     <BottomModalComponent
-      backgroundAction={!(action === 'back')}
+      backgroundAction={action === 'transition'}
       setBottomModalShow={setBottomSheetShow}
       parentOpen={bottomSheetOpen}
     >
@@ -55,15 +67,7 @@ const BottomSheetComponent = ({
           event.stopPropagation();
         }}
       >
-        {closeButton === 'cross' ? (
-          <SCrossButton
-            onClick={
-              action === 'back' ? handlePageBack : handleBottomSheetClose
-            }
-          />
-        ) : (
-          <SBarButton onClick={handleBottomSheetClose} />
-        )}
+        {renderCloseButton()}
         <article>{children}</article>
       </SSection>
     </BottomModalComponent>
