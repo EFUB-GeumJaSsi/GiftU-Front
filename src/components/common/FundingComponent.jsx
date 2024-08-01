@@ -80,6 +80,7 @@ const STitleWrapper = styled.p`
   width: 140px;
   height: 40px;
   margin-top: 12px;
+  margin-bottom: 12px;
 
   font-size: 17px;
   font-style: normal;
