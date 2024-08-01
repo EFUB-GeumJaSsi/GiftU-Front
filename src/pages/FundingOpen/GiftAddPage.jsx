@@ -19,13 +19,12 @@ const GiftAddPage = () => {
   const Btn = (
     <SBtnContainer>
       <ButtonComponent
-        btnInfo={{ color: 'orange', text: '새로운 선물 추가하기' }}
+        btnInfo={{ text: '새로운 선물 추가하기', color: 'orange' }}
       />
-      {isTrue ? (
-        <ButtonComponent btnInfo={{ color: 'jade', text: '펀딩 만들기' }} />
-      ) : (
-        <ButtonComponent btnInfo={{ text: '펀딩 만들기' }} />
-      )}
+      <ButtonComponent
+        btnInfo={{ text: '펀딩 만들기', color: isTrue ? 'jade' : 'gray' }}
+        disabled={!isTrue}
+      />
     </SBtnContainer>
   );
 
