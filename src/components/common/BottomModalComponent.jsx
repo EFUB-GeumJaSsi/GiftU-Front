@@ -39,8 +39,10 @@ const BottomModalComponent = ({
   const [bottomModalOpen, setBottomModalOpen] = useState(false);
 
   const handleBottomModalClose = () => {
-    setBottomModalOpen(false); // 바텀모달 닫기 애니메이션 효과
-    setTimeout(() => setBottomModalShow(false), 300); // 애니메이션 후 언마운트
+    if (backgroundAction) {
+      setBottomModalOpen(false); // 바텀모달 닫기 애니메이션 효과
+      setTimeout(() => setBottomModalShow(false), 300); // 애니메이션 후 언마운트
+    }
   };
 
   useEffect(() => {
@@ -62,9 +64,7 @@ const BottomModalComponent = ({
 
   const BottomModalUI = (
     <SBackgroundDiv
-      onClick={() => {
-        if (backgroundAction) return handleBottomModalClose;
-      }}
+      onClick={handleBottomModalClose}
       $open={bottomModalOpen && parentOpen}
     >
       <SContainer
