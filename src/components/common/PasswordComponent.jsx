@@ -88,9 +88,8 @@ const PasswordComponent = ({
         ))}
       </SPasswordInputContainer>
       {errorMessage && <STextWrapper>{errorMessage}</STextWrapper>}
-
       <SSecondaryButton
-        type='button'
+        type='submit'
         disabled={!isPasswordComplete}
         color={color}
         onClick={() => handlePasswordSubmit()}
