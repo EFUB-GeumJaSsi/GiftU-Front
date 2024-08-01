@@ -80,12 +80,17 @@ const SCrossButton = styled.button`
   background-repeat: no-repeat;
 `;
 const SBarButton = styled.button`
+  position: absolute;
+  top: 16px;
+  left: 50%;
+
   width: 46px;
   height: 6px;
-  margin: 0 auto;
 
   border-radius: 12px;
   background-color: var(--gray-300);
+
+  transform: translateX(-50%);
 `;
 
 export default BottomSheetComponent;
