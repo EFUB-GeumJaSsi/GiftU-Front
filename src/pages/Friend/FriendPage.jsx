@@ -157,6 +157,7 @@ const FriendPage = () => {
                 btnInfo={
                   email ? { text: '완료', color: 'orange' } : { text: '완료' }
                 }
+                disabled={!email}
               />
             </SForm>
           </SBottomSheetContainer>
