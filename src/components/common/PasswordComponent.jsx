@@ -66,49 +66,62 @@ const PasswordComponent = ({
       closeButton='cross'
       setBottomSheetShow={setBottomSheetShow}
     >
-      <STextContainer>
-        <h4>비밀번호 입력</h4>
-        {name ? (
-          <p>펀딩을 개설한 {name}님께 비밀번호를 요청하세요</p>
-        ) : (
-          <p>4자리 숫자를 입력해 주세요</p>
-        )}
-      </STextContainer>
-      <SPasswordInputContainer>
-        {password.map((digit, index) => (
-          <SPasswordInput
-            key={index}
-            type='text'
-            maxLength='1'
-            value={digit}
-            onChange={(e) => handlePasswordChange(e, index)}
-            ref={(el) => (inputRefs.current[index] = el)}
-            onKeyDown={(e) => handleKeyDown(e, index)}
-          />
-        ))}
-      </SPasswordInputContainer>
-      {errorMessage && <SErrorSpan>{errorMessage}</SErrorSpan>}
-      {/* ButtonComponent 사용하기 */}
-      <SBtn
-        type='submit'
-        disabled={!isPasswordComplete}
-        color={color}
-        onClick={() => handlePasswordSubmit()}
-      >
-        완료
-      </SBtn>
+      <SBottomSheetContainer>
+        <STextContainer>
+          <h4>비밀번호 입력</h4>
+          {name ? (
+            <p>펀딩을 개설한 {name}님께 비밀번호를 요청하세요</p>
+          ) : (
+            <p>4자리 숫자를 입력해 주세요</p>
+          )}
+        </STextContainer>
+        <SForm>
+          <SPasswordInputContainer>
+            {password.map((digit, index) => (
+              <SPasswordInput
+                key={index}
+                type='text'
+                maxLength='1'
+                value={digit}
+                onChange={(e) => handlePasswordChange(e, index)}
+                ref={(el) => (inputRefs.current[index] = el)}
+                onKeyDown={(e) => handleKeyDown(e, index)}
+              />
+            ))}
+          </SPasswordInputContainer>
+          {errorMessage && <SErrorSpan>{errorMessage}</SErrorSpan>}
+          {/* ButtonComponent 사용하기 */}
+          <SBtn
+            type='submit'
+            disabled={!isPasswordComplete}
+            color={color}
+            onClick={() => handlePasswordSubmit()}
+          >
+            완료
+          </SBtn>
+        </SForm>
+      </SBottomSheetContainer>
     </BottomSheetComponent>
   );
 };
 
+const SBottomSheetContainer = styled.div`
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+
+  padding: 26px 20px 24px;
+  gap: 32px;
+`;
 const STextContainer = styled.div`
   display: flex;
-  margin-left: 24px;
-  margin-right: 24px;
   flex-flow: column nowrap;
+  align-self: flex-start;
+
+  margin-left: 4px;
+  gap: 12px;
 
   h4 {
-    margin-bottom: 12px;
     color: var(--black);
     font-size: 20px;
     font-weight: 600;
@@ -120,11 +133,16 @@ const STextContainer = styled.div`
     font-weight: 500;
   }
 `;
+const SForm = styled.form`
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+
+  gap: 64px;
+`;
 const SPasswordInputContainer = styled.div`
   display: flex;
   gap: 8px;
-  margin-top: 32px;
-  margin-bottom: 12px;
 `;
 const SPasswordInput = styled.input`
   width: 56px;
@@ -141,7 +159,6 @@ const SPasswordInput = styled.input`
 const SBtn = styled.button`
   width: 335px;
   height: 48px;
-  margin-left: 24px;
 
   border-radius: 40px;
   background-color: ${({ disabled, color }) => {
