@@ -22,20 +22,7 @@ const GiftSetPage = ({
   const [price, setPrice] = useState(lastGiftData.price);
   const [url, setUrl] = useState(lastGiftData.giftUrl);
   const [imageFile, setImageFile] = useState(lastImageData);
-  const [imagePreview, setImagePreview] = useState(
-    lastImageData ? URL.createObjectURL(lastImageData) : null,
-  );
 
-  const handleUrlChange = (event) => {
-    setUrl(event.target.value);
-  };
-  const handleImageChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      setImageFile(file);
-      setImagePreview(URL.createObjectURL(file));
-    }
-  };
   const handleFormSubmit = () => {
     if (lastGiftData) {
       setGiftData((prevItems) => [
@@ -94,13 +81,13 @@ const GiftSetPage = ({
             placeholder='상품 링크를 붙여 넣어 주세요'
             value={url}
             required
-            onChange={handleUrlChange}
+            onChange={(event) => setUrl(event.target.value)}
           />
         </fieldset>
         <fieldset>
           <SLegend>사진</SLegend>
           <SImageLabel htmlFor='gift-image'>
-            {imagePreview && <SImg src={imagePreview} />}
+            {imageFile && <SImg src={URL.createObjectURL(imageFile)} />}
           </SImageLabel>
           <SImageInput
             type='file'
@@ -109,7 +96,9 @@ const GiftSetPage = ({
             id='gift-image'
             placeholder='+'
             required
-            onChange={handleImageChange}
+            onChange={(event) => {
+              event.target.files[0] && setImageFile(event.target.files[0]);
+            }}
           />
         </fieldset>
         <BottomBackgroundComponent
@@ -117,6 +106,7 @@ const GiftSetPage = ({
             <ButtonComponent
               type='submit'
               btnInfo={
+                // name && price && url && imageFile
                 price && url && imageFile
                   ? { text: '다음', color: 'jade', onClick: '' }
                   : { text: '선물 추가하기' }
