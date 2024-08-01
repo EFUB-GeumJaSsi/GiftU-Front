@@ -19,7 +19,7 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import BottomModalComponent from './BottomModalComponent';
-import { ReactComponent as CrossIcon } from '../../assets/common/Bottomsheet/cross.svg';
+import icn_cross from '../../assets/common/Bottomsheet/cross.svg';
 
 const BottomSheetComponent = ({
   closeButton,
@@ -50,9 +50,7 @@ const BottomSheetComponent = ({
         $cross={closeButton === 'cross'}
       >
         {closeButton === 'cross' ? (
-          <SCrossButton onClick={handleBottomSheetClose}>
-            <CrossIcon />
-          </SCrossButton>
+          <SCrossButton onClick={handleBottomSheetClose} />
         ) : (
           <SBarButton onClick={handleBottomSheetClose} />
         )}
@@ -76,6 +74,12 @@ const SSection = styled.section`
 const SCrossButton = styled.button`
   position: absolute;
   right: 24px;
+
+  width: 20px;
+  height: 20px;
+
+  background-image: url(${icn_cross});
+  background-repeat: no-repeat;
 `;
 const SBarButton = styled.button`
   width: 46px;
