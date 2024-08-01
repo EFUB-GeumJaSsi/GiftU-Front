@@ -42,12 +42,6 @@ const ListPage = ({ headerText, buttons, message }) => {
     setFundingList(FundingList);
   }, []);
 
-  const handleClick = (funding) => {
-    funding.status === 'IN_PROGRESS'
-      ? navigate(`/funding-detail/${funding.fundingId}/isOngoing`)
-      : navigate(`/funding-detail/${funding.fundingId}/end`);
-  };
-
   return (
     <SLayout>
       <BackHeaderComponent text={headerText} />
@@ -59,11 +53,7 @@ const ListPage = ({ headerText, buttons, message }) => {
       ) : (
         <SFundingContainer>
           {fundingList.map((funding, index) => (
-            <FundingComponent
-              result={funding}
-              key={index}
-              onClick={() => handleClick(funding)}
-            />
+            <FundingComponent data={funding} key={index} />
           ))}
         </SFundingContainer>
       )}
