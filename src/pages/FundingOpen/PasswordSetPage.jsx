@@ -13,9 +13,9 @@ let newPassword = '';
 
 const PasswordSetPage = () => {
   const { setCurrentPage } = useContext(PageContext);
-  const [bottomSheetShow, setBottomSheetShow] = useState(false);
   const { setFundingData } = useContext(DataContext);
 
+  const [bottomSheetShow, setBottomSheetShow] = useState(false);
   const { register, handleSubmit, watch, reset } = useForm({
     defaultValues: {
       visibility: '',
@@ -23,13 +23,6 @@ const PasswordSetPage = () => {
     },
     mode: 'onChange',
   });
-
-  useEffect(() => {
-    if (!bottomSheetShow) {
-      reset();
-    }
-  }, [bottomSheetShow, reset]);
-
   const visibility = watch('visibility');
 
   const setPassword = (data) => {
@@ -37,14 +30,12 @@ const PasswordSetPage = () => {
     console.log(newPassword, visibility);
     navigate('/');
   };
-
   const isButtonDisabled = () => {
     if (visibility === 'public') {
       return false;
     }
     return true;
   };
-
   const handleFormSubmit = () => {
     setFundingData((prevData) => ({
       ...prevData,
@@ -53,6 +44,12 @@ const PasswordSetPage = () => {
     }));
     setCurrentPage('CompletePage');
   };
+
+  useEffect(() => {
+    if (!bottomSheetShow) {
+      reset();
+    }
+  }, [bottomSheetShow, reset]);
 
   return (
     <FormProvider>
