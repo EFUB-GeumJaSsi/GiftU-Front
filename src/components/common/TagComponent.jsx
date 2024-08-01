@@ -12,9 +12,7 @@ const TagComponent = ({ text, color = 'gray' }) => {
   return <SLayout $color={colorOption[color]}>{text}</SLayout>;
 };
 
-const SLayout = styled.span`
-  width: fit-content;
-  height: fit-content;
+const SLayout = styled.div`
   padding: 4px 8px;
 
   border-radius: 20px;
