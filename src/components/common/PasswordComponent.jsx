@@ -87,15 +87,15 @@ const PasswordComponent = ({
           />
         ))}
       </SPasswordInputContainer>
-      {errorMessage && <STextWrapper>{errorMessage}</STextWrapper>}
-      <SSecondaryButton
+      {errorMessage && <SErrorSpan>{errorMessage}</SErrorSpan>}
+      <SBtn
         type='submit'
         disabled={!isPasswordComplete}
         color={color}
         onClick={() => handlePasswordSubmit()}
       >
         완료
-      </SSecondaryButton>
+      </SBtn>
     </BottomSheetComponent>
   );
 };
@@ -137,7 +137,7 @@ const SPasswordInput = styled.input`
   font-weight: 500;
   text-align: center;
 `;
-const SSecondaryButton = styled.button`
+const SBtn = styled.button`
   width: 335px;
   height: 48px;
   margin-left: 24px;
@@ -154,7 +154,7 @@ const SSecondaryButton = styled.button`
 
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
 `;
-const STextWrapper = styled.p`
+const SErrorSpan = styled.span`
   color: var(--red);
   text-align: center;
   margin-bottom: 35px;
