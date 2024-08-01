@@ -24,8 +24,8 @@ const FundingSetPage = () => {
   } = useForm({
     defaultValues: {
       title: '',
-      detail: '',
-      date: '',
+      content: '',
+      endDate: '',
       name: '',
       phoneNumber: '',
       addressNumber: '',
@@ -35,7 +35,7 @@ const FundingSetPage = () => {
     mode: 'onChange',
   });
   const title = watch('title');
-  const date = watch('date');
+  const endDate = watch('endDate');
   const name = watch('name');
   const phoneNumber = watch('phoneNumber');
 
@@ -67,11 +67,12 @@ const FundingSetPage = () => {
     setCurrentDate(today);
     setValue('currentDate', today);
   }, [setValue]);
+
   useEffect(() => {
     setIsButtonActive(
-      title !== '' && date !== '' && name !== '' && phoneNumber != '',
+      title !== '' && endDate !== '' && name !== '' && phoneNumber != '',
     );
-  }, [title, date, name, phoneNumber]);
+  }, [title, endDate, name, phoneNumber]);
 
   return (
     <SLayout>
@@ -99,12 +100,12 @@ const FundingSetPage = () => {
           )}
         </fieldset>
         <fieldset>
-          <SLabel htmlFor='detail'>
+          <SLabel htmlFor='content'>
             <p>펀딩 소개</p>
           </SLabel>
           <STextInput
-            id='detail'
-            {...register('detail', {
+            id='content'
+            {...register('content', {
               required: false,
               maxLength: {
                 value: 120,
@@ -113,8 +114,8 @@ const FundingSetPage = () => {
             })}
             placeholder='펀딩을 소개해 주세요'
           />
-          {errors.detail && (
-            <SWarningWrapper>{errors.detail.message}</SWarningWrapper>
+          {errors.content && (
+            <SWarningWrapper>{errors.content.message}</SWarningWrapper>
           )}
         </fieldset>
         <fieldset>
@@ -131,7 +132,7 @@ const FundingSetPage = () => {
               readOnly
             />
             <SDateInput
-              {...register('date', {
+              {...register('endDate', {
                 required: '날짜를 입력해주세요',
                 validate: (value) =>
                   value >= getValues('currentDate') ||
@@ -140,8 +141,8 @@ const FundingSetPage = () => {
               type='date'
             />
           </SDateContainer>
-          {errors.date && (
-            <SWarningWrapper>{errors.date.message}</SWarningWrapper>
+          {errors.endDate && (
+            <SWarningWrapper>{errors.endDate.message}</SWarningWrapper>
           )}
         </fieldset>
         <fieldset>
