@@ -14,9 +14,8 @@ import NavComponent from '../../components/common/NavComponent.jsx';
 const FriendPage = () => {
   // 친구 페이지 데이터
   const [friendList, setFriendList] = useState([]);
-  const [carouselFriendList, setCarouselFriendList] = useState(null);
-  const chopedCarouselFriendList =
-    carouselFriendList && arrayChop(carouselFriendList, 2);
+  const [carouselFriendList, setCarouselFriendList] = useState([]);
+  const chopedCarouselFriendList = arrayChop(carouselFriendList, 2).slice(0, 3);
   // 바텀시트 관련
   const [bottomSheetShow, setBottomSheetShow] = useState(false);
   const [email, setEmail] = useState('');
@@ -68,7 +67,7 @@ const FriendPage = () => {
   return (
     <SLayout>
       <SH1 as='header'>친구</SH1>
-      {carouselFriendList && (
+      {carouselFriendList.length > 0 && (
         <SSection>
           <ST1>나에게 선물한 친구</ST1>
           <CarouselComponent
