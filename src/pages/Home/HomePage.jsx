@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import NavComponent from '../../components/common/NavComponent';
+import Calendar from '../../components/Home/Calendar';
 import icn_search from '../../assets/common/search.svg';
 
 const HomePage = () => {
@@ -21,8 +22,8 @@ const HomePage = () => {
         <STextContainer>
           <SH2>곧 마감되는 펀딩</SH2>
           <SB4>기간이 얼마 남지 않은 펀딩을 확인하세요!</SB4>
-          {/* 캘린더 컴포넌트 */}
         </STextContainer>
+        <Calendar />
       </SSection>
       <SSection>
         <SH2>참여 가능한 펀딩</SH2>
