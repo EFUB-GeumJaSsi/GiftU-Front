@@ -19,3 +19,11 @@ export const getAccessTokenKakao = async (code) => {
 };
 
 // 액세스 토큰 재발급
+export const postAccessTokenReissue = async () => {
+  try {
+    const response = await apiAuth.post(`/api/oauth/reissue`);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
