@@ -112,9 +112,9 @@ const SCircleWrapper = styled.div`
   width: 64px;
   height: 64px;
 
-  background-color: var(--jade-pri);
   border-radius: 50%;
   border: 8px solid var(--white);
+  background-color: var(--jade-pri);
 `;
 
 export default NavComponent;
