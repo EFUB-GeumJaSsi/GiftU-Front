@@ -220,7 +220,7 @@ const SBottomSheetContainer = styled.div`
   align-items: center;
   gap: 32px;
 
-  padding: 32px 21px 18px 19px;
+  padding: 48px 20px 18px;
 `;
 const SSpan = styled.span`
   font-size: 20px;
