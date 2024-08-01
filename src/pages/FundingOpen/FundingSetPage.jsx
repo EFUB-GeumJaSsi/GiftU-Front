@@ -199,20 +199,20 @@ const FundingSetPage = () => {
             <SWarningWrapper>{errors.address.message}</SWarningWrapper>
           )}
         </fieldset>
+        <BottomBackgroundComponent
+          Button={
+            <ButtonComponent
+              type='submit'
+              disabled={!isValid}
+              btnInfo={{
+                text: '다음',
+                color: isValid ? 'jade' : 'gray',
+                width: '335px',
+              }}
+            />
+          }
+        />
       </SForm>
-      <BottomBackgroundComponent
-        Button={
-          <ButtonComponent
-            type='submit'
-            disabled={!isValid}
-            btnInfo={{
-              text: '다음',
-              color: isValid ? 'jade' : 'gray',
-              width: '335px',
-            }}
-          />
-        }
-      />
       {isOpen && (
         <SPostcodeContainer>
           <DaumPostcode
