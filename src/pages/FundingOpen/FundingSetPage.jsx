@@ -9,7 +9,6 @@ import BottomBackgroundComponent from '../../components/common/BottomBackgroundC
 
 const FundingSetPage = () => {
   const { setCurrentPage } = useContext(PageContext);
-  const [currentDate, setCurrentDate] = useState('');
   const { setFundingData } = useContext(DataContext);
 
   const [isOpen, setIsOpen] = useState(false);
@@ -40,10 +39,6 @@ const FundingSetPage = () => {
   const name = watch('name');
   const phoneNumber = watch('phoneNumber');
 
-  const onSubmit = (data) => {
-    navigate('/password-set', { state: { formData: data } });
-    console.log(data);
-  };
   const completeHandler = (data) => {
     setValue('addressNumber', data.zonecode);
     setValue('addressDetail1', data.address);

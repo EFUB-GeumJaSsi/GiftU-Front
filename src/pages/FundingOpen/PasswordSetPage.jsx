@@ -32,10 +32,6 @@ const PasswordSetPage = () => {
     }
   }, [bottomSheetShow, reset]);
 
-  const onSubmit = (data) => {
-    console.log('폼 제출', data);
-  };
-
   const visibility = watch('visibility');
 
   const setPassword = (data) => {
