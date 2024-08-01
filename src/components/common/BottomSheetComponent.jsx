@@ -19,6 +19,7 @@
 
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import BottomModalComponent from './BottomModalComponent';
 import icn_cross from '../../assets/common/Bottomsheet/cross.svg';
 
@@ -28,11 +29,15 @@ const BottomSheetComponent = ({
   setBottomSheetShow,
   children,
 }) => {
+  const navigate = useNavigate();
   const [bottomSheetOpen, setBottomSheetOpen] = useState(false);
 
   const handleBottomSheetClose = () => {
     setBottomSheetOpen(false); // 바텀시트 닫기 애니메이션 효과
     setTimeout(() => setBottomSheetShow(false), 300); // 애니메이션 후 언마운트
+  };
+  const handlePageBack = () => {
+    navigate(-1); // 페이지 뒤로가기
   };
 
   useEffect(() => {
@@ -52,7 +57,11 @@ const BottomSheetComponent = ({
         }}
       >
         {closeButton === 'cross' ? (
-          <SCrossButton onClick={handleBottomSheetClose} />
+          <SCrossButton
+            onClick={
+              action === 'back' ? handlePageBack : handleBottomSheetClose
+            }
+          />
         ) : (
           <SBarButton onClick={handleBottomSheetClose} />
         )}
