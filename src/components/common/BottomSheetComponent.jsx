@@ -24,8 +24,8 @@ import BottomModalComponent from './BottomModalComponent';
 import icn_cross from '../../assets/common/Bottomsheet/cross.svg';
 
 const BottomSheetComponent = ({
-  closeButton,
-  action,
+  closeButton = 'bar',
+  action = 'transition',
   setBottomSheetShow,
   children,
 }) => {
