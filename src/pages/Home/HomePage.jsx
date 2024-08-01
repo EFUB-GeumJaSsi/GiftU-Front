@@ -1,9 +1,17 @@
 import styled from 'styled-components';
+import { useEffect, useState } from 'react';
 import NavComponent from '../../components/common/NavComponent';
 import Calendar from '../../components/Home/Calendar';
+import FundingComponent from '../../components/common/FundingComponent';
 import icn_search from '../../assets/common/search.svg';
 
 const HomePage = () => {
+  const [possibleFundingList, setPossibleFundingList] = useState([]);
+
+  useEffect(() => {
+    setPossibleFundingList([]);
+  }, []);
+
   return (
     <SLayout>
       <section>
@@ -27,7 +35,11 @@ const HomePage = () => {
       </SSection>
       <SSection>
         <SH2>참여 가능한 펀딩</SH2>
-        {/* 펀딩 목록 */}
+        <SFundingUl>
+          {possibleFundingList.map((item, index) => (
+            <FundingComponent data={item} key={index} />
+          ))}
+        </SFundingUl>
       </SSection>
       <NavComponent />
     </SLayout>
@@ -87,6 +99,12 @@ const SInput = styled.input`
 const STextContainer = styled.div`
   display: flex;
   flex-flow: column nowrap;
+
+  gap: 8px;
+`;
+const SFundingUl = styled.ul`
+  display: flex;
+  flex-flow: row wrap;
 
   gap: 8px;
 `;
