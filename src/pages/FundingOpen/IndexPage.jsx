@@ -33,7 +33,6 @@ const DataProvider = ({ children }) => {
 const PageContext = createContext();
 const PageProvider = ({ children }) => {
   const [currentPage, setCurrentPage] = useState('GiftSetPage');
-  const { giftData, imageData } = useContext(DataContext);
 
   return (
     <PageContext.Provider value={{ currentPage, setCurrentPage }}>
