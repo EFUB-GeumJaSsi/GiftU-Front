@@ -103,9 +103,9 @@ const PasswordComponent = ({
 
 const STextContainer = styled.div`
   display: flex;
-  flex-direction: column;
   margin-left: 24px;
   margin-right: 24px;
+  flex-flow: column nowrap;
 
   h4 {
     margin-bottom: 12px;
@@ -132,7 +132,7 @@ const SPasswordInput = styled.input`
   font-size: 16px;
 
   border-radius: 4px;
-  background: var(--gray-100);
+  background-color: var(--gray-100);
 
   text-align: center;
 `;
