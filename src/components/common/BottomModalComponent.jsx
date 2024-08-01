@@ -81,8 +81,8 @@ const SBackgroundDiv = styled.div`
   left: 0;
   z-index: 9999;
 
-  width: 100vw;
-  height: 100vh;
+  width: 100svw;
+  height: 100svh;
 
   background-color: ${({ $open }) =>
     $open ? 'rgba(0, 0, 0, 0.4)' : 'rgba(0, 0, 0, 0)'};
