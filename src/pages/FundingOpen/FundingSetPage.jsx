@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import DaumPostcode from 'react-daum-postcode';
 import { useState, useEffect, useContext } from 'react';
 import { useForm } from 'react-hook-form';
-import { PageContext } from './IndexPage';
+import { DataContext, PageContext } from './IndexPage';
 import BackHeaderComponent from '../../components/common/BackHeaderComponent';
 import ButtonComponent from '../../components/common/ButtonComponent';
 import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
@@ -10,6 +10,8 @@ import BottomBackgroundComponent from '../../components/common/BottomBackgroundC
 const FundingSetPage = () => {
   const { setCurrentPage } = useContext(PageContext);
   const [currentDate, setCurrentDate] = useState('');
+  const { setFundingData } = useContext(DataContext);
+
   const [isOpen, setIsOpen] = useState(false);
   const [isAddressOpen, setIsAddressOpen] = useState(false);
   const [isButtonActive, setIsButtonActive] = useState(false);
@@ -52,6 +54,16 @@ const FundingSetPage = () => {
     setIsOpen((prevOpenState) => !prevOpenState);
   };
   const handleFormSubmit = () => {
+    setFundingData({
+      fundingTitle: null,
+      fundingContent: null,
+      fundingEndDate: null,
+      name: null,
+      phoneNumber: null,
+      addressNumber: null,
+      addressDetail1: null,
+      addressDetail2: null,
+    });
     setCurrentPage('PasswordSetPage');
   };
 

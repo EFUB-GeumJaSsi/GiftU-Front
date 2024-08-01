@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useEffect, useState, useContext } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
-import { PageContext } from './IndexPage';
+import { DataContext, PageContext } from './IndexPage';
 import BackHeaderComponent from '../../components/common/BackHeaderComponent';
 import ButtonComponent from '../../components/common/ButtonComponent';
 import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
@@ -14,6 +14,7 @@ let newPassword = '';
 const PasswordSetPage = () => {
   const { setCurrentPage } = useContext(PageContext);
   const [bottomSheetShow, setBottomSheetShow] = useState(false);
+  const { setFundingData } = useContext(DataContext);
 
   const methods = useForm({
     defaultValues: {
@@ -51,6 +52,11 @@ const PasswordSetPage = () => {
   };
 
   const handleFormSubmit = () => {
+    setFundingData((prevData) => ({
+      ...prevData,
+      visibility: null,
+      password: null,
+    }));
     setCurrentPage('CompletePage');
   };
 

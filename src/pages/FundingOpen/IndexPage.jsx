@@ -6,6 +6,28 @@ import PasswordSetPage from './PasswordSetPage';
 import CompletePage from './CompletePage';
 import HomePage from '../Home/HomePage';
 
+const DataContext = createContext();
+const DataProvider = ({ children }) => {
+  const [fundingData, setFundingData] = useState({});
+  const [giftData, setGiftData] = useState([]);
+  const [imageData, setImageData] = useState([]);
+
+  return (
+    <DataContext.Provider
+      value={{
+        fundingData,
+        setFundingData,
+        giftData,
+        setGiftData,
+        imageData,
+        setImageData,
+      }}
+    >
+      {children}
+    </DataContext.Provider>
+  );
+};
+
 const PageContext = createContext();
 const PageProvider = ({ children }) => {
   const [currentPage, setCurrentPage] = useState('GiftSetPage');
@@ -39,11 +61,13 @@ const PageRenderer = () => {
 
 const IndexPage = () => {
   return (
-    <PageProvider>
-      <PageRenderer />
-    </PageProvider>
+    <DataProvider>
+      <PageProvider>
+        <PageRenderer />
+      </PageProvider>
+    </DataProvider>
   );
 };
 
 export default IndexPage;
-export { PageContext };
+export { DataContext, PageContext };

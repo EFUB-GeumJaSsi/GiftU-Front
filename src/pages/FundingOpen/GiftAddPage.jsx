@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useState, useContext } from 'react';
-import { PageContext } from './IndexPage';
+import { DataContext, PageContext } from './IndexPage';
 import BackHeaderComponent from '../../components/common/BackHeaderComponent';
 import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
 import FundingPercentage from '../../components/FundingInfo/FundingPercentage';
@@ -16,6 +16,8 @@ const giftList = [
 
 const GiftAddPage = () => {
   const { setCurrentPage } = useContext(PageContext);
+  const { setGiftData } = useContext(DataContext);
+
   const [isTrue, setIsTrue] = useState(true);
 
   const Btn = (

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useState, useContext } from 'react';
-import { PageContext } from './IndexPage';
+import { DataContext, PageContext } from './IndexPage';
 import BackHeaderComponent from '../../components/common/BackHeaderComponent';
 import PriceInputComponent from '../../components/common/PriceInputComponent';
 import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
@@ -9,6 +9,9 @@ import icn_plus from '../../assets/FungingOpen/icn_plus.svg';
 
 const GiftSetPage = () => {
   const { setCurrentPage } = useContext(PageContext);
+  const { setGiftData, setImageData } = useContext(DataContext);
+
+  const [name, setName] = useState(null);
   const [price, setPrice] = useState(null);
   const [url, setUrl] = useState(null);
   const [imageFile, setImageFile] = useState(null);
@@ -25,6 +28,15 @@ const GiftSetPage = () => {
     }
   };
   const handleFormSubmit = () => {
+    setGiftData((prevData) => [
+      ...prevData,
+      {
+        giftName: name,
+        price: price,
+        giftUrl: url,
+      },
+    ]);
+    setImageData((prevItems) => [...prevItems, imageFile]);
     setCurrentPage('GiftAddPage');
   };
 
