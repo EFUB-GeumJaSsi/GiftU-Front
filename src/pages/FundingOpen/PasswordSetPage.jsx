@@ -16,15 +16,13 @@ const PasswordSetPage = () => {
   const [bottomSheetShow, setBottomSheetShow] = useState(false);
   const { setFundingData } = useContext(DataContext);
 
-  const methods = useForm({
+  const { register, handleSubmit, watch, reset } = useForm({
     defaultValues: {
       visibility: '',
       password: '',
     },
     mode: 'onChange',
   });
-
-  const { register, handleSubmit, watch, reset } = methods;
 
   useEffect(() => {
     if (!bottomSheetShow) {
