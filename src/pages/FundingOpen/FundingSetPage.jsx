@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import DaumPostcode from 'react-daum-postcode';
 import { useState, useEffect, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { PageContext } from './IndexPage';
 import BackHeaderComponent from '../../components/common/BackHeaderComponent';
@@ -13,7 +12,6 @@ const FundingSetPage = () => {
   const [currentDate, setCurrentDate] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [isAddressOpen, setIsAddressOpen] = useState(false);
-  const navigate = useNavigate();
   const [isButtonActive, setIsButtonActive] = useState(false);
   const {
     register,
