@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import DaumPostcode from 'react-daum-postcode';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import BackHeaderComponent from '../../components/common/BackHeaderComponent';
 import ButtonComponent from '../../components/common/ButtonComponent';
 import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
-import DaumPostcode from 'react-daum-postcode';
 
 const FundingSetPage = () => {
   const [currentDate, setCurrentDate] = useState('');
@@ -33,34 +33,30 @@ const FundingSetPage = () => {
     },
     mode: 'onChange',
   });
-
-  useEffect(() => {
-    const today = new Date().toISOString().split('T')[0];
-    setCurrentDate(today);
-    setValue('currentDate', today);
-  }, [setValue]);
+  const title = watch('title');
+  const date = watch('date');
+  const name = watch('name');
+  const phoneNumber = watch('phoneNumber');
 
   const onSubmit = (data) => {
     navigate('/password-set', { state: { formData: data } });
     console.log(data);
   };
-
   const completeHandler = (data) => {
     setValue('addressNumber', data.zonecode);
     setValue('addressDetail1', data.address);
     setIsOpen(false);
     setIsAddressOpen(true);
   };
-
   const toggleHandler = () => {
     setIsOpen((prevOpenState) => !prevOpenState);
   };
 
-  const title = watch('title');
-  const date = watch('date');
-  const name = watch('name');
-  const phoneNumber = watch('phoneNumber');
-
+  useEffect(() => {
+    const today = new Date().toISOString().split('T')[0];
+    setCurrentDate(today);
+    setValue('currentDate', today);
+  }, [setValue]);
   useEffect(() => {
     setIsButtonActive(
       title !== '' && date !== '' && name !== '' && phoneNumber != '',
