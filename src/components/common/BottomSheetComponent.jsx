@@ -86,8 +86,8 @@ const SBarButton = styled.button`
   height: 6px;
   margin: 0 auto;
 
-  background-color: var(--gray-300);
   border-radius: 12px;
+  background-color: var(--gray-300);
 `;
 
 export default BottomSheetComponent;
