@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
 import { useEffect, useState, useContext } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { PageContext } from './IndexPage';
@@ -15,8 +14,6 @@ let newPassword = '';
 const PasswordSetPage = () => {
   const { setCurrentPage } = useContext(PageContext);
   const [bottomSheetShow, setBottomSheetShow] = useState(false);
-
-  const navigate = useNavigate();
 
   const methods = useForm({
     defaultValues: {
