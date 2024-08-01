@@ -70,7 +70,8 @@ const SSection = styled.section`
 `;
 const SCrossButton = styled.button`
   position: absolute;
-  right: 24px;
+  top: 26px;
+  right: 22px;
 
   width: 20px;
   height: 20px;
