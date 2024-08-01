@@ -1,11 +1,11 @@
 import styled from 'styled-components';
-import icn_search from '../../assets/common/search.svg';
 import NavComponent from '../../components/common/NavComponent';
+import icn_search from '../../assets/common/search.svg';
 
 const HomePage = () => {
   return (
     <SLayout>
-      <SSection>
+      <section>
         <SInput
           type='text'
           id='search-bar'
@@ -16,13 +16,13 @@ const HomePage = () => {
             console.log('검색 페이지 인풋필드 포커스');
           }}
         />
-      </SSection>
+      </section>
       <SSection>
-        <STextWrapper>
+        <STextContainer>
           <SH2>곧 마감되는 펀딩</SH2>
           <SB4>기간이 얼마 남지 않은 펀딩을 확인하세요!</SB4>
           {/* 캘린더 컴포넌트 */}
-        </STextWrapper>
+        </STextContainer>
       </SSection>
       <SSection>
         <SH2>참여 가능한 펀딩</SH2>
@@ -83,7 +83,7 @@ const SInput = styled.input`
     line-height: 140%;
   }
 `;
-const STextWrapper = styled.div`
+const STextContainer = styled.div`
   display: flex;
   flex-flow: column nowrap;
 
