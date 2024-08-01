@@ -60,8 +60,8 @@ const BottomSheetComponent = ({
 };
 
 const SSection = styled.section`
-  width: 375px;
-  height: 320px;
+  width: fit-content;
+  height: fit-content;
 
   border-radius: 20px 20px 0px 0px;
   background-color: var(--white);
