@@ -106,12 +106,14 @@ const STextContainer = styled.div`
   flex-direction: column;
   margin-left: 24px;
   margin-right: 24px;
+
   h4 {
     margin-bottom: 12px;
-    color: black;
+    color: var(--black);
     font-size: 20px;
     font-weight: 600;
   }
+
   p {
     color: var(--gray-500);
     font-size: 14px;
@@ -128,22 +130,27 @@ const SPasswordInput = styled.input`
   width: 56px;
   height: 80px;
   font-size: 16px;
+
   border-radius: 4px;
   background: var(--gray-100);
+
   text-align: center;
 `;
 const SSecondaryButton = styled.button`
   width: 335px;
   height: 48px;
   margin-left: 24px;
+
+  border-radius: 40px;
   background-color: ${({ disabled, color }) => {
     if (disabled) return 'var(--gray-100)';
     return color === 'orange' ? 'var(--orange-pri)' : 'var(--jade-pri)';
   }};
+
   color: white;
   font-size: 16px;
   font-weight: 600;
-  border-radius: 40px;
+
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
 `;
 const STextWrapper = styled.p`
