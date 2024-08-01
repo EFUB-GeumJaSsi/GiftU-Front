@@ -41,8 +41,7 @@ const BottomSheetComponent = ({
   };
 
   useEffect(() => {
-    // 바텀시트 열기 애니메이션 효과
-    setBottomSheetOpen(true);
+    setBottomSheetOpen(true); // 바텀시트 열기 애니메이션 효과
   }, []);
 
   return (
