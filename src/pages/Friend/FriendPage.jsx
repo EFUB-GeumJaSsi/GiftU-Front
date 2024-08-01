@@ -182,7 +182,6 @@ const SH3 = styled.h3`
   color: var(--black);
   font-size: 20px;
   font-weight: 600;
-  line-height: 140%;
 `;
 const ST1 = styled.h1`
   color: var(--black);
@@ -276,13 +275,15 @@ const SBottomSheetContainer = styled.div`
   flex-flow: column nowrap;
   align-items: center;
 
+  padding: 26px 20px 24px;
   gap: 32px;
 `;
 const STextContainer = styled.div`
   display: flex;
   flex-flow: column nowrap;
+  align-self: flex-start;
 
-  width: 327px;
+  margin-left: 4px;
   gap: 12px;
 `;
 const SForm = styled.form`
@@ -290,8 +291,7 @@ const SForm = styled.form`
   flex-flow: column nowrap;
   align-items: center;
 
-  width: fit-content;
-  gap: 60px;
+  gap: 80px;
 `;
 const SInput = styled.input`
   width: 327px;
