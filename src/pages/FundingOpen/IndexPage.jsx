@@ -33,6 +33,7 @@ const DataProvider = ({ children }) => {
 const PageContext = createContext();
 const PageProvider = ({ children }) => {
   const [currentPage, setCurrentPage] = useState('GiftSetPage');
+  const { giftData, imageData } = useContext(DataContext);
 
   return (
     <PageContext.Provider value={{ currentPage, setCurrentPage }}>
@@ -47,7 +48,12 @@ const PageRenderer = () => {
     case 'GiftSetPage':
       return <GiftSetPage />;
     case 'GiftSetPage-back':
-      return <GiftSetPage data={'마지막으로 추가한 선물'} />; //수정!!!!!
+      return (
+        <GiftSetPage
+          lastGiftData={giftData[giftData.length - 1]}
+          lastImageData={imageData[imageData.length - 1]}
+        />
+      );
     case 'GiftAddPage':
       return <GiftAddPage />;
     case 'FundingSetPage':

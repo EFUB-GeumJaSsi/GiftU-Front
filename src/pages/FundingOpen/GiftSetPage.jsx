@@ -7,15 +7,24 @@ import BottomBackgroundComponent from '../../components/common/BottomBackgroundC
 import ButtonComponent from '../../components/common/ButtonComponent';
 import icn_plus from '../../assets/FungingOpen/icn_plus.svg';
 
-const GiftSetPage = () => {
+const GiftSetPage = ({
+  lastGiftData = {
+    giftName: null,
+    price: null,
+    giftUrl: null,
+  },
+  lastImageData = null,
+}) => {
   const { setCurrentPage } = useContext(PageContext);
   const { setGiftData, setImageData } = useContext(DataContext);
 
-  const [name, setName] = useState(null);
-  const [price, setPrice] = useState(null);
-  const [url, setUrl] = useState(null);
-  const [imageFile, setImageFile] = useState(null);
-  const [imagePreview, setImagePreview] = useState(null);
+  const [name, setName] = useState(lastGiftData.giftName);
+  const [price, setPrice] = useState(lastGiftData.price);
+  const [url, setUrl] = useState(lastGiftData.giftUrl);
+  const [imageFile, setImageFile] = useState(lastImageData);
+  const [imagePreview, setImagePreview] = useState(
+    lastImageData ? URL.createObjectURL(lastImageData) : null,
+  );
 
   const handleUrlChange = (event) => {
     setUrl(event.target.value);
