@@ -24,10 +24,10 @@ const GiftSetPage = ({
   const [imageFile, setImageFile] = useState(lastImageData);
 
   const handleFormSubmit = () => {
-    if (lastGiftData) {
+    if (lastGiftData.price) {
       setGiftData((prevItems) => [
         // 마지막 아이템 삭제
-        ...prevItems.slice(prevItems.length - 2),
+        ...prevItems.slice(0, -1),
         // 수정 아이템 저장
         {
           giftName: name,
@@ -37,7 +37,7 @@ const GiftSetPage = ({
       ]);
       setImageData((prevItems) => [
         // 마지막 아이템 삭제
-        ...prevItems.slice(prevItems.length - 2),
+        ...prevItems.slice(0, -1),
         // 수정 아이템 저장
         imageFile,
       ]);
