@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState, useContext } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
+import { DataContext, PageContext } from './IndexPage';
 import BackHeaderComponent from '../../components/common/BackHeaderComponent';
 import ButtonComponent from '../../components/common/ButtonComponent';
 import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
@@ -12,30 +12,17 @@ import { ReactComponent as BlueLocker } from '../../assets/PasswordSet/icn_btn_y
 let newPassword = '';
 
 const PasswordSetPage = () => {
+  const { setCurrentPage } = useContext(PageContext);
+  const { setFundingData } = useContext(DataContext);
+
   const [bottomSheetShow, setBottomSheetShow] = useState(false);
-
-  const navigate = useNavigate();
-
-  const methods = useForm({
+  const { register, handleSubmit, watch, reset } = useForm({
     defaultValues: {
       visibility: '',
       password: '',
     },
     mode: 'onChange',
   });
-
-  const { register, handleSubmit, watch, reset } = methods;
-
-  useEffect(() => {
-    if (!bottomSheetShow) {
-      reset();
-    }
-  }, [bottomSheetShow, reset]);
-
-  const onSubmit = (data) => {
-    console.log('폼 제출', data);
-  };
-
   const visibility = watch('visibility');
 
   const setPassword = (data) => {
@@ -43,19 +30,34 @@ const PasswordSetPage = () => {
     console.log(newPassword, visibility);
     navigate('/');
   };
-
   const isButtonDisabled = () => {
     if (visibility === 'public') {
       return false;
     }
     return true;
   };
+  const handleFormSubmit = () => {
+    setFundingData((prevData) => ({
+      ...prevData,
+      visibility: null,
+      password: null,
+    }));
+    setCurrentPage('CompletePage');
+  };
+
+  useEffect(() => {
+    if (!bottomSheetShow) {
+      reset();
+    }
+  }, [bottomSheetShow, reset]);
 
   return (
     <FormProvider>
       <SLayout>
-        <BackHeaderComponent />
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <BackHeaderComponent
+          onClick={() => setCurrentPage('PasswordSetPage')}
+        />
+        <form onSubmit={handleFormSubmit}>
           <SFieldset>
             <SLegend>공개 여부</SLegend>
             <SRadioContainer>

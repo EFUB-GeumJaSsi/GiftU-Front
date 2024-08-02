@@ -95,9 +95,11 @@ export const deleteParticipation = async (participationId) => {
 };
 
 // 펀딩 리스트 조회(내가 개설한)
-export const getFundingsList = async (status) => {
+export const getOpenList = async (status) => {
   try {
-    const response = await apiAuth.get(`/fundings/list/${status}`);
+    const response = status
+      ? await apiAuth.get(`/fundings/list/${status}`)
+      : await apiAuth.get(`/fundings/list`);
     return response;
   } catch (error) {
     throw error;
@@ -105,9 +107,11 @@ export const getFundingsList = async (status) => {
 };
 
 // 펀딩 리스트 조회(내가 참여한)
-export const getParticipationList = async (status) => {
+export const getJoinList = async (status) => {
   try {
-    const response = await apiAuth.get(`/fundings/participation/${status}`);
+    const response = status
+      ? await apiAuth.get(`/fundings/participation/${status}`)
+      : await apiAuth.get(`/fundings/participation`);
     return response;
   } catch (error) {
     throw error;

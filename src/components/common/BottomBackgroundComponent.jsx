@@ -25,6 +25,7 @@ const SLayout = styled.div`
   display: flex;
   justify-content: center;
   position: fixed;
+  left: 50%;
   bottom: 0;
 
   width: 375px;
@@ -33,6 +34,8 @@ const SLayout = styled.div`
 
   border-top: 1px solid var(--gray-100);
   background: var(--white);
+
+  transform: translateX(-50%);
 `;
 
 export default BottomBackgroundComponent;

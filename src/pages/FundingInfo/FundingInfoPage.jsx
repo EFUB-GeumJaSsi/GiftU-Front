@@ -158,6 +158,7 @@ const FundingInfoPage = () => {
       )}
       {funding === 'pre' && bottomSheetShow && (
         <PasswordComponent
+          action='back' // 바텀시트 cross 버튼 클릭 시 뒤로가기 + background 이벤트리스너 비활성화
           passwordExact={getPassword}
           setBottomSheetShow={setBottomSheetShow}
           validPassword={() => setBottomSheetShow(false)}

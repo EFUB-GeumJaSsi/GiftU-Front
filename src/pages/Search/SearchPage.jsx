@@ -62,7 +62,7 @@ const SearchPage = () => {
                   </div>
                   <div>
                     {result.status == 'IN_PROGRESS' ? (
-                      <TagComponent text='진행중' color='orange' />
+                      <TagComponent text='진행 중' color='jade' />
                     ) : (
                       <TagComponent text='종료' color='gray' />
                     )}

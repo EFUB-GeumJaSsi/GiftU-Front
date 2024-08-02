@@ -1,11 +1,20 @@
 import styled from 'styled-components';
-import icn_search from '../../assets/common/search.svg';
+import { useEffect, useState } from 'react';
 import NavComponent from '../../components/common/NavComponent';
+import Calendar from '../../components/Home/Calendar';
+import FundingComponent from '../../components/common/FundingComponent';
+import icn_search from '../../assets/common/search.svg';
 
 const HomePage = () => {
+  const [possibleFundingList, setPossibleFundingList] = useState([]);
+
+  useEffect(() => {
+    setPossibleFundingList([]);
+  }, []);
+
   return (
     <SLayout>
-      <SSection>
+      <section>
         <SInput
           type='text'
           id='search-bar'
@@ -16,17 +25,21 @@ const HomePage = () => {
             console.log('검색 페이지 인풋필드 포커스');
           }}
         />
-      </SSection>
+      </section>
       <SSection>
-        <STextWrapper>
+        <STextContainer>
           <SH2>곧 마감되는 펀딩</SH2>
           <SB4>기간이 얼마 남지 않은 펀딩을 확인하세요!</SB4>
-          {/* 캘린더 컴포넌트 */}
-        </STextWrapper>
+        </STextContainer>
+        <Calendar />
       </SSection>
       <SSection>
         <SH2>참여 가능한 펀딩</SH2>
-        {/* 펀딩 목록 */}
+        <SFundingUl>
+          {possibleFundingList.map((item, index) => (
+            <FundingComponent data={item} key={index} />
+          ))}
+        </SFundingUl>
       </SSection>
       <NavComponent />
     </SLayout>
@@ -83,9 +96,15 @@ const SInput = styled.input`
     line-height: 140%;
   }
 `;
-const STextWrapper = styled.div`
+const STextContainer = styled.div`
   display: flex;
   flex-flow: column nowrap;
+
+  gap: 8px;
+`;
+const SFundingUl = styled.ul`
+  display: flex;
+  flex-flow: row wrap;
 
   gap: 8px;
 `;

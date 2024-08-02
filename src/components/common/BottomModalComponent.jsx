@@ -5,8 +5,9 @@
 // (1-2) 부모 컴포넌트에 추가: {bottomModalShow && (<BottomModalComponent></BottomModalComponent>)}
 //
 // 2. 바텀모달 props
-// (2-1) setBottomModalShow - 1-1의 setBottomModalShow
-// (2-2) parentOpen - (4-3) 또는 true
+// (2-1) backgroundAction - SBackgroundDiv 이벤트리스너 활성화 여부
+// (2-2) setBottomModalShow - 1-1의 setBottomModalShow
+// (2-3) parentOpen - (4-3) 또는 true
 // 예시: <BottomModalComponent setBottomModalShow={setBottomModalShow} parentOpen={true}>
 //
 // 3. 바텀모달 내용
@@ -29,12 +30,19 @@ import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-const BottomModalComponent = ({ setBottomModalShow, parentOpen, children }) => {
+const BottomModalComponent = ({
+  backgroundAction,
+  setBottomModalShow,
+  parentOpen,
+  children,
+}) => {
   const [bottomModalOpen, setBottomModalOpen] = useState(false);
 
   const handleBottomModalClose = () => {
-    setBottomModalOpen(false); // 바텀모달 닫기 애니메이션 효과
-    setTimeout(() => setBottomModalShow(false), 300); // 애니메이션 후 언마운트
+    if (backgroundAction) {
+      setBottomModalOpen(false); // 바텀모달 닫기 애니메이션 효과
+      setTimeout(() => setBottomModalShow(false), 300); // 애니메이션 후 언마운트
+    }
   };
 
   useEffect(() => {
@@ -81,8 +89,8 @@ const SBackgroundDiv = styled.div`
   left: 0;
   z-index: 9999;
 
-  width: 100vw;
-  height: 100vh;
+  width: 100svw;
+  height: 100svh;
 
   background-color: ${({ $open }) =>
     $open ? 'rgba(0, 0, 0, 0.4)' : 'rgba(0, 0, 0, 0)'};
