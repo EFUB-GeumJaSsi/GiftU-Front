@@ -1,37 +1,36 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import TagComponent from '../../components/common/TagComponent';
 import search from '../../assets/common/search.svg';
+import { getSearch } from '../../api/search';
 
 const SearchPage = () => {
   const [search, setSearch] = useState('');
   const [results, setResults] = useState([]);
-  const Results = [
-    {
-      image: '',
-      title:
-        '두 줄보다 긴 펀딩 제목은 이렇게 보이도록 설정할 거예요 ㅎㅎㅎㅎㅎㅎㅎ',
-      name: '김이화',
-      endDate: '2024.09.16',
-      stateTag: '진행중',
-    },
-    {
-      image: '',
-      title:
-        '두 줄보다 긴 펀딩 제목은 이렇게 보이도록 설정할 거예요 제목입니다제목입니다 이 제목은 두 줄이 넘습니다',
-      name: '김이화',
-      endDate: '2024.09.16',
-      stateTag: '진행중',
-    },
-  ];
+
   const onChange = (e) => {
     setSearch(e.target.value);
-    if (e.target.value === '') {
-      setResults([]);
+  };
+
+  useEffect(() => {
+    if (search) {
+      readSearchList(search);
     } else {
-      setResults(Results);
+      setResults([]);
+    }
+  }, [search]);
+
+  //API 연결
+  const readSearchList = async (search) => {
+    try {
+      const response = await getSearch(search);
+      setResults(Array.isArray(response.data) ? response.data : []);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
     }
   };
+
   return (
     <SLayout>
       <SHeader>
@@ -48,28 +47,29 @@ const SearchPage = () => {
         <SNoResultsP>검색 결과가 없어요</SNoResultsP>
       ) : (
         <SOl>
-          {results.map((result, index) => (
-            <SResultItem key={index}>
-              <SImg src={result.image} />
-              <SContentWrapper>
-                <div id='title'>{result.title}</div>
-                <div id='name'>
-                  <SBoldWrapper>개설</SBoldWrapper> {result.name}
-                </div>
-                <div id='endDate'>
-                  <SBoldWrapper>마감</SBoldWrapper>
-                  {result.endDate}
-                </div>
-                <div>
-                  {result.stateTag == '진행중' ? (
-                    <TagComponent text='진행중' color='orange' />
-                  ) : (
-                    <TagComponent text='종료' color='gray' />
-                  )}
-                </div>
-              </SContentWrapper>
-            </SResultItem>
-          ))}
+          {results &&
+            results.map((result, index) => (
+              <SResultItem key={index}>
+                <SImg src={result.fundingImageUrl} />
+                <SContentWrapper>
+                  <div id='title'>{result.fundingTitle}</div>
+                  <div id='name'>
+                    <SBoldWrapper>개설</SBoldWrapper> {result.userNickname}
+                  </div>
+                  <div id='endDate'>
+                    <SBoldWrapper>마감</SBoldWrapper>
+                    {result.fundingEndDate}
+                  </div>
+                  <div>
+                    {result.status == 'IN_PROGRESS' ? (
+                      <TagComponent text='진행중' color='orange' />
+                    ) : (
+                      <TagComponent text='종료' color='gray' />
+                    )}
+                  </div>
+                </SContentWrapper>
+              </SResultItem>
+            ))}
         </SOl>
       )}
     </SLayout>
@@ -98,13 +98,14 @@ const SHeader = styled.header`
 const SInput = styled.input`
   width: 280px;
   height: 40px;
-  padding-left: 49px;
+  padding-left: 45px;
+  padding-right: 14px;
 
   border-radius: 40px;
   background-color: var(--gray-100);
   background-image: url(${search});
   background-repeat: no-repeat;
-  background-position: 20px center;
+  background-position: 14px center;
 
   color: var(--black);
   font-size: 16px;
@@ -152,7 +153,6 @@ const SResultItem = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
 
   width: 332px;
   gap: 15px;
@@ -169,6 +169,9 @@ const SContentWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   gap: 8px;
+
+  width: 187px;
+
   font-weight: 500;
   font-size: 14px;
   #title {
