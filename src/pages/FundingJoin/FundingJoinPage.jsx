@@ -1,37 +1,74 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { addComma } from '../../components/FundingInfo/FundingPercentage';
+import { getFundingInfo, postFundingJoin } from '../../api/funding';
 import BackHeaderComponent from '../../components/common/BackHeaderComponent';
 import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
 import ButtonComponent from '../../components/common/ButtonComponent';
 import FundingPercentage from '../../components/FundingInfo/FundingPercentage';
 import PriceInputComponent from '../../components/common/PriceInputComponent';
 
-const giftList = [
-  { image: '', title: '선물 제목', price: 200000 },
-  { image: '', title: '선물 제목', price: 500000 },
-  { image: '', title: '선물 제목', price: 840000 },
-  { image: '', title: '선물 제목', price: 1000000 },
-];
-
 const FundingJoinPage = () => {
-  const [balance, setBalance] = useState(84000);
-  const [price, setPrice] = useState(null);
+  const navigate = useNavigate();
+  const { fundingId } = useParams();
+  const [giftList, setGiftList] = useState(null);
+  const [nowMoney, setNowMoney] = useState(null);
+  const [balance, setBalance] = useState(null);
+  const [contributionAmount, setContributionAmount] = useState(null);
+  const [name, setName] = useState('nickname');
   const [message, setMessage] = useState('');
   const [isDone, setIsDone] = useState(false);
-  const [name, setName] = useState('nickname');
-
+  
+  // 축하메시지 set
   const handleMessageChange = (e) => {
     setMessage(e.target.value);
   };
 
+  // 닉네임/익명 여부 set
   const handleRadioChange = (e) => {
     setName(e.target.value);
   };
 
+  // 펀딩 정보 조회
+  const readFundingInfo = async () => {
+    try {
+      const res = await getFundingInfo(fundingId);
+      const giftList = res.data.giftList;
+      const nowMoney = res.data.nowMoney ? res.data.nowMoney : 0;
+      setGiftList(giftList);
+      setNowMoney(nowMoney);
+      setBalance(giftList[giftList.length - 1].price - nowMoney);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  // 펀딩 참여
+  const createFundingJoin = async () => {
+    const name = 'nickname' ? false : true;
+    try {
+      const res = await postFundingJoin(
+        fundingId,
+        contributionAmount,
+        name,
+        message,
+      );
+      navigate('참여 완료 페이지 이동');
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  // 참여 가능한 금액 입력 시 결제 버튼 활성화
   useEffect(() => {
-    price <= balance ? setIsDone(true) : setIsDone(false);
-  }, [price, balance]);
+    contributionAmount <= balance ? setIsDone(true) : setIsDone(false);
+  }, [contributionAmount, balance]);
+
+  // 최초 렌더링 데이터 read
+  useEffect(() => {
+    readFundingInfo();
+  }, []);
 
   return (
     <>
@@ -40,9 +77,15 @@ const FundingJoinPage = () => {
         <FundingPercentage
           type='info'
           color='var(--orange-pri)'
-          balance={price ? balance - parseInt(price) : balance}
           giftList={giftList}
-          joinPrice={price && isDone ? price : undefined}
+          nowMoney={
+            contributionAmount && isDone
+              ? nowMoney + parseInt(contributionAmount)
+              : nowMoney
+          }
+          joinPrice={
+            contributionAmount && isDone ? contributionAmount : undefined
+          }
         />
         <SForm>
           <SContainer>
@@ -52,11 +95,11 @@ const FundingJoinPage = () => {
             </SLabel>
             <PriceInputComponent
               focusColor='var(--orange-pri)'
-              price={price}
-              setPrice={setPrice}
+              price={contributionAmount}
+              setPrice={setContributionAmount}
               placeholder='펀딩에 참여할 금액을 입력해 주세요'
             />
-            {price > balance && (
+            {balance && contributionAmount > balance && (
               <SWarningSpan>
                 {addComma(balance)}원보다 적은 금액을 입력해 주세요
               </SWarningSpan>
@@ -103,13 +146,14 @@ const FundingJoinPage = () => {
       </SLayout>
       <BottomBackgroundComponent
         Button={
-          <ButtonComponent
-            btnInfo={
-              price && isDone
-                ? { text: '결제하기', color: 'orange' }
-                : { text: '결제하기' }
-            }
-          />
+          contributionAmount && isDone ? (
+            <ButtonComponent
+              btnInfo={{ text: '결제하기', color: 'orange' }}
+              onClick={createFundingJoin}
+            />
+          ) : (
+            <ButtonComponent btnInfo={{ text: '결제하기' }} />
+          )
         }
       />
     </>

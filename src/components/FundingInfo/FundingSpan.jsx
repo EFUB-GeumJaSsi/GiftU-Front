@@ -1,15 +1,14 @@
 import styled from 'styled-components';
 
-const FundingSpan = ({
-  color = 'jade',
-  name = '김이화',
-  startDate = '2023.04.01',
-  endDate = '2023.04.25',
-}) => {
+const FundingSpan = ({ color, name, startDate, endDate }) => {
+  const replaceHyphen = (it) => {
+    return it && it.replaceAll('-', '.');
+  };
+
   return (
     <SLayout>
       <SContainer>
-        {color === 'orange' ? (
+        {color === 'var(--orange-pri)' ? (
           <STitleSpan>선물 수령인</STitleSpan>
         ) : (
           <STitleSpan>펀딩 개설자</STitleSpan>
@@ -19,7 +18,7 @@ const FundingSpan = ({
       <SContainer>
         <STitleSpan>펀딩 기간</STitleSpan>
         <STextSpan>
-          {startDate} ~ {endDate}
+          {replaceHyphen(startDate)} ~ {replaceHyphen(endDate)}
         </STextSpan>
       </SContainer>
     </SLayout>

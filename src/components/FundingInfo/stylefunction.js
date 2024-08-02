@@ -1,5 +1,8 @@
 const getColor = (props) => {
-  if (props.nextIdx === props.idx) return 'var(--gray-500)';
+  if (props.percent == 100 && props.length === props.idx - 1)
+    return props.color;
+
+  if (props.$nextIdx === props.idx) return 'var(--gray-500)';
 
   if (props.idx === 'join') return 'var(--orange-pri)';
 
@@ -23,12 +26,16 @@ const getBackgroundColor = (props) => {
 };
 
 const getOpacity = (props) => {
-  if (props.idx == props.selected) return '1';
+  if (
+    props.idx == props.selected ||
+    (props.percent == 100 && props.length === props.idx - 1)
+  )
+    return '1';
 
   if (props.joinPrice && props.idx !== 'join') return '0';
 
   if (
-    props.idx === props.nextIdx ||
+    props.idx === props.$nextIdx ||
     props.idx === 'join' ||
     props.num === props.length
   ) {

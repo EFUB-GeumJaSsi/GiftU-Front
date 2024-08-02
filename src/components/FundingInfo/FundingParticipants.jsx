@@ -1,29 +1,15 @@
 import styled from 'styled-components';
 import { ReactComponent as ProfileDefault } from '../../assets/common/profile_default.svg';
 
-const FundingParticipants = ({
-  name = '김이화',
-  list = [
-    {
-      image:
-        'https://health.chosun.com/site/data/img_dir/2023/07/17/2023071701753_0.jpg',
-      name: '김이화',
-    },
-    { image: '', name: '이름은최대10글자' },
-    { image: '', name: '이름은최대10글자' },
-    { image: '', name: '이름은최대10글자' },
-    { image: '', name: '이름은최대10글자' },
-    { image: '', name: '이름은최대10글자' },
-  ],
-}) => {
+const FundingParticipants = ({ list }) => {
   const participantItem = (it, idx) => (
     <SItemContainer key={idx}>
-      {it.image ? (
-        <SImg src={it.image} alt='profile' />
+      {it.userImageUrl ? (
+        <SImg src={it.userImageUrl} alt='profile' />
       ) : (
         <SProfileDefault alt='default' />
       )}
-      <SNameSpan>{it.name}</SNameSpan>
+      <SNameSpan>{it.nickname}</SNameSpan>
     </SItemContainer>
   );
 
@@ -31,13 +17,22 @@ const FundingParticipants = ({
     <SLayout>
       <STextContainer>
         <STitleSpan>{list.length}명이 참여했어요!</STitleSpan>
-        <STextSpan>
-          가장 많이 기여한 사람은 <SBoldTextSpan>{name}</SBoldTextSpan> 님이에요
-        </STextSpan>
+        {list.length > 0 && (
+          <STextSpan>
+            가장 많이 기여한 사람은 <SBoldTextSpan>{list[0].nickname}</SBoldTextSpan>{' '}
+            님이에요
+          </STextSpan>
+        )}
       </STextContainer>
-      <SParticipantsContainer>
-        {list.map((it, idx) => participantItem(it, idx))}
-      </SParticipantsContainer>
+      {list.length > 0 ? (
+        <SParticipantsContainer>
+          {list.map((it, idx) => participantItem(it, idx))}
+        </SParticipantsContainer>
+      ) : (
+        <SWrapper>
+          <STextSpan>아직 참여한 사람이 없어요</STextSpan>
+        </SWrapper>
+      )}
     </SLayout>
   );
 };
@@ -117,6 +112,12 @@ const SNameSpan = styled.span`
   font-style: normal;
   font-weight: 500;
   line-height: 120%;
+`;
+const SWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
 `;
 
 export default FundingParticipants;

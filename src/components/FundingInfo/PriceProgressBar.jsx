@@ -4,7 +4,7 @@ import { addComma } from '../../components/FundingInfo/FundingPercentage';
 import { getColor, getBackgroundColor, getOpacity } from './stylefunction';
 
 const PriceProgressBar = ({ type, color, giftList, balance, joinPrice }) => {
-  const maxPrice = giftList.length > 0 && giftList[giftList.length - 1].price;
+  const maxPrice = giftList && giftList[giftList.length - 1].price;
   const nowPrice = maxPrice - balance;
   const percent = Math.round(((maxPrice - balance) / maxPrice) * 100);
   const [nextPrice, setNextPrice] = useState({
@@ -13,9 +13,11 @@ const PriceProgressBar = ({ type, color, giftList, balance, joinPrice }) => {
   });
   const [selected, setSelected] = useState(null);
 
+  // 현재 달성한 금액과 가장 가까운 다음 달성 목표 찾기
   const findNextPrice = () => {
-    const nextItem = giftList.find((it) => it.price > nowPrice);
-    const nextIdx = giftList.findIndex((it) => it.price > nowPrice) + 1;
+    const nextItem = giftList && giftList.find((it) => it.price > nowPrice);
+    const nextIdx =
+      giftList && giftList.findIndex((it) => it.price > nowPrice) + 1;
     return { nextItem, nextIdx };
   };
 
@@ -44,11 +46,12 @@ const PriceProgressBar = ({ type, color, giftList, balance, joinPrice }) => {
         color={color}
         getColor={getColor}
         getOpacity={getOpacity}
-        length={giftList.length - 1}
+        length={giftList && giftList.length - 1}
         num={it.num && it.num}
-        nextIdx={nextPrice.idx}
         joinPrice={joinPrice}
+        $nextIdx={nextPrice.idx}
         selected={selected}
+        percent={percent}
       >
         {addComma(it.price)}원
       </SPointSpan>
@@ -57,7 +60,7 @@ const PriceProgressBar = ({ type, color, giftList, balance, joinPrice }) => {
         type={type}
         color={color}
         getBackgroundColor={getBackgroundColor}
-        length={giftList.length - 1}
+        length={giftList && giftList.length - 1}
         num={it.num && it.num}
         price={it.price}
         balance={nowPrice}
@@ -77,10 +80,11 @@ const PriceProgressBar = ({ type, color, giftList, balance, joinPrice }) => {
         color={color}
       />
       <ProgressPoint it={{ price: 0 }} type='none' />
-      {giftList.map((it, idx) => (
-        <ProgressPoint key={idx} it={it} idx={idx} type={type} />
-      ))}
-      {joinPrice && nowPrice <= maxPrice && (
+      {giftList &&
+        giftList.map((it, idx) => (
+          <ProgressPoint key={idx} it={it} idx={idx} type={type} />
+        ))}
+      {joinPrice > 0 && nowPrice <= maxPrice && (
         <ProgressPoint it={{ price: nowPrice }} idx='join' type={type} />
       )}
     </SContainer>
