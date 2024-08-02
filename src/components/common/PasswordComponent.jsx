@@ -16,8 +16,10 @@
 import styled from 'styled-components';
 import { useRef, useState } from 'react';
 import BottomSheetComponent from '../../components/common/BottomSheetComponent';
+import { postPassword } from '../../api/funding';
 
 const PasswordComponent = ({
+  fundingId,
   setBottomSheetShow,
   passwordSet,
   validPassword,
@@ -28,6 +30,17 @@ const PasswordComponent = ({
   const [password, setPassword] = useState(['', '', '', '']);
   const inputRefs = useRef([]);
   const [errorMessage, setErrorMessage] = useState('');
+
+  // 패스워드 일치 여부 확인
+  const readPassword = async () => {
+    try {
+      const res = await postPassword(fundingId, password.join(''));
+      return true;
+    } catch (e) {
+      console.log(e);
+      return false;
+    }
+  };
 
   const handlePasswordChange = (e, index) => {
     const { value } = e.target;
@@ -49,15 +62,22 @@ const PasswordComponent = ({
 
   const isPasswordComplete = password.every((digit) => digit !== '');
 
-  const handlePasswordSubmit = () => {
+  const handlePasswordSubmit = async () => {
+    // 패스워드 등록하는 경우
     const enteredPassword = password.join('');
     if (passwordExact === 'Set') {
       passwordSet(enteredPassword);
-    } else if (enteredPassword !== passwordExact) {
-      setErrorMessage('비밀번호가 틀립니다.');
-    } else {
+      return;
+    }
+
+    // 패스워드 확인하는 경우
+    const res = await readPassword();
+    if (res) {
       setErrorMessage('');
       validPassword();
+    } else {
+      setPassword(['', '', '', '']);
+      setErrorMessage('비밀번호를 다시 입력해 주세요.');
     }
   };
 
@@ -89,7 +109,6 @@ const PasswordComponent = ({
         ))}
       </SPasswordInputContainer>
       {errorMessage && <STextWrapper>{errorMessage}</STextWrapper>}
-
       <SSecondaryButton
         type='button'
         disabled={!isPasswordComplete}
