@@ -1,14 +1,54 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import BackHeaderComponent from '../../components/common/BackHeaderComponent';
 import FundingParticipants from '../../components/FundingInfo/FundingParticipants';
 import ButtonComponent from '../../components/common/ButtonComponent';
 import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
+import { postReview, getReview, patchReview } from '../../api/review';
+
 const ReviewEditPage = () => {
+  const { fundingId } = useParams();
   const [reviewText, setReviewText] = useState('');
   const handleInputChange = (e) => {
     setReviewText(e.target.value);
   };
+  const createReview = async (fundingId, reviewText) => {
+    try {
+      const response = await postReview(fundingId, reviewText);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const readReview = async (fundingId) => {
+    try {
+      const response = await getReview(fundingId);
+      if ((response.data.reviewContent = '')) setReviewText([]);
+      else setReviewText(response.data.reviewContent);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const updateReview = async (fundingId, reviewText) => {
+    try {
+      const response = await patchReview(fundingId, reviewText);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    readReview(fundingId);
+  }, []);
+
+  const handleFormSubmit = () => {
+    createReview(fundingId, reviewText);
+  };
+  //updateReview(fundingId, reviewText);
+  //else
   const Btn = (
     <ButtonComponent
       btnInfo={{
@@ -16,6 +56,7 @@ const ReviewEditPage = () => {
         width: '335px',
         color: reviewText ? 'jade' : 'gray',
       }}
+      onClick={handleFormSubmit}
     />
   );
   return (
