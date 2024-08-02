@@ -1,68 +1,97 @@
-import React from 'react';
 import styled from 'styled-components';
+import { ReactComponent as ProfileIcon } from '../../assets/common/profile_default.svg';
 
-const NotificationItem = ({ image, name, message, time }) => {
+const NotificationItem = ({ image, name, message, time, onClick }) => {
   return (
-    <ItemBox>
-      <img src={image}></img>
-      <TextBox>
-        <Text>
-          <Name>{name}</Name>
-          <Message>{message}</Message>
-        </Text>
-        <Time>{time}</Time>
-      </TextBox>
-    </ItemBox>
+    <SLayout onClick={onClick}>
+      {image === 'default' ? (
+        <StyledProfileIcon />
+      ) : (
+        <SImg src={image} alt='Profile' />
+      )}
+      <STextContainer>
+        <STextboxContainer>
+          <SNameWrapper>{name}</SNameWrapper>
+          <SMessageWrapper>{message}</SMessageWrapper>
+        </STextboxContainer>
+        <STimeWrapper>{time}</STimeWrapper>
+      </STextContainer>
+    </SLayout>
   );
 };
-export default NotificationItem;
 
-const ItemBox = styled.div`
-  img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: #d4d4d4;
-  }
+const SLayout = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  gap: 10px;
+
   width: 335px;
   height: 72px;
-  gap: 10px;
+
   border-bottom: 1px solid var(--gray-100);
+
+  cursor: pointer;
 `;
-const TextBox = styled.div`
+
+const SImg = styled.img`
+  width: 40px;
+  height: 40px;
+
+  border-radius: 50%;
+  background-color: #d4d4d4;
+`;
+
+const StyledProfileIcon = styled(ProfileIcon)`
+  width: 40px;
+  height: 40px;
+
+  border-radius: 50%;
+  background-color: var(--gray-300);
+`;
+
+const STextContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 5px;
 `;
-const Text = styled.div`
+
+const STextboxContainer = styled.div`
   display: flex;
   flex-direction: row;
-  font-size: 16px;
   gap: 4px;
+
   width: 268px;
   height: 22px;
+
+  font-size: 16px;
+
   overflow: hidden;
 `;
-const Time = styled.div`
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--gray-500);
-`;
-const Name = styled.div`
+
+const SNameWrapper = styled.div`
   font-weight: 500;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 40%;
 `;
-const Message = styled.div`
+
+const SMessageWrapper = styled.div`
+  max-width: 50%;
+
   font-weight: 400;
   white-space: nowrap;
-  overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 50%;
+
+  overflow: hidden;
 `;
+
+const STimeWrapper = styled.div`
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--gray-500);
+`;
+
+export default NotificationItem;

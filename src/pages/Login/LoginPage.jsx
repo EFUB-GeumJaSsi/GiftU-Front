@@ -1,51 +1,46 @@
 import styled from 'styled-components';
-import giftu from '../../assets/Login/giftu_logo.svg';
-import { ReactComponent as Kakao } from '../../assets/Login/kakao_logo.svg';
+import { KAKAO_AUTH_URL } from '../../api/oauth';
+import { ReactComponent as GiftuLogo } from '../../assets/Login/giftu_logo.svg';
+import kakao_logo from '../../assets/Login/kakao_logo.svg';
 
 const LoginPage = () => {
   return (
-    <Container>
-      <Logo src={giftu} />
-      <Button>
-        <Kakao />
-        카카오 로그인
-      </Button>
-    </Container>
+    <SLayout>
+      <SGiftuLogo />
+      <SKakaoLogin href={KAKAO_AUTH_URL}>카카오 로그인</SKakaoLogin>
+    </SLayout>
   );
 };
 
-const Container = styled.div`
+const SLayout = styled.div`
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
   justify-content: center;
+
+  height: 100%;
   gap: 22%;
-
-  height: 100vh;
-
-  box-sizing: border-box;
 `;
-const Logo = styled.img`
+const SGiftuLogo = styled(GiftuLogo)`
   width: 200px;
-  height: 135px;
 `;
-const Button = styled.button`
+const SKakaoLogin = styled.a`
   display: flex;
-  flex-flow: row nowrap;
+  justify-content: center;
   align-items: center;
-  vertical-align: middle;
-  gap: 66px;
 
   width: 280px;
   height: 48px;
-  padding: 14px;
 
   border-radius: 6px;
   background-color: #fee500;
+  background-image: url(${kakao_logo});
+  background-repeat: no-repeat;
+  background-position: 14px center;
 
   color: #181600;
   font-size: 15px;
-  font-weight: 400;
+  font-weight: 600;
 `;
 
 export default LoginPage;
