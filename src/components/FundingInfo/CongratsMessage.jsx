@@ -4,10 +4,10 @@ import { forwardRef } from 'react';
 const CongratsMessage = (props, ref) => {
   return (
     <SLayout ref={ref}>
-      {props.list.map((it, idx) => (
+      {props.list && props.list.map((it, idx) => (
         <SContainer key={idx}>
-          <STitleSpan>{it.name}</STitleSpan>
-          <STextSpan>{it.message}</STextSpan>
+          <STitleSpan>{it.nickname}</STitleSpan>
+          <STextSpan>{it.message ? it.message : '펀딩에 참여했어요!'}</STextSpan>
         </SContainer>
       ))}
     </SLayout>

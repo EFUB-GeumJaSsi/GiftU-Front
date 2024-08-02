@@ -41,8 +41,7 @@ const STagSpan = styled.span`
 
   padding: 4px 12px;
   border-radius: 20px;
-  background-color: ${(props) =>
-    props.color === 'orange' ? 'var(--orange-pri)' : 'var(--jade-pri)'};
+  background-color: ${(props) => props.color};
 
   color: var(--white);
   font-size: 16px;

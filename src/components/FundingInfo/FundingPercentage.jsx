@@ -1,6 +1,6 @@
-// 축하메시지 수정 페이지에서 사용할 때 color, balance, giftList, joinPrice 넘겨주세요!
+// 축하메시지 수정 페이지에서 사용할 때 color, nowMoney, giftList, joinPrice 넘겨주세요!
 // color(string): 프로그레스 바 색
-// balance(number): 달성까지 남은 금액
+// nowMoney(number): 지금까지 펀딩된 금액
 // giftList(list): 가격대별 선물 리스트, 가격 오름차순 정렬
 // joinPrice(number): 펀딩 참여자가 참여한 금액
 
@@ -17,21 +17,21 @@ import { ReactComponent as Fold } from '../../assets/FundingInfo/fold 1.svg';
 
 const FundingPercentage = ({
   type,
-  color,
-  balance,
+  color = 'var(--gray-400)',
+  nowMoney,
   giftList,
   joinPrice,
   setIsTrue,
 }) => {
-  const maxPrice = giftList[giftList.length - 1].price;
-  const percent = Math.round(((maxPrice - balance) / maxPrice) * 100);
-  const [list, setList] = useState(giftList ? giftList : []);
+  const maxPrice = giftList && giftList[giftList.length - 1].price;
+  const percent = Math.round((nowMoney / maxPrice) * 100);
+  const balance = maxPrice - nowMoney;
   const [isClicked, setIsClicked] = useState(type === 'add' ? true : false);
 
   // GiftAddPage 삭제버튼핸들러
   const handleItemDelete = (e) => {
     const { id } = e.target;
-    const targetIdx = list.findIndex((it, idx) => idx === parseInt(id) - 1);
+    const targetIdx = giftList.findIndex((it, idx) => idx === parseInt(id) - 1);
 
     if (targetIdx >= 0) {
       updateList(targetIdx, id);
@@ -40,9 +40,9 @@ const FundingPercentage = ({
 
   // GiftAddPage 삭제할 아이템 제외 리스트 정리
   const updateList = (targetIdx, id) => {
-    const targetNum = list[targetIdx].num;
+    const targetNum = giftList[targetIdx].num;
 
-    const newList = list.reduce((result, it, idx) => {
+    const newList = giftList.reduce((result, it, idx) => {
       if (idx === parseInt(id) - 1) return result;
       if (it.num >= targetNum) {
         result.push({ ...it, num: it.num - 1 });
@@ -58,13 +58,13 @@ const FundingPercentage = ({
   // GiftAddPage 펀딩 만들기 버튼 활성화/비활성화 여부
   useEffect(() => {
     if (setIsTrue) {
-      if (list.length === 0) {
+      if (giftList.length === 0) {
         setIsTrue(false);
       } else {
         setIsTrue(true);
       }
     }
-  }, [setIsTrue, list]);
+  }, [setIsTrue, giftList]);
 
   const Text = () => {
     const EndedText = (
@@ -88,26 +88,26 @@ const FundingPercentage = ({
     );
 
     const AddGiftText = (
-      <SSmallTextSpan>총 {list.length}개의 선물</SSmallTextSpan>
+      <SSmallTextSpan>
+        총 {giftList ? giftList.length : 0}개의 선물
+      </SSmallTextSpan>
     );
 
     return type === 'add'
       ? AddGiftText
-      : balance == 0
+      : parseInt(balance) === 0
         ? EndedText
         : OngoingText;
   };
 
   const GiftItem = ({ it, idx }) => (
-    <SItemContainer idx={idx + 1} length={list.length}>
-      <SImg src={it.image} alt='img' />
+    <SItemContainer idx={idx + 1} length={giftList.length}>
+      <SImg src={it.giftImageUrl} alt='img' />
       <SItemTextContainer>
-        <SItemTextSpan>{it.title}</SItemTextSpan>
+        <SItemTextSpan>{it.giftName}</SItemTextSpan>
         <SItemTextSpan>{addComma(it.price)}원</SItemTextSpan>
       </SItemTextContainer>
-      {type === 'add' && (
-        <DeleteBtn id={idx + 1} idx={idx + 1} onClick={handleItemDelete} />
-      )}
+      {type === 'add' && <DeleteBtn id={idx + 1} onClick={handleItemDelete} />}
     </SItemContainer>
   );
 
@@ -119,9 +119,9 @@ const FundingPercentage = ({
       <PriceProgressBar
         type={type}
         color={color}
-        giftList={list}
-        balance={balance}
+        giftList={giftList}
         joinPrice={joinPrice}
+        balance={balance}
       />
       <SButtonContainer onClick={() => setIsClicked(!isClicked)}>
         <SBtn clicked={isClicked} color={color}>
@@ -131,10 +131,10 @@ const FundingPercentage = ({
       </SButtonContainer>
       {isClicked && (
         <SItemLayout>
-          {list.length === 0 ? (
+          {giftList.length === 0 ? (
             <SNoGiftSpan>추가된 선물이 없습니다</SNoGiftSpan>
           ) : (
-            list.map((it, idx) => <GiftItem key={idx} it={it} idx={idx} />)
+            giftList.map((it, idx) => <GiftItem key={idx} it={it} idx={idx} />)
           )}
         </SItemLayout>
       )}

@@ -1,9 +1,6 @@
 import styled from 'styled-components';
 
-const FundingComment = ({
-  color,
-  comment = '내가 남긴 후기 내용이 표시되는 공간 글자수는 최대 120자까지 남길 수 있고 줄간격은 140% 스타일은 Body/B3-Medium 입니다 내가 남긴 후기 내용이 표시되는 공간 내가 남긴 후기 내용이 표시되는 공간',
-}) => {
+const FundingComment = ({ color, comment }) => {
   return (
     <SContainer color={color}>
       <STitleSpan>선물 후기</STitleSpan>
@@ -37,7 +34,7 @@ const STitleSpan = styled.span`
 `;
 const STextSpan = styled.p`
   width: 291px;
-  height: 78px;
+  max-height: 78px;
 
   color: var(--black);
   font-size: 14px;

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import { ReactComponent as Next } from '../../assets/FundingInfo/icn_back.svg';
 
 // 후기 작성
@@ -17,33 +18,29 @@ const GoWriteCommentButton = ({ color, onClick }) => {
 // 축하메시지 작성
 const GoWriteMessageButton = ({
   color,
-  price = '5,000',
+  price,
   onClick,
   wroteMessage,
   isEnd,
 }) => {
+  const navigate = useNavigate();
+
   return (
-    <SLayout color={color} onClick={onClick}>
+    <SLayout
+      color={color}
+      onClick={
+        wroteMessage ? onClick : () => navigate('축하 메시지 수정 페이지')
+      }
+    >
       <SContainer>
-        {wroteMessage || isEnd ? (
-          <>
-            <STextSpan color={color}>
-              펀딩에 <SEmphaSpan>{price}원</SEmphaSpan> 기여했어요
-            </STextSpan>
-            <SBigTextSpan color={color}>
-              친구에게 남긴 메시지를 확인해 보세요!
-            </SBigTextSpan>
-          </>
-        ) : (
-          <>
-            <STextSpan color={color}>
-              펀딩에 <SEmphaSpan>{price}원</SEmphaSpan> 기여했어요
-            </STextSpan>
-            <SBigTextSpan color={color}>
-              선물 받을 친구에게 메시지를 남겨보세요!
-            </SBigTextSpan>
-          </>
-        )}
+        <STextSpan color={color}>
+          펀딩에 <SEmphaSpan>{price}원</SEmphaSpan> 기여했어요
+        </STextSpan>
+        <SBigTextSpan color={color}>
+          {wroteMessage || isEnd
+            ? '친구에게 남긴 메시지를 확인해 보세요!'
+            : '선물 받을 친구에게 메시지를 남겨보세요!'}
+        </SBigTextSpan>
       </SContainer>
       <NextBtn color={color} />
     </SLayout>
@@ -61,7 +58,9 @@ const SLayout = styled.button`
 
   border-radius: 16px;
   background: ${(props) =>
-    props.color === 'orange' ? 'var(--orange-sec)' : 'var(--jade-pri)'};
+    props.color === 'var(--orange-pri)'
+      ? 'var(--orange-sec)'
+      : 'var(--jade-pri)'};
 `;
 const SContainer = styled.div`
   display: flex;
@@ -69,7 +68,8 @@ const SContainer = styled.div`
   gap: 4px;
 `;
 const STextSpan = styled.span`
-  color: ${(props) => (props.color ? 'var(--gray-500)' : 'var(--white)')};
+  color: ${(props) =>
+    props.color === 'var(--orange-pri)' ? 'var(--gray-500)' : 'var(--white)'};
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -89,7 +89,7 @@ const SBigTextSpan = styled(STextSpan)`
 `;
 const NextBtn = styled(Next)`
   fill: ${(props) =>
-    props.color === 'orange' ? 'var(--orange-pri)' : 'var(--white)'};
+    props.color === 'var(--orange-pri)' ? 'var(--orange-pri)' : 'var(--white)'};
 `;
 
 export { GoWriteCommentButton, GoWriteMessageButton };
