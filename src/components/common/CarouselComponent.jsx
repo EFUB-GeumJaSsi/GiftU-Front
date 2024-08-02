@@ -56,23 +56,14 @@ const CarouselComponent = ({ pageLength, pageWidth, children }) => {
     <SLayout $pageWidth={pageWidth}>
       <SContentContainer
         id='carousel'
-        onPointerDown={(event) => {
-          setFirstX(event.clientX);
-        }}
-        onPointerUp={(event) => {
-          setLastX(event.clientX);
-        }}
-        onTouchStart={(event) => {
-          setFirstX(event.changedTouches[0].clientX);
-        }}
-        onTouchEnd={(event) => {
-          setLastX(event.changedTouches[0].clientX);
-        }}
-        $currentPage={currentPage}
+        onPointerDown={(event) => setFirstX(event.clientX)}
+        onPointerUp={(event) => setLastX(event.clientX)}
+        onTouchStart={(event) => setFirstX(event.changedTouches[0].clientX)}
+        onTouchEnd={(event) => setLastX(event.changedTouches[0].clientX)}
       >
         {children}
       </SContentContainer>
-      <SPaginationFieldset>
+      <SPaginationFieldset $pageLength={pageLength}>
         {Array.from({ length: pageLength }, (v, i) => i).map((pageNumber) => {
           return (
             <SRadioInput
@@ -113,6 +104,8 @@ const SContentContainer = styled.div`
   flex-flow: row nowrap;
 `;
 const SPaginationFieldset = styled.fieldset`
+  visibility: ${({ $pageLength }) =>
+    $pageLength === 1 ? 'hidden' : 'visible'};
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;

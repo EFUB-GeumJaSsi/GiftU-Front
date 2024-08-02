@@ -1,120 +1,98 @@
 /*
-<SFundingContainer>
+<SFundingListContainer>
   {fundingList.map((funding, index) => (
-      <FundingComponent
-        result={funding}
-        key={index}
-        onClick={() => handleClick(funding)}
-       />
+    <FundingComponent data={funding} key={index} />
   ))}
-</SFundingContainer>
-겉을 SFundingListContainer로 감싸고 map을 이용하면 됩니다. 
-
-fundingList를 api로 받아와 fundingList로 넣어주면 됩니다. 
-const handleClick = (funding) => {
-    funding.status === 'IN_PROGRESS'
-      ? navigate(`/funding-detail/${funding.fundingId}/isOngoing`)
-      : navigate(`/funding-detail/${funding.fundingId}/end`);
-  };
-handleClick 부분은 이렇게 클릭하면 해당 펀딩의 세부 페이지로 가도록 연결해줍니다. 
-
+</SFundingListContainer>
+SFundingListContainer로 감싸고 map을 이용하면 됩니다. 
 */
 
 import styled from 'styled-components';
-import TagComponent from './TagComponent';
 import { useNavigate } from 'react-router-dom';
+import TagComponent from './TagComponent';
 
-const FundingComponent = ({ result, ...props }) => {
+const FundingComponent = ({ data, ...props }) => {
+  const navigate = useNavigate();
+
   return (
-    <SFundingContainer {...props}>
-      <SImageContainer>
-        <img src={result.fundingImageUrl} alt='funding' />
-        <STagWrapper>
-          {result.status === 'IN_PROGRESS' ? (
-            <TagComponent text='진행 중' color='jade' />
-          ) : (
-            <TagComponent text='종료' color='gray' />
-          )}
-        </STagWrapper>
-      </SImageContainer>
-      <STitleWrapper>{result.fundingTitle}</STitleWrapper>
+    <SLayout onClick={() => navigate(`/funding/${data.fundingId}`)} {...props}>
+      <SImg src={data.fundingImageUrl} alt='funding' />
+      <STagWrapper>
+        {data.status === 'IN_PROGRESS' ? (
+          <TagComponent text='진행 중' color='jade' />
+        ) : (
+          <TagComponent text='종료' color='gray' />
+        )}
+      </STagWrapper>
+      <STitleSpan>{data.fundingTitle}</STitleSpan>
       <STextContainer>
-        <STextWrapper id='label'>
-          <p id='label'>개설</p>
-          <p>{result.launcherNickname}</p>
-        </STextWrapper>
-        <STextWrapper>
-          <p id='label'>마감</p>
-          <p>{result.fundingEndDate}</p>
-        </STextWrapper>
+        <SGrayB3>개설</SGrayB3>
+        <SBlackB3>{data.launcherNickname}</SBlackB3>
+        <SGrayB3>마감</SGrayB3>
+        <SBlackB3>{data.fundingEndDate}</SBlackB3>
       </STextContainer>
-    </SFundingContainer>
+    </SLayout>
   );
 };
 
-const SFundingContainer = styled.div`
+const SLayout = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
 
-  width: 164px;
-  height: 266px;
+  padding: 8px;
+  gap: 12px;
 
   cursor: pointer;
 `;
-const SImageContainer = styled.div`
-  position: relative;
-
+const SImg = styled.img`
   width: 148px;
   height: 148px;
-  margin-top: 8px;
 
   border-radius: 16px;
 `;
 const STagWrapper = styled.div`
   position: absolute;
-  top: 12px;
-  right: 12px;
+  top: 20px;
+  right: 20px;
 `;
-const STitleWrapper = styled.p`
+const STitleSpan = styled.span`
+  display: -webkit-box;
+  overflow: hidden;
+
   width: 140px;
   height: 40px;
-  margin-top: 12px;
-  margin-bottom: 12px;
 
   font-size: 17px;
-  font-style: normal;
   font-weight: 700;
   line-height: 120%;
-
   text-overflow: ellipsis;
-  overflow: hidden;
-  display: -webkit-box;
+
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 `;
 const STextContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  width: 140px;
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  gap: 4px 8px;
 `;
-const STextWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 8px;
-
+const SB3 = styled.span`
   font-size: 14px;
-  font-style: normal;
   font-weight: 500;
   line-height: 120%;
+`;
+const SBlackB3 = styled(SB3)`
+  overflow: hidden;
 
-  p {
-    color: var(--black);
-  }
-  #label {
-    color: var(--gray-500);
-  }
+  width: 107px;
+
+  color: var(--black);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+`;
+const SGrayB3 = styled(SB3)`
+  color: var(--gray-500);
 `;
 
 export default FundingComponent;

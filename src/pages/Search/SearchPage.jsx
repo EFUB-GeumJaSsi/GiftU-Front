@@ -62,7 +62,7 @@ const SearchPage = () => {
                 </div>
                 <div>
                   {result.stateTag == '진행중' ? (
-                    <TagComponent text='진행중' color='orange' />
+                    <TagComponent text='진행 중' color='jade' />
                   ) : (
                     <TagComponent text='종료' color='gray' />
                   )}

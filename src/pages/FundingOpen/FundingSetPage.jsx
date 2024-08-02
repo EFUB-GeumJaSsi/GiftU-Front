@@ -1,17 +1,18 @@
-import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import DaumPostcode from 'react-daum-postcode';
+import { useState, useEffect, useContext } from 'react';
 import { useForm } from 'react-hook-form';
+import { DataContext, PageContext } from './IndexPage';
 import BackHeaderComponent from '../../components/common/BackHeaderComponent';
 import ButtonComponent from '../../components/common/ButtonComponent';
 import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
-import DaumPostcode from 'react-daum-postcode';
 
 const FundingSetPage = () => {
-  const [currentDate, setCurrentDate] = useState('');
+  const { setCurrentPage } = useContext(PageContext);
+  const { setFundingData } = useContext(DataContext);
+
   const [isOpen, setIsOpen] = useState(false);
   const [isAddressOpen, setIsAddressOpen] = useState(false);
-  const navigate = useNavigate();
   const [isButtonActive, setIsButtonActive] = useState(false);
   const {
     register,
@@ -23,8 +24,8 @@ const FundingSetPage = () => {
   } = useForm({
     defaultValues: {
       title: '',
-      detail: '',
-      date: '',
+      content: '',
+      endDate: '',
       name: '',
       phoneNumber: '',
       addressNumber: '',
@@ -33,17 +34,10 @@ const FundingSetPage = () => {
     },
     mode: 'onChange',
   });
-
-  useEffect(() => {
-    const today = new Date().toISOString().split('T')[0];
-    setCurrentDate(today);
-    setValue('currentDate', today);
-  }, [setValue]);
-
-  const onSubmit = (data) => {
-    navigate('/password-set', { state: { formData: data } });
-    console.log(data);
-  };
+  const title = watch('title');
+  const endDate = watch('endDate');
+  const name = watch('name');
+  const phoneNumber = watch('phoneNumber');
 
   const completeHandler = (data) => {
     setValue('addressNumber', data.zonecode);
@@ -51,26 +45,39 @@ const FundingSetPage = () => {
     setIsOpen(false);
     setIsAddressOpen(true);
   };
-
   const toggleHandler = () => {
     setIsOpen((prevOpenState) => !prevOpenState);
   };
+  const handleFormSubmit = () => {
+    setFundingData({
+      fundingTitle: null,
+      fundingContent: null,
+      fundingEndDate: null,
+      name: null,
+      phoneNumber: null,
+      addressNumber: null,
+      addressDetail1: null,
+      addressDetail2: null,
+    });
+    setCurrentPage('PasswordSetPage');
+  };
 
-  const title = watch('title');
-  const date = watch('date');
-  const name = watch('name');
-  const phoneNumber = watch('phoneNumber');
+  useEffect(() => {
+    const today = new Date().toISOString().split('T')[0];
+    setCurrentDate(today);
+    setValue('currentDate', today);
+  }, [setValue]);
 
   useEffect(() => {
     setIsButtonActive(
-      title !== '' && date !== '' && name !== '' && phoneNumber != '',
+      title !== '' && endDate !== '' && name !== '' && phoneNumber != '',
     );
-  }, [title, date, name, phoneNumber]);
+  }, [title, endDate, name, phoneNumber]);
 
   return (
     <SLayout>
-      <BackHeaderComponent />
-      <SForm onSubmit={handleSubmit(onSubmit)}>
+      <BackHeaderComponent onClick={() => setCurrentPage('GiftAddPage')} />
+      <SForm onSubmit={handleFormSubmit}>
         <fieldset>
           <SLabel htmlFor='title'>
             <p>제목</p>
@@ -93,12 +100,12 @@ const FundingSetPage = () => {
           )}
         </fieldset>
         <fieldset>
-          <SLabel htmlFor='detail'>
+          <SLabel htmlFor='content'>
             <p>펀딩 소개</p>
           </SLabel>
           <STextInput
-            id='detail'
-            {...register('detail', {
+            id='content'
+            {...register('content', {
               required: false,
               maxLength: {
                 value: 120,
@@ -107,8 +114,8 @@ const FundingSetPage = () => {
             })}
             placeholder='펀딩을 소개해 주세요'
           />
-          {errors.detail && (
-            <SWarningWrapper>{errors.detail.message}</SWarningWrapper>
+          {errors.content && (
+            <SWarningWrapper>{errors.content.message}</SWarningWrapper>
           )}
         </fieldset>
         <fieldset>
@@ -125,7 +132,7 @@ const FundingSetPage = () => {
               readOnly
             />
             <SDateInput
-              {...register('date', {
+              {...register('endDate', {
                 required: '날짜를 입력해주세요',
                 validate: (value) =>
                   value >= getValues('currentDate') ||
@@ -134,8 +141,8 @@ const FundingSetPage = () => {
               type='date'
             />
           </SDateContainer>
-          {errors.date && (
-            <SWarningWrapper>{errors.date.message}</SWarningWrapper>
+          {errors.endDate && (
+            <SWarningWrapper>{errors.endDate.message}</SWarningWrapper>
           )}
         </fieldset>
         <fieldset>
@@ -199,20 +206,20 @@ const FundingSetPage = () => {
             <SWarningWrapper>{errors.address.message}</SWarningWrapper>
           )}
         </fieldset>
+        <BottomBackgroundComponent
+          Button={
+            <ButtonComponent
+              type='submit'
+              disabled={!isValid}
+              btnInfo={{
+                text: '다음',
+                color: isValid ? 'jade' : 'gray',
+                width: '335px',
+              }}
+            />
+          }
+        />
       </SForm>
-      <BottomBackgroundComponent
-        Button={
-          <ButtonComponent
-            type='submit'
-            disabled={!isValid}
-            btnInfo={{
-              text: '다음',
-              color: isValid ? 'jade' : 'gray',
-              width: '335px',
-            }}
-          />
-        }
-      />
       {isOpen && (
         <SPostcodeContainer>
           <DaumPostcode
