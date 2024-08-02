@@ -66,7 +66,7 @@ const GiftSetPage = ({
             id='gift-price'
             maxLength='11'
             placeholder='선물의 가격을 입력해 주세요'
-            required
+            required={!price}
             focusColor='var(--jade-pri)'
             price={price}
             setPrice={setPrice}
@@ -80,7 +80,7 @@ const GiftSetPage = ({
             id='gift-url'
             placeholder='상품 링크를 붙여 넣어 주세요'
             value={url}
-            required
+            required={!url}
             onChange={(event) => setUrl(event.target.value)}
           />
         </fieldset>
@@ -95,7 +95,7 @@ const GiftSetPage = ({
             name='gift'
             id='gift-image'
             placeholder='+'
-            required
+            required={!imageFile}
             onChange={(event) => {
               event.target.files[0] && setImageFile(event.target.files[0]);
             }}
