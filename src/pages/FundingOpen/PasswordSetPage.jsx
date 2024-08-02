@@ -28,7 +28,6 @@ const PasswordSetPage = () => {
   const setPassword = (data) => {
     newPassword = data;
     console.log(newPassword, visibility);
-    navigate('/');
   };
   const isButtonDisabled = () => {
     if (visibility === 'public') {
