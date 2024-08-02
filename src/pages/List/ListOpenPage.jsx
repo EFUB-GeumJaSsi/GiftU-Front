@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import FundingComponent from '../../components/common/FundingComponent';
 import TagSelectComponent from '../../components/common/TagSelectComponent';
 import BackHeaderComponent from '../../components/common/BackHeaderComponent';
@@ -10,7 +9,6 @@ const ListOpenPage = () => {
   const [tag, setTag] = useState('전체');
   const tags = ['전체', '진행', '종료'];
   const [openList, setOpenList] = useState([]);
-  const navigate = useNavigate();
 
   const readOpenList = async (status) => {
     try {
@@ -30,10 +28,6 @@ const ListOpenPage = () => {
       readOpenList('TERMINATED');
     }
   }, [tag]);
-
-  const handleClick = (funding) => {
-    navigate(`/fundings/${funding.fundingId}`);
-  };
 
   return (
     <SLayout>
@@ -56,17 +50,14 @@ const ListOpenPage = () => {
       ) : (
         <SFundingContainer>
           {openList.map((funding, index) => (
-            <FundingComponent
-              result={funding}
-              key={index}
-              onClick={() => handleClick(funding)}
-            />
+            <FundingComponent data={funding} key={index} />
           ))}
         </SFundingContainer>
       )}
     </SLayout>
   );
 };
+
 const SLayout = styled.div`
   display: flex;
   height: 100%;
