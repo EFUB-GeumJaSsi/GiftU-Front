@@ -14,9 +14,8 @@ import NavComponent from '../../components/common/NavComponent.jsx';
 const FriendPage = () => {
   // 친구 페이지 데이터
   const [friendList, setFriendList] = useState([]);
-  const [carouselFriendList, setCarouselFriendList] = useState(null);
-  const chopedCarouselFriendList =
-    carouselFriendList && arrayChop(carouselFriendList, 2);
+  const [carouselFriendList, setCarouselFriendList] = useState([]);
+  const chopedCarouselFriendList = arrayChop(carouselFriendList, 2).slice(0, 3);
   // 바텀시트 관련
   const [bottomSheetShow, setBottomSheetShow] = useState(false);
   const [email, setEmail] = useState('');
@@ -68,7 +67,7 @@ const FriendPage = () => {
   return (
     <SLayout>
       <SH1 as='header'>친구</SH1>
-      {carouselFriendList && (
+      {carouselFriendList.length > 0 && (
         <SSection>
           <ST1>나에게 선물한 친구</ST1>
           <CarouselComponent
@@ -157,6 +156,7 @@ const FriendPage = () => {
                 btnInfo={
                   email ? { text: '완료', color: 'orange' } : { text: '완료' }
                 }
+                disabled={!email}
               />
             </SForm>
           </SBottomSheetContainer>
@@ -182,7 +182,6 @@ const SH3 = styled.h3`
   color: var(--black);
   font-size: 20px;
   font-weight: 600;
-  line-height: 140%;
 `;
 const ST1 = styled.h1`
   color: var(--black);
@@ -276,13 +275,15 @@ const SBottomSheetContainer = styled.div`
   flex-flow: column nowrap;
   align-items: center;
 
+  padding: 26px 20px 24px;
   gap: 32px;
 `;
 const STextContainer = styled.div`
   display: flex;
   flex-flow: column nowrap;
+  align-self: flex-start;
 
-  width: 327px;
+  margin-left: 4px;
   gap: 12px;
 `;
 const SForm = styled.form`
@@ -290,8 +291,7 @@ const SForm = styled.form`
   flex-flow: column nowrap;
   align-items: center;
 
-  width: fit-content;
-  gap: 60px;
+  gap: 80px;
 `;
 const SInput = styled.input`
   width: 327px;
