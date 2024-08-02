@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import FundingComponent from '../../components/common/FundingComponent';
 import TagSelectComponent from '../../components/common/TagSelectComponent';
 import BackHeaderComponent from '../../components/common/BackHeaderComponent';
@@ -10,7 +9,6 @@ const ListJoinPage = () => {
   const [tag, setTag] = useState('전체');
   const tags = ['전체', '진행', '종료'];
   const [joinList, setJoinList] = useState([]);
-  const navigate = useNavigate();
 
   const readJoinList = async (status) => {
     try {
@@ -30,10 +28,6 @@ const ListJoinPage = () => {
       readJoinList('TERMINATED');
     }
   }, [tag]);
-
-  const handleClick = (funding) => {
-    navigate(`/fundings/${funding.fundingId}`);
-  };
 
   return (
     <SLayout>
@@ -57,11 +51,7 @@ const ListJoinPage = () => {
       ) : (
         <SFundingContainer>
           {joinList.map((funding, index) => (
-            <FundingComponent
-              result={funding}
-              key={index}
-              onClick={() => handleClick(funding)}
-            />
+            <FundingComponent data={funding} key={index} />
           ))}
         </SFundingContainer>
       )}
@@ -75,12 +65,10 @@ const SLayout = styled.div`
   align-items: center;
   height: 100%;
 `;
-
 const SNotiItemWrapper = styled.div`
   margin-top: 24px;
   margin-bottom: 20px;
 `;
-
 const SFundingContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
