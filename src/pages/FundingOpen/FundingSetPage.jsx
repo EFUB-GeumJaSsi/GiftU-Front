@@ -11,6 +11,7 @@ const FundingSetPage = () => {
   const { setCurrentPage } = useContext(PageContext);
   const { setFundingData } = useContext(DataContext);
 
+  const [currentDate, setCurrentDate] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [isAddressOpen, setIsAddressOpen] = useState(false);
   const [isButtonActive, setIsButtonActive] = useState(false);
