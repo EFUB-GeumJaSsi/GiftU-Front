@@ -1,16 +1,16 @@
 /*
-  부모 컴포넌트에 패스워드가 유효하다면 어느 창으로 이동할지 passwordIsValid()로 설정해주시면 됩니다.
-   function passwordIsValid() {
-      navigate('/');
-  }
-  {bottomSheetShow && (
-    <PasswordComponent
-      setBottomSheetShow={setBottomSheetShow}
-      passwardExact={'1234'}
-      validPassword={() => passwordIsValid()}
-      color='orange'
-    />
-  )}
+부모 컴포넌트에 패스워드가 유효하다면 어느 창으로 이동할지 passwordIsValid()로 설정해주시면 됩니다.
+function passwordIsValid() {
+  navigate('/');
+}
+{bottomSheetShow && (
+  <PasswordComponent
+    color='orange'
+    passwardExact={'1234'}
+    validPassword={() => passwordIsValid()}
+    setBottomSheetShow={setBottomSheetShow}
+  />
+)}
 */
 
 import styled from 'styled-components';
@@ -19,13 +19,14 @@ import BottomSheetComponent from '../../components/common/BottomSheetComponent';
 import { postPassword } from '../../api/funding';
 
 const PasswordComponent = ({
-  fundingId,
-  setBottomSheetShow,
+  color,
+  passwordExact,
   passwordSet,
   validPassword,
+  fundingId,
   name,
-  passwordExact,
-  color,
+  setBottomSheetShow,
+  ...props
 }) => {
   const [password, setPassword] = useState(['', '', '', '']);
   const inputRefs = useRef([]);
@@ -85,103 +86,120 @@ const PasswordComponent = ({
     <BottomSheetComponent
       closeButton='cross'
       setBottomSheetShow={setBottomSheetShow}
-      style={{ position: 'absolute' }}
+      {...props}
     >
-      <STextContainer>
-        <h4>비밀번호 입력</h4>
-        {name ? (
-          <p>펀딩을 개설한 {name}님께 비밀번호를 요청하세요</p>
-        ) : (
-          <p>4자리 숫자를 입력해 주세요</p>
-        )}
-      </STextContainer>
-      <SPasswordInputContainer>
-        {password.map((digit, index) => (
-          <SPasswordInput
-            key={index}
-            type='text'
-            maxLength='1'
-            value={digit}
-            onChange={(e) => handlePasswordChange(e, index)}
-            ref={(el) => (inputRefs.current[index] = el)}
-            onKeyDown={(e) => handleKeyDown(e, index)}
-          />
-        ))}
-      </SPasswordInputContainer>
-      {errorMessage && <STextWrapper>{errorMessage}</STextWrapper>}
-      <SSecondaryButton
-        type='button'
-        disabled={!isPasswordComplete}
-        color={color}
-        onClick={() => handlePasswordSubmit()}
-      >
-        완료
-      </SSecondaryButton>
+      <SBottomSheetContainer>
+        <STextContainer>
+          <h4>비밀번호 입력</h4>
+          {name ? (
+            <p>펀딩을 개설한 {name}님께 비밀번호를 요청하세요</p>
+          ) : (
+            <p>4자리 숫자를 입력해 주세요</p>
+          )}
+        </STextContainer>
+        <SForm>
+          <SPasswordInputContainer>
+            {password.map((digit, index) => (
+              <SPasswordInput
+                key={index}
+                type='text'
+                maxLength='1'
+                value={digit}
+                onChange={(e) => handlePasswordChange(e, index)}
+                ref={(el) => (inputRefs.current[index] = el)}
+                onKeyDown={(e) => handleKeyDown(e, index)}
+              />
+            ))}
+          </SPasswordInputContainer>
+          {errorMessage && <SErrorSpan>{errorMessage}</SErrorSpan>}
+          {/* ButtonComponent 사용하기 */}
+          <SBtn
+            type='submit'
+            disabled={!isPasswordComplete}
+            color={color}
+            onClick={() => handlePasswordSubmit()}
+          >
+            완료
+          </SBtn>
+        </SForm>
+      </SBottomSheetContainer>
     </BottomSheetComponent>
   );
 };
 
+const SBottomSheetContainer = styled.div`
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+
+  padding: 26px 20px 24px;
+  gap: 32px;
+`;
 const STextContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  width: 100%;
-  margin-left: 24px;
-  margin-right: 24px;
+  flex-flow: column nowrap;
+  align-self: flex-start;
+
+  margin-left: 4px;
+  gap: 12px;
+
   h4 {
-    margin-bottom: 12px;
-    color: black;
+    color: var(--black);
     font-size: 20px;
-    font-style: normal;
     font-weight: 600;
-    line-height: 140%;
   }
+
   p {
     color: var(--gray-500);
     font-size: 14px;
-    font-style: normal;
     font-weight: 500;
-    line-height: 140%;
   }
+`;
+const SForm = styled.form`
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+
+  gap: 64px;
 `;
 const SPasswordInputContainer = styled.div`
   display: flex;
-  justify-content: center;
   gap: 8px;
-  width: 100%;
-  margin-top: 32px;
-  margin-bottom: 12px;
 `;
 const SPasswordInput = styled.input`
   width: 56px;
   height: 80px;
-  border: none;
-  font-size: 16px;
+
   border-radius: 4px;
-  background: var(--gray-100);
+  background-color: var(--gray-100);
+
+  color: var(--black);
+  font-size: 30px;
+  font-weight: 500;
   text-align: center;
 `;
-const SSecondaryButton = styled.button`
+const SBtn = styled.button`
   width: 335px;
-  height: 48px;
-  margin-left: 24px;
+  height: 56px;
+
+  border-radius: 40px;
   background-color: ${({ disabled, color }) => {
     if (disabled) return 'var(--gray-100)';
     return color === 'orange' ? 'var(--orange-pri)' : 'var(--jade-pri)';
   }};
+
   color: white;
   font-size: 16px;
   font-weight: 600;
-  border: none;
-  border-radius: 40px;
+
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
 `;
-const STextWrapper = styled.p`
+const SErrorSpan = styled.span`
   color: var(--red);
   text-align: center;
   margin-bottom: 35px;
 
   font-size: 14px;
-  font-style: normal;
   font-weight: 500;
   line-height: 120%;
 `;
