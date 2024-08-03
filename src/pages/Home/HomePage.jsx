@@ -4,12 +4,22 @@ import NavComponent from '../../components/common/NavComponent';
 import Calendar from '../../components/Home/Calendar';
 import FundingComponent from '../../components/common/FundingComponent';
 import icn_search from '../../assets/common/search.svg';
+import { getFriendsFundingList } from '../../api/funding';
 
 const HomePage = () => {
   const [possibleFundingList, setPossibleFundingList] = useState([]);
 
+  const readFriendsFundingList = async () => {
+    try {
+      const res = await getFriendsFundingList();
+      setPossibleFundingList(res.data.fundings);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   useEffect(() => {
-    setPossibleFundingList([]);
+    readFriendsFundingList();
   }, []);
 
   return (
