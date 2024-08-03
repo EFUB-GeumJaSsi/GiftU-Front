@@ -106,7 +106,7 @@ const FundingInfoPage = () => {
     }
   };
 
-  // 내가 쓴 리뷰 조회
+  // 리뷰 조회
   const readReview = async () => {
     try {
       const res = await getReview(data.fundingId);
@@ -150,12 +150,12 @@ const FundingInfoPage = () => {
     }
   }, [fundingId]);
 
-  // 종료되었고 내가 개설한 펀딩이면 readReview()
+  // 종료되었고 리뷰 존재하면 readReview()
   useEffect(() => {
-    if (isEnd && funding === 'open' && data.existedReview) {
+    if (isEnd && data.existedReview) {
       readReview();
     }
-  }, [isEnd, funding, data.existedReview]);
+  }, [funding, isEnd, data.existedReview]);
 
   const Btn = () => {
     // 내가 참여한
@@ -172,7 +172,7 @@ const FundingInfoPage = () => {
               width: '223px',
               color: 'orange',
             }}
-            onClick={() => navigate('수정페이지 이동')}
+            onClick={() => navigate(`/funding/${fundingId}/message/edit`)}
           />
         </SBtnContainer>
       );
@@ -188,11 +188,7 @@ const FundingInfoPage = () => {
                 : ' 선물 후기 작성하기',
               color: 'jade',
             }}
-            onClick={
-              data.existedReview
-                ? () => navigate('후기 수정 페이지 이동')
-                : () => navigate('후기 작성 페이지 이동')
-            }
+            onClick={() => navigate(`/funding/${fundingId}/review/edit`)}
           />
         );
       } else {
@@ -294,7 +290,6 @@ const FundingInfoPage = () => {
           color='orange'
           fundingId={fundingId}
           name={data.nickname}
-          passwordExact={getPassword}
           validPassword={() => setBottomSheetShow(false)}
           action='back' // 바텀시트 cross 버튼 클릭 시 뒤로가기 + background 이벤트리스너 비활성화
           setBottomSheetShow={setBottomSheetShow}
