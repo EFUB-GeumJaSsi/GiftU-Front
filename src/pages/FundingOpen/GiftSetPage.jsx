@@ -9,9 +9,9 @@ import icn_plus from '../../assets/FungingOpen/icn_plus.svg';
 
 const GiftSetPage = ({
   lastGiftData = {
-    giftName: null,
+    giftName: '',
     price: null,
-    giftUrl: null,
+    giftUrl: '',
   },
   lastImageData = null,
 }) => {
