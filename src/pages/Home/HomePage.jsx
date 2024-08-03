@@ -116,7 +116,8 @@ const SFundingUl = styled.ul`
   display: flex;
   flex-flow: row wrap;
 
-  gap: 8px;
+  width: 335px;
+  gap: 7px;
 `;
 
 export default HomePage;
