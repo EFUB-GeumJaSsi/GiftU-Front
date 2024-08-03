@@ -3,10 +3,12 @@ import { useState, useEffect } from 'react';
 import TagComponent from '../../components/common/TagComponent';
 import search from '../../assets/common/search.svg';
 import { getSearch } from '../../api/search';
+import { useNavigate } from 'react-router-dom';
 
 const SearchPage = () => {
   const [search, setSearch] = useState('');
   const [results, setResults] = useState([]);
+  const navigate = useNavigate();
 
   const onChange = (e) => {
     setSearch(e.target.value);
@@ -30,7 +32,6 @@ const SearchPage = () => {
       console.error(error);
     }
   };
-
   return (
     <SLayout>
       <SHeader>
@@ -49,7 +50,10 @@ const SearchPage = () => {
         <SOl>
           {results &&
             results.map((result, index) => (
-              <SResultItem key={index}>
+              <SResultItem
+                key={index}
+                onClick={() => navigate(`/funding/${result.fundingId}`)}
+              >
                 <SImg src={result.fundingImageUrl} />
                 <SContentWrapper>
                   <div id='title'>{result.fundingTitle}</div>
@@ -149,9 +153,10 @@ const SOl = styled.ol`
   margin: 0 auto;
   gap: 20px;
 `;
-const SResultItem = styled.div`
+const SResultItem = styled.button`
   display: flex;
   flex-direction: row;
+
   align-items: center;
 
   width: 332px;
@@ -167,7 +172,6 @@ const SImg = styled.img`
 const SContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   gap: 8px;
 
   width: 187px;
