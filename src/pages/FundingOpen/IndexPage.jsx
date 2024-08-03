@@ -5,6 +5,7 @@ import FundingSetPage from './FundingSetPage';
 import PasswordSetPage from './PasswordSetPage';
 import CompletePage from './CompletePage';
 import HomePage from '../Home/HomePage';
+import { postFunding } from '../../api/funding';
 
 // 데이터 관리
 const DataContext = createContext();
@@ -44,6 +45,19 @@ const PageRenderer = () => {
   const { currentPage } = useContext(PageContext);
   const { giftData, imageData } = useContext(DataContext);
 
+  /*여기부터 이찬희 작성*/
+  const handleFundingSubmission = async () => {
+    const request = { ...fundingData, gifts: giftData };
+    try {
+      const response = await postFunding(request, imageData);
+      console.log('펀딩 생성 성공', response.data);
+      setCurrentPage('HomePage');
+    } catch (error) {
+      console.error('펀딩 생성 오류', error);
+    }
+  };
+  /*여기까지*/
+
   switch (currentPage) {
     case 'GiftSetPage':
       return <GiftSetPage />;
@@ -61,7 +75,9 @@ const PageRenderer = () => {
     case 'PasswordSetPage':
       return <PasswordSetPage />;
     case 'CompletePage':
-      // 펀딩 개설 POST
+      /*여기부터 이찬희 작성*/
+      handleFundingSubmission();
+      /*여기까지*/
       return <CompletePage />;
     default:
       return <HomePage />;
