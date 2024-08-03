@@ -100,7 +100,7 @@ const PasswordComponent = ({
             <p>4자리 숫자를 입력해 주세요</p>
           )}
         </STextContainer>
-        <SForm errorMessage={errorMessage}>
+        <SForm $errorMessage={errorMessage}>
           <SPasswordInputContainer>
             {password.map((digit, index) => (
               <SPasswordInput
@@ -164,7 +164,7 @@ const SForm = styled.form`
   flex-flow: column nowrap;
   align-items: center;
 
-  gap: ${(props) => (props.errorMessage ? '0' : '64px')};
+  gap: ${(props) => (props.$errorMessage ? '0' : '64px')};
 `;
 const SPasswordInputContainer = styled.div`
   display: flex;
