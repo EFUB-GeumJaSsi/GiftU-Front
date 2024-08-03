@@ -14,6 +14,8 @@ const TagComponent = ({ text, color = 'gray' }) => {
 
 const SLayout = styled.div`
   padding: 4px 8px;
+  width: fit-content;
+  height: fit-content;
 
   border-radius: 20px;
   background-color: ${({ $color }) => $color[0]};
