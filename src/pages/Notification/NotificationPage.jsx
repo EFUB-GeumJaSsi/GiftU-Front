@@ -1,44 +1,52 @@
 import styled from 'styled-components';
-import { useState } from 'react';
-import NotificationItem from '../../components/Notification/NotificationItem';
+import { useState, useEffect } from 'react';
 import TagSelectComponent from '../../components/common/TagSelectComponent';
 import Modal from '../../components/common/ModalComponent';
 import { ReactComponent as IcnInfo } from '../../assets/Friend/icn_info.svg';
 import { ReactComponent as ProfileIcon } from '../../assets/common/profile_default.svg';
 import NavComponent from '../../components/common/NavComponent';
+import {
+  getAllNotice,
+  getFriendNotice,
+  getFundingNotice,
+} from '../../api/notice';
+import { postFriendAccept } from '../../api/friend';
+
+//현재시간에서 알림받은 시간 빼서 보여주는 코드
+const getTime = (timestamp) => {
+  const now = new Date();
+  const past = new Date(timestamp);
+  const diffInSeconds = Math.floor((now - past) / 1000);
+
+  const days = Math.floor(diffInSeconds / (3600 * 24));
+  const hours = Math.floor((diffInSeconds % (3600 * 24)) / 3600);
+  const minutes = Math.floor((diffInSeconds % 3600) / 60);
+
+  if (days > 0) {
+    return `${days}일 전`;
+  } else if (hours > 0) {
+    return `${hours}시간 전`;
+  } else if (minutes > 0) {
+    return `${minutes}분 전`;
+  } else {
+    return `방금 전`;
+  }
+};
 
 const NotificationPage = () => {
+  const [notificationList, setNotificationList] = useState([]);
   const [modalShow, setModalShow] = useState(false);
   const [modalContent, setModalContent] = useState(null);
   const [tag, setTag] = useState('전체');
-
   const tags = ['전체', '친구', '펀딩'];
+  const [friendTableId, setFriendTableId] = useState('');
+  const [time, setTime] = useState();
 
-  const notifications = [
-    {
-      image: 'default',
-      name: '닉네임은여기까지입니다',
-      message: '님과 친구가 되었습니다',
-      time: '00분 전',
-      type: '친구',
-    },
-    {
-      image: 'default',
-      name: '펀딩 이름',
-      message: '펀딩이 종료되었습니다',
-      time: '00시간 전',
-      type: '펀딩',
-    },
-  ];
-
+  //친구알림 모달창
   const friendNotiClick = (image, name) => {
     setModalContent(
       <SModalContainer>
-        {image === 'default' ? (
-          <StyledProfileIcon />
-        ) : (
-          <SImg src={image} alt='Profile' />
-        )}
+        {image === 'default' ? <StyledProfileIcon /> : <SImg src={image} />}
         <span>{name}</span>
         <span style={{ color: 'var(--black)' }}>친구를 추가하시겠어요?</span>
         <span style={{ fontSize: '12px' }}>
@@ -49,17 +57,124 @@ const NotificationPage = () => {
     setModalShow(true);
   };
 
+  //펀딩알림 클릭시 해당 펀딩 페이지로 이동
   const fundingNotiClick = () => {
     window.location.href = '/'; // 나중에 이동할 주소 넣어야함
   };
 
-  const filteredNotifications = notifications.filter((notification) => {
+  const filteredNotifications = notificationList.filter(() => {
     if (tag === '전체') return true;
-    if (tag === '친구' && notification.type === '친구') return true;
-    if (tag === '펀딩' && notification.type === '펀딩') return true;
+    if (tag === '친구') return true;
+    if (tag === '펀딩') return true;
     return false;
   });
 
+  useEffect(() => {
+    if (tag === '전체') {
+      readNotificationAll();
+    } else if (tag === '친구') {
+      readNotificationFriend();
+    } else if (tag === '펀딩') {
+      readNotificationFunding();
+    }
+  }, [tag]);
+
+  //전체알림 조회 API 연결
+  const readNotificationAll = async () => {
+    try {
+      const response = await getAllNotice();
+      setNotificationList(formatNotifications(response.data));
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  //친구알림 조회 API 연결
+  const readNotificationFriend = async () => {
+    try {
+      const response = await getFriendNotice();
+      const data = Array.isArray(response.data) ? response.data : [];
+      if (data.length === 0) {
+        setNotificationList([]);
+      } else
+        setNotificationList(
+          response.data.map((item) => ({
+            ...item,
+            time: getTime(item.updatedAt),
+            image: item.recieveUserImgUrl,
+            name: item.recieveUserNickname,
+            friendTableId: setFriendTableId(item.friendTableId),
+          })),
+        );
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  //펀딩알림 조회 API 연결
+  const readNotificationFunding = async () => {
+    try {
+      const response = await getFundingNotice();
+      setTime(response.data.now);
+      const fundingNotifications = [
+        ...response.data.fundingAchieve.map((item) => ({
+          ...item,
+          image: item.fundingImageUrl,
+          name: item.fundingTitle,
+          time: getTime(time),
+        })),
+        ...response.data.fundingDueDate.map((item) => ({
+          ...item,
+          image: item.fundingImageUrl,
+          name: item.fundingTitle,
+          time: getTime(time),
+        })),
+      ];
+      setNotificationList(fundingNotifications);
+
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const formatNotifications = (data) => {
+    const friendNotices = data.friendNotice.map((notice) => ({
+      ...notice,
+      image: notice.recieveUserImgUrl,
+      name: notice.recieveUserNickname,
+      time: getTime(notice.updatedAt),
+    }));
+    const fundingDueDateNotices = data.fundingDueDate.map((notice) => ({
+      ...notice,
+      image: notice.fundingImageUrl,
+      name: notice.fundingTitle,
+      time: getTime(time),
+    }));
+    const fundingAchieveNotices = data.fundingAchieve.map((notice) => ({
+      ...notice,
+      image: notice.fundingImageUrl,
+      name: notice.fundingTitle,
+      percent: notice.percent,
+      time: getTime(time),
+    }));
+    return [
+      ...friendNotices,
+      ...fundingDueDateNotices,
+      ...fundingAchieveNotices,
+    ];
+  };
+  //친구요청 수락 API 연결
+  const createFriendAccept = async (friendTableId) => {
+    try {
+      const response = await postFriendAccept(friendTableId);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const handleFormSubmit = async () => {
+    await createFriendAccept(friendTableId);
+  };
   return (
     <SLayout>
       <SHeader>알림</SHeader>
@@ -70,25 +185,57 @@ const NotificationPage = () => {
           onTagChange={setTag}
         />
         <SBtnWrapper>
-          {filteredNotifications.map((notification, index) => (
-            <NotificationItem
-              key={index}
-              image={notification.image}
-              name={notification.name}
-              message={notification.message}
-              time={notification.time}
-              onClick={() =>
-                notification.type === '친구'
-                  ? friendNotiClick(notification.image, notification.name)
-                  : fundingNotiClick()
-              }
-            />
-          ))}
+          {filteredNotifications.map((notification, index) =>
+            //tag가 친구일때
+            tag === '친구' ? (
+              <SALayout
+                key={index}
+                onClick={() =>
+                  friendNotiClick(
+                    notification.recieveUserImgUrl,
+                    notification.name,
+                    notification.friendTableId,
+                  )
+                }
+              >
+                {notification.recieveUserImgUrl === 'default' ? (
+                  <AStyledProfileIcon />
+                ) : (
+                  <SAImg src={notification.recieveUserImgUrl} />
+                )}
+                <STextContainer>
+                  <STextboxContainer>
+                    <SNameText>{notification.name} </SNameText>
+                    <SMessageText>님이 친구 요청을 보냈습니다</SMessageText>
+                  </STextboxContainer>
+                  <STimeText>{notification.time}</STimeText>
+                </STextContainer>
+              </SALayout>
+            ) : (
+              //tag가 펀딩일때
+              <SALayout onClick={() => fundingNotiClick} key={index}>
+                <SAImg src={notification.fundingImageUrl} />
+                <STextContainer>
+                  <STextboxContainer>
+                    <SNameText>{notification.name} </SNameText>
+                    <SMessageText>
+                      펀딩 {notification.percent}% 달성
+                    </SMessageText>
+                  </STextboxContainer>
+                  <STimeText>{notification.time}</STimeText>
+                </STextContainer>
+              </SALayout>
+            ),
+          )}
         </SBtnWrapper>
       </SItemContainer>
       <NavComponent />
       {modalShow && (
-        <Modal actionText='추가하기' setModalShow={setModalShow}>
+        <Modal
+          actionText='추가하기'
+          onClickAction={handleFormSubmit}
+          setModalShow={setModalShow}
+        >
           {modalContent}
         </Modal>
       )}
@@ -96,6 +243,13 @@ const NotificationPage = () => {
   );
 };
 
+const SImg = styled.img`
+  width: 40px;
+  height: 40px;
+
+  background-color: var(--gray-300);
+  border-radius: 50%;
+`;
 const SModalContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -150,6 +304,80 @@ const SBtnWrapper = styled.div`
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
+`;
+
+const SALayout = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+
+  width: 335px;
+  height: 72px;
+
+  border-bottom: 1px solid var(--gray-100);
+
+  cursor: pointer;
+`;
+
+const SAImg = styled.img`
+  width: 40px;
+  height: 40px;
+
+  border-radius: 50%;
+  background-color: #d4d4d4;
+`;
+
+const AStyledProfileIcon = styled(ProfileIcon)`
+  width: 40px;
+  height: 40px;
+
+  border-radius: 50%;
+  background-color: var(--gray-300);
+`;
+
+const STextContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+`;
+
+const STextboxContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+
+  width: 268px;
+  height: 22px;
+
+  font-size: 16px;
+
+  overflow: hidden;
+`;
+
+const SNameText = styled.p`
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 40%;
+`;
+
+const SMessageText = styled.p`
+  max-width: 50%;
+
+  font-weight: 400;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  overflow: hidden;
+`;
+
+const STimeText = styled.p`
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--gray-500);
 `;
 
 export default NotificationPage;
