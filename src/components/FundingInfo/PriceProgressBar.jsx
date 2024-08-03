@@ -4,7 +4,8 @@ import { addComma } from '../../components/FundingInfo/FundingPercentage';
 import { getColor, getBackgroundColor, getOpacity } from './stylefunction';
 
 const PriceProgressBar = ({ type, color, giftList, balance, joinPrice }) => {
-  const maxPrice = giftList && giftList[giftList.length - 1].price;
+  const maxPrice =
+    giftList && giftList.length > 0 && giftList[giftList.length - 1].price;
   const nowPrice = maxPrice - balance;
   const percent = Math.round(((maxPrice - balance) / maxPrice) * 100);
   const [nextPrice, setNextPrice] = useState({
@@ -39,7 +40,14 @@ const PriceProgressBar = ({ type, color, giftList, balance, joinPrice }) => {
   // 2. 펀딩 참여 금액 입력 시
   // 3. 새로운 선물 등록 시
   const ProgressPoint = ({ it, idx, type }) => (
-    <SPointContainer price={it.price} max={maxPrice} onClick={handleOnClick}>
+    <SPointContainer
+      price={it.price}
+      max={maxPrice}
+      length={giftList && giftList.length - 1}
+      num={it.num && it.num}
+      selected={selected}
+      onClick={handleOnClick}
+    >
       <SPointSpan
         idx={idx === 'join' ? idx : idx + 1}
         type={type}
@@ -134,6 +142,8 @@ const SPointContainer = styled.div`
   align-items: center;
   justify-content: center;
   gap: 8px;
+  z-index: ${(props) =>
+    props.selected ? '990' : props.length === props.num ? '500' : '0'};
 `;
 const SPointSpan = styled.span`
   min-height: 15px;
@@ -155,6 +165,8 @@ const SPointSpan = styled.span`
   visibility: ${(props) => (props.type === 'none' ? 'hidden' : 'visible')};
   opacity: ${(props) => getOpacity(props)};
 
+  z-index: ${(props) =>
+    props.selected ? '999' : props.length === props.num ? '500' : '100'};
   &:hover {
     opacity: 1;
     z-index: 999;
