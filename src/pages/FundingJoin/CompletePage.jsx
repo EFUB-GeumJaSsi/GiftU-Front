@@ -7,7 +7,10 @@ import { ReactComponent as IcnGift } from '../../assets/FundingJoin/gift_icon.sv
 
 const CompletePage = () => {
   const Btn = (
-    <ButtonComponent btnInfo={{ text: '홈으로 돌아가기', color: 'orange' }} />
+    <ButtonComponent
+      btnInfo={{ text: '홈으로 돌아가기', color: 'orange' }}
+      onClick={window.location.replace('/')}
+    />
   );
 
   return (
