@@ -1,7 +1,11 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { arrayChop } from '../../components/common/CarouselComponent';
-import { postFriendRequest, getFriendList } from '../../api/friend.js';
+import {
+  postFriendRequest,
+  getFriendList,
+  getFriendParticipatedList,
+} from '../../api/friend.js';
 import CarouselComponent from '../../components/common/CarouselComponent';
 import BottomSheetComponent from '../../components/common/BottomSheetComponent';
 import ButtonComponent from '../../components/common/ButtonComponent';
@@ -35,8 +39,9 @@ const FriendPage = () => {
   };
   const readCarouselFriendList = async () => {
     try {
-      // const response = await 개발 중
-      setCarouselFriendList();
+      const response = await getFriendParticipatedList();
+      setCarouselFriendList(response.data);
+      console.log(response.data);
     } catch (error) {
       console.error(error);
     }
@@ -62,6 +67,7 @@ const FriendPage = () => {
   // 최초 렌더링 시 데이터 read
   useEffect(() => {
     readFriendList();
+    readCarouselFriendList();
   }, []);
 
   return (
