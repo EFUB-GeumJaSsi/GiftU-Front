@@ -104,7 +104,7 @@ const FundingSetPage = () => {
           <SLabel htmlFor='content'>
             <p>펀딩 소개</p>
           </SLabel>
-          <STextInput
+          <STextArea
             id='content'
             {...register('content', {
               required: false,
@@ -282,6 +282,26 @@ const STextInput = styled(SInput)`
     border: 2px solid var(--jade-pri);
   }
 `;
+const STextArea = styled.textarea`
+  background-color: var(--gray-100);
+  border-radius: 16px;
+  width: 335px;
+  height: 180px;
+  padding: 21px 24px;
+
+  border: none;
+  color: var(--black);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 140%;
+  box-sizing: border-box;
+
+  &:focus {
+    border: 2px solid var(--jade-pri);
+  }
+  outline: none;
+`;
+
 const SWarningWrapper = styled.div`
   margin-top: 8px;
   margin-left: 8px;
