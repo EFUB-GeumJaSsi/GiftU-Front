@@ -17,7 +17,7 @@ const CompletePage = () => {
       <BottomBackgroundComponent
         Button={
           <ButtonComponent
-            btnInfo={{ text: '홈으로 돌아가기', color: 'orange', onClick: '' }}
+            btnInfo={{ text: '홈으로 돌아가기', color: 'jade', onClick: '' }}
           />
         }
       />
