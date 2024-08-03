@@ -75,7 +75,7 @@ const FriendPage = () => {
       <SH1 as='header'>친구</SH1>
       {carouselFriendList.length > 0 && (
         <SSection>
-          <ST1>나에게 선물한 친구</ST1>
+          <ST1>최근 내 펀딩에 참여한 친구</ST1>
           <CarouselComponent
             pageLength={chopedCarouselFriendList.length}
             pageWidth={335}
