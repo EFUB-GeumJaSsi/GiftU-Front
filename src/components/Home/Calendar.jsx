@@ -6,35 +6,10 @@ import BottomSheetComponent from '../common/BottomSheetComponent';
 import CarouselComponent from '../common/CarouselComponent';
 import CalendarFundingItem from './CalendarFundingItem';
 import { ReactComponent as TagIcon } from '../../assets/Home/tag_today.svg';
-
-const fundings = [
-  {
-    fundingId: 4,
-    launcherNickname: '이퍼비',
-    fundingTitle: '이퍼비 생일선물 위시 리스트',
-    fundingEndDate: '2024-07-31',
-    status: 'IN_PROGRESS',
-    fundingImageUrl: 'https://localhost:8080/image/abcd-5678-ijkl',
-  },
-  {
-    fundingId: 6,
-    launcherNickname: '박퍼비',
-    fundingTitle: '박퍼비 생일선물 위시 리스트 박퍼비 생일선물 위시 리스트',
-    fundingEndDate: '2024-07-31',
-    status: 'IN_PROGRESS',
-    fundingImageUrl: 'https://localhost:8080/image/abcd-5678-ijkl',
-  },
-  {
-    fundingId: 6,
-    launcherNickname: '박퍼비',
-    fundingTitle: '박퍼비 생일선물 위시 리스트',
-    fundingEndDate: '2024-07-26',
-    status: 'IN_PROGRESS',
-    fundingImageUrl: 'https://localhost:8080/image/abcd-5678-ijkl',
-  },
-];
+import { getCalendarFunding, getExistanceOfFunding } from '../../api/calendar';
 
 const Calendar = () => {
+  const [isFundingExist, setIsFundingExist] = useState({});
   const [selectedFundingList, setSelectedFundingList] = useState([]);
   const [chopedDataList, setChopedDataList] = useState([]);
   const [bottomSheetShow, setBottomSheetShow] = useState(false);
@@ -50,6 +25,29 @@ const Calendar = () => {
   const month = date.getMonth() + 1;
   const today = date.getDate();
   const startDate = startOfWeek(date);
+
+  // 2주 간 해당 날짜 펀딩 존재 여부 조회
+  const readIsExistance = async () => {
+    try {
+      const res = await getExistanceOfFunding(
+        dates[0],
+        dates[dates.length - 1],
+      );
+      setIsFundingExist(res.data.existenceOfFundingOnDate);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  // 날짜별 펀딩 목록 조회
+  const readFundingList = async (date) => {
+    try {
+      const res = await getCalendarFunding(date);
+      return res.data.fundings;
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   for (let i = 0; i < 14; i++) {
     dates[i] = addDays(startDate, i + 1)
@@ -70,14 +68,17 @@ const Calendar = () => {
     setBottomSheetShow(true);
   };
 
-  const handleSelectFundings = (date) => {
-    const newSelectedFundingList = fundings.filter(
-      (it) => it.fundingEndDate === date,
-    );
-
+  const handleSelectFundings = async (date) => {
+    const newSelectedFundingList = await readFundingList(date);
+    
     setSelectedFundingList(newSelectedFundingList);
     setChopedDataList(arrayChop(newSelectedFundingList, 2));
   };
+
+  // 초기 렌더링 정보 조회
+  useEffect(() => {
+    readIsExistance();
+  }, []);
 
   return (
     <SLayout>
@@ -91,15 +92,12 @@ const Calendar = () => {
       </SDayWrapper>
       <SDateContainer>
         {dates.map((it, idx) => {
-          const isFundingEndDate = fundings.some(
-            (item) => item.fundingEndDate === it,
-          );
           return (
             <SDateSpan
-              funding={isFundingEndDate}
+              $funding={isFundingExist[it]}
               key={idx + 'date'}
               id={idx}
-              onClick={isFundingEndDate ? handleOnClick : undefined}
+              onClick={isFundingExist[it] ? handleOnClick : undefined}
             >
               {it.split('-')[2]}
               {today === Number(it.split('-')[2]) && <Tag />}
@@ -198,15 +196,15 @@ const SDateSpan = styled.span`
 
   border-radius: 50%;
   background-color: ${(props) =>
-    props.funding ? 'var(--orange-sec)' : 'var(--gray-200)'};
+    props.$funding ? 'var(--orange-sec)' : 'var(--gray-200)'};
 
   text-align: center;
   color: ${(props) =>
-    props.funding ? 'var(--orange-pri)' : 'var(--gray-400)'};
+    props.$funding ? 'var(--orange-pri)' : 'var(--gray-400)'};
   font-size: 16px;
   font-weight: 500;
 
-  cursor: ${(props) => (props.funding ? 'pointer' : 'default')};
+  cursor: ${(props) => (props.$funding ? 'pointer' : 'default')};
 `;
 const Tag = styled(TagIcon)`
   position: absolute;

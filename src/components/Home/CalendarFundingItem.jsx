@@ -1,10 +1,12 @@
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 const CalendarFundingItem = ({ data = {} }) => {
-  const { fundingImageUrl, fundingTitle, launcherNickname } = data;
+  const navigate = useNavigate();
+  const { fundingImageUrl, fundingTitle, launcherNickname, fundingId } = data;
 
   return (
-    <SItemContainer>
+    <SItemContainer onClick={() => navigate(`/funding/${fundingId}`)}>
       <SImageWrapper src={fundingImageUrl} alt='fundingImg' />
       <STextContainer>
         <STitleWrapper>{fundingTitle}</STitleWrapper>
