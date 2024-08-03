@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { H1, H3, T1, B1, B3 } from '../../styles/font';
 import { useState, useEffect } from 'react';
 import { arrayChop } from '../../components/common/CarouselComponent';
 import {
@@ -72,10 +73,10 @@ const FriendPage = () => {
 
   return (
     <SLayout>
-      <SH1 as='header'>친구</SH1>
+      <SHeader>친구</SHeader>
       {carouselFriendList.length > 0 && (
         <SSection>
-          <ST1>최근 내 펀딩에 참여한 친구</ST1>
+          <SH1>최근 내 펀딩에 참여한 친구</SH1>
           <CarouselComponent
             pageLength={chopedCarouselFriendList.length}
             pageWidth={335}
@@ -108,7 +109,7 @@ const FriendPage = () => {
       )}
       <SFriendSection>
         <STopContainer>
-          <ST1>내 친구</ST1>
+          <SH1>내 친구</SH1>
           <SAddBtn
             onClick={() => {
               setBottomSheetShow(true);
@@ -132,7 +133,7 @@ const FriendPage = () => {
             ))}
           </SUl>
         ) : (
-          <SGuideText>친구에게 초대 메시지를 보내보세요!</SGuideText>
+          <SEmptyP>친구에게 초대 메시지를 보내보세요!</SEmptyP>
         )}
       </SFriendSection>
       <NavComponent />
@@ -143,8 +144,8 @@ const FriendPage = () => {
         >
           <SBottomSheetContainer>
             <STextContainer>
-              <SH3>친구 추가</SH3>
-              <SB3>친구의 이메일 주소를 입력해 주세요</SB3>
+              <SH2>친구 추가</SH2>
+              <SRequestP>친구의 이메일 주소를 입력해 주세요</SRequestP>
             </STextContainer>
             <SForm onSubmit={handleFormSubmit}>
               <SInput
@@ -177,38 +178,6 @@ const FriendPage = () => {
   );
 };
 
-// 텍스트 스타일
-const SH1 = styled.h1`
-  color: var(--black);
-  font-size: 22px;
-  font-weight: 700;
-  line-height: 140%;
-`;
-const SH3 = styled.h3`
-  color: var(--black);
-  font-size: 20px;
-  font-weight: 600;
-`;
-const ST1 = styled.h1`
-  color: var(--black);
-  font-size: 17px;
-  font-weight: 700;
-  line-height: 120%;
-`;
-const SB1 = styled.p`
-  color: var(--gray-500);
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 140%;
-`;
-const SB3 = styled.p`
-  color: var(--gray-500);
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 120%;
-`;
-
-// 스타일 컴포넌트
 const SLayout = styled.div`
   display: flex;
   overflow-x: hidden;
@@ -227,11 +196,19 @@ const SLayout = styled.div`
     display: none;
   }
 `;
+const SHeader = styled.header`
+  ${H1}
+  color: var(--black);
+`;
 const SSection = styled.section`
   display: flex;
   flex-flow: column nowrap;
 
   gap: 16px;
+`;
+const SH1 = styled.h1`
+  ${T1}
+  color: var(--black);
 `;
 const SPageContainer = styled.div`
   display: flex;
@@ -269,12 +246,15 @@ const SUl = styled.ul`
 
   gap: 16px;
 `;
-const SGuideText = styled(SB1)`
+const SEmptyP = styled.p`
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
   justify-content: center;
   flex-grow: 1;
+
+  ${B1}
+  color: var(--gray-500);
 `;
 const SBottomSheetContainer = styled.div`
   display: flex;
@@ -291,6 +271,14 @@ const STextContainer = styled.div`
 
   margin-left: 4px;
   gap: 12px;
+`;
+const SH2 = styled.h2`
+  ${H3}
+  color: var(--black);
+`;
+const SRequestP = styled.p`
+  ${B3}
+  color: var(--gray-500);
 `;
 const SForm = styled.form`
   display: flex;
