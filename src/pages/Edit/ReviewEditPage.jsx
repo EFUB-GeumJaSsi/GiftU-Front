@@ -6,14 +6,37 @@ import FundingParticipants from '../../components/FundingInfo/FundingParticipant
 import ButtonComponent from '../../components/common/ButtonComponent';
 import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
 import { postReview, getReview, patchReview } from '../../api/review';
+import { getFundingInfo } from '../../api/funding';
+import { useNavigate } from 'react-router-dom';
 
 const ReviewEditPage = () => {
   const { fundingId } = useParams();
   const [reviewText, setReviewText] = useState('');
+  const [contributers, setContributers] = useState('');
+  const [isReviewExists, setIsReviewExists] = useState(false);
+  const [data, setData] = useState('');
+  const navigate = useNavigate();
+
   const handleInputChange = (e) => {
     setReviewText(e.target.value);
   };
-  const createReview = async (fundingId, reviewText) => {
+
+  const readFundingInfo = async () => {
+    try {
+      const res = await getFundingInfo(fundingId);
+      const data = res.data;
+      console.log(data);
+      data.contributers && setContributers(data.contributers);
+      if (data.existedReview === true) {
+        setIsReviewExists(true);
+      }
+      setData(data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const createReview = async () => {
     try {
       const response = await postReview(fundingId, reviewText);
       console.log(response.data);
@@ -21,16 +44,24 @@ const ReviewEditPage = () => {
       console.error(error);
     }
   };
+
   const readReview = async (fundingId) => {
     try {
       const response = await getReview(fundingId);
-      if ((response.data.reviewContent = '')) setReviewText([]);
-      else setReviewText(response.data.reviewContent);
+      setReviewText(response.data.reviewContent);
       console.log(response.data);
     } catch (error) {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    const fetchReview = async () => {};
+    if (isReviewExists) {
+      readReview(fundingId);
+    }
+    fetchReview();
+  }, [fundingId]);
 
   const updateReview = async (fundingId, reviewText) => {
     try {
@@ -40,15 +71,20 @@ const ReviewEditPage = () => {
       console.error(error);
     }
   };
-  useEffect(() => {
-    readReview(fundingId);
-  }, []);
 
-  const handleFormSubmit = () => {
-    createReview(fundingId, reviewText);
+  useEffect(() => {
+    if (fundingId) {
+      readFundingInfo();
+    }
+  }, [fundingId]);
+
+  const handleFormSubmit = async () => {
+    if (!isReviewExists) await createReview();
+    else {
+      await updateReview(fundingId, reviewText);
+    }
+    navigate('선물후기 완료시 이동할 주소'); //이동할 주소 입력해야함
   };
-  //updateReview(fundingId, reviewText);
-  //else
   const Btn = (
     <ButtonComponent
       btnInfo={{
@@ -63,7 +99,7 @@ const ReviewEditPage = () => {
     <SLayout>
       <BackHeaderComponent text='선물후기'></BackHeaderComponent>
       <SContentContainer>
-        <FundingParticipants />
+        <FundingParticipants list={contributers} />
         <SForm>
           <SLegend>선물 후기</SLegend>
           <STextarea
