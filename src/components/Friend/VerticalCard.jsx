@@ -1,12 +1,15 @@
 import styled from 'styled-components';
 import { B1, B3 } from '../../styles/font';
+import icn_profile_default from '../../assets/common/profile_default.svg';
 
-const VerticalCard = ({ friendId, nickname, birthday, image }) => {
+const VerticalCard = ({ data = { nickname, birthday, userImageUrl } }) => {
+  const image = data.userImageUrl || icn_profile_default;
+
   return (
     <SLayout>
       <SImg src={image} />
-      <SNicknameSpan>{nickname}</SNicknameSpan>
-      <SBirthdaySpan>{birthday}</SBirthdaySpan>
+      <SNicknameSpan>{data.nickname}</SNicknameSpan>
+      <SBirthdaySpan>{data.birthday}</SBirthdaySpan>
     </SLayout>
   );
 };

@@ -5,11 +5,16 @@ import { deleteFriendItem } from '../../api/friend';
 import BottomModalComponent from '../../components/common/BottomModalComponent';
 import ModalComponent from '../common/ModalComponent';
 import ToastComponent from '../common/ToastComponent';
+import icn_profile_default from '../../assets/common/profile_default.svg';
 import icn_birth from '../../assets/Friend/icn_birth.svg';
 import btn_delete from '../../assets/Friend/btn_delete_friend.svg';
 import icn_info from '../../assets/Friend/icn_info.svg';
 
-const HorizontalCard = ({ friendId, nickname, birthday, image }) => {
+const HorizontalCard = ({
+  data = { friendId, nickname, birthday, userImageUrl },
+}) => {
+  const image = data.userImageUrl || icn_profile_default;
+
   const [bottomModalShow, setBottomModalShow] = useState(false);
   const [bottomModalOpen, setBottomModalOpen] = useState(false);
   const [modalShow, setModalShow] = useState(false);
@@ -34,7 +39,7 @@ const HorizontalCard = ({ friendId, nickname, birthday, image }) => {
     setTimeout(() => setBottomModalShow(false), 300); // 애니메이션 후 언마운트
   };
   const handleDeleteClick = () => {
-    delFriend(friendId);
+    delFriend(data.friendId);
     setToastShow(true);
   };
 
@@ -42,8 +47,8 @@ const HorizontalCard = ({ friendId, nickname, birthday, image }) => {
     <SLayout>
       <SImg src={image} />
       <STextContainer>
-        <SNicknameSpan>{nickname}</SNicknameSpan>
-        <SBirthdaySpan>{birthday}</SBirthdaySpan>
+        <SNicknameSpan>{data.nickname}</SNicknameSpan>
+        <SBirthdaySpan>{data.birthday}</SBirthdaySpan>
       </STextContainer>
       <SMenuBtn
         onClick={() => {
@@ -78,7 +83,7 @@ const HorizontalCard = ({ friendId, nickname, birthday, image }) => {
           <SModalContainer>
             <SInfoContainer>
               <SImg src={image} />
-              <SModalNicknameSpan>{nickname}</SModalNicknameSpan>
+              <SModalNicknameSpan>{data.nickname}</SModalNicknameSpan>
             </SInfoContainer>
             <SWarnContainer>
               <SWarnH2>친구를 삭제하시겠어요?</SWarnH2>

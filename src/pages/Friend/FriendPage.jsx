@@ -83,24 +83,14 @@ const FriendPage = () => {
           >
             {chopedCarouselFriendList.map((item, index) => (
               <SPageContainer key={index}>
-                <VerticalCard
-                  friendId={item[0].friendId}
-                  nickname={item[0].nickname}
-                  birthday={item[0].birthday}
-                  image={item[0].userImageUrl}
-                />
+                <VerticalCard data={item[0]} />
                 {index === chopedCarouselFriendList.length - 1 &&
                 carouselFriendList.length % 2 !== 0 ? (
                   <div style={{ visibility: 'hidden' }}>
-                    <VerticalCard />
+                    <VerticalCard data={{}} />
                   </div>
                 ) : (
-                  <VerticalCard
-                    friendId={item[1].friendId}
-                    nickname={item[1].nickname}
-                    birthday={item[1].birthday}
-                    image={item[1].userImageUrl}
-                  />
+                  <VerticalCard data={item[1]} />
                 )}
               </SPageContainer>
             ))}
@@ -123,12 +113,7 @@ const FriendPage = () => {
           <SUl>
             {friendList.map((item, index) => (
               <li key={index}>
-                <HorizontalCard
-                  friendId={item.friendId}
-                  nickname={item.nickname}
-                  birthday={item.birthday}
-                  image={item.userImageUrl}
-                />
+                <HorizontalCard data={item} />
               </li>
             ))}
           </SUl>
