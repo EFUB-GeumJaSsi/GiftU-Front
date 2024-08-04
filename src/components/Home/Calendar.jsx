@@ -24,7 +24,7 @@ const Calendar = () => {
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
   const today = date.getDate();
-  const startDate = startOfWeek(date);
+  const startDate = addDays(startOfWeek(date), -6);
 
   // 2주 간 해당 날짜 펀딩 존재 여부 조회
   const readIsExistance = async () => {
@@ -70,7 +70,7 @@ const Calendar = () => {
 
   const handleSelectFundings = async (date) => {
     const newSelectedFundingList = await readFundingList(date);
-    
+
     setSelectedFundingList(newSelectedFundingList);
     setChopedDataList(arrayChop(newSelectedFundingList, 2));
   };
