@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { H1, H3, T1, B1, B3 } from '../../styles/font';
 import { useState, useEffect } from 'react';
-import { arrayChop } from '../../components/common/CarouselComponent';
 import {
   postFriendRequest,
   getFriendList,
@@ -20,7 +19,6 @@ const FriendPage = () => {
   // 친구 페이지 데이터
   const [friendList, setFriendList] = useState([]);
   const [carouselFriendList, setCarouselFriendList] = useState([]);
-  const chopedCarouselFriendList = arrayChop(carouselFriendList, 2).slice(0, 3);
   // 바텀시트 관련
   const [bottomSheetShow, setBottomSheetShow] = useState(false);
   const [email, setEmail] = useState('');
@@ -41,8 +39,9 @@ const FriendPage = () => {
   const readCarouselFriendList = async () => {
     try {
       const response = await getFriendParticipatedList();
-      setCarouselFriendList(response.data);
-      console.log(response.data);
+      const arr = response.data.slice(0, 6);
+      if (arr.length % 2 != 0) arr.push({});
+      setCarouselFriendList(arr);
     } catch (error) {
       console.error(error);
     }
@@ -78,22 +77,16 @@ const FriendPage = () => {
         <SSection>
           <SH1>최근 내 펀딩에 참여한 친구</SH1>
           <CarouselComponent
-            pageLength={chopedCarouselFriendList.length}
+            pageLength={carouselFriendList.length / 2}
             pageWidth={335}
           >
-            {chopedCarouselFriendList.map((item, index) => (
-              <SPageContainer key={index}>
-                <VerticalCard data={item[0]} />
-                {index === chopedCarouselFriendList.length - 1 &&
-                carouselFriendList.length % 2 !== 0 ? (
-                  <div style={{ visibility: 'hidden' }}>
-                    <VerticalCard data={{}} />
-                  </div>
-                ) : (
-                  <VerticalCard data={item[1]} />
-                )}
-              </SPageContainer>
-            ))}
+            <SCarouselUl>
+              {carouselFriendList.map((item, index) => (
+                <li key={index}>
+                  {item.userId ? <VerticalCard data={item} /> : <></>}
+                </li>
+              ))}
+            </SCarouselUl>
           </CarouselComponent>
         </SSection>
       )}
@@ -110,13 +103,13 @@ const FriendPage = () => {
           </SAddBtn>
         </STopContainer>
         {friendList.length ? (
-          <SUl>
+          <SFriendsUl>
             {friendList.map((item, index) => (
               <li key={index}>
                 <HorizontalCard data={item} />
               </li>
             ))}
-          </SUl>
+          </SFriendsUl>
         ) : (
           <SEmptyP>친구에게 초대 메시지를 보내보세요!</SEmptyP>
         )}
@@ -195,11 +188,22 @@ const SH1 = styled.h1`
   ${T1}
   color: var(--black);
 `;
-const SPageContainer = styled.div`
+const SCarouselUl = styled.ul`
   display: flex;
   flex-flow: row nowrap;
 
-  gap: 15px;
+  li:nth-child(odd) {
+    margin-right: 15px;
+  }
+
+  li:nth-child(even) {
+    margin-right: 0;
+  }
+
+  li:last-child {
+    width: 160px;
+    height: 184px;
+  }
 `;
 const SFriendSection = styled(SSection)`
   flex-grow: 1;
@@ -225,7 +229,7 @@ const SAddBtn = styled.button`
   align-items: center;
   gap: 8px;
 `;
-const SUl = styled.ul`
+const SFriendsUl = styled.ul`
   display: flex;
   flex-flow: column nowrap;
 
