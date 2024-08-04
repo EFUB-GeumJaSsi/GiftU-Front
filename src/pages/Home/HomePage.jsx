@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { getFriendsFundingList } from '../../api/funding';
 import NavComponent from '../../components/common/NavComponent';
 import Calendar from '../../components/Home/Calendar';
@@ -7,6 +8,7 @@ import FundingComponent from '../../components/common/FundingComponent';
 import icn_search from '../../assets/common/search.svg';
 
 const HomePage = () => {
+  const navigate = useNavigate();
   const [possibleFundingList, setPossibleFundingList] = useState([]);
 
   // API 연결
@@ -31,10 +33,7 @@ const HomePage = () => {
           id='search-bar'
           placeholder='어떤 펀딩을 찾고 있나요?'
           readOnly
-          onClick={() => {
-            console.log('검색페이지로 라우팅!');
-            console.log('검색 페이지 인풋필드 포커스');
-          }}
+          onClick={() => navigate('/search')}
         />
       </SSection>
       <SSection>
