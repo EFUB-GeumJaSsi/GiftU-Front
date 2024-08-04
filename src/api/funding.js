@@ -137,3 +137,35 @@ export const deleteFunding = async (fundingId) => {
     throw error;
   }
 };
+
+//축하메세지 조회
+export const getCongratsMessage = async (fundingId) => {
+  try {
+    const response = await apiAuth.get(`/fundings/${fundingId}/participation`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+//축하메세지 수정
+export const patchCongratsMessage = async (
+  participationId,
+  anonymity,
+  message,
+) => {
+  try {
+    const response = await apiAuth.patch(
+      `/fundings/participation/${participationId}`,
+      { anonymity: anonymity, message: message },
+      { headers: { 'Content-Type': 'application/json' } },
+    );
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
