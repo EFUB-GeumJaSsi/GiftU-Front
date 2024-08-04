@@ -14,7 +14,7 @@ const HomePage = () => {
 
   return (
     <SLayout>
-      <section>
+      <SSection>
         <SInput
           type='text'
           id='search-bar'
@@ -25,7 +25,7 @@ const HomePage = () => {
             console.log('검색 페이지 인풋필드 포커스');
           }}
         />
-      </section>
+      </SSection>
       <SSection>
         <STextContainer>
           <SH2>곧 마감되는 펀딩</SH2>
@@ -74,6 +74,7 @@ const SSection = styled.section`
   display: flex;
   flex-flow: column nowrap;
 
+  width: fit-content;
   gap: 16px;
 `;
 const SInput = styled.input`
@@ -106,7 +107,8 @@ const SFundingUl = styled.ul`
   display: flex;
   flex-flow: row wrap;
 
-  gap: 8px;
+  width: 335px;
+  gap: 8px 7px;
 `;
 
 export default HomePage;
