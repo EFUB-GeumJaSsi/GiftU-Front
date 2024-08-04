@@ -12,10 +12,12 @@ const OAuthRedirectPage = () => {
     try {
       const response = await getAccessTokenKakao(code);
       localStorage.setItem('token', response.data.accessToken);
+      localStorage.setItem('token-date', new Date());
       navigate('/my/edit');
     } catch (error) {
       console.error(error);
       localStorage.removeItem('token');
+      localStorage.removeItem('token-date');
       navigate('/login');
     }
   };
