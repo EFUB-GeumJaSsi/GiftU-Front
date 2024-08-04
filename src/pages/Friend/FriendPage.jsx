@@ -7,14 +7,14 @@ import {
   getFriendList,
   getFriendParticipatedList,
 } from '../../api/friend.js';
+import NavComponent from '../../components/common/NavComponent';
 import CarouselComponent from '../../components/common/CarouselComponent';
 import BottomSheetComponent from '../../components/common/BottomSheetComponent';
 import ButtonComponent from '../../components/common/ButtonComponent';
-import ToastComponent from '../../components/common/ToastComponent.jsx';
+import ToastComponent from '../../components/common/ToastComponent';
 import VerticalCard from '../../components/Friend/VerticalCard';
 import HorizontalCard from '../../components/Friend/HorizontalCard';
 import { ReactComponent as IcnUnion } from '../../assets/Friend/icn_union.svg';
-import NavComponent from '../../components/common/NavComponent.jsx';
 
 const FriendPage = () => {
   // 친구 페이지 데이터
