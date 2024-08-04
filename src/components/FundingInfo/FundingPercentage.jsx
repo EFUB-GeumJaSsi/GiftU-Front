@@ -28,7 +28,7 @@ const FundingPercentage = ({
   const maxPrice =
     giftList && giftList.length > 0 && giftList[giftList.length - 1].price;
   const percent = Math.round((nowMoney / maxPrice) * 100);
-  const balance = maxPrice - nowMoney;
+  const balance = nowMoney ? maxPrice - nowMoney : null;
   const [isClicked, setIsClicked] = useState(type === 'add' ? true : false);
   const [list, setList] = useState(type === 'add' ? addKeytoGiftData(giftData) : []);
 
@@ -107,7 +107,7 @@ const FundingPercentage = ({
   };
 
   const GiftItem = ({ it, idx, length }) => (
-    <SItemContainer idx={idx + 1} length={length}>
+    <SItemContainer $idx={idx + 1} $length={length}>
       {it.giftImageUrl ? (
         <SImg src={it.giftImageUrl} alt='img' />
       ) : (
@@ -134,10 +134,10 @@ const FundingPercentage = ({
         balance={balance}
       />
       <SButtonContainer onClick={() => setIsClicked(!isClicked)}>
-        <SBtn clicked={isClicked} color={color}>
+        <SBtn $clicked={isClicked} $color={color}>
           가격대별 선물 보기
         </SBtn>
-        <FoldBtn clicked={isClicked} color={color} />
+        <FoldBtn $clicked={isClicked} $color={color} />
       </SButtonContainer>
       {isClicked && (
         <SItemLayout>
@@ -189,7 +189,7 @@ const STextSpan = styled.span`
   line-height: 120%;
 `;
 const SBoldTextSpan = styled(STextSpan)`
-  color: ${(props) => (props.joinPrice ? 'var(--orange-pri)' : 'var(--black)')};
+  color: ${(props) => (props.$joinPrice ? 'var(--orange-pri)' : 'var(--black)')};
 `;
 const SSmallTextSpan = styled.span`
   margin-top: -4px;
@@ -214,7 +214,7 @@ const SButtonContainer = styled.button`
   background-color: var(--white);
 `;
 const SBtn = styled.span`
-  color: ${(props) => (props.clicked ? props.color : 'var(--gray-400)')};
+  color: ${(props) => (props.$clicked ? props.$color : 'var(--gray-400)')};
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
@@ -223,7 +223,7 @@ const SBtn = styled.span`
   cursor: pointer;
 `;
 const FoldBtn = styled(Fold)`
-  fill: ${(props) => (props.clicked ? props.color : 'var(--gray-400)')};
+  fill: ${(props) => (props.$clicked ? props.$color : 'var(--gray-400)')};
 `;
 const SNoGiftSpan = styled.span`
   color: var(--gray-300);
@@ -247,7 +247,7 @@ const SItemContainer = styled.div`
 
   height: 64px;
   border-bottom: ${(props) =>
-    props.idx !== props.length ? '1px solid var(--gray-300)' : '0'};
+    props.$idx !== props.$length ? '1px solid var(--gray-300)' : '0'};
 `;
 const SImg = styled.img`
   width: 48px;
