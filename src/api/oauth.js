@@ -22,8 +22,10 @@ export const getAccessTokenKakao = async (code) => {
 export const postAccessTokenReissue = async () => {
   try {
     const response = await apiAuth.post(`/api/oauth/reissue`);
-    return response;
+    localStorage.setItem('giftu-token', response.data.accessToken);
   } catch (error) {
-    throw error;
+    console.error(error);
+    localStorage.removeItem('giftu-token');
+    navigate('/login');
   }
 };
