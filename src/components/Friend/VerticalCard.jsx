@@ -36,6 +36,8 @@ const SImg = styled.img`
 
   border-radius: 50%;
   background-color: #d9d9d9;
+
+  object-fit: cover;
 `;
 const SNicknameSpan = styled.span`
   overflow: hidden;
