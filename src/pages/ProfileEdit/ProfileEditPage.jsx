@@ -53,14 +53,14 @@ const ProfileEditPage = () => {
       const data = {
         nickname: userData.nickname,
         email: userData.email,
-        birthday: birthday,
+        birthday: userData.birthday,
       };
       const formData = new FormData();
       if (imageFile) {
-        formData.append('profileImage', imageFile);
+        formData.append('userImage', imageFile);
       }
       formData.append(
-        'fundingRequestDto',
+        'userUpdateRequestDto',
         new Blob([JSON.stringify(data)], { type: 'application/json' }),
       );
 
