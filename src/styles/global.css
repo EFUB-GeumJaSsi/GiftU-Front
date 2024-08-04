@@ -18,6 +18,12 @@
   --gray-500: #909294;
 
   font-family: Pretendard;
+
+  /* 스크롤바 비표시 */
+  -ms-overflow-style: none;
+}
+::-webkit-scrollbar {
+  display: none;
 }
 * {
   font-family: Pretendard;
