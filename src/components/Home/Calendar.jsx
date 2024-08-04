@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { startOfWeek, addDays } from 'date-fns';
-import { arrayChop } from '../common/CarouselComponent';
 import BottomSheetComponent from '../common/BottomSheetComponent';
 import CarouselComponent from '../common/CarouselComponent';
 import CalendarFundingItem from './CalendarFundingItem';
@@ -36,7 +35,6 @@ const fundings = [
 
 const Calendar = () => {
   const [selectedFundingList, setSelectedFundingList] = useState([]);
-  const [chopedDataList, setChopedDataList] = useState([]);
   const [bottomSheetShow, setBottomSheetShow] = useState(false);
   const [selectedDate, setSelectedDate] = useState({
     month: '',
@@ -75,8 +73,9 @@ const Calendar = () => {
       (it) => it.fundingEndDate === date,
     );
 
-    setSelectedFundingList(newSelectedFundingList);
-    setChopedDataList(arrayChop(newSelectedFundingList, 2));
+    const arr = newSelectedFundingList;
+    if (arr.length % 2 != 0) arr.push({});
+    setSelectedFundingList(arr);
   };
 
   return (
@@ -115,22 +114,20 @@ const Calendar = () => {
               요일
             </SSpan>
             <CarouselComponent
-              pageLength={chopedDataList.length}
+              pageLength={selectedFundingList.length / 2}
               pageWidth={335}
             >
-              {chopedDataList.map((it, idx) => (
-                <SItemContainer key={it}>
-                  <CalendarFundingItem data={it[0]} />
-                  {idx === chopedDataList.length - 1 &&
-                  selectedFundingList.length % 2 !== 0 ? (
-                    <div style={{ visibility: 'hidden' }}>
-                      <CalendarFundingItem />
-                    </div>
-                  ) : (
-                    <CalendarFundingItem data={it[1]} />
-                  )}
-                </SItemContainer>
-              ))}
+              <SCarouselUl>
+                {selectedFundingList.map((item, index) => (
+                  <li key={index}>
+                    {item.fundingId ? (
+                      <CalendarFundingItem data={item} />
+                    ) : (
+                      <></>
+                    )}
+                  </li>
+                ))}
+              </SCarouselUl>
             </CarouselComponent>
           </SBottomSheetContainer>
         </BottomSheetComponent>
@@ -227,12 +224,24 @@ const SSpan = styled.span`
   font-weight: 700;
   line-height: 140%;
 `;
-const SItemContainer = styled.div`
+const SCarouselUl = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
+  flex-flow: column wrap;
+
+  height: 172px;
+
+  li:nth-child(odd) {
+    margin-bottom: 12px;
+  }
+
+  li:nth-child(even) {
+    margin-bottom: 0;
+  }
+
+  li:last-child {
+    width: 335px;
+    height: 80px;
+  }
 `;
 
 export default Calendar;
