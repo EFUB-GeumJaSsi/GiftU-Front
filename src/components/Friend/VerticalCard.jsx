@@ -51,6 +51,11 @@ const SImg = styled.img`
   background-color: #d9d9d9;
 
   object-fit: cover;
+  // 드래그 방지
+  -webkit-user-drag: none;
+  -moz-user-drag: none;
+  -ms-user-drag: none;
+  user-drag: none;
 `;
 const SNicknameSpan = styled.span`
   overflow: hidden;
