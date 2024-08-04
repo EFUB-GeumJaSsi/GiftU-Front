@@ -32,9 +32,10 @@ const SLayout = styled.div`
 const SImg = styled.img`
   width: 80px;
   height: 80px;
+  margin-bottom: 8px;
+
   border-radius: 50%;
   background-color: #d9d9d9;
-  margin-bottom: 8px;
 `;
 const SNicknameSpan = styled.span`
   overflow: hidden;
