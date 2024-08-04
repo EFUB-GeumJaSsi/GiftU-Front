@@ -1,3 +1,16 @@
+function formatDate(dateStr) {
+  if (!dateStr) {
+    return '생일 정보 없음';
+  } else {
+    const dateObj = new Date(dateStr);
+
+    const month = dateObj.getMonth() + 1; // 월은 0부터 시작하므로 1을 더함
+    const day = dateObj.getDate();
+
+    return `${month}월 ${day}일`;
+  }
+}
+
 import styled from 'styled-components';
 import { B1, B3 } from '../../styles/font';
 import icn_profile_default from '../../assets/common/profile_default.svg';
@@ -9,7 +22,7 @@ const VerticalCard = ({ data = { nickname, birthday, userImageUrl } }) => {
     <SLayout>
       <SImg src={image} />
       <SNicknameSpan>{data.nickname}</SNicknameSpan>
-      <SBirthdaySpan>{data.birthday}</SBirthdaySpan>
+      <SBirthdaySpan>{formatDate(data.birthday)}</SBirthdaySpan>
     </SLayout>
   );
 };
@@ -56,3 +69,4 @@ const SBirthdaySpan = styled.span`
 `;
 
 export default VerticalCard;
+export { formatDate };
