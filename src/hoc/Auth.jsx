@@ -7,13 +7,16 @@ Auth HOC 사용법
 예시: <Auth Page={HomePage} user='login' />
 */
 
+import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { postAccessTokenReissue } from '../api/oauth';
+import SpinnerComponent from '../components/common/SpinnerComponent';
 
 const Auth = ({ Page, option }) => {
   const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const checkIsLogin = async () => {
     const accessToken = localStorage.getItem('token');
@@ -35,23 +38,41 @@ const Auth = ({ Page, option }) => {
   }, []);
 
   useEffect(() => {
-    switch (option) {
-      case 'all':
-        break;
-      case 'login':
-        if (isLogin) console.log();
-        else navigate('/login');
-        break;
-      case 'logout':
-        if (isLogin) navigate(-1);
-        else console.log();
-        break;
-      default:
-        navigate(-1);
+    if (isLogin != null) {
+      switch (option) {
+        case 'all':
+          break;
+        case 'login':
+          if (!isLogin) navigate('/login');
+          break;
+        case 'logout':
+          if (isLogin) navigate(-1);
+          break;
+        default:
+          navigate(-1);
+      }
+      setIsLoading(false);
     }
   }, [isLogin]);
 
+  if (isLoading) {
+    return (
+      <SLayout>
+        <SpinnerComponent />
+      </SLayout>
+    );
+  }
+
   return <Page />;
 };
+
+const SLayout = styled.div`
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+
+  height: 100%;
+`;
 
 export default Auth;
