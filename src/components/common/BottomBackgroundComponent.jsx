@@ -36,6 +36,8 @@ const SLayout = styled.div`
   background: var(--white);
 
   transform: translateX(-50%);
+
+  z-index: 999;
 `;
 
 export default BottomBackgroundComponent;
