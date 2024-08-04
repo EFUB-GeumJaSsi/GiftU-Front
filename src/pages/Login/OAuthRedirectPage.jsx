@@ -11,10 +11,11 @@ const OAuthRedirectPage = () => {
   const readAccessTokenKakao = async () => {
     try {
       const response = await getAccessTokenKakao(code);
-      localStorage.setItem('giftu-token', response.data.accessToken);
+      localStorage.setItem('token', response.data.accessToken);
       navigate('/my/edit');
     } catch (error) {
       console.error(error);
+      localStorage.removeItem('token');
       navigate('/login');
     }
   };
