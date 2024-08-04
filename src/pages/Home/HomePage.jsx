@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
+import { getFriendsFundingList } from '../../api/funding';
 import NavComponent from '../../components/common/NavComponent';
 import Calendar from '../../components/Home/Calendar';
 import FundingComponent from '../../components/common/FundingComponent';
@@ -8,8 +9,18 @@ import icn_search from '../../assets/common/search.svg';
 const HomePage = () => {
   const [possibleFundingList, setPossibleFundingList] = useState([]);
 
+  // API 연결
+  const readFundingFriendList = async () => {
+    try {
+      const response = await getFriendsFundingList();
+      setPossibleFundingList(response.data.fundings);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
-    setPossibleFundingList([]);
+    readFundingFriendList();
   }, []);
 
   return (
