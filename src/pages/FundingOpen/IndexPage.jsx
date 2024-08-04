@@ -46,16 +46,10 @@ const PageRenderer = () => {
   const { fundingData, giftData, imageData } = useContext(DataContext);
 
   const handleFundingSubmission = async () => {
-    console.log('펀딩데이터', fundingData);
-    console.log('선물데이터', giftData);
-    console.log('이미지데이터', imageData);
     const request = { ...fundingData, gifts: giftData };
-    console.log('request', request);
     try {
       const response = await postFunding(request, imageData);
-      console.log('response', response);
       console.log('펀딩 생성 성공', response.data);
-      setCurrentPage('HomePage');
     } catch (error) {
       console.error('펀딩 생성 오류', error);
     }

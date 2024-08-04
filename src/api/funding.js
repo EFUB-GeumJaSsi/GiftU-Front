@@ -11,9 +11,6 @@ export const postFunding = async (request, images) => {
       'fundingRequestDto',
       new Blob([JSON.stringify(request)], { type: 'application/json' }),
     );
-
-    console.log([...formData.entries()]);
-
     const response = await apiAuth.post(`/fundings`, formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
       withCredentials: true,
