@@ -166,7 +166,7 @@ const SPointSpan = styled.span`
   opacity: ${(props) => props.$getOpacity(props)};
 
   z-index: ${(props) =>
-    props.selected ? '999' : props.$length === props.$num ? '500' : '100'};
+    props.$selected ? '999' : props.$length === props.$num ? '500' : '100'};
   &:hover {
     opacity: 1;
     z-index: 999;

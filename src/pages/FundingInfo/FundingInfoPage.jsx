@@ -165,6 +165,7 @@ const FundingInfoPage = () => {
           <ButtonComponent
             btnInfo={{ text: '참여 취소', width: '104px' }}
             onClick={delParticipation}
+            disabled={false}
           />
           <ButtonComponent
             btnInfo={{
@@ -198,6 +199,7 @@ const FundingInfoPage = () => {
               text: '개설 취소하기',
             }}
             onClick={() => setModalShow(true)}
+            disabled={false}
           />
         );
       }

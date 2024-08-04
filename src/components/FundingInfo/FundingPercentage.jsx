@@ -28,7 +28,7 @@ const FundingPercentage = ({
   const maxPrice =
     giftList && giftList.length > 0 && giftList[giftList.length - 1].price;
   const percent = Math.round((nowMoney / maxPrice) * 100);
-  const balance = nowMoney ? maxPrice - nowMoney : null;
+  const balance = nowMoney ? maxPrice - nowMoney : maxPrice;
   const [isClicked, setIsClicked] = useState(type === 'add' ? true : false);
   const [list, setList] = useState(type === 'add' ? addKeytoGiftData(giftData) : []);
 
@@ -87,7 +87,7 @@ const FundingPercentage = ({
         <STitleSpan>{percent}% 달성</STitleSpan>
         <STextSpan>
           100% 달성까지{' '}
-          <SBoldTextSpan joinPrice={joinPrice}>
+          <SBoldTextSpan $joinPrice={joinPrice}>
             {addComma(balance)}원
           </SBoldTextSpan>{' '}
           남았어요
