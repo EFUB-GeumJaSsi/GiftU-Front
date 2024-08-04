@@ -168,11 +168,6 @@ const SLayout = styled.div`
   gap: 24px;
 
   box-sizing: border-box;
-  -ms-overflow-style: none;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
 `;
 const SHeader = styled.header`
   ${H1}

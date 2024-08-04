@@ -90,6 +90,12 @@ const SContentContainer = styled.div`
   display: flex;
   overflow-x: hidden;
   flex-flow: row nowrap;
+
+  // 스크롤바 비표시
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 const SPaginationFieldset = styled.fieldset`
   visibility: ${({ $pageLength }) =>
