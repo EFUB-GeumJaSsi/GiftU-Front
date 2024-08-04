@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 import GiftSetPage from './GiftSetPage';
 import GiftAddPage from './GiftAddPage';
 import FundingSetPage from './FundingSetPage';
@@ -43,20 +43,29 @@ const PageProvider = ({ children }) => {
 };
 const PageRenderer = () => {
   const { currentPage } = useContext(PageContext);
-  const { giftData, imageData } = useContext(DataContext);
+  const { fundingData, giftData, imageData } = useContext(DataContext);
 
-  /*여기부터 이찬희 작성*/
   const handleFundingSubmission = async () => {
+    console.log('펀딩데이터', fundingData);
+    console.log('선물데이터', giftData);
+    console.log('이미지데이터', imageData);
     const request = { ...fundingData, gifts: giftData };
+    console.log('request', request);
     try {
       const response = await postFunding(request, imageData);
+      console.log('response', response);
       console.log('펀딩 생성 성공', response.data);
       setCurrentPage('HomePage');
     } catch (error) {
       console.error('펀딩 생성 오류', error);
     }
   };
-  /*여기까지*/
+
+  useEffect(() => {
+    if (currentPage === 'CompletePage') {
+      handleFundingSubmission();
+    }
+  }, [currentPage]);
 
   switch (currentPage) {
     case 'GiftSetPage':
@@ -75,9 +84,6 @@ const PageRenderer = () => {
     case 'PasswordSetPage':
       return <PasswordSetPage />;
     case 'CompletePage':
-      /*여기부터 이찬희 작성*/
-      handleFundingSubmission();
-      /*여기까지*/
       return <CompletePage />;
     default:
       return <HomePage />;
