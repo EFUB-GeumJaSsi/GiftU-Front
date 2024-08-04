@@ -1,4 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
+import Auth from './hoc/Auth';
 // 로그인
 import LoginPage from './pages/Login/LoginPage';
 import OAuthRedirectPage from './pages/Login/OAuthRedirectPage';
@@ -31,27 +32,63 @@ import MessageEditPage from './pages/Edit/MessageEditPage';
 const App = () => {
   return (
     <Routes>
-      <Route path='/login' element={<LoginPage />} />
-      <Route path='/api/oauth/kakao' element={<OAuthRedirectPage />} />
-      <Route path='/' element={<HomePage />} />
-      <Route path='/search' element={<SearchPage />} />
-      <Route path='/friends' element={<FriendPage />} />
-      <Route path='/notifications' element={<NotificationPage />} />
-      <Route path='/my' element={<MyPage />} />
-      <Route path='/my/edit' element={<ProfileEditPage />} />
-      <Route path='/my/funding/open' element={<ListOpenPage />} />
-      <Route path='/my/funding/join' element={<ListJoinPage />} />
-      <Route path='/tutorial' element={<TutorialPage />} />
-      <Route path='/funding/open' element={<FundingOpenPage />} />
-      <Route path='/funding/:fundingId' element={<FundingInfoPage />} />
-      <Route path='/funding/:fundingId/join' element={<FundingJoinPage />} />
+      <Route
+        path='/login'
+        element={<Auth Page={LoginPage} option='logout' />}
+      />
+      <Route
+        path='/api/oauth/kakao'
+        element={<Auth Page={OAuthRedirectPage} option='all' />}
+      />
+      <Route path='/' element={<Auth Page={HomePage} option='login' />} />
+      <Route
+        path='/search'
+        element={<Auth Page={SearchPage} option='login' />}
+      />
+      <Route
+        path='/friends'
+        element={<Auth Page={FriendPage} option='login' />}
+      />
+      <Route
+        path='/notifications'
+        element={<Auth Page={NotificationPage} option='login' />}
+      />
+      <Route path='/my' element={<Auth Page={MyPage} option='login' />} />
+      <Route
+        path='/my/edit'
+        element={<Auth Page={ProfileEditPage} option='login' />}
+      />
+      <Route
+        path='/my/funding/open'
+        element={<Auth Page={ListOpenPage} option='login' />}
+      />
+      <Route
+        path='/my/funding/join'
+        element={<Auth Page={ListJoinPage} option='login' />}
+      />
+      <Route
+        path='/tutorial'
+        element={<Auth Page={TutorialPage} option='all' />}
+      />
+      <Route
+        path='/funding/open'
+        element={<Auth Page={FundingOpenPage} option='login' />}
+      />
+      <Route
+        path='/funding/:fundingId'
+        element={<Auth Page={FundingInfoPage} option='all' />}
+      />
+      <Route
+        path='/funding/:fundingId/join'
+        element={<Auth Page={FundingJoinPage} option='login' />}
+      />
       <Route
         path='/funding/:fundingId/review/edit'
-        element={<ReviewEditPage />}
+        element={<Auth Page={ReviewEditPage} option='login' />}
       />
       <Route
         path='/funding/:fundingId/message/edit'
-        element={<MessageEditPage />}
+        element={<Auth Page={MessageEditPage} option='login' />}
       />
     </Routes>
   );
