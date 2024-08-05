@@ -7,9 +7,8 @@ import { getCongratsMessage, patchCongratsMessage } from '../../api/funding';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const MessageEditPage = () => {
-  const fundingId = 70; //아직 연결 안함 본인 펀딩 아이디 넣어야 작동됨
   const participationId = 19; //아직 연결 안함 본인 participationId 넣어야 작동됨
-
+  const { fundingId } = useParams();
   const [anony, setAnony] = useState();
   const [msgText, setMsgText] = useState('');
   const [name, setName] = useState('nickname');
@@ -46,7 +45,7 @@ const MessageEditPage = () => {
   const navigate = useNavigate();
   const handleClickChange = (e) => {
     UpdateMessage(participationId, anony, msgText);
-    //navigate(''); //버튼 클릭시 이동할 주소
+    navigate(`/funding/${fundingId}`); //버튼 클릭시 이동할 주소
   };
   useEffect(() => {
     readMessage(fundingId);

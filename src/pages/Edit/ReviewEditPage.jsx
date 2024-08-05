@@ -1,13 +1,12 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 import BackHeaderComponent from '../../components/common/BackHeaderComponent';
 import FundingParticipants from '../../components/FundingInfo/FundingParticipants';
 import ButtonComponent from '../../components/common/ButtonComponent';
 import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
 import { postReview, getReview, patchReview } from '../../api/review';
 import { getFundingInfo } from '../../api/funding';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const ReviewEditPage = () => {
   const { fundingId } = useParams();
@@ -83,7 +82,7 @@ const ReviewEditPage = () => {
     else {
       await updateReview(fundingId, reviewText);
     }
-    navigate('선물후기 완료시 이동할 주소'); //이동할 주소 입력해야함
+    navigate(`/funding/${fundingId}`);
   };
   const Btn = (
     <ButtonComponent
