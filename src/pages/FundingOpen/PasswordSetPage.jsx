@@ -30,7 +30,10 @@ const PasswordSetPage = () => {
     setValue('password', newPassword);
   };
   const isButtonDisabled = () => {
-    return visibility !== 'true';
+    if (visibility === 'public') {
+      return false;
+    }
+    return true;
   };
   const handleFormSubmit = (data) => {
     const formattedData = {

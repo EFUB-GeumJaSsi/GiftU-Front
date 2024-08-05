@@ -60,7 +60,8 @@ const FundingSetPage = () => {
   useEffect(() => {
     const today = new Date().toISOString().split('T')[0];
     setCurrentDate(today);
-  }, [currentDate]);
+    console.log(currentDate);
+  }, []);
 
   useEffect(() => {
     setIsButtonActive(
@@ -131,7 +132,7 @@ const FundingSetPage = () => {
               {...register('fundingEndDate', {
                 required: '날짜를 입력해주세요',
                 validate: (value) =>
-                  value >= currentDate || '오늘 이후의 날짜를 선택해주세요.',
+                  value > currentDate || '오늘 이후의 날짜를 선택해주세요.',
               })}
               type='date'
             />
@@ -264,7 +265,7 @@ const SInput = styled.input`
 `;
 const STextInput = styled(SInput)`
   width: 335px;
-  padding: 21px 24px;
+  padding: 21px 19px;
 
   color: var(--black);
   font-size: 16px;
@@ -281,7 +282,8 @@ const STextArea = styled.textarea`
   border-radius: 16px;
   width: 335px;
   height: 180px;
-  padding: 21px 24px;
+  padding: 21px 19px;
+  resize: none;
 
   border: none;
   color: var(--black);
@@ -314,12 +316,12 @@ const SDateContainer = styled.div`
 `;
 const SCurrentDateInput = styled(SInput)`
   width: 160px;
-  padding: 21px 22px;
+  padding: 19px 19px;
   box-sizing: border-box;
 `;
 const SDateInput = styled(SInput)`
   width: 160px;
-  padding: 21px 22px;
+  padding: 19px 19px;
   box-sizing: border-box;
 
   &:focus {
@@ -340,7 +342,7 @@ const SAddressNumberContainer = styled.div`
 `;
 const SAddressInput = styled(SInput)`
   width: 209px;
-  padding: 21px 34px 21px 28px;
+  padding: 21px 34px 21px 19px;
   box-sizing: border-box;
 `;
 const SButton = styled.button`
@@ -371,3 +373,7 @@ const SPostcodeContainer = styled.div`
 `;
 
 export default FundingSetPage;
+
+
+
+
