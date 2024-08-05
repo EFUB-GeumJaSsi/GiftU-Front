@@ -21,9 +21,9 @@ const Auth = ({ Page, option }) => {
   const checkIsLogin = async () => {
     const accessToken = localStorage.getItem('token');
     if (accessToken) {
-      const accessTokenDate = localStorage.getItem('token-date');
+      const accessTokenDate = new Date(localStorage.getItem('token-date'));
       const now = new Date();
-      if (now - accessTokenDate > 3480000) {
+      if (now.getTime() - accessTokenDate.getTime() > 3480000) {
         // 엑세스 토큰 발급 시각으로부터 58분이 지났는가?
         const response = await postAccessTokenReissue();
       }

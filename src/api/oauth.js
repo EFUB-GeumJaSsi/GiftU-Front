@@ -24,10 +24,12 @@ export const postAccessTokenReissue = async () => {
     const response = await apiAuth.post(`/api/oauth/reissue`);
     localStorage.setItem('token', response.data.accessToken);
     localStorage.setItem('token-date', new Date());
+    return response;
   } catch (error) {
     console.error(error);
     localStorage.removeItem('token');
     localStorage.removeItem('token-date');
     navigate('/login');
+    throw error;
   }
 };
