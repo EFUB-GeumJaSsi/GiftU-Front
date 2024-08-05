@@ -251,7 +251,9 @@ const FundingInfoPage = () => {
             ) : (
               funding === 'open' &&
               !data.existedReview &&
-              isEnd && <GoWriteCommentButton color={color} />
+              isEnd && (
+                <GoWriteCommentButton color={color} fundingId={fundingId} />
+              )
             )}
             <FundingSpan
               color={color}
