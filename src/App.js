@@ -38,7 +38,7 @@ const App = () => {
       />
       <Route
         path='/api/oauth/kakao'
-        element={<Auth Page={OAuthRedirectPage} option='all' />}
+        element={<Auth Page={OAuthRedirectPage} option='logout' />}
       />
       <Route path='/' element={<Auth Page={HomePage} option='login' />} />
       <Route
