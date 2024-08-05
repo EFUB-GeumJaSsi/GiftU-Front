@@ -13,7 +13,6 @@ export const postFunding = async (request, images) => {
     );
     const response = await apiAuth.post(`/fundings`, formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
-      withCredentials: true,
     });
 
     return response;
