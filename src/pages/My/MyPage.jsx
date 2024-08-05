@@ -56,7 +56,7 @@ const MyPage = () => {
   };
   const handleAccountDelete = () => {
     delUser();
-    navigate(`/login`);
+    navigate(`/login`, { replace: true });
   };
 
   return (
