@@ -24,13 +24,15 @@ const Calendar = () => {
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
   const today = date.getDate();
-  const startDate = addDays(startOfWeek(date), -6);
+  const day = date.getDay();
+  const startDate =
+    day === 0 ? addDays(startOfWeek(date), -6) : addDays(startOfWeek(date), 1);
 
-  // 2주 간 해당 날짜 펀딩 존재 여부 조회
+  // 일정 구간 펀딩 존재 여부 조회
   const readIsExistance = async () => {
     try {
       const res = await getExistanceOfFunding(
-        dates[0],
+        date.toISOString().split('T')[0],
         dates[dates.length - 1],
       );
       setIsFundingExist(res.data.existenceOfFundingOnDate);
