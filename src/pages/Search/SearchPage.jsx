@@ -1,15 +1,14 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
-import TagComponent from '../../components/common/TagComponent';
+import { useNavigate } from 'react-router-dom';
+import SearchItem from '../../components/Search/SearchItem';
 import search from '../../assets/common/search.svg';
 import { getSearch } from '../../api/search';
-import { useNavigate } from 'react-router-dom';
 
 const SearchPage = () => {
   const [search, setSearch] = useState('');
   const [results, setResults] = useState([]);
   const navigate = useNavigate();
-
   const onChange = (e) => {
     setSearch(e.target.value);
   };
@@ -50,29 +49,15 @@ const SearchPage = () => {
         <SOl>
           {results &&
             results.map((result, index) => (
-              <SResultItem
+              <SearchItem
                 key={index}
+                image={result.fundingImageUrl}
+                name={result.userNickname}
+                date={result.fundingEndDate}
+                status={result.status}
+                title={result.fundingTitle}
                 onClick={() => navigate(`/funding/${result.fundingId}`)}
-              >
-                <SImg src={result.fundingImageUrl} />
-                <SContentWrapper>
-                  <div id='title'>{result.fundingTitle}</div>
-                  <div id='name'>
-                    <SBoldWrapper>개설</SBoldWrapper> {result.userNickname}
-                  </div>
-                  <div id='endDate'>
-                    <SBoldWrapper>마감</SBoldWrapper>
-                    {result.fundingEndDate}
-                  </div>
-                  <div>
-                    {result.status == 'IN_PROGRESS' ? (
-                      <TagComponent text='진행 중' color='jade' />
-                    ) : (
-                      <TagComponent text='종료' color='gray' />
-                    )}
-                  </div>
-                </SContentWrapper>
-              </SResultItem>
+              />
             ))}
         </SOl>
       )}
@@ -178,27 +163,26 @@ const SContentWrapper = styled.div`
 
   font-weight: 500;
   font-size: 14px;
-  #title {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    font-weight: 700;
-    font-size: 17px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%;
-  }
-  #name {
-    display: flex;
-    flex-direction: row;
-    gap: 4px;
-  }
-  #endDate {
-    display: flex;
-    flex-direction: row;
-    gap: 4px;
-  }
 `;
+const STitleText = styled.text`
+  display: -webkit-box;
+  text-align: start;
+
+  max-width: 100%;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+
+  font-weight: 700;
+  font-size: 17px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+const SNameText = styled.text`
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+`;
+const SDateText = styled(SNameText)``;
 const SBoldWrapper = styled.div`
   color: var(--gray-500);
   font-weight: 500;
