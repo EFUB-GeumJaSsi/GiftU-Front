@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { format } from 'date-fns';
 import BackHeaderComponent from '../../components/common/BackHeaderComponent';
@@ -13,7 +14,7 @@ const ProfileEditPage = () => {
   const [currentDate, setCurrentDate] = useState('');
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
-
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -99,6 +100,7 @@ const ProfileEditPage = () => {
   const handleSubmitChange = async (userData) => {
     try {
       await updateUserInfo(userData);
+      navigate('/my');
     } catch (error) {
       console.error(error);
     }
