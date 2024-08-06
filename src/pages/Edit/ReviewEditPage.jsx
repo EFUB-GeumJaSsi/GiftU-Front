@@ -10,37 +10,17 @@ import { useNavigate, useParams, useLocation } from 'react-router-dom';
 
 const ReviewEditPage = () => {
   const { fundingId } = useParams();
-  const [reviewText, setReviewText] = useState('');
-  const [contributers, setContributers] = useState('');
-  const [isReviewExists, setIsReviewExists] = useState(false);
-  const [data, setData] = useState('');
-  const navigate = useNavigate();
   const location = useLocation();
-  //const key=location.state.key;
+  const [reviewText, setReviewText] = useState(location.state?.reviewText);
+  const [contributers, setContributers] = useState(
+    location.state?.contributers,
+  );
+  const isFull = reviewText ? true : false;
+  const navigate = useNavigate();
   const handleInputChange = (e) => {
     setReviewText(e.target.value);
   };
 
-  const readFundingInfo = async () => {
-    try {
-      const res = await getFundingInfo(fundingId);
-      const data = res.data;
-      console.log(data);
-      data.contributers && setContributers(data.contributers);
-      if (data.existedReview === true) {
-        setIsReviewExists(true);
-      }
-      setData(data);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  useEffect(() => {
-    if (fundingId) {
-      readFundingInfo(fundingId);
-    }
-  }, [fundingId]);
   const createReview = async () => {
     try {
       const response = await postReview(fundingId, reviewText);
@@ -61,7 +41,7 @@ const ReviewEditPage = () => {
   };
 
   useEffect(() => {
-    isReviewExists && readReview(fundingId);
+    reviewText === null && readReview(fundingId);
   }, [fundingId]);
 
   const updateReview = async (fundingId, reviewText) => {
@@ -74,11 +54,12 @@ const ReviewEditPage = () => {
   };
 
   const handleFormSubmit = async () => {
-    isReviewExists ? updateReview(fundingId, reviewText) : createReview();
+    reviewText !== null ? updateReview(fundingId, reviewText) : createReview();
     navigate(`/funding/${fundingId}`);
   };
   const Btn = (
     <ButtonComponent
+      disabled={!isFull}
       btnInfo={{
         text: '완료',
         width: '335px',
