@@ -16,7 +16,7 @@ const ReviewEditPage = () => {
   const [data, setData] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
-
+  //const key=location.state.key;
   const handleInputChange = (e) => {
     setReviewText(e.target.value);
   };
