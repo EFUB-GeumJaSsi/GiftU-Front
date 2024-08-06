@@ -16,7 +16,7 @@ const PasswordSetPage = () => {
   const { setFundingData } = useContext(DataContext);
 
   const [bottomSheetShow, setBottomSheetShow] = useState(false);
-  const { register, handleSubmit, watch, reset } = useForm({
+  const { register, handleSubmit, watch, reset, setValue } = useForm({
     defaultValues: {
       visibility: '',
       password: '',
@@ -27,7 +27,7 @@ const PasswordSetPage = () => {
 
   const setPassword = (data) => {
     newPassword = data;
-    console.log(newPassword, visibility);
+    setValue('password', newPassword);
   };
   const isButtonDisabled = () => {
     if (visibility === 'public') {
@@ -35,11 +35,14 @@ const PasswordSetPage = () => {
     }
     return true;
   };
-  const handleFormSubmit = () => {
+  const handleFormSubmit = (data) => {
+    const formattedData = {
+      ...data,
+      visibility: data.visibility === 'true',
+    };
     setFundingData((prevData) => ({
       ...prevData,
-      visibility: null,
-      password: null,
+      ...formattedData,
     }));
     setCurrentPage('CompletePage');
   };
@@ -56,7 +59,7 @@ const PasswordSetPage = () => {
         <BackHeaderComponent
           onClick={() => setCurrentPage('PasswordSetPage')}
         />
-        <form onSubmit={handleFormSubmit}>
+        <form onSubmit={handleSubmit(handleFormSubmit)}>
           <SFieldset>
             <SLegend>공개 여부</SLegend>
             <SRadioContainer>
