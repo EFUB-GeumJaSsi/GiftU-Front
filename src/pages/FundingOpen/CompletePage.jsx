@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import BackHeaderComponent from '../../components/common/BackHeaderComponent';
 import CompletePageComponent from '../../components/common/CompletePageComponent';
 import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
@@ -6,6 +7,8 @@ import ButtonComponent from '../../components/common/ButtonComponent';
 import { ReactComponent as IcnGift } from '../../assets/FungingOpen/icn_gift.svg';
 
 const CompletePage = () => {
+  const navigate = useNavigate();
+
   return (
     <SLayout>
       <BackHeaderComponent />
@@ -17,7 +20,8 @@ const CompletePage = () => {
       <BottomBackgroundComponent
         Button={
           <ButtonComponent
-            btnInfo={{ text: '홈으로 돌아가기', color: 'orange', onClick: '' }}
+            btnInfo={{ text: '홈으로 돌아가기', color: 'jade' }}
+            onClick={() => navigate('/', { replace: true })}
           />
         }
       />

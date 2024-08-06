@@ -37,6 +37,7 @@ const SearchPage = () => {
         <SInput
           type='search'
           name='q'
+          autoFocus
           placeholder='펀딩 이름, 친구를 검색해 보세요'
           value={search}
           onChange={onChange}

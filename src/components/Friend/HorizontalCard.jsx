@@ -1,14 +1,21 @@
 import styled from 'styled-components';
+import { B1, C1, C2 } from '../../styles/font';
 import { useState } from 'react';
 import { deleteFriendItem } from '../../api/friend';
+import { formatDate } from './VerticalCard';
 import BottomModalComponent from '../../components/common/BottomModalComponent';
 import ModalComponent from '../common/ModalComponent';
 import ToastComponent from '../common/ToastComponent';
+import icn_profile_default from '../../assets/common/profile_default.svg';
 import icn_birth from '../../assets/Friend/icn_birth.svg';
 import btn_delete from '../../assets/Friend/btn_delete_friend.svg';
 import icn_info from '../../assets/Friend/icn_info.svg';
 
-const HorizontalCard = ({ friendId, nickname, birthday, image }) => {
+const HorizontalCard = ({
+  data = { friendId, nickname, birthday, userImageUrl },
+}) => {
+  const image = data.userImageUrl || icn_profile_default;
+
   const [bottomModalShow, setBottomModalShow] = useState(false);
   const [bottomModalOpen, setBottomModalOpen] = useState(false);
   const [modalShow, setModalShow] = useState(false);
@@ -33,7 +40,7 @@ const HorizontalCard = ({ friendId, nickname, birthday, image }) => {
     setTimeout(() => setBottomModalShow(false), 300); // 애니메이션 후 언마운트
   };
   const handleDeleteClick = () => {
-    delFriend(friendId);
+    delFriend(data.friendId);
     setToastShow(true);
   };
 
@@ -41,8 +48,8 @@ const HorizontalCard = ({ friendId, nickname, birthday, image }) => {
     <SLayout>
       <SImg src={image} />
       <STextContainer>
-        <SCardNickname>{nickname}</SCardNickname>
-        <SCardBirthday>{birthday}</SCardBirthday>
+        <SNicknameSpan>{data.nickname}</SNicknameSpan>
+        <SBirthdaySpan>{formatDate(data.birthday)}</SBirthdaySpan>
       </STextContainer>
       <SMenuBtn
         onClick={() => {
@@ -77,12 +84,12 @@ const HorizontalCard = ({ friendId, nickname, birthday, image }) => {
           <SModalContainer>
             <SInfoContainer>
               <SImg src={image} />
-              <SModalNickname>{nickname}</SModalNickname>
+              <SModalNicknameSpan>{data.nickname}</SModalNicknameSpan>
             </SInfoContainer>
             <SWarnContainer>
-              <SWarnTitle>친구를 삭제하시겠어요?</SWarnTitle>
-              <SWarnText>친구와 주고받은 선물 기록이 사라져요.</SWarnText>
-              <SWarnText>나중에 다시 친구로 추가할 수 있어요.</SWarnText>
+              <SWarnH2>친구를 삭제하시겠어요?</SWarnH2>
+              <SWarnP>친구와 주고받은 선물 기록이 사라져요.</SWarnP>
+              <SWarnP>나중에 다시 친구로 추가할 수 있어요.</SWarnP>
             </SWarnContainer>
           </SModalContainer>
         </ModalComponent>
@@ -96,24 +103,6 @@ const HorizontalCard = ({ friendId, nickname, birthday, image }) => {
   );
 };
 
-// 텍스트 스타일
-const SB1 = styled.p`
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 140%;
-`;
-const SC1 = styled.small`
-  font-size: 12px;
-  font-weight: 600;
-  line-height: 120%;
-`;
-const SC2 = styled.small`
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 120%;
-`;
-
-// 스타일 컴포넌트
 const SLayout = styled.div`
   display: flex;
   flex-flow: row nowrap;
@@ -135,6 +124,13 @@ const SImg = styled.img`
 
   border-radius: 50%;
   background-color: #d9d9d9;
+
+  object-fit: cover;
+  // 드래그 방지
+  -webkit-user-drag: none;
+  -moz-user-drag: none;
+  -ms-user-drag: none;
+  user-drag: none;
 `;
 const STextContainer = styled.div`
   display: flex;
@@ -142,19 +138,22 @@ const STextContainer = styled.div`
 
   gap: 8px;
 `;
-const SCardNickname = styled(SB1)`
+const SNicknameSpan = styled.span`
   overflow: hidden;
 
   width: 200px;
 
+  ${B1}
   color: var(--black);
   text-overflow: ellipsis;
 
   white-space: nowrap;
 `;
-const SCardBirthday = styled(SC1)`
-  color: var(--gray-500);
+const SBirthdaySpan = styled.span`
   text-align: start;
+
+  ${C1}
+  color: var(--gray-500);
 
   &::before {
     content: url(${icn_birth});
@@ -211,16 +210,10 @@ const SInfoContainer = styled.div`
 
   gap: 8px;
 `;
-const SModalNickname = styled(SB1)`
-  overflow: hidden;
+const SModalNicknameSpan = styled(SNicknameSpan)`
   text-align: center;
-
   width: 160px;
-
   color: var(--gray-500);
-  text-overflow: ellipsis;
-
-  white-space: nowrap;
 `;
 const SWarnContainer = styled.div`
   display: flex;
@@ -228,10 +221,12 @@ const SWarnContainer = styled.div`
 
   gap: 8px;
 `;
-const SWarnTitle = styled(SB1)`
+const SWarnH2 = styled.h2`
   text-align: center;
+  ${B1}
 `;
-const SWarnText = styled(SC2)`
+const SWarnP = styled.p`
+  ${C2}
   color: var(--gray-500);
 
   &::before {

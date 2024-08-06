@@ -9,9 +9,9 @@ import icn_plus from '../../assets/FungingOpen/icn_plus.svg';
 
 const GiftSetPage = ({
   lastGiftData = {
-    giftName: null,
+    giftName: '',
     price: null,
-    giftUrl: null,
+    giftUrl: '',
   },
   lastImageData = null,
 }) => {
@@ -60,12 +60,24 @@ const GiftSetPage = ({
       <BackHeaderComponent />
       <SForm onSubmit={handleFormSubmit}>
         <fieldset>
+          <SLegend>상품</SLegend>
+          <SInput
+            type='text'
+            name='gift'
+            id='gift-name'
+            placeholder='상품명을 입력해 주세요'
+            value={name}
+            required={!name}
+            onChange={(event) => setName(event.target.value)}
+          />
+        </fieldset>
+        <fieldset>
           <SLegend>가격</SLegend>
           <PriceInputComponent
             name='gift'
             id='gift-price'
             maxLength='11'
-            placeholder='선물의 가격을 입력해 주세요'
+            placeholder='상품 가격을 입력해 주세요'
             required={!price}
             focusColor='var(--jade-pri)'
             price={price}
@@ -74,7 +86,7 @@ const GiftSetPage = ({
         </fieldset>
         <fieldset>
           <SLegend>링크</SLegend>
-          <SUrlInput
+          <SInput
             type='url'
             name='gift'
             id='gift-url'
@@ -138,8 +150,18 @@ const SLegend = styled.legend`
   font-size: 16px;
   font-weight: 500;
   line-height: 140%;
+
+  &::after {
+    content: '*';
+
+    position: relative;
+    top: 2px;
+    left: 8px;
+
+    color: var(--jade-pri);
+  }
 `;
-const SUrlInput = styled.input`
+const SInput = styled.input`
   width: 335px;
   padding: 21px 24px;
 
@@ -151,6 +173,7 @@ const SUrlInput = styled.input`
   font-size: 16px;
   font-weight: 400;
   line-height: 140%;
+  text-overflow: ellipsis;
 
   box-sizing: border-box;
 

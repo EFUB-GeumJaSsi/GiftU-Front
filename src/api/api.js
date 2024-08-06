@@ -6,7 +6,7 @@ const api = axios.create({
 });
 
 // 인증이 필요한 요청
-const accessToken = localStorage.getItem('giftu-token');
+const accessToken = localStorage.getItem('token');
 const apiAuth = axios.create({
   baseURL: `${process.env.REACT_APP_SERVER_URL}`,
   headers: { Authorization: `Bearer ${accessToken}` },
