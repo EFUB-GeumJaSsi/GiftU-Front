@@ -5,7 +5,6 @@ import FundingParticipants from '../../components/FundingInfo/FundingParticipant
 import ButtonComponent from '../../components/common/ButtonComponent';
 import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
 import { postReview, getReview, patchReview } from '../../api/review';
-import { getFundingInfo } from '../../api/funding';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 
 const ReviewEditPage = () => {
