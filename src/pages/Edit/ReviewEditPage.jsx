@@ -1,19 +1,26 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 import BackHeaderComponent from '../../components/common/BackHeaderComponent';
 import FundingParticipants from '../../components/FundingInfo/FundingParticipants';
 import ButtonComponent from '../../components/common/ButtonComponent';
 import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
 import { postReview, getReview, patchReview } from '../../api/review';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 
 const ReviewEditPage = () => {
   const { fundingId } = useParams();
-  const [reviewText, setReviewText] = useState('');
+  const location = useLocation();
+  const [reviewText, setReviewText] = useState(location.state?.reviewText);
+  const [contributers, setContributers] = useState(
+    location.state?.contributers,
+  );
+  const isFull = reviewText ? true : false;
+  const navigate = useNavigate();
   const handleInputChange = (e) => {
     setReviewText(e.target.value);
   };
-  const createReview = async (fundingId, reviewText) => {
+
+  const createReview = async () => {
     try {
       const response = await postReview(fundingId, reviewText);
       console.log(response.data);
@@ -21,16 +28,20 @@ const ReviewEditPage = () => {
       console.error(error);
     }
   };
+
   const readReview = async (fundingId) => {
     try {
       const response = await getReview(fundingId);
-      if ((response.data.reviewContent = '')) setReviewText([]);
-      else setReviewText(response.data.reviewContent);
+      setReviewText(response.data.reviewContent);
       console.log(response.data);
     } catch (error) {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    reviewText === null && readReview(fundingId);
+  }, [fundingId]);
 
   const updateReview = async (fundingId, reviewText) => {
     try {
@@ -40,17 +51,14 @@ const ReviewEditPage = () => {
       console.error(error);
     }
   };
-  useEffect(() => {
-    readReview(fundingId);
-  }, []);
 
-  const handleFormSubmit = () => {
-    createReview(fundingId, reviewText);
+  const handleFormSubmit = async () => {
+    reviewText !== null ? updateReview(fundingId, reviewText) : createReview();
+    navigate(`/funding/${fundingId}`);
   };
-  //updateReview(fundingId, reviewText);
-  //else
   const Btn = (
     <ButtonComponent
+      disabled={!isFull}
       btnInfo={{
         text: '완료',
         width: '335px',
@@ -63,7 +71,7 @@ const ReviewEditPage = () => {
     <SLayout>
       <BackHeaderComponent text='선물후기'></BackHeaderComponent>
       <SContentContainer>
-        <FundingParticipants />
+        <FundingParticipants list={contributers} />
         <SForm>
           <SLegend>선물 후기</SLegend>
           <STextarea

@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { format } from 'date-fns';
 import BackHeaderComponent from '../../components/common/BackHeaderComponent';
@@ -7,11 +8,13 @@ import ButtonComponent from '../../components/common/ButtonComponent';
 import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
 import { ReactComponent as Camera } from '../../assets/common/camera.svg';
 import { ReactComponent as ProfileIcon } from '../../assets/common/profile_default.svg';
+import { getUserInfo, patchUserInfo } from '../../api/user';
 
 const ProfileEditPage = () => {
   const [currentDate, setCurrentDate] = useState('');
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -21,22 +24,59 @@ const ProfileEditPage = () => {
     formState: { errors, isValid },
   } = useForm({
     defaultValues: {
-      image: 'default',
-      nickname: '닉네임',
-      email: 'yyheeyeon@gmail.com',
+      nickname: '',
+      email: '',
       birthday: '',
     },
     mode: 'onChange',
   });
+
+  //유저정보 조회 API
+  const readUserInfo = async () => {
+    try {
+      const response = await getUserInfo();
+      const userData = response.data;
+
+      setValue('nickname', userData.nickname);
+      setValue('email', userData.email);
+      setValue('birthday', format(new Date(userData.birthday), 'yyyy-MM-dd'));
+      console.log(response.data);
+      if (userData.userImageUrl) {
+        setImagePreview(userData.userImageUrl);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  //유저정보 수정 API
+  const updateUserInfo = async (userData) => {
+    try {
+      const data = {
+        nickname: userData.nickname,
+        email: userData.email,
+        birthday: userData.birthday,
+      };
+      const formData = new FormData();
+      if (imageFile) {
+        formData.append('userImage', imageFile);
+      }
+      formData.append(
+        'userUpdateRequestDto',
+        new Blob([JSON.stringify(data)], { type: 'application/json' }),
+      );
+
+      const response = await patchUserInfo(formData);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     const today = new Date().toISOString().split('T')[0];
     setCurrentDate(today);
     setValue('currentDate', today);
   }, [setValue]);
-
-  const onSubmit = (data) => {
-    console.log('Form Data:', data);
-  };
 
   const birthday = watch('birthday');
 
@@ -57,6 +97,14 @@ const ProfileEditPage = () => {
       setImagePreview(URL.createObjectURL(file));
     }
   };
+  const handleSubmitChange = async (userData) => {
+    try {
+      await updateUserInfo(userData);
+      navigate('/my');
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const Btn = (
     <ButtonComponent
@@ -67,13 +115,18 @@ const ProfileEditPage = () => {
         width: '335px',
         color: isValid ? 'jade' : 'gray',
       }}
+      onClick={handleSubmit(handleSubmitChange)}
     ></ButtonComponent>
   );
+
+  useEffect(() => {
+    readUserInfo();
+  }, []);
 
   return (
     <SLayout>
       <BackHeaderComponent text='프로필 편집' />
-      <SForm onSubmit={handleSubmit(onSubmit)}>
+      <SForm>
         <SImageContainer>
           {imagePreview ? (
             <SImgWrapper src={imagePreview} alt='Profile' />
@@ -95,6 +148,7 @@ const ProfileEditPage = () => {
           <STextarea
             name='nickname'
             placeholder='닉네임을 입력해 주세요!'
+            value={useForm.nickname}
             {...register('nickname', {
               required: '닉네임을 입력해 주세요!',
               maxLength: {
@@ -113,6 +167,7 @@ const ProfileEditPage = () => {
           <STextarea
             name='email'
             placeholder='이메일을 입력해 주세요!'
+            value={useForm.email}
             {...register('email', {
               required: '이메일을 입력해 주세요!',
               pattern: {
@@ -131,6 +186,7 @@ const ProfileEditPage = () => {
           <SInputContainer>
             <SDateInput
               placeholder=''
+              value={useForm.birthday}
               {...register('birthday', {
                 required: '생일을 입력해 주세요!',
                 validate: (value) =>

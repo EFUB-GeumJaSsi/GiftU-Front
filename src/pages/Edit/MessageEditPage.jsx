@@ -1,44 +1,65 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import BackHeaderComponent from '../../components/common/BackHeaderComponent';
 import ButtonComponent from '../../components/common/ButtonComponent';
 import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
-const tempList = [
-  {
-    name: '이름은최대8글자',
-    message:
-      '축하 메시지가 표시될 거예요 메시지는 여러 줄이어도 모두 표시되도록 설정해 주세요',
-    price: '40,000원',
-  },
-  {
-    name: '김이화',
-    message: '생일 축하해!',
-  },
-  {
-    name: '이름은최대8글자',
-    message:
-      '축하 메시지가 표시될 거예요 메시지는 여러 줄이어도 모두 표시되도록 설정해 주세요',
-  },
-];
-const Btn = (
-  <ButtonComponent
-    btnInfo={{
-      text: '수정하기',
-      width: '335px',
-      color: 'orange',
-    }}
-  />
-);
+import { getCongratsMessage, patchCongratsMessage } from '../../api/funding';
+import { useNavigate, useParams } from 'react-router-dom';
+
 const MessageEditPage = () => {
-  const [MsgText, setMsgText] = useState(tempList[0].message);
+  const participationId = 19; //아직 연결 안함 본인 participationId 넣어야 작동됨
+  const { fundingId } = useParams();
+  const [anony, setAnony] = useState();
+  const [msgText, setMsgText] = useState('');
+  const [name, setName] = useState('nickname');
   const handleInputChange = (e) => {
     setMsgText(e.target.value);
   };
   const handleRadioChange = (e) => {
-    setName(e.target.value);
+    const selectedValue = e.target.value;
+    setName(selectedValue);
+    setAnony(selectedValue === 'anony' ? true : false);
   };
-  const [name, setName] = useState('nickname');
+  const readMessage = async (fundingId) => {
+    try {
+      const response = await getCongratsMessage(fundingId);
+      setMsgText(response.data.message);
+      setName(response.data.anonymity ? 'anony' : 'nickname');
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const UpdateMessage = async (participationId, anony, msgText) => {
+    try {
+      const response = await patchCongratsMessage(
+        participationId,
+        anony,
+        msgText,
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const navigate = useNavigate();
+  const handleClickChange = (e) => {
+    UpdateMessage(participationId, anony, msgText);
+    navigate(`/funding/${fundingId}`); //버튼 클릭시 이동할 주소
+  };
+  useEffect(() => {
+    readMessage(fundingId);
+  }, [fundingId]);
 
+  const Btn = (
+    <ButtonComponent
+      btnInfo={{
+        text: '수정하기',
+        width: '335px',
+        color: 'orange',
+      }}
+      onClick={handleClickChange}
+    />
+  );
   return (
     <SLayout>
       <BackHeaderComponent text='축하메세지' />
@@ -73,7 +94,7 @@ const MessageEditPage = () => {
         </SFieldset>
         <SFieldset>
           <SOptionalLegend>축하메세지</SOptionalLegend>
-          <SBigTextarea onChange={handleInputChange} value={MsgText} />
+          <STextarea onChange={handleInputChange} value={msgText} />
         </SFieldset>
       </SForm>
       <BottomBackgroundComponent Button={Btn} />
@@ -177,7 +198,7 @@ const SOptionalLegend = styled.legend`
   font-size: 16px;
   font-weight: 500;
 `;
-const SBigTextarea = styled.textarea`
+const STextarea = styled.textarea`
   display: flex;
   flex-direction: column;
 
