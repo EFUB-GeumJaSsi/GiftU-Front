@@ -9,17 +9,8 @@ import { getFriendsFundingList } from '../../api/funding';
 const HomePage = () => {
   const [possibleFundingList, setPossibleFundingList] = useState([]);
 
-  const readFriendsFundingList = async () => {
-    try {
-      const res = await getFriendsFundingList();
-      setPossibleFundingList(res.data.fundings);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
   useEffect(() => {
-    readFriendsFundingList();
+    setPossibleFundingList([]);
   }, []);
 
   return (
