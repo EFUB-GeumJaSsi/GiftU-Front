@@ -4,13 +4,14 @@ import TagSelectComponent from '../../components/common/TagSelectComponent';
 import Modal from '../../components/common/ModalComponent';
 import { ReactComponent as IcnInfo } from '../../assets/Friend/icn_info.svg';
 import { ReactComponent as ProfileIcon } from '../../assets/common/profile_default.svg';
+import { useNavigate, useParams } from 'react-router-dom';
 import NavComponent from '../../components/common/NavComponent';
 import {
   getAllNotice,
   getFriendNotice,
   getFundingNotice,
 } from '../../api/notice';
-import { postFriendAccept } from '../../api/friend';
+import { postFriendAccept, postFriendReject } from '../../api/friend';
 
 //현재시간에서 알림받은 시간 빼서 보여주는 코드
 const getTime = (timestamp) => {
@@ -41,12 +42,13 @@ const NotificationPage = () => {
   const tags = ['전체', '친구', '펀딩'];
   const [friendTableId, setFriendTableId] = useState('');
   const [time, setTime] = useState();
-
+  const navigate = useNavigate();
+  const { fundingId } = useParams();
   //친구알림 모달창
   const friendNotiClick = (image, name) => {
     setModalContent(
       <SModalContainer>
-        {image === 'default' ? <StyledProfileIcon /> : <SImg src={image} />}
+        {image === null ? <StyledProfileIcon /> : <SImg src={image} />}
         <span>{name}</span>
         <span style={{ color: 'var(--black)' }}>친구를 추가하시겠어요?</span>
         <span style={{ fontSize: '12px' }}>
@@ -59,7 +61,7 @@ const NotificationPage = () => {
 
   //펀딩알림 클릭시 해당 펀딩 페이지로 이동
   const fundingNotiClick = () => {
-    window.location.href = '/'; // 나중에 이동할 주소 넣어야함
+    navigate(`fundings/${fundingId}`); // 나중에 이동할 주소 넣어야함
   };
 
   const filteredNotifications = notificationList.filter(() => {
@@ -167,6 +169,17 @@ const NotificationPage = () => {
   const createFriendAccept = async (friendTableId) => {
     try {
       const response = await postFriendAccept(friendTableId);
+      location.reload(true);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  //친구요청 거절 API 연결
+  const createFriendReject = async (friendTableId) => {
+    try {
+      const response = await postFriendReject(friendTableId);
+      location.reload(true);
       console.log(response.data);
     } catch (error) {
       console.error(error);
@@ -174,6 +187,9 @@ const NotificationPage = () => {
   };
   const handleFormSubmit = async () => {
     await createFriendAccept(friendTableId);
+  };
+  const handleFormReject = async () => {
+    await createFriendReject(friendTableId);
   };
   return (
     <SLayout>
@@ -184,7 +200,7 @@ const NotificationPage = () => {
           selectedTag={tag}
           onTagChange={setTag}
         />
-        <SBtnWrapper>
+        <SOl>
           {filteredNotifications.map((notification, index) =>
             //tag가 친구일때
             tag === '친구' ? (
@@ -198,7 +214,7 @@ const NotificationPage = () => {
                   )
                 }
               >
-                {notification.recieveUserImgUrl === 'default' ? (
+                {notification.recieveUserImgUrl === null ? (
                   <AStyledProfileIcon />
                 ) : (
                   <SAImg src={notification.recieveUserImgUrl} />
@@ -227,11 +243,13 @@ const NotificationPage = () => {
               </SALayout>
             ),
           )}
-        </SBtnWrapper>
+        </SOl>
       </SItemContainer>
       <NavComponent />
       {modalShow && (
         <Modal
+          cancelText='거절하기'
+          onClickCancel={handleFormReject}
           actionText='추가하기'
           onClickAction={handleFormSubmit}
           setModalShow={setModalShow}
@@ -300,7 +318,7 @@ const SItemContainer = styled.main`
   gap: 16px;
 `;
 
-const SBtnWrapper = styled.div`
+const SOl = styled.ol`
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
