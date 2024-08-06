@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import BackHeaderComponent from '../../components/common/BackHeaderComponent';
 import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
 import ButtonComponent from '../../components/common/ButtonComponent';
@@ -6,10 +7,12 @@ import CompletePageComponent from '../../components/common/CompletePageComponent
 import { ReactComponent as IcnGift } from '../../assets/FundingJoin/gift_icon.svg';
 
 const CompletePage = () => {
+  const navigate = useNavigate();
+
   const Btn = (
     <ButtonComponent
       btnInfo={{ text: '홈으로 돌아가기', color: 'orange' }}
-      onClick={window.location.replace('/')}
+      onClick={() => navigate('/', { replace: true })}
     />
   );
 

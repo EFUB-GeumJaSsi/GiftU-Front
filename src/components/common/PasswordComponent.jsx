@@ -115,7 +115,6 @@ const PasswordComponent = ({
             ))}
           </SPasswordInputContainer>
           {errorMessage && <SErrorSpan>{errorMessage}</SErrorSpan>}
-          {/* ButtonComponent 사용하기 */}
           <ButtonComponent
             btnInfo={{
               text: '완료',

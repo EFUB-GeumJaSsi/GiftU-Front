@@ -1,13 +1,61 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { addComma } from '../../components/FundingInfo/FundingPercentage';
-import { getColor, getBackgroundColor, getOpacity } from './stylefunction';
+
+const getColor = (props) => {
+  if (props.$percent == 100 && props.$length === props.$idx - 1)
+    return props.$color;
+
+  if (props.$nextIdx === props.$idx) return 'var(--gray-500)';
+
+  if (props.$idx === 'join') return 'var(--orange-pri)';
+
+  if (props.$type === 'info' || props.$num !== props.$length)
+    return 'var(--gray-300)';
+
+  return props.$color;
+};
+
+const getBackgroundColor = (props) => {
+  if (props.$num !== props.$length && props.$type === 'add')
+    return 'var(--gray-300)';
+
+  if (props.$type === 'add') return 'var(--jade-pri)';
+
+  if (props.id === 'join') return 'var(--orange-pri)';
+
+  if (props.$price <= props.$balance) return props.$color;
+
+  return 'var(--gray-300)';
+};
+
+const getOpacity = (props) => {
+  if (
+    props.$idx == props.$selected ||
+    (props.$percent == 100 && props.$length === props.$idx - 1)
+  )
+    return '1';
+
+  if (props.$joinPrice && props.$idx !== 'join') return '0';
+
+  if (
+    props.$idx === props.$nextIdx ||
+    props.$idx === 'join' ||
+    props.$num === props.$length
+  ) {
+    return '1';
+  }
+
+  return '0';
+};
 
 const PriceProgressBar = ({ type, color, giftList, balance, joinPrice }) => {
   const maxPrice =
     giftList && giftList.length > 0 && giftList[giftList.length - 1].price;
   const nowPrice = maxPrice - balance;
-  const percent = balance ? Math.round(((maxPrice - balance) / maxPrice) * 100) : 0;
+  const percent = balance
+    ? Math.round(((maxPrice - balance) / maxPrice) * 100)
+    : 0;
   const [nextPrice, setNextPrice] = useState({
     idx: null,
     price: null,

@@ -120,7 +120,7 @@ const FundingInfoPage = () => {
   const delFunding = async () => {
     try {
       const res = await deleteFunding(data.fundingId);
-      navigate('/my/funding/open');
+      navigate('/my/funding/open', { replace: true });
     } catch (e) {
       console.log(e);
     }

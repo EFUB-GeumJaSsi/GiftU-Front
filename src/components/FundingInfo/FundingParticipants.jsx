@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { ReactComponent as ProfileDefault } from '../../assets/common/profile_default.svg';
 
-const FundingParticipants = ({ list }) => {
+const FundingParticipants = ({ list = [] }) => {
   const participantItem = (it, idx) => (
     <SItemContainer key={idx}>
       {it.userImageUrl ? (
@@ -16,11 +16,11 @@ const FundingParticipants = ({ list }) => {
   return (
     <SLayout>
       <STextContainer>
-        <STitleSpan>{list ? list.length : 0}명이 참여했어요!</STitleSpan>
-        {list && list.length > 0 && (
+        <STitleSpan>{list.length}명이 참여했어요!</STitleSpan>
+        {list.length > 0 && (
           <STextSpan>
             가장 많이 기여한 사람은{' '}
-            <SBoldTextSpan>{list && list[0].nickname}</SBoldTextSpan> 님이에요
+            <SBoldTextSpan>{list[0].nickname}</SBoldTextSpan> 님이에요
           </STextSpan>
         )}
       </STextContainer>
