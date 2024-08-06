@@ -189,7 +189,11 @@ const FundingInfoPage = () => {
                 : ' 선물 후기 작성하기',
               color: 'jade',
             }}
-            onClick={() => navigate(`/funding/${fundingId}/review/edit`)}
+            onClick={() =>
+              navigate(`/funding/${fundingId}/review/edit`, {
+                state: { contributers: contributers, review: review },
+              })
+            }
           />
         );
       } else {
