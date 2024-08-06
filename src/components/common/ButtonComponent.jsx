@@ -40,6 +40,8 @@ const SBtn = styled.button`
   font-size: 16px;
   font-weight: 600;
   line-height: 140%;
+
+  cursor: ${(props) => (props.disabled ? 'default' : 'cursor')};
 `;
 
 export default ButtonComponent;

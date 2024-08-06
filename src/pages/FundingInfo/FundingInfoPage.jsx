@@ -106,7 +106,7 @@ const FundingInfoPage = () => {
     }
   };
 
-  // 내가 쓴 리뷰 조회
+  // 리뷰 조회
   const readReview = async () => {
     try {
       const res = await getReview(data.fundingId);
@@ -120,7 +120,11 @@ const FundingInfoPage = () => {
   const delFunding = async () => {
     try {
       const res = await deleteFunding(data.fundingId);
-      navigate('/my/funding/open');
+      navigate(
+        '/my/funding/open',
+        { state: { info: true } },
+        { replace: true },
+      );
     } catch (e) {
       console.log(e);
     }
@@ -150,12 +154,12 @@ const FundingInfoPage = () => {
     }
   }, [fundingId]);
 
-  // 종료되었고 내가 개설한 펀딩이면 readReview()
+  // 종료되었고 리뷰 존재하면 readReview()
   useEffect(() => {
-    if (isEnd && funding === 'open' && data.existedReview) {
+    if (isEnd && data.existedReview) {
       readReview();
     }
-  }, [isEnd, funding, data.existedReview]);
+  }, [funding, isEnd, data.existedReview]);
 
   const Btn = () => {
     // 내가 참여한
@@ -165,6 +169,7 @@ const FundingInfoPage = () => {
           <ButtonComponent
             btnInfo={{ text: '참여 취소', width: '104px' }}
             onClick={delParticipation}
+            disabled={false}
           />
           <ButtonComponent
             btnInfo={{
@@ -172,7 +177,7 @@ const FundingInfoPage = () => {
               width: '223px',
               color: 'orange',
             }}
-            onClick={() => navigate('수정페이지 이동')}
+            onClick={() => navigate(`/funding/${fundingId}/message/edit`)}
           />
         </SBtnContainer>
       );
@@ -188,10 +193,10 @@ const FundingInfoPage = () => {
                 : ' 선물 후기 작성하기',
               color: 'jade',
             }}
-            onClick={
-              data.existedReview
-                ? () => navigate('후기 수정 페이지 이동')
-                : () => navigate('후기 작성 페이지 이동')
+            onClick={() =>
+              navigate(`/funding/${fundingId}/review/edit`, {
+                state: { contributers: contributers, review: review },
+              })
             }
           />
         );
@@ -202,6 +207,7 @@ const FundingInfoPage = () => {
               text: '개설 취소하기',
             }}
             onClick={() => setModalShow(true)}
+            disabled={false}
           />
         );
       }
@@ -253,7 +259,9 @@ const FundingInfoPage = () => {
             ) : (
               funding === 'open' &&
               !data.existedReview &&
-              isEnd && <GoWriteCommentButton color={color} />
+              isEnd && (
+                <GoWriteCommentButton color={color} fundingId={fundingId} />
+              )
             )}
             <FundingSpan
               color={color}
@@ -294,7 +302,6 @@ const FundingInfoPage = () => {
           color='orange'
           fundingId={fundingId}
           name={data.nickname}
-          passwordExact={getPassword}
           validPassword={() => setBottomSheetShow(false)}
           action='back' // 바텀시트 cross 버튼 클릭 시 뒤로가기 + background 이벤트리스너 비활성화
           setBottomSheetShow={setBottomSheetShow}

@@ -22,49 +22,57 @@ const FundingPercentage = ({
   giftList,
   joinPrice,
   setIsTrue,
+  giftData,
+  imageData,
 }) => {
-  const maxPrice = giftList && giftList[giftList.length - 1].price;
+  const maxPrice =
+    giftList && giftList.length > 0 && giftList[giftList.length - 1].price;
   const percent = Math.round((nowMoney / maxPrice) * 100);
-  const balance = maxPrice - nowMoney;
+  const balance = nowMoney ? maxPrice - nowMoney : maxPrice;
   const [isClicked, setIsClicked] = useState(type === 'add' ? true : false);
+  const [list, setList] = useState(type === 'add' ? addKeytoGiftData(giftData) : []);
+
+  // 선물 데이터 오름차순 정렬
+  function sortGiftData(array) {
+    return array && array.sort((a, b) => a.price - b.price);
+  }
+
+  // GiftAddPage 선물 정렬
+  function addKeytoGiftData(array) {
+    const addNum = [...array].map((it, idx) => {
+      return { ...it, num: idx, giftImage: imageData[idx] };
+    });
+    return sortGiftData(addNum);
+  }
 
   // GiftAddPage 삭제버튼핸들러
   const handleItemDelete = (e) => {
+    // 이벤트 버블링 방지
+    e.stopPropagation();
+
     const { id } = e.target;
-    const targetIdx = giftList.findIndex((it, idx) => idx === parseInt(id) - 1);
+    const targetIdx = list.findIndex((it, idx) => idx === parseInt(id) - 1);
 
     if (targetIdx >= 0) {
-      updateList(targetIdx, id);
+      const targetNum = list[targetIdx].num;
+
+      // splice 원본 배열 변경
+      giftData.splice(targetNum, 1);
+      imageData.splice(targetNum, 1);
+      setList(addKeytoGiftData(giftData));
     }
-  };
-
-  // GiftAddPage 삭제할 아이템 제외 리스트 정리
-  const updateList = (targetIdx, id) => {
-    const targetNum = giftList[targetIdx].num;
-
-    const newList = giftList.reduce((result, it, idx) => {
-      if (idx === parseInt(id) - 1) return result;
-      if (it.num >= targetNum) {
-        result.push({ ...it, num: it.num - 1 });
-      } else {
-        result.push(it);
-      }
-      return result;
-    }, []);
-
-    setList(newList);
   };
 
   // GiftAddPage 펀딩 만들기 버튼 활성화/비활성화 여부
   useEffect(() => {
     if (setIsTrue) {
-      if (giftList.length === 0) {
+      if (list && list.length === 0) {
         setIsTrue(false);
       } else {
         setIsTrue(true);
       }
     }
-  }, [setIsTrue, giftList]);
+  }, [setIsTrue, list]);
 
   const Text = () => {
     const EndedText = (
@@ -79,7 +87,7 @@ const FundingPercentage = ({
         <STitleSpan>{percent}% 달성</STitleSpan>
         <STextSpan>
           100% 달성까지{' '}
-          <SBoldTextSpan joinPrice={joinPrice}>
+          <SBoldTextSpan $joinPrice={joinPrice}>
             {addComma(balance)}원
           </SBoldTextSpan>{' '}
           남았어요
@@ -88,9 +96,7 @@ const FundingPercentage = ({
     );
 
     const AddGiftText = (
-      <SSmallTextSpan>
-        총 {giftList ? giftList.length : 0}개의 선물
-      </SSmallTextSpan>
+      <SSmallTextSpan>총 {list ? list.length : 0}개의 선물</SSmallTextSpan>
     );
 
     return type === 'add'
@@ -100,9 +106,13 @@ const FundingPercentage = ({
         : OngoingText;
   };
 
-  const GiftItem = ({ it, idx }) => (
-    <SItemContainer idx={idx + 1} length={giftList.length}>
-      <SImg src={it.giftImageUrl} alt='img' />
+  const GiftItem = ({ it, idx, length }) => (
+    <SItemContainer $idx={idx + 1} $length={length}>
+      {it.giftImageUrl ? (
+        <SImg src={it.giftImageUrl} alt='img' />
+      ) : (
+        <SImg src={URL.createObjectURL(it.giftImage)} />
+      )}
       <SItemTextContainer>
         <SItemTextSpan>{it.giftName}</SItemTextSpan>
         <SItemTextSpan>{addComma(it.price)}원</SItemTextSpan>
@@ -119,22 +129,29 @@ const FundingPercentage = ({
       <PriceProgressBar
         type={type}
         color={color}
-        giftList={giftList}
+        giftList={giftList ? giftList : list}
         joinPrice={joinPrice}
         balance={balance}
       />
       <SButtonContainer onClick={() => setIsClicked(!isClicked)}>
-        <SBtn clicked={isClicked} color={color}>
+        <SBtn $clicked={isClicked} $color={color}>
           가격대별 선물 보기
         </SBtn>
-        <FoldBtn clicked={isClicked} color={color} />
+        <FoldBtn $clicked={isClicked} $color={color} />
       </SButtonContainer>
       {isClicked && (
         <SItemLayout>
-          {giftList.length === 0 ? (
+          {giftList ? (
+            sortGiftData(giftList).map((it, idx) => (
+              <GiftItem key={idx} it={it} idx={idx} length={giftList.length} />
+            ))
+          ) : list && list.length === 0 ? (
             <SNoGiftSpan>추가된 선물이 없습니다</SNoGiftSpan>
           ) : (
-            giftList.map((it, idx) => <GiftItem key={idx} it={it} idx={idx} />)
+            list &&
+            list.map((it, idx) => (
+              <GiftItem key={idx} it={it} idx={idx} length={list.length} />
+            ))
           )}
         </SItemLayout>
       )}
@@ -172,7 +189,7 @@ const STextSpan = styled.span`
   line-height: 120%;
 `;
 const SBoldTextSpan = styled(STextSpan)`
-  color: ${(props) => (props.joinPrice ? 'var(--orange-pri)' : 'var(--black)')};
+  color: ${(props) => (props.$joinPrice ? 'var(--orange-pri)' : 'var(--black)')};
 `;
 const SSmallTextSpan = styled.span`
   margin-top: -4px;
@@ -197,7 +214,7 @@ const SButtonContainer = styled.button`
   background-color: var(--white);
 `;
 const SBtn = styled.span`
-  color: ${(props) => (props.clicked ? props.color : 'var(--gray-400)')};
+  color: ${(props) => (props.$clicked ? props.$color : 'var(--gray-400)')};
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
@@ -206,7 +223,7 @@ const SBtn = styled.span`
   cursor: pointer;
 `;
 const FoldBtn = styled(Fold)`
-  fill: ${(props) => (props.clicked ? props.color : 'var(--gray-400)')};
+  fill: ${(props) => (props.$clicked ? props.$color : 'var(--gray-400)')};
 `;
 const SNoGiftSpan = styled.span`
   color: var(--gray-300);
@@ -230,7 +247,7 @@ const SItemContainer = styled.div`
 
   height: 64px;
   border-bottom: ${(props) =>
-    props.idx !== props.length ? '1px solid var(--gray-300)' : '0'};
+    props.$idx !== props.$length ? '1px solid var(--gray-300)' : '0'};
 `;
 const SImg = styled.img`
   width: 48px;

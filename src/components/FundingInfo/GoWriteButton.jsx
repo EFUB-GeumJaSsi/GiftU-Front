@@ -3,9 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { ReactComponent as Next } from '../../assets/FundingInfo/icn_back.svg';
 
 // 후기 작성
-const GoWriteCommentButton = ({ color, onClick }) => {
+const GoWriteCommentButton = ({ color, fundingId }) => {
   return (
-    <SLayout color={color} onClick={onClick}>
+    <SLayout
+      color={color}
+      onClick={() => navigate(`/funding/${fundingId}/review/edit`)}
+    >
       <SContainer>
         <STextSpan>펀딩이 100% 달성되었어요</STextSpan>
         <SBigTextSpan>선물해 준 친구들에게 마음을 전해볼까요?</SBigTextSpan>

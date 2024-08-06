@@ -19,10 +19,7 @@ const SContainer = styled.div`
   padding: 20px 20px 20px 24px;
 
   border-radius: 16px;
-  border: ${(props) =>
-    props.color === 'orange'
-      ? '2px solid var(--orange-pri)'
-      : '2px solid var(--jade-pri)'};
+  border: ${(props) => `2px solid ${props.color}`};
   background: var(--gray-100);
 `;
 const STitleSpan = styled.span`

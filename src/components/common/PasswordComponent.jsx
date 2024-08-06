@@ -17,6 +17,7 @@ import styled from 'styled-components';
 import { useRef, useState } from 'react';
 import BottomSheetComponent from '../../components/common/BottomSheetComponent';
 import { postPassword } from '../../api/funding';
+import ButtonComponent from './ButtonComponent';
 
 const PasswordComponent = ({
   color,
@@ -63,13 +64,15 @@ const PasswordComponent = ({
 
   const isPasswordComplete = password.every((digit) => digit !== '');
 
-  const handlePasswordSubmit = async () => {
+  const handlePasswordSubmit = async (e) => {
     // 패스워드 등록하는 경우
     const enteredPassword = password.join('');
     if (passwordExact === 'Set') {
       passwordSet(enteredPassword);
       return;
     }
+
+    e.preventDefault();
 
     // 패스워드 확인하는 경우
     const res = await readPassword();
@@ -97,7 +100,7 @@ const PasswordComponent = ({
             <p>4자리 숫자를 입력해 주세요</p>
           )}
         </STextContainer>
-        <SForm>
+        <SForm $errorMessage={errorMessage}>
           <SPasswordInputContainer>
             {password.map((digit, index) => (
               <SPasswordInput
@@ -112,15 +115,15 @@ const PasswordComponent = ({
             ))}
           </SPasswordInputContainer>
           {errorMessage && <SErrorSpan>{errorMessage}</SErrorSpan>}
-          {/* ButtonComponent 사용하기 */}
-          <SBtn
+          <ButtonComponent
+            btnInfo={{
+              text: '완료',
+              color: isPasswordComplete ? color : 'gray',
+            }}
             type='submit'
             disabled={!isPasswordComplete}
-            color={color}
-            onClick={() => handlePasswordSubmit()}
-          >
-            완료
-          </SBtn>
+            onClick={(e) => handlePasswordSubmit(e)}
+          />
         </SForm>
       </SBottomSheetContainer>
     </BottomSheetComponent>
@@ -160,7 +163,7 @@ const SForm = styled.form`
   flex-flow: column nowrap;
   align-items: center;
 
-  gap: 64px;
+  gap: ${(props) => (props.$errorMessage ? '0' : '64px')};
 `;
 const SPasswordInputContainer = styled.div`
   display: flex;
@@ -178,25 +181,10 @@ const SPasswordInput = styled.input`
   font-weight: 500;
   text-align: center;
 `;
-const SBtn = styled.button`
-  width: 335px;
-  height: 56px;
-
-  border-radius: 40px;
-  background-color: ${({ disabled, color }) => {
-    if (disabled) return 'var(--gray-100)';
-    return color === 'orange' ? 'var(--orange-pri)' : 'var(--jade-pri)';
-  }};
-
-  color: white;
-  font-size: 16px;
-  font-weight: 600;
-
-  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
-`;
 const SErrorSpan = styled.span`
   color: var(--red);
   text-align: center;
+  margin-top: 12px;
   margin-bottom: 35px;
 
   font-size: 14px;

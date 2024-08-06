@@ -1,23 +1,14 @@
 import styled from 'styled-components';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { DataContext, PageContext } from './IndexPage';
 import BackHeaderComponent from '../../components/common/BackHeaderComponent';
 import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
 import FundingPercentage from '../../components/FundingInfo/FundingPercentage';
 import ButtonComponent from '../../components/common/ButtonComponent';
 
-// 추가한 선물마다 번호를 매겨서 가장 나중에 추가한 선물 구분
-const giftList = [
-  { price: 10000, title: '선물', num: 0 },
-  { price: 15000, title: '선물', num: 3 },
-  { price: 30000, title: '선물', num: 2 },
-  { price: 50000, title: '선물', num: 1 },
-];
-
 const GiftAddPage = () => {
   const { setCurrentPage } = useContext(PageContext);
-  const { setGiftData } = useContext(DataContext);
-
+  const { giftData, imageData } = useContext(DataContext);
   const [isTrue, setIsTrue] = useState(true);
 
   const Btn = (
@@ -42,8 +33,9 @@ const GiftAddPage = () => {
         <FundingPercentage
           type='add'
           color='var(--jade-pri)'
-          giftList={giftList}
           setIsTrue={setIsTrue}
+          giftData={giftData}
+          imageData={imageData}
         />
       </SContainer>
       <BottomBackgroundComponent Button={Btn} />
