@@ -6,7 +6,7 @@ import ButtonComponent from '../../components/common/ButtonComponent';
 import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
 import { postReview, getReview, patchReview } from '../../api/review';
 import { getFundingInfo } from '../../api/funding';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 
 const ReviewEditPage = () => {
   const { fundingId } = useParams();
@@ -15,6 +15,7 @@ const ReviewEditPage = () => {
   const [isReviewExists, setIsReviewExists] = useState(false);
   const [data, setData] = useState('');
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleInputChange = (e) => {
     setReviewText(e.target.value);
@@ -35,6 +36,11 @@ const ReviewEditPage = () => {
     }
   };
 
+  useEffect(() => {
+    if (fundingId) {
+      readFundingInfo(fundingId);
+    }
+  }, [fundingId]);
   const createReview = async () => {
     try {
       const response = await postReview(fundingId, reviewText);
@@ -55,11 +61,7 @@ const ReviewEditPage = () => {
   };
 
   useEffect(() => {
-    const fetchReview = async () => {};
-    if (isReviewExists) {
-      readReview(fundingId);
-    }
-    fetchReview();
+    isReviewExists && readReview(fundingId);
   }, [fundingId]);
 
   const updateReview = async (fundingId, reviewText) => {
@@ -71,17 +73,8 @@ const ReviewEditPage = () => {
     }
   };
 
-  useEffect(() => {
-    if (fundingId) {
-      readFundingInfo();
-    }
-  }, [fundingId]);
-
   const handleFormSubmit = async () => {
-    if (!isReviewExists) await createReview();
-    else {
-      await updateReview(fundingId, reviewText);
-    }
+    isReviewExists ? updateReview(fundingId, reviewText) : createReview();
     navigate(`/funding/${fundingId}`);
   };
   const Btn = (

@@ -23,9 +23,8 @@ const MessageEditPage = () => {
   const readMessage = async (fundingId) => {
     try {
       const response = await getCongratsMessage(fundingId);
-      const isAnonymous = response.data.anonymity === true;
       setMsgText(response.data.message);
-      setName(isAnonymous ? 'anony' : 'nickname');
+      setName(response.data.anonymity ? 'anony' : 'nickname');
     } catch (error) {
       console.error(error);
     }
@@ -95,7 +94,7 @@ const MessageEditPage = () => {
         </SFieldset>
         <SFieldset>
           <SOptionalLegend>축하메세지</SOptionalLegend>
-          <SBigTextarea onChange={handleInputChange} value={msgText} />
+          <STextarea onChange={handleInputChange} value={msgText} />
         </SFieldset>
       </SForm>
       <BottomBackgroundComponent Button={Btn} />
@@ -199,7 +198,7 @@ const SOptionalLegend = styled.legend`
   font-size: 16px;
   font-weight: 500;
 `;
-const SBigTextarea = styled.textarea`
+const STextarea = styled.textarea`
   display: flex;
   flex-direction: column;
 
