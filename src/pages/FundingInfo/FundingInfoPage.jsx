@@ -96,7 +96,6 @@ const FundingInfoPage = () => {
     try {
       const res = await getFundingInfo(fundingId);
       const data = res.data;
-      console.log(data);
       data.contributers && setContributers(data.contributers);
       handleSetStatus(data.status, data.fundingEndDate);
       handleSetType(data.userId, data.contributers);

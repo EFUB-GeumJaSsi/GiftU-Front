@@ -44,7 +44,6 @@ const PaymentLandingPage = () => {
     const { success, error_msg, imp_uid } = response;
 
     if (success) {
-      console.log('결제 성공', imp_uid);
       createPayment(imp_uid);
     } else {
       alert(error_msg);
