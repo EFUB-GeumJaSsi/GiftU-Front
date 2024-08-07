@@ -126,10 +126,10 @@ const NotificationPage = () => {
           ...item,
           tag: 'friend',
           time: getTime(item.updatedAt),
-          rawTime: item.updatedAt,
           image: item.recieveUserImgUrl,
           name: item.recieveUserNickname,
           friendTableId: item.friendTableId,
+          rawTime: item.updatedAt,
         }));
         setNotificationList(sortNotificationsByTime(friendNotifications));
       }
@@ -189,6 +189,7 @@ const NotificationPage = () => {
       image: notice.recieveUserImgUrl,
       name: notice.recieveUserNickname,
       time: getTime(notice.updatedAt),
+      friendTableId: notice.friendTableId,
       rawTime: notice.updatedAt,
     }));
     const fundingDueDateNotices = data.fundingDueDate.map((notice) => ({
