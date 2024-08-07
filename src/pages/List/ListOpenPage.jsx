@@ -42,7 +42,10 @@ const ListOpenPage = () => {
 
   return (
     <SLayout>
-      <BackHeaderComponent text='내가 만든 펀딩' />
+      <BackHeaderComponent
+        text='내가 만든 펀딩'
+        onClick={() => navigate('/my')}
+      />
       <List
         tags={tags}
         selectedTag={tag}
