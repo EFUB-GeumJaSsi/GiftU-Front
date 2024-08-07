@@ -9,6 +9,11 @@ const addComma = (price) => {
   return commaPrice;
 };
 
+// 선물 데이터 오름차순 정렬
+const sortGiftData = (array) => {
+  return array && array.sort((a, b) => a.price - b.price);
+};
+
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import PriceProgressBar from './PriceProgressBar';
@@ -32,11 +37,6 @@ const FundingPercentage = ({
   const [list, setList] = useState(
     type === 'add' ? addKeytoGiftData(giftData) : [],
   );
-
-  // 선물 데이터 오름차순 정렬
-  function sortGiftData(array) {
-    return array && array.sort((a, b) => a.price - b.price);
-  }
 
   // GiftAddPage 선물 정렬
   function addKeytoGiftData(array) {
@@ -137,14 +137,14 @@ const FundingPercentage = ({
       />
       <SButtonContainer onClick={() => setIsClicked(!isClicked)}>
         <SBtn $clicked={isClicked} $color={color}>
-          가격대별 선물 보기
+          선물 상세 보기
         </SBtn>
         <FoldBtn $clicked={isClicked} $color={color} />
       </SButtonContainer>
       {isClicked && (
         <SItemLayout>
           {giftList.length > 0 ? (
-            sortGiftData(giftList).map((it, idx) => (
+            giftList.map((it, idx) => (
               <GiftItem key={idx} it={it} idx={idx} length={giftList.length} />
             ))
           ) : list && list.length === 0 ? (
@@ -273,4 +273,4 @@ const SItemTextSpan = styled.span`
 `;
 
 export default FundingPercentage;
-export { addComma };
+export { addComma, sortGiftData };
