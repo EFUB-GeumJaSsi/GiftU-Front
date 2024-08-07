@@ -55,7 +55,7 @@ const PriceProgressBar = ({
   giftList = [],
   balance,
   joinPrice,
-  percent,
+  percent = 0,
 }) => {
   const maxPrice = giftList.length > 0 && giftList[giftList.length - 1].price;
   const nowPrice = maxPrice - balance;

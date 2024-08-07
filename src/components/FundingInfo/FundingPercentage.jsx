@@ -18,19 +18,20 @@ import { ReactComponent as Fold } from '../../assets/FundingInfo/fold 1.svg';
 const FundingPercentage = ({
   type,
   color = 'var(--gray-400)',
-  nowMoney,
-  giftList,
+  nowMoney = 0,
+  giftList = [],
   joinPrice,
   setIsTrue,
   giftData,
   imageData,
 }) => {
-  const maxPrice =
-    giftList && giftList.length > 0 && giftList[giftList.length - 1].price;
-  const percent = Math.round((nowMoney / maxPrice) * 100);
+  const maxPrice = giftList.length > 0 && giftList[giftList.length - 1].price;
+  const percent = maxPrice ? Math.round((nowMoney / maxPrice) * 100) : 0;
   const balance = nowMoney ? maxPrice - nowMoney : maxPrice;
   const [isClicked, setIsClicked] = useState(type === 'add' ? true : false);
-  const [list, setList] = useState(type === 'add' ? addKeytoGiftData(giftData) : []);
+  const [list, setList] = useState(
+    type === 'add' ? addKeytoGiftData(giftData) : [],
+  );
 
   // 선물 데이터 오름차순 정렬
   function sortGiftData(array) {
@@ -88,7 +89,7 @@ const FundingPercentage = ({
         <STextSpan>
           100% 달성까지{' '}
           <SBoldTextSpan $joinPrice={joinPrice}>
-            {addComma(balance)}원
+            {addComma(Number(balance))}원
           </SBoldTextSpan>{' '}
           남았어요
         </STextSpan>
@@ -190,7 +191,8 @@ const STextSpan = styled.span`
   line-height: 120%;
 `;
 const SBoldTextSpan = styled(STextSpan)`
-  color: ${(props) => (props.$joinPrice ? 'var(--orange-pri)' : 'var(--black)')};
+  color: ${(props) =>
+    props.$joinPrice ? 'var(--orange-pri)' : 'var(--black)'};
 `;
 const SSmallTextSpan = styled.span`
   margin-top: -4px;
