@@ -132,6 +132,7 @@ const FundingPercentage = ({
         giftList={giftList ? giftList : list}
         joinPrice={joinPrice}
         balance={balance}
+        percent={percent}
       />
       <SButtonContainer onClick={() => setIsClicked(!isClicked)}>
         <SBtn $clicked={isClicked} $color={color}>

@@ -49,13 +49,16 @@ const getOpacity = (props) => {
   return '0';
 };
 
-const PriceProgressBar = ({ type, color, giftList, balance, joinPrice }) => {
-  const maxPrice =
-    giftList && giftList.length > 0 && giftList[giftList.length - 1].price;
+const PriceProgressBar = ({
+  type,
+  color,
+  giftList = [],
+  balance,
+  joinPrice,
+  percent,
+}) => {
+  const maxPrice = giftList.length > 0 && giftList[giftList.length - 1].price;
   const nowPrice = maxPrice - balance;
-  const percent = balance
-    ? Math.round(((maxPrice - balance) / maxPrice) * 100)
-    : 0;
   const [nextPrice, setNextPrice] = useState({
     idx: null,
     price: null,
