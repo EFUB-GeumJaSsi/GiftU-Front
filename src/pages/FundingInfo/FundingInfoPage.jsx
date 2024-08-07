@@ -25,6 +25,7 @@ import {
 } from '../../components/FundingInfo/GoWriteButton';
 import PasswordComponent from '../../components/common/PasswordComponent';
 import ToastComponent from '../../components/common/ToastComponent';
+import ScrollToTop from '../../components/common/ScrollToTop';
 import { ReactComponent as IcnInfo } from '../../assets/Friend/icn_info.svg';
 
 const FundingInfoPage = () => {
@@ -237,6 +238,7 @@ const FundingInfoPage = () => {
 
   return (
     <>
+      <ScrollToTop />
       <BackHeaderComponent />
       <SLayout $isEnd={isEnd && funding !== 'open'}>
         {data.password && bottomSheetShow && funding === 'pre' ? (

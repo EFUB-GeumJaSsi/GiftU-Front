@@ -8,6 +8,7 @@ import BottomBackgroundComponent from '../../components/common/BottomBackgroundC
 import ButtonComponent from '../../components/common/ButtonComponent';
 import FundingPercentage from '../../components/FundingInfo/FundingPercentage';
 import PriceInputComponent from '../../components/common/PriceInputComponent';
+import ScrollToTop from '../../components/common/ScrollToTop';
 
 const FundingJoinPage = () => {
   const { setCurrentPage } = useContext(PageContext);
@@ -57,6 +58,7 @@ const FundingJoinPage = () => {
 
   return (
     <>
+      <ScrollToTop />
       <BackHeaderComponent />
       <SLayout>
         <FundingPercentage
