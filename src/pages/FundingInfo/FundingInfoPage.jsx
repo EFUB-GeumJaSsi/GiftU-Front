@@ -24,6 +24,7 @@ import {
 } from '../../components/FundingInfo/GoWriteButton';
 import PasswordComponent from '../../components/common/PasswordComponent';
 import ToastComponent from '../../components/common/ToastComponent';
+import { ReactComponent as IcnInfo } from '../../assets/Friend/icn_info.svg';
 
 const FundingInfoPage = () => {
   const navigate = useNavigate();
@@ -303,7 +304,9 @@ const FundingInfoPage = () => {
         >
           <SModalContainer>
             <SBigSpan>펀딩 개설을 취소하시겠어요?</SBigSpan>
-            <SSmallSpan>펀딩에 참여한 친구들에게 알림이 전송돼요</SSmallSpan>
+            <SSmallSpan>
+              <IcnInfo /> 펀딩에 참여한 친구들에게 알림이 전송돼요
+            </SSmallSpan>
           </SModalContainer>
         </Modal>
       )}
@@ -366,9 +369,13 @@ const SBigSpan = styled.span`
   line-height: 140%;
 `;
 const SSmallSpan = styled(SBigSpan)`
+  display: flex;
+  align-items: center;
+
   color: var(--gray-500);
   font-size: 12px;
   line-height: 120%;
+  white-space: pre;
 `;
 
 export default FundingInfoPage;
