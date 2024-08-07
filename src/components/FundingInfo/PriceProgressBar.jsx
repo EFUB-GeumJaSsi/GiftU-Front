@@ -19,7 +19,7 @@ const getColor = (props) => {
 const getBackgroundColor = (props) => {
   if (
     (props.$num !== props.$length && props.$type === 'add') ||
-    props.$type === 'none'
+    (props.$type === 'none' && props.$percent === 0)
   )
     return 'var(--gray-300)';
 
@@ -126,6 +126,7 @@ const PriceProgressBar = ({
         $num={it.num ? it.num : 0}
         $price={it.price}
         $balance={nowPrice}
+        $percent={percent}
         $getBackgroundColor={getBackgroundColor}
       />
     </SPointContainer>
