@@ -213,6 +213,7 @@ const FundingInfoPage = () => {
           <ButtonComponent
             btnInfo={{
               text: '개설 취소하기',
+              color: 'darkGray',
             }}
             onClick={() => setModalShow(true)}
             disabled={false}

@@ -18,6 +18,7 @@ const ButtonComponent = ({ btnInfo, ...props }) => {
     orange: ['var(--orange-pri)', 'var(--white)'],
     jade: ['var(--jade-pri)', 'var(--white)'],
     gray: ['var(--gray-100)', 'var(--gray-400)'],
+    darkGray: ['var(--gray-400)', 'var(--gray-100)'],
   };
 
   return (
