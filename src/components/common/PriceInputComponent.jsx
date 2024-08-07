@@ -10,6 +10,7 @@
 // 예시: <PriceInputComponent focusColor='var(--jade-pri)' price={price} setPrice={setPrice} />
 
 import styled from 'styled-components';
+import { B2 } from '../../styles/font';
 
 const PriceInputComponent = ({ focusColor, price, setPrice, ...props }) => {
   const handlePriceChange = (event) => {
@@ -46,10 +47,8 @@ const SInput = styled.input`
   border-radius: 16px;
   background-color: var(--gray-100);
 
+  ${B2}
   color: var(--black);
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 140%;
 
   box-sizing: border-box;
 
@@ -58,10 +57,8 @@ const SInput = styled.input`
   }
 
   &::placeholder {
+    ${B2}
     color: var(--gray-400);
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 140%;
   }
 `;
 

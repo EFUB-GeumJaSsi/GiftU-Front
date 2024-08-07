@@ -181,9 +181,7 @@ const SHorizontalBtn = styled.button`
 
   border-radius: 16px;
 
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 140%;
+  ${B1}
 `;
 const SDeleteBtn = styled(SHorizontalBtn)`
   background-color: rgba(255, 255, 255, 0.8);

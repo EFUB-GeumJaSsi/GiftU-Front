@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { H2, B4 } from '../../styles/font';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getFriendsFundingList } from '../../api/funding';
@@ -6,7 +7,6 @@ import NavComponent from '../../components/common/NavComponent';
 import Calendar from '../../components/Home/Calendar';
 import FundingComponent from '../../components/common/FundingComponent';
 import icn_search from '../../assets/common/search.svg';
-import { getFriendsFundingList } from '../../api/funding';
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -59,16 +59,12 @@ const HomePage = () => {
 
 // 텍스트 스타일
 const SH2 = styled.h2`
+  ${H2}
   color: var(--black);
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 140%;
 `;
 const SB4 = styled.p`
+  ${B4}
   color: var(--gray-500);
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 120%;
 `;
 
 // 스타일 컴포넌트

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { B1, B2, C2, H1 } from '../../styles/font';
 import { useState, useEffect } from 'react';
 import TagSelectComponent from '../../components/common/TagSelectComponent';
 import Modal from '../../components/common/ModalComponent';
@@ -282,8 +283,7 @@ const SModalContainer = styled.div`
     align-items: center;
     gap: 3px;
 
-    font-weight: 500;
-    font-size: 16px;
+    ${B1}
     color: var(--gray-500);
   }
 `;
@@ -302,28 +302,23 @@ const SLayout = styled.div`
   padding: 40px 0 128px;
   gap: 24px;
 `;
-
 const SHeader = styled.header`
   padding-left: 28px;
 
+  ${H1}
   color: var(--black);
-  font-size: 22px;
-  font-weight: 700;
 `;
-
 const SItemContainer = styled.main`
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
   gap: 16px;
 `;
-
 const SOl = styled.ol`
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
 `;
-
 const SALayout = styled.div`
   display: flex;
   flex-direction: row;
@@ -337,7 +332,6 @@ const SALayout = styled.div`
 
   cursor: pointer;
 `;
-
 const SAImg = styled.img`
   width: 40px;
   height: 40px;
@@ -345,7 +339,6 @@ const SAImg = styled.img`
   border-radius: 50%;
   background-color: #d4d4d4;
 `;
-
 const AStyledProfileIcon = styled(ProfileIcon)`
   width: 40px;
   height: 40px;
@@ -353,14 +346,12 @@ const AStyledProfileIcon = styled(ProfileIcon)`
   border-radius: 50%;
   background-color: var(--gray-300);
 `;
-
 const STextContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 5px;
 `;
-
 const STextboxContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -369,32 +360,27 @@ const STextboxContainer = styled.div`
   width: 268px;
   height: 22px;
 
-  font-size: 16px;
-
   overflow: hidden;
 `;
-
 const SNameText = styled.p`
-  font-weight: 500;
+  max-width: 40%;
+
+  ${B1}
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 40%;
 `;
-
 const SMessageText = styled.p`
   max-width: 50%;
 
+  ${B2}
   font-weight: 400;
   white-space: nowrap;
   text-overflow: ellipsis;
-
   overflow: hidden;
 `;
-
 const STimeText = styled.p`
-  font-size: 12px;
-  font-weight: 500;
+  ${C2}
   color: var(--gray-500);
 `;
 

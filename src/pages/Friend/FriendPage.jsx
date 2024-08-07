@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { H1, H3, T1, B1, B3 } from '../../styles/font';
+import { H1, H3, T1, B1, B3, C1 } from '../../styles/font';
 import { useState, useEffect } from 'react';
 import {
   postFriendRequest,
@@ -213,10 +213,8 @@ const SAddBtn = styled.button`
   border-radius: 20px;
   background-color: var(--jade-pri);
 
+  ${C1}
   color: var(--white);
-  font-size: 12px;
-  font-weight: 600;
-  line-height: 120%;
 
   padding: 8px 12px 8px 8px;
   display: flex;

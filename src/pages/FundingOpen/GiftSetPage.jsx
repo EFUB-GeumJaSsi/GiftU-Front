@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { B1, B2 } from '../../styles/font';
 import { useState, useContext } from 'react';
 import { DataContext, PageContext } from './IndexPage';
 import BackHeaderComponent from '../../components/common/BackHeaderComponent';
@@ -118,8 +119,7 @@ const GiftSetPage = ({
             <ButtonComponent
               type='submit'
               btnInfo={
-                // name && price && url && imageFile
-                price && url && imageFile
+                name && price && url && imageFile
                   ? { text: '다음', color: 'jade', onClick: '' }
                   : { text: '선물 추가하기' }
               }
@@ -146,10 +146,8 @@ const SForm = styled.form`
 const SLegend = styled.legend`
   margin: 0 0 8px 8px;
 
+  ${B1}
   color: var(--black);
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 140%;
 
   &::after {
     content: '*';
@@ -169,10 +167,8 @@ const SInput = styled.input`
   border-radius: 16px;
   background-color: var(--gray-100);
 
+  ${B2}
   color: var(--black);
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 140%;
   text-overflow: ellipsis;
 
   box-sizing: border-box;
@@ -183,9 +179,7 @@ const SInput = styled.input`
 
   &::placeholder {
     color: var(--gray-400);
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 140%;
+    ${B2}
   }
 `;
 const SImageLabel = styled.label`

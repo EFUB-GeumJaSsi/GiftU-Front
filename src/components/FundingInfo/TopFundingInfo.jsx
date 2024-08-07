@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { B1, B3, H2 } from '../../styles/font';
 
 const TopFundingInfo = ({ color, tag, image, title, infoText }) => {
   return (
@@ -43,11 +44,8 @@ const STagSpan = styled.span`
   border-radius: 20px;
   background-color: ${(props) => props.color};
 
+  ${B1}
   color: var(--white);
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 140%;
 `;
 const STitleWrapper = styled.div`
   justify-content: flex-start;
@@ -55,18 +53,13 @@ const STitleWrapper = styled.div`
   width: 311px;
 `;
 const STitleSpan = styled.span`
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 140%;
+  ${H2}
 `;
 const STextSpan = styled.p`
   width: 311px;
 
+  ${B3}
   color: var(--gray-500);
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 500;
   line-height: 140%;
   word-break: break-all;
 `;

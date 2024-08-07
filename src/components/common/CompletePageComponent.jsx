@@ -15,6 +15,7 @@
 //   />
 
 import styled from 'styled-components';
+import { H3, B2 } from '../../styles/font';
 
 const CompletePageComponent = ({ Icon, heading, paragraph }) => {
   return (
@@ -29,15 +30,11 @@ const CompletePageComponent = ({ Icon, heading, paragraph }) => {
 // 텍스트 스타일
 const SH3 = styled.h3`
   color: var(--black);
-  font-size: 20px;
-  font-weight: 600;
-  line-height: 140%;
+  ${H3}
 `;
 const SB2 = styled.p`
   color: var(--gray-500);
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 140%;
+  ${B2}
   white-space: pre-line;
   text-align: center;
 `;
