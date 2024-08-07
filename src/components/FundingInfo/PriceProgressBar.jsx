@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
-import { addComma } from '../../components/FundingInfo/FundingPercentage';
 
 const getColor = (props) => {
   if (props.$percent == 100 && props.$length === props.$idx - 1)
@@ -109,7 +108,7 @@ const PriceProgressBar = ({ type, color, giftList, balance, joinPrice }) => {
         $getColor={getColor}
         $getOpacity={getOpacity}
       >
-        {addComma(it.price)}원
+        {it.price?.toLocaleString()}원
       </SPointSpan>
       <SCircleDiv
         id={idx && idx + 1}
