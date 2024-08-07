@@ -177,7 +177,11 @@ const FundingInfoPage = () => {
               width: '223px',
               color: 'orange',
             }}
-            onClick={() => navigate(`/funding/${fundingId}/message/edit`)}
+            onClick={() =>
+              navigate(`/funding/${fundingId}/message/edit`, {
+                state: { participationId: contributed.participationId },
+              })
+            }
           />
         </SBtnContainer>
       );
@@ -195,7 +199,7 @@ const FundingInfoPage = () => {
             }}
             onClick={() =>
               navigate(`/funding/${fundingId}/review/edit`, {
-                state: { contributers: contributers, review: review },
+                state: { contributers: contributers, reviewText: review },
               })
             }
           />
@@ -216,7 +220,14 @@ const FundingInfoPage = () => {
     return (
       <ButtonComponent
         btnInfo={{ text: '선물하기', color: 'orange' }}
-        onClick={() => navigate(`/funding/${fundingId}/join`)}
+        onClick={() =>
+          navigate(`/funding/${fundingId}/join`, {
+            state: {
+              giftList: data.giftList,
+              nowMoney: data.nowMoney,
+            },
+          })
+        }
       />
     );
   };
