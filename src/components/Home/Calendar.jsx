@@ -67,7 +67,6 @@ const Calendar = () => {
       })
       .replaceAll('.', '')
       .replaceAll(' ', '-');
-    console.log(dates);
   }
 
   const handleOnClick = (e) => {
