@@ -8,6 +8,7 @@ import {
 } from '../../api/funding';
 import { getUserInfo } from '../../api/user';
 import { getReview } from '../../api/review';
+import { sortGiftData } from '../../components/FundingInfo/FundingPercentage';
 import BackHeaderComponent from '../../components/common/BackHeaderComponent';
 import FundingSpan from '../../components/FundingInfo/FundingSpan';
 import TopFundingInfo from '../../components/FundingInfo/TopFundingInfo';
@@ -31,6 +32,7 @@ const FundingInfoPage = () => {
   const messageRef = useRef(null);
   const { fundingId } = useParams();
   const [data, setData] = useState({});
+  const [giftList, setGiftList] = useState([]);
   const [contributers, setContributers] = useState([]);
   const [contributed, setContributed] = useState({});
   const [review, setReview] = useState('');
@@ -100,6 +102,7 @@ const FundingInfoPage = () => {
       data.contributers && setContributers(data.contributers);
       handleSetStatus(data.status, data.fundingEndDate);
       handleSetType(data.userId, data.contributers);
+      setGiftList(sortGiftData(data.giftList));
       setData(data);
     } catch (e) {
       console.log(e);
@@ -223,7 +226,7 @@ const FundingInfoPage = () => {
         onClick={() =>
           navigate(`/funding/${fundingId}/join`, {
             state: {
-              giftList: data.giftList,
+              giftList: giftList,
               nowMoney: data.nowMoney,
             },
           })
@@ -266,12 +269,20 @@ const FundingInfoPage = () => {
                 price={contributed.contributionAmount}
                 wroteMessage={contributed.message}
                 onClick={onFocusMessage}
+                fundingId={fundingId}
+                contributed={contributed}
               />
             ) : (
               funding === 'open' &&
               !data.existedReview &&
-              isEnd && (
-                <GoWriteCommentButton color={color} fundingId={fundingId} />
+              isEnd &&
+              data.nowMoney >= giftList[0].price && (
+                <GoWriteCommentButton
+                  color={color}
+                  fundingId={fundingId}
+                  nowMoney={data.nowMoney}
+                  giftList={giftList}
+                />
               )
             )}
             <FundingSpan
@@ -283,7 +294,7 @@ const FundingInfoPage = () => {
             <FundingPercentage
               type='info'
               color={color}
-              giftList={data.giftList}
+              giftList={giftList}
               nowMoney={data.nowMoney}
             />
             {funding === 'open' && <FundingParticipants list={contributers} />}
@@ -293,9 +304,11 @@ const FundingInfoPage = () => {
           </>
         )}
       </SLayout>
-      {!(isEnd && funding !== 'open') && funding && (
-        <BottomBackgroundComponent Button={<Btn />} />
-      )}
+      {!(isEnd && funding !== 'open') &&
+        funding &&
+        !(isEnd && data.nowMoney < giftList[0].price) && (
+          <BottomBackgroundComponent Button={<Btn />} />
+        )}
       {modalShow && (
         <Modal
           actionText='취소하기'
