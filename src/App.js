@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import Auth from './hoc/Auth';
 // 로그인
 import LoginPage from './pages/Login/LoginPage';
@@ -90,6 +90,7 @@ const App = () => {
         path='/funding/:fundingId/message/edit'
         element={<Auth Page={MessageEditPage} option='login' />}
       />
+      <Route path='*' element={<Navigate to='/' />} />
     </Routes>
   );
 };
