@@ -28,6 +28,7 @@ export const deleteUser = async () => {
     const response = await apiAuth.delete(`/users`, {
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     });
+    localStorage.clear();
     return response;
   } catch (error) {
     throw error;
