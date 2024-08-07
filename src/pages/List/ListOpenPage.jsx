@@ -1,13 +1,19 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { getOpenList } from '../../api/funding';
 import List from '../../components/List/List';
 import BackHeaderComponent from '../../components/common/BackHeaderComponent';
-import { getOpenList } from '../../api/funding';
+import ToastComponent from '../../components/common/ToastComponent';
 
 const ListOpenPage = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const info = location.state?.info;
   const [tag, setTag] = useState('전체');
   const tags = ['전체', '진행', '종료'];
   const [openList, setOpenList] = useState([]);
+  const [toastShow, setToastShow] = useState(location.state?.info);
 
   const readOpenList = async (status) => {
     try {
@@ -28,6 +34,12 @@ const ListOpenPage = () => {
     }
   }, [tag]);
 
+  useEffect(() => {
+    if (info) {
+      navigate('/my/funding/open', { replace: true });
+    }
+  }, [info]);
+
   return (
     <SLayout>
       <BackHeaderComponent text='내가 만든 펀딩' />
@@ -37,6 +49,11 @@ const ListOpenPage = () => {
         onTagChange={setTag}
         openList={openList}
       />
+      {toastShow && (
+        <ToastComponent setToastShow={setToastShow}>
+          펀딩 참여가 취소되었어요
+        </ToastComponent>
+      )}
     </SLayout>
   );
 };
