@@ -33,7 +33,14 @@ const getTime = (timestamp) => {
     return `방금 전`;
   }
 };
+const getDaysRemaining = (fundingEndDate) => {
+  const now = new Date();
+  const endDate = new Date(fundingEndDate);
+  const diffInMilliseconds = endDate - now;
+  const daysRemaining = Math.ceil(diffInMilliseconds / (1000 * 60 * 60 * 24));
 
+  return daysRemaining;
+};
 const NotificationPage = () => {
   const [notificationList, setNotificationList] = useState([]);
   const [modalShow, setModalShow] = useState(false);
@@ -43,7 +50,6 @@ const NotificationPage = () => {
   const [friendTableId, setFriendTableId] = useState('');
   const [time, setTime] = useState();
   const navigate = useNavigate();
-  const { fundingId } = useParams();
   //친구알림 모달창
   const friendNotiClick = (image, name) => {
     setModalContent(
@@ -60,8 +66,8 @@ const NotificationPage = () => {
   };
 
   //펀딩알림 클릭시 해당 펀딩 페이지로 이동
-  const fundingNotiClick = () => {
-    navigate(`fundings/${fundingId}`); // 나중에 이동할 주소 넣어야함
+  const fundingNotiClick = (fundingId) => {
+    navigate(`/funding/${fundingId}`); // 나중에 이동할 주소 넣어야함
   };
 
   const filteredNotifications = notificationList.filter(() => {
@@ -119,17 +125,21 @@ const NotificationPage = () => {
       const response = await getFundingNotice();
       setTime(response.data.now);
       const fundingNotifications = [
-        ...response.data.fundingAchieve.map((item) => ({
-          ...item,
-          image: item.fundingImageUrl,
-          name: item.fundingTitle,
-          time: getTime(time),
-        })),
         ...response.data.fundingDueDate.map((item) => ({
           ...item,
+          id: item.fundingId,
+          tag: item.tag,
           image: item.fundingImageUrl,
           name: item.fundingTitle,
-          time: getTime(time),
+          time: getDaysRemaining(item.fundingEndDate),
+        })),
+        ...response.data.fundingAchieve.map((item) => ({
+          ...item,
+          id: item.fundingId,
+          tag: item.tag,
+          image: item.fundingImageUrl,
+          name: item.fundingTitle,
+          time: getTime(item.lastParticipationTime),
         })),
       ];
       setNotificationList(fundingNotifications);
@@ -142,22 +152,27 @@ const NotificationPage = () => {
   const formatNotifications = (data) => {
     const friendNotices = data.friendNotice.map((notice) => ({
       ...notice,
+      tag: notice.tag,
       image: notice.recieveUserImgUrl,
       name: notice.recieveUserNickname,
       time: getTime(notice.updatedAt),
     }));
     const fundingDueDateNotices = data.fundingDueDate.map((notice) => ({
       ...notice,
+      id: notice.fundingId,
+      tag: notice.tag,
       image: notice.fundingImageUrl,
       name: notice.fundingTitle,
-      time: getTime(time),
+      time: getDaysRemaining(item.fundingEndDate),
     }));
     const fundingAchieveNotices = data.fundingAchieve.map((notice) => ({
       ...notice,
+      id: notice.fundingId,
+      tag: notice.tag,
       image: notice.fundingImageUrl,
       name: notice.fundingTitle,
       percent: notice.percent,
-      time: getTime(time),
+      time: getTime(notice.lastParticipationTime),
     }));
     return [
       ...friendNotices,
@@ -203,7 +218,7 @@ const NotificationPage = () => {
         <SOl>
           {filteredNotifications.map((notification, index) =>
             //tag가 친구일때
-            tag === '친구' ? (
+            notification.tag === 'friend ' ? (
               <SALayout
                 key={index}
                 onClick={() =>
@@ -229,14 +244,23 @@ const NotificationPage = () => {
               </SALayout>
             ) : (
               //tag가 펀딩일때
-              <SALayout onClick={() => fundingNotiClick} key={index}>
+              <SALayout
+                onClick={() => fundingNotiClick(notification.id)}
+                key={index}
+              >
                 <SAImg src={notification.fundingImageUrl} />
                 <STextContainer>
                   <STextboxContainer>
                     <SNameText>{notification.name} </SNameText>
-                    <SMessageText>
-                      펀딩 {notification.percent}% 달성
-                    </SMessageText>
+                    {notification.tag === 'fundingAchieve' ? (
+                      <SMessageText>
+                        펀딩 {notification.percent}% 달성
+                      </SMessageText>
+                    ) : (
+                      <SMessageText>
+                        펀딩 종료{notification.percent}일 전
+                      </SMessageText>
+                    )}
                   </STextboxContainer>
                   <STimeText>{notification.time}</STimeText>
                 </STextContainer>
