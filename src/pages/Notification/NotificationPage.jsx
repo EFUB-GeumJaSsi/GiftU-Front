@@ -128,7 +128,7 @@ const NotificationPage = () => {
           time: getTime(item.updatedAt),
           image: item.recieveUserImgUrl,
           name: item.recieveUserNickname,
-          friendTableId: item.friendTableId,
+          friendTableId: setFriendTableId(item.friendTableId),
           rawTime: item.updatedAt,
         }));
         setNotificationList(sortNotificationsByTime(friendNotifications));
@@ -173,7 +173,6 @@ const NotificationPage = () => {
           })),
       ];
       setNotificationList(sortNotificationsByTime(fundingNotifications));
-
       console.log(response.data);
     } catch (error) {
       console.error(error);
@@ -189,7 +188,7 @@ const NotificationPage = () => {
       image: notice.recieveUserImgUrl,
       name: notice.recieveUserNickname,
       time: getTime(notice.updatedAt),
-      friendTableId: notice.friendTableId,
+      friendTableId: setFriendTableId(notice.friendTableId),
       rawTime: notice.updatedAt,
     }));
     const fundingDueDateNotices = data.fundingDueDate.map((notice) => ({
