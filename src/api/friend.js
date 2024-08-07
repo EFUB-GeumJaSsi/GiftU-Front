@@ -3,7 +3,11 @@ import { api, apiAuth } from './api';
 // 친구 요청
 export const postFriendRequest = async (email) => {
   try {
-    const response = await apiAuth.post(`/friends/request`, { email: email });
+    const response = await apiAuth.post(
+      `/friends/request`,
+      { email: email },
+      { headers: { 'Content-Type': 'application/json' } },
+    );
     return response;
   } catch (error) {
     throw error;
