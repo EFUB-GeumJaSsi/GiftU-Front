@@ -36,7 +36,7 @@ const ListOpenPage = () => {
 
   useEffect(() => {
     if (info) {
-      navigate('/my/funding/open', { replace: true });
+      navigate(location.pathname, { replace: true });
     }
   }, [info]);
 
