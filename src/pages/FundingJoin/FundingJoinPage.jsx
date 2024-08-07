@@ -44,7 +44,7 @@ const FundingJoinPage = () => {
     setFundingJoinData({
       fundingId: fundingId,
       contributionAmount: contributionAmount,
-      anonymity: 'nickname' ? false : true,
+      anonymity: name === 'anony' ? true : false,
       message: message,
     });
     setCurrentPage('PaymentLandingPage');
