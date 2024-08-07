@@ -8,7 +8,7 @@ import { useNavigate, useParams, useLocation } from 'react-router-dom';
 
 const MessageEditPage = () => {
   const location = useLocation();
-  const participationId = location.state;
+  const participationId = location.state?.participationId;
   const { fundingId } = useParams();
   const [msgText, setMsgText] = useState('');
   const [name, setName] = useState('nickname');
@@ -44,7 +44,7 @@ const MessageEditPage = () => {
   const handleClickChange = (e) => {
     const anonymity = name === 'anony';
     UpdateMessage(participationId, anonymity, msgText);
-    navigate(`/funding/${fundingId}`); //버튼 클릭시 이동할 주소
+    navigate(-1); //버튼 클릭시 이동할 주소
   };
   useEffect(() => {
     readMessage(fundingId);
