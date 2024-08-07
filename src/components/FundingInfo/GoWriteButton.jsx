@@ -38,7 +38,7 @@ const GoWriteMessageButton = ({
     <SLayout
       color={color}
       onClick={
-        wroteMessage
+        wroteMessage || isEnd
           ? onClick
           : () =>
               navigate(`/funding/${fundingId}/message/edit`, {
