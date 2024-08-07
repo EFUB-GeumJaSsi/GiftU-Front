@@ -17,7 +17,10 @@ const getColor = (props) => {
 };
 
 const getBackgroundColor = (props) => {
-  if (props.$num !== props.$length && props.$type === 'add')
+  if (
+    (props.$num !== props.$length && props.$type === 'add') ||
+    props.$type === 'none'
+  )
     return 'var(--gray-300)';
 
   if (props.$type === 'add') return 'var(--jade-pri)';
@@ -120,7 +123,7 @@ const PriceProgressBar = ({
         $type={type}
         $color={color}
         $length={giftList && giftList.length - 1}
-        $num={it.num && it.num}
+        $num={it.num ? it.num : 0}
         $price={it.price}
         $balance={nowPrice}
         $getBackgroundColor={getBackgroundColor}

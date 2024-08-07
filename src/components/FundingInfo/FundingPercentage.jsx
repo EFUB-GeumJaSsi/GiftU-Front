@@ -130,7 +130,7 @@ const FundingPercentage = ({
       <PriceProgressBar
         type={type}
         color={color}
-        giftList={giftList ? giftList : list}
+        giftList={giftList.length > 0 ? giftList : list}
         joinPrice={joinPrice}
         balance={balance}
         percent={percent}
@@ -143,7 +143,7 @@ const FundingPercentage = ({
       </SButtonContainer>
       {isClicked && (
         <SItemLayout>
-          {giftList ? (
+          {giftList.length > 0 ? (
             sortGiftData(giftList).map((it, idx) => (
               <GiftItem key={idx} it={it} idx={idx} length={giftList.length} />
             ))
