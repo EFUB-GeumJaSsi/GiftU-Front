@@ -37,7 +37,7 @@ const PasswordSetPage = () => {
   const handleFormSubmit = (data) => {
     const formattedData = {
       ...data,
-      visibility: data.visibility === 'true',
+      visibility: data.visibility === 'public' ? true : false,
       password: password.join(''),
     };
     setFundingData((prevData) => ({
