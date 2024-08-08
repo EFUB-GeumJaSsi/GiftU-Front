@@ -4,14 +4,18 @@ import { useNavigate } from 'react-router-dom';
 import { ReactComponent as Next } from '../../assets/FundingInfo/icn_back.svg';
 
 // 후기 작성
-const GoWriteCommentButton = ({ color, fundingId }) => {
+const GoWriteCommentButton = ({ color, fundingId, nowMoney, giftList }) => {
+  const navigate = useNavigate();
+  const maxPrice = giftList.length > 0 && giftList[giftList.length - 1].price;
+  const percent = maxPrice ? Math.round((nowMoney / maxPrice) * 100) : 0;
+
   return (
     <SLayout
       color={color}
       onClick={() => navigate(`/funding/${fundingId}/review/edit`)}
     >
       <SContainer>
-        <STextSpan>펀딩이 100% 달성되었어요</STextSpan>
+        <STextSpan>펀딩이 {percent}% 달성되었어요</STextSpan>
         <SBigTextSpan>선물해 준 친구들에게 마음을 전해볼까요?</SBigTextSpan>
       </SContainer>
       <NextBtn color={color} />
@@ -25,6 +29,8 @@ const GoWriteMessageButton = ({
   price,
   onClick,
   wroteMessage,
+  contributed,
+  fundingId,
   isEnd,
 }) => {
   const navigate = useNavigate();
@@ -33,7 +39,12 @@ const GoWriteMessageButton = ({
     <SLayout
       color={color}
       onClick={
-        wroteMessage ? onClick : () => navigate('축하 메시지 수정 페이지')
+        wroteMessage || isEnd
+          ? onClick
+          : () =>
+              navigate(`/funding/${fundingId}/message/edit`, {
+                state: { participationId: contributed.participationId },
+              })
       }
     >
       <SContainer>

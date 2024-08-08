@@ -4,6 +4,11 @@
 // giftList(list): 가격대별 선물 리스트, 가격 오름차순 정렬
 // joinPrice(number): 펀딩 참여자가 참여한 금액
 
+// 선물 데이터 오름차순 정렬
+const sortGiftData = (array) => {
+  return array && array.sort((a, b) => a.price - b.price);
+};
+
 import styled from 'styled-components';
 import { T1, B3 } from '../../styles/font';
 import { useEffect, useState } from 'react';
@@ -14,24 +19,20 @@ import { ReactComponent as Fold } from '../../assets/FundingInfo/fold 1.svg';
 const FundingPercentage = ({
   type,
   color = 'var(--gray-400)',
-  nowMoney,
-  giftList,
+  nowMoney = 0,
+  giftList = [],
   joinPrice,
   setIsTrue,
   giftData,
   imageData,
 }) => {
-  const maxPrice =
-    giftList && giftList.length > 0 && giftList[giftList.length - 1].price;
-  const percent = Math.round((nowMoney / maxPrice) * 100);
+  const maxPrice = giftList.length > 0 && giftList[giftList.length - 1].price;
+  const percent = maxPrice ? Math.round((nowMoney / maxPrice) * 100) : 0;
   const balance = nowMoney ? maxPrice - nowMoney : maxPrice;
   const [isClicked, setIsClicked] = useState(type === 'add' ? true : false);
-  const [list, setList] = useState(type === 'add' ? addKeytoGiftData(giftData) : []);
-
-  // 선물 데이터 오름차순 정렬
-  function sortGiftData(array) {
-    return array && array.sort((a, b) => a.price - b.price);
-  }
+  const [list, setList] = useState(
+    type === 'add' ? addKeytoGiftData(giftData) : [],
+  );
 
   // GiftAddPage 선물 정렬
   function addKeytoGiftData(array) {
@@ -125,20 +126,21 @@ const FundingPercentage = ({
       <PriceProgressBar
         type={type}
         color={color}
-        giftList={giftList ? giftList : list}
+        giftList={giftList.length > 0 ? giftList : list}
         joinPrice={joinPrice}
         balance={balance}
+        percent={percent}
       />
       <SButtonContainer onClick={() => setIsClicked(!isClicked)}>
         <SBtn $clicked={isClicked} $color={color}>
-          가격대별 선물 보기
+          선물 상세 보기
         </SBtn>
         <FoldBtn $clicked={isClicked} $color={color} />
       </SButtonContainer>
       {isClicked && (
         <SItemLayout>
-          {giftList ? (
-            sortGiftData(giftList).map((it, idx) => (
+          {giftList.length > 0 ? (
+            giftList.map((it, idx) => (
               <GiftItem key={idx} it={it} idx={idx} length={giftList.length} />
             ))
           ) : list && list.length === 0 ? (
@@ -179,7 +181,8 @@ const STextSpan = styled.span`
   color: var(--gray-500);
 `;
 const SBoldTextSpan = styled(STextSpan)`
-  color: ${(props) => (props.$joinPrice ? 'var(--orange-pri)' : 'var(--black)')};
+  color: ${(props) =>
+    props.$joinPrice ? 'var(--orange-pri)' : 'var(--black)'};
 `;
 const SSmallTextSpan = styled.span`
   margin-top: -4px;
@@ -248,3 +251,4 @@ const SItemTextSpan = styled.span`
 `;
 
 export default FundingPercentage;
+export { sortGiftData };

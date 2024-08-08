@@ -9,6 +9,8 @@ import {
 } from '../../api/funding';
 import { getUserInfo } from '../../api/user';
 import { getReview } from '../../api/review';
+import { postPassword } from '../../api/funding';
+import { sortGiftData } from '../../components/FundingInfo/FundingPercentage';
 import BackHeaderComponent from '../../components/common/BackHeaderComponent';
 import FundingSpan from '../../components/FundingInfo/FundingSpan';
 import TopFundingInfo from '../../components/FundingInfo/TopFundingInfo';
@@ -25,13 +27,15 @@ import {
 } from '../../components/FundingInfo/GoWriteButton';
 import PasswordComponent from '../../components/common/PasswordComponent';
 import ToastComponent from '../../components/common/ToastComponent';
-import { postPassword } from '../../api/funding';
+import ScrollToTop from '../../components/common/ScrollToTop';
+import { ReactComponent as IcnInfo } from '../../assets/Friend/icn_info.svg';
 
 const FundingInfoPage = () => {
   const navigate = useNavigate();
   const messageRef = useRef(null);
   const { fundingId } = useParams();
   const [data, setData] = useState({});
+  const [giftList, setGiftList] = useState([]);
   const [contributers, setContributers] = useState([]);
   const [contributed, setContributed] = useState({});
   const [review, setReview] = useState('');
@@ -57,7 +61,8 @@ const FundingInfoPage = () => {
       const today = new Date();
       const endDate = new Date(fundingEndDate);
       const diff = Math.abs(endDate.getTime() - today.getTime());
-      setTag(`D-${Math.ceil(diff / (1000 * 60 * 60 * 24))}`);
+      const leftDays = Math.round(diff / (1000 * 60 * 60 * 24));
+      setTag(leftDays > 0 ? `D-${leftDays}` : 'D-day');
     } else {
       setIsEnd(true);
       setTag('종료');
@@ -100,10 +105,10 @@ const FundingInfoPage = () => {
     try {
       const res = await getFundingInfo(fundingId);
       const data = res.data;
-      console.log(data);
       data.contributers && setContributers(data.contributers);
       handleSetStatus(data.status, data.fundingEndDate);
       handleSetType(data.userId, data.contributers);
+      setGiftList(sortGiftData(data.giftList));
       setData(data);
     } catch (e) {
       console.log(e);
@@ -204,7 +209,11 @@ const FundingInfoPage = () => {
               width: '223px',
               color: 'orange',
             }}
-            onClick={() => navigate(`/funding/${fundingId}/message/edit`)}
+            onClick={() =>
+              navigate(`/funding/${fundingId}/message/edit`, {
+                state: { participationId: contributed.participationId },
+              })
+            }
           />
         </SBtnContainer>
       );
@@ -222,7 +231,7 @@ const FundingInfoPage = () => {
             }}
             onClick={() =>
               navigate(`/funding/${fundingId}/review/edit`, {
-                state: { contributers: contributers, review: review },
+                state: { contributers: contributers, reviewText: review },
               })
             }
           />
@@ -232,6 +241,7 @@ const FundingInfoPage = () => {
           <ButtonComponent
             btnInfo={{
               text: '개설 취소하기',
+              color: 'darkGray',
             }}
             onClick={() => setModalShow(true)}
             disabled={false}
@@ -243,13 +253,21 @@ const FundingInfoPage = () => {
     return (
       <ButtonComponent
         btnInfo={{ text: '선물하기', color: 'orange' }}
-        onClick={() => navigate(`/funding/${fundingId}/join`)}
+        onClick={() =>
+          navigate(`/funding/${fundingId}/join`, {
+            state: {
+              giftList: giftList,
+              nowMoney: data.nowMoney,
+            },
+          })
+        }
       />
     );
   };
 
   return (
     <>
+      <ScrollToTop />
       <BackHeaderComponent />
       <SLayout $isEnd={isEnd && funding !== 'open'}>
         {data.password && bottomSheetShow && funding === 'pre' ? (
@@ -282,12 +300,20 @@ const FundingInfoPage = () => {
                 price={contributed.contributionAmount}
                 wroteMessage={contributed.message}
                 onClick={onFocusMessage}
+                fundingId={fundingId}
+                contributed={contributed}
               />
             ) : (
               funding === 'open' &&
               !data.existedReview &&
-              isEnd && (
-                <GoWriteCommentButton color={color} fundingId={fundingId} />
+              isEnd &&
+              data.nowMoney >= giftList[0].price && (
+                <GoWriteCommentButton
+                  color={color}
+                  fundingId={fundingId}
+                  nowMoney={data.nowMoney}
+                  giftList={giftList}
+                />
               )
             )}
             <FundingSpan
@@ -299,7 +325,7 @@ const FundingInfoPage = () => {
             <FundingPercentage
               type='info'
               color={color}
-              giftList={data.giftList}
+              giftList={giftList}
               nowMoney={data.nowMoney}
             />
             {funding === 'open' && <FundingParticipants list={contributers} />}
@@ -309,9 +335,11 @@ const FundingInfoPage = () => {
           </>
         )}
       </SLayout>
-      {!(isEnd && funding !== 'open') && funding && (
-        <BottomBackgroundComponent Button={<Btn />} />
-      )}
+      {!(isEnd && funding !== 'open') &&
+        funding &&
+        !(isEnd && data.nowMoney < giftList[0].price) && (
+          <BottomBackgroundComponent Button={<Btn />} />
+        )}
       {modalShow && (
         <Modal
           actionText='취소하기'
@@ -320,7 +348,9 @@ const FundingInfoPage = () => {
         >
           <SModalContainer>
             <SBigSpan>펀딩 개설을 취소하시겠어요?</SBigSpan>
-            <SSmallSpan>펀딩에 참여한 친구들에게 알림이 전송돼요</SSmallSpan>
+            <SSmallSpan>
+              <IcnInfo /> 펀딩에 참여한 친구들에게 알림이 전송돼요
+            </SSmallSpan>
           </SModalContainer>
         </Modal>
       )}
@@ -382,8 +412,12 @@ const SBigSpan = styled.span`
   text-align: center;
 `;
 const SSmallSpan = styled(SBigSpan)`
+  display: flex;
+  align-items: center;
+
   ${C2}
   color: var(--gray-500);
+  white-space: pre;
 `;
 
 export default FundingInfoPage;

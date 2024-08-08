@@ -1,23 +1,33 @@
 import styled from 'styled-components';
 import { B1, B2, B3 } from '../../styles/font';
-import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { getFundingInfo, postFundingJoin } from '../../api/funding';
+import { useContext, useEffect, useState } from 'react';
+import { useLocation, useParams } from 'react-router-dom';
+import { DataContext, PageContext } from './IndexPage';
 import BackHeaderComponent from '../../components/common/BackHeaderComponent';
 import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
 import ButtonComponent from '../../components/common/ButtonComponent';
 import FundingPercentage from '../../components/FundingInfo/FundingPercentage';
 import PriceInputComponent from '../../components/common/PriceInputComponent';
+import ScrollToTop from '../../components/common/ScrollToTop';
 
 const FundingJoinPage = () => {
-  const navigate = useNavigate();
+  const { setCurrentPage } = useContext(PageContext);
+  const { fundingJoinData, setFundingJoinData } = useContext(DataContext);
   const { fundingId } = useParams();
-  const [giftList, setGiftList] = useState(null);
-  const [nowMoney, setNowMoney] = useState(null);
-  const [balance, setBalance] = useState(null);
-  const [contributionAmount, setContributionAmount] = useState(null);
-  const [name, setName] = useState('nickname');
-  const [message, setMessage] = useState('');
+  const location = useLocation();
+  const [giftList, setGiftList] = useState(location.state?.giftList);
+  const [nowMoney, setNowMoney] = useState(location.state?.nowMoney);
+  const [balance, setBalance] = useState(
+    giftList && giftList[giftList.length - 1].price - nowMoney,
+  );
+
+  const [contributionAmount, setContributionAmount] = useState(
+    fundingJoinData.contributionAmount,
+  );
+  const [name, setName] = useState(
+    fundingJoinData.anonymity ? 'anony' : 'nickname',
+  );
+  const [message, setMessage] = useState(fundingJoinData.message);
   const [isDone, setIsDone] = useState(false);
 
   // 축하메시지 set
@@ -30,34 +40,15 @@ const FundingJoinPage = () => {
     setName(e.target.value);
   };
 
-  // 펀딩 정보 조회
-  const readFundingInfo = async () => {
-    try {
-      const res = await getFundingInfo(fundingId);
-      const giftList = res.data.giftList;
-      const nowMoney = res.data.nowMoney ? res.data.nowMoney : 0;
-      setGiftList(giftList);
-      setNowMoney(nowMoney);
-      setBalance(giftList[giftList.length - 1].price - nowMoney);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  // 펀딩 참여
-  const createFundingJoin = async () => {
-    const name = 'nickname' ? false : true;
-    try {
-      const res = await postFundingJoin(
-        fundingId,
-        contributionAmount,
-        name,
-        message,
-      );
-      navigate('참여 완료 페이지 이동');
-    } catch (e) {
-      console.log(e);
-    }
+  // 결제하기 버튼 핸들러
+  const handleClickPayment = () => {
+    setFundingJoinData({
+      fundingId: fundingId,
+      contributionAmount: contributionAmount,
+      anonymity: name === 'anony' ? true : false,
+      message: message,
+    });
+    setCurrentPage('PaymentLandingPage');
   };
 
   // 참여 가능한 금액 입력 시 결제 버튼 활성화
@@ -65,13 +56,9 @@ const FundingJoinPage = () => {
     contributionAmount <= balance ? setIsDone(true) : setIsDone(false);
   }, [contributionAmount, balance]);
 
-  // 최초 렌더링 데이터 read
-  useEffect(() => {
-    readFundingInfo();
-  }, []);
-
   return (
     <>
+      <ScrollToTop />
       <BackHeaderComponent />
       <SLayout>
         <FundingPercentage
@@ -149,7 +136,7 @@ const FundingJoinPage = () => {
           contributionAmount && isDone ? (
             <ButtonComponent
               btnInfo={{ text: '결제하기', color: 'orange' }}
-              onClick={createFundingJoin}
+              onClick={handleClickPayment}
             />
           ) : (
             <ButtonComponent btnInfo={{ text: '결제하기' }} />
@@ -174,13 +161,11 @@ const SForm = styled.form`
   justify-content: center;
   gap: 24px;
 `;
-
 const SContainer = styled.fieldset`
   display: flex;
   flex-direction: column;
   gap: 8px;
 `;
-
 const SLabel = styled.label`
   display: flex;
 `;

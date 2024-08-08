@@ -2,11 +2,11 @@ import styled from 'styled-components';
 import { B1, B3, C2, H2 } from '../../styles/font';
 import { useState, useEffect } from 'react';
 import { startOfWeek, addDays } from 'date-fns';
+import { getCalendarFunding, getExistanceOfFunding } from '../../api/calendar';
 import BottomSheetComponent from '../common/BottomSheetComponent';
 import CarouselComponent from '../common/CarouselComponent';
 import CalendarFundingItem from './CalendarFundingItem';
 import { ReactComponent as TagIcon } from '../../assets/Home/tag_today.svg';
-import { getCalendarFunding, getExistanceOfFunding } from '../../api/calendar';
 
 const Calendar = () => {
   const [isFundingExist, setIsFundingExist] = useState({});
@@ -31,7 +31,15 @@ const Calendar = () => {
   const readIsExistance = async () => {
     try {
       const res = await getExistanceOfFunding(
-        date.toISOString().split('T')[0],
+        date
+          .toLocaleString('ko-KR', {
+            timeZone: 'Asia/Seoul',
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+          })
+          .replaceAll('.', '')
+          .replaceAll(' ', '-'),
         dates[dates.length - 1],
       );
       setIsFundingExist(res.data.existenceOfFundingOnDate);
@@ -52,8 +60,14 @@ const Calendar = () => {
 
   for (let i = 0; i < 14; i++) {
     dates[i] = addDays(startDate, i + 1)
-      .toISOString()
-      .split('T')[0];
+      .toLocaleString('ko-KR', {
+        timeZone: 'Asia/Seoul',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+      .replaceAll('.', '')
+      .replaceAll(' ', '-');
   }
 
   const handleOnClick = (e) => {
