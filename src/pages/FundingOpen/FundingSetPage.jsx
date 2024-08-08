@@ -7,7 +7,6 @@ import { DataContext, PageContext } from './IndexPage';
 import BackHeaderComponent from '../../components/common/BackHeaderComponent';
 import ButtonComponent from '../../components/common/ButtonComponent';
 import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
-import { getValue } from '@testing-library/user-event/dist/utils';
 
 const FundingSetPage = () => {
   const { setCurrentPage } = useContext(PageContext);
@@ -21,7 +20,6 @@ const FundingSetPage = () => {
     register,
     handleSubmit,
     setValue,
-    getValues,
     watch,
     formState: { errors, isValid },
   } = useForm({
@@ -56,6 +54,11 @@ const FundingSetPage = () => {
   const handleFormSubmit = (data) => {
     setFundingData(data);
     setCurrentPage('PasswordSetPage');
+  };
+
+  const handlePhoneNumberChange = (e) => {
+    const value = e.target.value.replace(/-/g, '');
+    setValue('phoneNumber', value);
   };
 
   useEffect(() => {
@@ -170,6 +173,7 @@ const FundingSetPage = () => {
               id='phoneNumber'
               {...register('phoneNumber', {
                 required: '배송 정보를 입력하세요',
+                onChange: handlePhoneNumberChange,
               })}
               type='tel'
               placeholder='휴대폰 번호를 -없이 입력해주세요'

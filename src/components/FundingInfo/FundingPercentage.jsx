@@ -4,14 +4,10 @@
 // giftList(list): 가격대별 선물 리스트, 가격 오름차순 정렬
 // joinPrice(number): 펀딩 참여자가 참여한 금액
 
-// 선물 데이터 오름차순 정렬
-const sortGiftData = (array) => {
-  return array && array.sort((a, b) => a.price - b.price);
-};
-
 import styled from 'styled-components';
 import { T1, B3 } from '../../styles/font';
 import { useEffect, useState } from 'react';
+import useSortGiftData from '../../hooks/useSortGiftData';
 import PriceProgressBar from './PriceProgressBar';
 import DeleteBtn from './DeleteBtn';
 import { ReactComponent as Fold } from '../../assets/FundingInfo/fold 1.svg';
@@ -39,7 +35,7 @@ const FundingPercentage = ({
     const addNum = [...array].map((it, idx) => {
       return { ...it, num: idx, giftImage: imageData[idx] };
     });
-    return sortGiftData(addNum);
+    return useSortGiftData(addNum);
   }
 
   // GiftAddPage 삭제버튼핸들러
@@ -251,4 +247,3 @@ const SItemTextSpan = styled.span`
 `;
 
 export default FundingPercentage;
-export { sortGiftData };

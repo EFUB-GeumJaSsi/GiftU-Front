@@ -3,7 +3,7 @@ import { api, apiAuth } from './api';
 // 카카오 로그인/회원가입
 // 1. 카카오 서버에 인가코드 요청
 const CLIENT_ID = `${process.env.REACT_APP_KAKAO_REST_API_KEY}`;
-const FRONT_DOMAIN = `http://localhost:3000`;
+const FRONT_DOMAIN = `https://gift-u.netlify.app`;
 const REDIRECT_URI = `${FRONT_DOMAIN}/api/oauth/kakao`;
 export const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 // 2. 기프트유 서버에 토큰 요청

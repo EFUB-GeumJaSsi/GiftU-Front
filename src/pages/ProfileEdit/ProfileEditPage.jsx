@@ -60,6 +60,8 @@ const ProfileEditPage = () => {
       const formData = new FormData();
       if (imageFile) {
         formData.append('userImage', imageFile);
+      } else {
+        formData.append(userData.userImageUrl);
       }
       formData.append(
         'userUpdateRequestDto',
