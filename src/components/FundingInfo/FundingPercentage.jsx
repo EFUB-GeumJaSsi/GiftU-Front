@@ -31,9 +31,7 @@ const FundingPercentage = ({
   const percent = Math.round((nowMoney / maxPrice) * 100);
   const balance = nowMoney ? maxPrice - nowMoney : maxPrice;
   const [isClicked, setIsClicked] = useState(type === 'add' ? true : false);
-  const [list, setList] = useState(
-    type === 'add' ? addKeytoGiftData(giftData) : [],
-  );
+  const [list, setList] = useState(type === 'add' ? addKeytoGiftData(giftData) : []);
 
   // 선물 데이터 오름차순 정렬
   function sortGiftData(array) {
