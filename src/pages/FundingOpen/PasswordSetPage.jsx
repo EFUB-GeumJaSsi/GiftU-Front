@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { B1, B3, H3 } from '../../styles/font';
 import { useEffect, useState, useContext } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { DataContext, PageContext } from './IndexPage';
@@ -9,14 +10,13 @@ import PasswordComponent from '../../components/common/PasswordComponent';
 import { ReactComponent as OrangeLocker } from '../../assets/PasswordSet/icn_btn_no.svg';
 import { ReactComponent as BlueLocker } from '../../assets/PasswordSet/icn_btn_yes.svg';
 
-let newPassword = '';
-
 const PasswordSetPage = () => {
   const { setCurrentPage } = useContext(PageContext);
   const { setFundingData } = useContext(DataContext);
+  const [password, setPassword] = useState(['', '', '', '']);
 
   const [bottomSheetShow, setBottomSheetShow] = useState(false);
-  const { register, handleSubmit, watch, reset, setValue } = useForm({
+  const { register, handleSubmit, watch, reset } = useForm({
     defaultValues: {
       visibility: '',
       password: '',
@@ -25,20 +25,20 @@ const PasswordSetPage = () => {
   });
   const visibility = watch('visibility');
 
-  const setPassword = (data) => {
-    newPassword = data;
-    setValue('password', newPassword);
-  };
   const isButtonDisabled = () => {
     if (visibility === 'public') {
       return false;
     }
     return true;
   };
+
+  const handlePasswordSubmit = () => {};
+
   const handleFormSubmit = (data) => {
     const formattedData = {
       ...data,
-      visibility: data.visibility === 'true',
+      visibility: data.visibility === 'public' ? true : false,
+      password: password.join(''),
     };
     setFundingData((prevData) => ({
       ...prevData,
@@ -106,9 +106,10 @@ const PasswordSetPage = () => {
           {bottomSheetShow && (
             <PasswordComponent
               setBottomSheetShow={setBottomSheetShow}
-              passwordExact={'Set'}
-              passwordSet={(data) => setPassword(data)}
               color='jade'
+              password={password}
+              setPassword={setPassword}
+              passwordHandle={handlePasswordSubmit}
             />
           )}
           <BottomBackgroundComponent
@@ -146,11 +147,9 @@ const SFieldset = styled.fieldset`
 const SLegend = styled.legend`
   margin-left: 8px;
   margin-bottom: 40px;
+
+  ${B1}
   color: var(--black);
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 140%;
 `;
 const SRadioContainer = styled.div`
   display: flex;
@@ -187,18 +186,12 @@ const STextContainer = styled.div`
   padding-left: 20px;
 
   h4 {
+    ${H3}
     color: black;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 140%;
   }
   p {
+    ${B3}
     color: var(--gray-500);
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 140%;
   }
 `;
 const SLockerBackground = styled.div`

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { B1, B2 } from '../../styles/font';
 import { useState, useEffect } from 'react';
 import BackHeaderComponent from '../../components/common/BackHeaderComponent';
 import ButtonComponent from '../../components/common/ButtonComponent';
@@ -127,10 +128,7 @@ const STextBox = styled.label`
 const STextWrapper = styled.span`
   margin-left: 8px;
 
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 140%;
+  ${B1}
 `;
 const SStarWrapper = styled(STextWrapper)`
   display: flex;
@@ -178,11 +176,8 @@ const SButtonWrapper = styled.label`
   background: ${(props) =>
     props.checked ? 'var(--orange-sec)' : 'var(--gray-100)'};
 
+  ${B2}
   color: ${(props) => (props.checked ? 'var(--black)' : 'var(--gray-400)')};
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 140%;
 
   cursor: pointer;
 `;
@@ -194,9 +189,8 @@ const SOptionalLegend = styled.legend`
   height: 22px;
   padding: 0px 8px 0px 8px;
 
+  ${B1}
   color: var(--black);
-  font-size: 16px;
-  font-weight: 500;
 `;
 const STextarea = styled.textarea`
   display: flex;
@@ -209,9 +203,8 @@ const STextarea = styled.textarea`
   border-radius: 16px;
   background-color: var(--gray-100);
 
+  ${B1}
   color: var(--black);
-  font-weight: 500;
-  font-size: 16px;
 
   resize: none;
 

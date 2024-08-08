@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { B1, C2 } from '../../styles/font';
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
@@ -24,6 +25,7 @@ import {
 } from '../../components/FundingInfo/GoWriteButton';
 import PasswordComponent from '../../components/common/PasswordComponent';
 import ToastComponent from '../../components/common/ToastComponent';
+import { postPassword } from '../../api/funding';
 
 const FundingInfoPage = () => {
   const navigate = useNavigate();
@@ -40,6 +42,8 @@ const FundingInfoPage = () => {
   const [modalShow, setModalShow] = useState(false);
   const [bottomSheetShow, setBottomSheetShow] = useState(false);
   const [toastShow, setToastShow] = useState(false);
+  const [password, setPassword] = useState(['', '', '', '']);
+  const [errorMessage, setErrorMessage] = useState('');
 
   // 축하메시지 컴포넌트 포커싱
   const onFocusMessage = () => {
@@ -138,6 +142,29 @@ const FundingInfoPage = () => {
       setToastShow(true);
     } catch (e) {
       console.log(e);
+    }
+  };
+
+  const readPassword = async () => {
+    try {
+      const res = await postPassword(data.fundingId, password.join(''));
+      return true;
+    } catch (e) {
+      console.log(e);
+      return false;
+    }
+  };
+
+  const handlePasswordSubmit = async (e) => {
+    e.preventDefault();
+    // 패스워드 확인하는 경우
+    const res = await readPassword();
+    if (res) {
+      setErrorMessage('');
+      setBottomSheetShow(false);
+    } else {
+      setPassword(['', '', '', '']);
+      setErrorMessage('비밀번호를 다시 입력해 주세요.');
     }
   };
 
@@ -299,12 +326,14 @@ const FundingInfoPage = () => {
       )}
       {funding === 'pre' && bottomSheetShow && (
         <PasswordComponent
-          color='orange'
-          fundingId={fundingId}
-          name={data.nickname}
-          validPassword={() => setBottomSheetShow(false)}
-          action='back' // 바텀시트 cross 버튼 클릭 시 뒤로가기 + background 이벤트리스너 비활성화
           setBottomSheetShow={setBottomSheetShow}
+          color='orange'
+          password={password}
+          setPassword={setPassword}
+          passwordHandle={handlePasswordSubmit}
+          errorMessage={errorMessage}
+          name={data.nickname}
+          action='back' // 바텀시트 cross 버튼 클릭 시 뒤로가기 + background 이벤트리스너 비활성화
         />
       )}
       {toastShow && (
@@ -348,17 +377,13 @@ const SModalContainer = styled.div`
   padding: 32px 0 28px 0;
 `;
 const SBigSpan = styled.span`
+  ${B1}
   color: var(--black);
   text-align: center;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 140%;
 `;
 const SSmallSpan = styled(SBigSpan)`
+  ${C2}
   color: var(--gray-500);
-  font-size: 12px;
-  line-height: 120%;
 `;
 
 export default FundingInfoPage;

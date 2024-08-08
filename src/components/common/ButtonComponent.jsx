@@ -9,6 +9,7 @@
 // 예시 <ButtonComponent btnInfo={{ text: '다음', color: 'jade' }} />
 
 import styled from 'styled-components';
+import { B0 } from '../../styles/font';
 
 const ButtonComponent = ({ btnInfo, ...props }) => {
   const { text, color, width } = btnInfo;
@@ -37,9 +38,7 @@ const SBtn = styled.button`
 
   text-align: center;
   color: ${(props) => (props.color ? props.color[1] : 'var(--gray-400)')};
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 140%;
+  ${B0}
 
   cursor: ${(props) => (props.disabled ? 'default' : 'cursor')};
 `;

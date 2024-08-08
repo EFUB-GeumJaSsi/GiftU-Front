@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { B3 } from '../../styles/font';
 
 const FundingSpan = ({ color, name, startDate, endDate }) => {
   const replaceHyphen = (it) => {
@@ -45,18 +46,12 @@ const STitleSpan = styled.span`
   width: 64px;
   height: 17px;
 
+  ${B3}
   color: var(--gray-400);
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 120%;
 `;
 const STextSpan = styled.span`
+  ${B3}
   color: var(--gray-500);
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 120%;
 `;
 
 export default FundingSpan;

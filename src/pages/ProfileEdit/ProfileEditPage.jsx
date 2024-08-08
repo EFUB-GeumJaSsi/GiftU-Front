@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { B1, B3 } from '../../styles/font';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
@@ -286,9 +287,7 @@ const STextarea = styled.textarea`
   color: var(--black);
   background-color: var(--gray-100);
 
-  font-weight: 500;
-  font-size: 16px;
-
+  ${B1}
   resize: none;
 
   &::placeholder {
@@ -303,8 +302,7 @@ const STextarea = styled.textarea`
 const SInput = styled.input`
   border-radius: 16px;
   background-color: var(--gray-100);
-  font-weight: 500;
-  font-size: 16px;
+  ${B1}
   &::placeholder {
     color: var(--gray-400);
   }
@@ -327,11 +325,8 @@ const SWarningWrapper = styled.div`
   margin-top: 8px;
   margin-left: 8px;
 
+  ${B3}
   color: var(--red);
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 120%;
 `;
 
 export default ProfileEditPage;

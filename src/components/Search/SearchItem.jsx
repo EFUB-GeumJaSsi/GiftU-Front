@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { B3, T1 } from '../../styles/font';
 import TagComponent from '../common/TagComponent';
 
 const SearchItem = ({ image, name, title, date, status, onClick }) => {
@@ -49,8 +50,7 @@ const SContentWrapper = styled.div`
 
   width: 187px;
 
-  font-weight: 500;
-  font-size: 14px;
+  ${B3}
 `;
 const STitleText = styled.text`
   display: -webkit-box;
@@ -60,8 +60,7 @@ const STitleText = styled.text`
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 
-  font-weight: 700;
-  font-size: 17px;
+  ${T1}
   overflow: hidden;
   text-overflow: ellipsis;
 `;
@@ -73,6 +72,5 @@ const SNameText = styled.text`
 const SDateText = styled(SNameText)``;
 const SBoldWrapper = styled.div`
   color: var(--gray-500);
-  font-weight: 500;
 `;
 export default SearchItem;

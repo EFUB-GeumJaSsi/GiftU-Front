@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { H2 } from '../../styles/font';
 import { useState, useContext, useEffect } from 'react';
 import { DataContext, PageContext } from './IndexPage';
 import BackHeaderComponent from '../../components/common/BackHeaderComponent';
@@ -61,10 +62,7 @@ const SContainer = styled.div`
 const STitleWrapper = styled.span`
   margin-left: 8px;
 
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 140%;
+  ${H2}
 `;
 
 export default GiftAddPage;

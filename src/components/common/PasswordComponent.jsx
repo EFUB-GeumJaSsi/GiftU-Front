@@ -1,48 +1,20 @@
-/*
-부모 컴포넌트에 패스워드가 유효하다면 어느 창으로 이동할지 passwordIsValid()로 설정해주시면 됩니다.
-function passwordIsValid() {
-  navigate('/');
-}
-{bottomSheetShow && (
-  <PasswordComponent
-    color='orange'
-    passwardExact={'1234'}
-    validPassword={() => passwordIsValid()}
-    setBottomSheetShow={setBottomSheetShow}
-  />
-)}
-*/
-
 import styled from 'styled-components';
-import { useRef, useState } from 'react';
+import { H3, B3 } from '../../styles/font';
+import { useEffect, useRef } from 'react';
 import BottomSheetComponent from '../../components/common/BottomSheetComponent';
-import { postPassword } from '../../api/funding';
 import ButtonComponent from './ButtonComponent';
 
 const PasswordComponent = ({
-  color,
-  passwordExact,
-  passwordSet,
-  validPassword,
-  fundingId,
-  name,
   setBottomSheetShow,
+  color,
+  password,
+  setPassword,
+  passwordHandle,
+  errorMessage,
+  name,
   ...props
 }) => {
-  const [password, setPassword] = useState(['', '', '', '']);
   const inputRefs = useRef([]);
-  const [errorMessage, setErrorMessage] = useState('');
-
-  // 패스워드 일치 여부 확인
-  const readPassword = async () => {
-    try {
-      const res = await postPassword(fundingId, password.join(''));
-      return true;
-    } catch (e) {
-      console.log(e);
-      return false;
-    }
-  };
 
   const handlePasswordChange = (e, index) => {
     const { value } = e.target;
@@ -62,28 +34,8 @@ const PasswordComponent = ({
     }
   };
 
-  const isPasswordComplete = password.every((digit) => digit !== '');
-
-  const handlePasswordSubmit = async (e) => {
-    // 패스워드 등록하는 경우
-    const enteredPassword = password.join('');
-    if (passwordExact === 'Set') {
-      passwordSet(enteredPassword);
-      return;
-    }
-
-    e.preventDefault();
-
-    // 패스워드 확인하는 경우
-    const res = await readPassword();
-    if (res) {
-      setErrorMessage('');
-      validPassword();
-    } else {
-      setPassword(['', '', '', '']);
-      setErrorMessage('비밀번호를 다시 입력해 주세요.');
-    }
-  };
+  const isPasswordComplete =
+    Array.isArray(password) && password.every((digit) => digit !== '');
 
   return (
     <BottomSheetComponent
@@ -102,17 +54,18 @@ const PasswordComponent = ({
         </STextContainer>
         <SForm $errorMessage={errorMessage}>
           <SPasswordInputContainer>
-            {password.map((digit, index) => (
-              <SPasswordInput
-                key={index}
-                type='text'
-                maxLength='1'
-                value={digit}
-                onChange={(e) => handlePasswordChange(e, index)}
-                ref={(el) => (inputRefs.current[index] = el)}
-                onKeyDown={(e) => handleKeyDown(e, index)}
-              />
-            ))}
+            {Array.isArray(password) &&
+              password.map((digit, index) => (
+                <SPasswordInput
+                  key={index}
+                  type='text'
+                  maxLength='1'
+                  value={digit}
+                  onChange={(e) => handlePasswordChange(e, index)}
+                  ref={(el) => (inputRefs.current[index] = el)}
+                  onKeyDown={(e) => handleKeyDown(e, index)}
+                />
+              ))}
           </SPasswordInputContainer>
           {errorMessage && <SErrorSpan>{errorMessage}</SErrorSpan>}
           <ButtonComponent
@@ -122,7 +75,7 @@ const PasswordComponent = ({
             }}
             type='submit'
             disabled={!isPasswordComplete}
-            onClick={(e) => handlePasswordSubmit(e)}
+            onClick={(e) => passwordHandle(e)}
           />
         </SForm>
       </SBottomSheetContainer>
@@ -147,15 +100,13 @@ const STextContainer = styled.div`
   gap: 12px;
 
   h4 {
+    ${H3}
     color: var(--black);
-    font-size: 20px;
-    font-weight: 600;
   }
 
   p {
+    ${B3}
     color: var(--gray-500);
-    font-size: 14px;
-    font-weight: 500;
   }
 `;
 const SForm = styled.form`
@@ -187,9 +138,7 @@ const SErrorSpan = styled.span`
   margin-top: 12px;
   margin-bottom: 35px;
 
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 120%;
+  ${B3}
 `;
 
 export default PasswordComponent;

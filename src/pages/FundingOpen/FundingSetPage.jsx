@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { B0, B1, B2, B3 } from '../../styles/font';
 import DaumPostcode from 'react-daum-postcode';
 import { useState, useEffect, useContext } from 'react';
 import { useForm } from 'react-hook-form';
@@ -58,9 +58,19 @@ const FundingSetPage = () => {
   };
 
   useEffect(() => {
-    const today = new Date().toISOString().split('T')[0];
+    const today = new Date()
+      .toLocaleString('ko-KR', {
+        timeZone: 'Asia/Seoul',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+      .replace(/\./g, '')
+      .replace(/ /g, '-')
+      .replace(' ', '');
+
     setCurrentDate(today);
-    console.log(currentDate);
+    console.log(today);
   }, []);
 
   useEffect(() => {
@@ -160,7 +170,7 @@ const FundingSetPage = () => {
               {...register('phoneNumber', {
                 required: '배송 정보를 입력하세요',
               })}
-              type='text'
+              type='tel'
               placeholder='휴대폰 번호를 -없이 입력해주세요'
             />
             <SAddressNumberContainer>
@@ -247,10 +257,7 @@ const SLabel = styled.label`
   margin-left: 8px;
   margin-bottom: 8px;
 
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 140%;
+  ${B1}
 
   h5 {
     margin-left: 8px;
@@ -267,10 +274,8 @@ const STextInput = styled(SInput)`
   width: 335px;
   padding: 21px 19px;
 
+  ${B2}
   color: var(--black);
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 140%;
   box-sizing: border-box;
 
   &:focus {
@@ -286,10 +291,8 @@ const STextArea = styled.textarea`
   resize: none;
 
   border: none;
+  ${B2}
   color: var(--black);
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 140%;
   box-sizing: border-box;
 
   &:focus {
@@ -302,10 +305,8 @@ const SWarningWrapper = styled.div`
   margin-top: 8px;
   margin-left: 8px;
 
+  ${B3}
   color: var(--red);
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 120%;
 `;
 const SDateContainer = styled.div`
   display: grid;
@@ -353,10 +354,8 @@ const SButton = styled.button`
   padding: 13px 15px 13px 16px;
 
   box-sizing: border-box;
+  ${B0}
   color: white;
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 140%;
   background-color: ${({ disabled }) =>
     disabled ? 'var(--gray-500)' : 'var(--jade-pri)'};
   border-radius: 16px;
@@ -373,7 +372,3 @@ const SPostcodeContainer = styled.div`
 `;
 
 export default FundingSetPage;
-
-
-
-

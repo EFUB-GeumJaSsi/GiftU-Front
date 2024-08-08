@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { T1, B3 } from '../../styles/font';
 import { ReactComponent as ProfileDefault } from '../../assets/common/profile_default.svg';
 
 const FundingParticipants = ({ list = [] }) => {
@@ -55,17 +56,11 @@ const STextContainer = styled.div`
   margin: 20px 24px 0 24px;
 `;
 const STitleSpan = styled.span`
-  font-size: 17px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 120%;
+  ${T1}
 `;
 const STextSpan = styled.span`
+  ${B3}
   color: var(--gray-500);
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 120%;
 `;
 const SBoldTextSpan = styled(STextSpan)`
   color: var(--black);
@@ -106,12 +101,9 @@ const SNameSpan = styled.span`
   width: 61px;
   height: 34px;
 
+  ${B3}
   color: var(--gray-500);
   text-align: center;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 120%;
 `;
 const SWrapper = styled.div`
   display: flex;

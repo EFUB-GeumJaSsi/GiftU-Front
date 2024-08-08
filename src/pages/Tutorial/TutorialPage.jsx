@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { H2, B3, C2, T1 } from '../../styles/font';
 import BackHeaderComponent from '../../components/common/BackHeaderComponent';
 import TitleDescription from '../../components/Tutorial/TitleDescription';
 import { ReactComponent as Present } from '../../assets/Tutorial/present.svg';
@@ -137,8 +138,7 @@ const SCategoryWrapper = styled.div`
   margin-left: 20px;
   padding-top: 20px;
 
-  font-size: 20px;
-  font-weight: 700;
+  ${H2}
 `;
 const SWhiteContainer = styled.div`
   display: flex;
@@ -152,12 +152,10 @@ const SWhiteContainer = styled.div`
   background-color: var(--white);
 `;
 const SSecond1Wrapper = styled.div`
-  font-weight: 700;
-  font-size: 20px;
+  ${H2}
 `;
 const SSecond2Wrapper = styled.div`
-  font-weight: 500;
-  font-size: 14px;
+  ${B3}
   color: var(--gray-400);
 `;
 const SContainer = styled.div`
@@ -183,8 +181,7 @@ const SDateContainer = styled.div`
   background-color: var(--white);
 `;
 const SFourthTextWrapper = styled.div`
-  font-weight: 500;
-  font-size: 12px;
+  ${C2}
   color: var(--gray-500);
 `;
 const SMiddleContainer = styled.div`
@@ -207,12 +204,10 @@ const SJoinFundingContainer = styled.div`
   background-color: var(--gray-100);
 `;
 const SBoldWrapper = styled.div`
-  font-weight: 700;
-  font-size: 17px;
+  ${T1}
 `;
 const STextWrapper = styled.div`
-  font-weight: 500;
-  font-size: 14px;
+  ${B3}
   color: var(--gray-500);
 `;
 const SPriceBtnContainer = styled.div`
