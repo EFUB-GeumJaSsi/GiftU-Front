@@ -10,7 +10,7 @@ import {
 import { getUserInfo } from '../../api/user';
 import { getReview } from '../../api/review';
 import { postPassword } from '../../api/funding';
-import { sortGiftData } from '../../components/FundingInfo/FundingPercentage';
+import useSortGiftData from '../../hooks/useSortGiftData';
 import BackHeaderComponent from '../../components/common/BackHeaderComponent';
 import FundingSpan from '../../components/FundingInfo/FundingSpan';
 import TopFundingInfo from '../../components/FundingInfo/TopFundingInfo';
@@ -61,8 +61,8 @@ const FundingInfoPage = () => {
       const today = new Date();
       const endDate = new Date(fundingEndDate);
       const diff = Math.abs(endDate.getTime() - today.getTime());
-      const leftDays = Math.round(diff / (1000 * 60 * 60 * 24));
-      setTag(leftDays > 0 ? `D-${leftDays}` : 'D-day');
+      const leftDays = Math.ceil(diff / (1000 * 60 * 60 * 24));
+      setTag(leftDays === 1 ? 'D-day' : `D-${leftDays - 1}`);
     } else {
       setIsEnd(true);
       setTag('종료');
@@ -108,7 +108,7 @@ const FundingInfoPage = () => {
       data.contributers && setContributers(data.contributers);
       handleSetStatus(data.status, data.fundingEndDate);
       handleSetType(data.userId, data.contributers);
-      setGiftList(sortGiftData(data.giftList));
+      setGiftList(useSortGiftData(data.giftList));
       setData(data);
     } catch (e) {
       console.log(e);
