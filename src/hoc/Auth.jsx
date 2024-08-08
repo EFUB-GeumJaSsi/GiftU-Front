@@ -59,7 +59,7 @@ const Auth = ({ Page, option }) => {
       }
       setIsLoading(false);
     }
-  }, [isLogin, navigate]);
+  }, [isLogin]);
 
   if (isLoading) {
     return (
