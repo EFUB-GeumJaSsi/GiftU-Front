@@ -45,7 +45,7 @@ const MessageEditPage = () => {
   const handleClickChange = (e) => {
     const anonymity = name === 'anony';
     UpdateMessage(participationId, anonymity, msgText);
-    navigate(-1); //버튼 클릭시 이동할 주소
+    navigate(-1, { replace: true }); //버튼 클릭시 이동할 주소
   };
   useEffect(() => {
     readMessage(fundingId);
