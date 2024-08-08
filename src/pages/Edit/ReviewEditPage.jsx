@@ -54,7 +54,7 @@ const ReviewEditPage = () => {
 
   const handleFormSubmit = async () => {
     reviewText !== null ? updateReview(fundingId, reviewText) : createReview();
-    navigate(-1);
+    navigate(`/funding/${fundingId}`, { replace: true });
   };
   const Btn = (
     <ButtonComponent
