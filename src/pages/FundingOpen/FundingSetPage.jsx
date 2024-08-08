@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import { B0, B1, B2, B3 } from '../../styles/font';
 import DaumPostcode from 'react-daum-postcode';
 import { useState, useEffect, useContext } from 'react';
@@ -59,9 +58,19 @@ const FundingSetPage = () => {
   };
 
   useEffect(() => {
-    const today = new Date().toISOString().split('T')[0];
+    const today = new Date()
+      .toLocaleString('ko-KR', {
+        timeZone: 'Asia/Seoul',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+      .replace(/\./g, '')
+      .replace(/ /g, '-')
+      .replace(' ', '');
+
     setCurrentDate(today);
-    console.log(currentDate);
+    console.log(today);
   }, []);
 
   useEffect(() => {
@@ -161,7 +170,7 @@ const FundingSetPage = () => {
               {...register('phoneNumber', {
                 required: '배송 정보를 입력하세요',
               })}
-              type='text'
+              type='tel'
               placeholder='휴대폰 번호를 -없이 입력해주세요'
             />
             <SAddressNumberContainer>
