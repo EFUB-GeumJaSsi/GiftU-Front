@@ -21,7 +21,10 @@ const FundingParticipants = ({ list = [] }) => {
         {list.length > 0 && (
           <STextSpan>
             가장 많이 기여한 사람은{' '}
-            <SBoldTextSpan>{list[0].nickname}</SBoldTextSpan> 님이에요
+            <SBoldTextSpan>
+              {list[0].anonymous ? '익명' : list[0].nickname}
+            </SBoldTextSpan>{' '}
+            님이에요
           </STextSpan>
         )}
       </STextContainer>
