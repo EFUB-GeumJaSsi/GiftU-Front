@@ -12,7 +12,9 @@ const SearchPage = () => {
   const onChange = (e) => {
     setSearch(e.target.value);
   };
-
+  const toHome = () => {
+    navigate('/');
+  };
   useEffect(() => {
     if (search) {
       readSearchList(search);
@@ -42,7 +44,7 @@ const SearchPage = () => {
           value={search}
           onChange={onChange}
         />
-        <SExitBtn>닫기</SExitBtn>
+        <SExitBtn onClick={toHome}>닫기</SExitBtn>
       </SHeader>
       {results.length === 0 ? (
         <SNoResultsP>검색 결과가 없어요</SNoResultsP>
