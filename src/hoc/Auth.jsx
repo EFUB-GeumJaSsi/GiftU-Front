@@ -43,10 +43,16 @@ const Auth = ({ Page, option }) => {
         case 'all':
           break;
         case 'login':
-          if (!isLogin) navigate('/login');
+          if (!isLogin) {
+            navigate('/login');
+            return;
+          }
           break;
         case 'logout':
-          if (isLogin) navigate(-1);
+          if (isLogin) {
+            navigate(-1);
+            return;
+          }
           break;
         default:
           navigate(-1);
