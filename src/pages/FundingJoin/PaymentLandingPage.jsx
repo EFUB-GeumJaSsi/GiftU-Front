@@ -13,7 +13,7 @@ const PaymentLandingPage = () => {
   const readUserInfo = async () => {
     try {
       const res = await getUserInfo();
-      return res.data
+      return res.data;
     } catch {
       console.log(e);
     }
@@ -41,9 +41,9 @@ const PaymentLandingPage = () => {
 
   // 아임포트 callback 함수
   const callback = (response) => {
-    const { success, error_msg, imp_uid } = response;
+    const { status, error_msg, imp_uid } = response;
 
-    if (success) {
+    if (status === 'paid') {
       createPayment(imp_uid);
     } else {
       alert(error_msg);
