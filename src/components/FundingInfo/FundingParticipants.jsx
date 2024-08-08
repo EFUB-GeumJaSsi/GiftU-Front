@@ -1,7 +1,8 @@
 import styled from 'styled-components';
+import { T1, B3 } from '../../styles/font';
 import { ReactComponent as ProfileDefault } from '../../assets/common/profile_default.svg';
 
-const FundingParticipants = ({ list }) => {
+const FundingParticipants = ({ list = [] }) => {
   const participantItem = (it, idx) => (
     <SItemContainer key={idx}>
       {it.userImageUrl ? (
@@ -19,12 +20,12 @@ const FundingParticipants = ({ list }) => {
         <STitleSpan>{list.length}명이 참여했어요!</STitleSpan>
         {list.length > 0 && (
           <STextSpan>
-            가장 많이 기여한 사람은 <SBoldTextSpan>{list[0].nickname}</SBoldTextSpan>{' '}
-            님이에요
+            가장 많이 기여한 사람은{' '}
+            <SBoldTextSpan>{list[0].nickname}</SBoldTextSpan> 님이에요
           </STextSpan>
         )}
       </STextContainer>
-      {list.length > 0 ? (
+      {list && list.length > 0 ? (
         <SParticipantsContainer>
           {list.map((it, idx) => participantItem(it, idx))}
         </SParticipantsContainer>
@@ -55,17 +56,11 @@ const STextContainer = styled.div`
   margin: 20px 24px 0 24px;
 `;
 const STitleSpan = styled.span`
-  font-size: 17px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 120%;
+  ${T1}
 `;
 const STextSpan = styled.span`
+  ${B3}
   color: var(--gray-500);
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 120%;
 `;
 const SBoldTextSpan = styled(STextSpan)`
   color: var(--black);
@@ -106,12 +101,9 @@ const SNameSpan = styled.span`
   width: 61px;
   height: 34px;
 
+  ${B3}
   color: var(--gray-500);
   text-align: center;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 120%;
 `;
 const SWrapper = styled.div`
   display: flex;

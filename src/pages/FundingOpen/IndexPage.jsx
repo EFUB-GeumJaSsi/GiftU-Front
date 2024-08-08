@@ -1,10 +1,11 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 import GiftSetPage from './GiftSetPage';
 import GiftAddPage from './GiftAddPage';
 import FundingSetPage from './FundingSetPage';
 import PasswordSetPage from './PasswordSetPage';
 import CompletePage from './CompletePage';
 import HomePage from '../Home/HomePage';
+import { postFunding } from '../../api/funding';
 
 // 데이터 관리
 const DataContext = createContext();
@@ -42,7 +43,23 @@ const PageProvider = ({ children }) => {
 };
 const PageRenderer = () => {
   const { currentPage } = useContext(PageContext);
-  const { giftData, imageData } = useContext(DataContext);
+  const { fundingData, giftData, imageData } = useContext(DataContext);
+
+  const handleFundingSubmission = async () => {
+    const request = { ...fundingData, gifts: giftData };
+    try {
+      const response = await postFunding(request, imageData);
+      console.log('펀딩 생성 성공', response.data);
+    } catch (error) {
+      console.error('펀딩 생성 오류', error);
+    }
+  };
+
+  useEffect(() => {
+    if (currentPage === 'CompletePage') {
+      handleFundingSubmission();
+    }
+  }, [currentPage]);
 
   switch (currentPage) {
     case 'GiftSetPage':
@@ -61,7 +78,6 @@ const PageRenderer = () => {
     case 'PasswordSetPage':
       return <PasswordSetPage />;
     case 'CompletePage':
-      // 펀딩 개설 POST
       return <CompletePage />;
     default:
       return <HomePage />;

@@ -1,31 +1,42 @@
 import styled from 'styled-components';
+import { H2, B4 } from '../../styles/font';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { getFriendsFundingList } from '../../api/funding';
 import NavComponent from '../../components/common/NavComponent';
 import Calendar from '../../components/Home/Calendar';
 import FundingComponent from '../../components/common/FundingComponent';
 import icn_search from '../../assets/common/search.svg';
 
 const HomePage = () => {
+  const navigate = useNavigate();
   const [possibleFundingList, setPossibleFundingList] = useState([]);
 
+  // API 연결
+  const readFundingFriendList = async () => {
+    try {
+      const response = await getFriendsFundingList();
+      setPossibleFundingList(response.data.fundings);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
-    setPossibleFundingList([]);
+    readFundingFriendList();
   }, []);
 
   return (
     <SLayout>
-      <section>
+      <SSection>
         <SInput
           type='text'
           id='search-bar'
           placeholder='어떤 펀딩을 찾고 있나요?'
           readOnly
-          onClick={() => {
-            console.log('검색페이지로 라우팅!');
-            console.log('검색 페이지 인풋필드 포커스');
-          }}
+          onClick={() => navigate('/search')}
         />
-      </section>
+      </SSection>
       <SSection>
         <STextContainer>
           <SH2>곧 마감되는 펀딩</SH2>
@@ -48,16 +59,12 @@ const HomePage = () => {
 
 // 텍스트 스타일
 const SH2 = styled.h2`
+  ${H2}
   color: var(--black);
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 140%;
 `;
 const SB4 = styled.p`
+  ${B4}
   color: var(--gray-500);
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 120%;
 `;
 
 // 스타일 컴포넌트
@@ -74,6 +81,7 @@ const SSection = styled.section`
   display: flex;
   flex-flow: column nowrap;
 
+  width: fit-content;
   gap: 16px;
 `;
 const SInput = styled.input`
@@ -106,7 +114,8 @@ const SFundingUl = styled.ul`
   display: flex;
   flex-flow: row wrap;
 
-  gap: 8px;
+  width: 335px;
+  gap: 8px 7px;
 `;
 
 export default HomePage;

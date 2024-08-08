@@ -1,19 +1,25 @@
 import { createContext, useContext, useState } from 'react';
+import { postFundingJoin } from '../../api/funding';
 import FundingJoinPage from './FundingJoinPage';
 import CompletePage from './CompletePage';
+import PaymentLandingPage from './PaymentLandingPage';
 
 // 데이터 관리
 const DataContext = createContext();
 const DataProvider = ({ children }) => {
-  // 데이터
+  const [fundingJoinData, setFundingJoinData] = useState({
+    fundingId: null,
+    contributionAmount: null,
+    anonymity: null,
+    message: '',
+  });
 
   return (
     <DataContext.Provider
-      value={
-        {
-          // 데이터
-        }
-      }
+      value={{
+        fundingJoinData,
+        setFundingJoinData,
+      }}
     >
       {children}
     </DataContext.Provider>
@@ -33,16 +39,36 @@ const PageProvider = ({ children }) => {
 };
 const PageRenderer = () => {
   const { currentPage } = useContext(PageContext);
+  const { fundingJoinData } = useContext(DataContext);
+
+  // 펀딩 참여 데이터 전달
+  const createFundingJoin = async () => {
+    try {
+      await postFundingJoin(
+        fundingJoinData.fundingId,
+        fundingJoinData.contributionAmount,
+        fundingJoinData.anonymity,
+        fundingJoinData.message,
+      );
+      return true;
+    } catch (e) {
+      console.log(e);
+      return false;
+    }
+  };
 
   switch (currentPage) {
     case 'FundingJoinPage':
       return <FundingJoinPage />;
-    case '결제랜딩페이지':
-      // 랜딩 페이지 만들 때 SpinnerComponent 쓰세요 빙글빙글 돌아갑니다
-      return;
+    case 'PaymentLandingPage':
+      return <PaymentLandingPage />;
     case 'CompletePage':
-      // 결제 후에 펀딩 참여 POST
-      return <CompletePage />;
+      const res = createFundingJoin();
+      if (res) {
+        return <CompletePage />;
+      } else {
+        return <FundingJoinPage />;
+      }
     default:
       return <HomePage />;
   }

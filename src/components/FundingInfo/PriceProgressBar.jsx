@@ -1,12 +1,67 @@
 import styled from 'styled-components';
+import { C2 } from '../../styles/font';
 import { useEffect, useState } from 'react';
-import { addComma } from '../../components/FundingInfo/FundingPercentage';
-import { getColor, getBackgroundColor, getOpacity } from './stylefunction';
 
-const PriceProgressBar = ({ type, color, giftList, balance, joinPrice }) => {
-  const maxPrice = giftList && giftList[giftList.length - 1].price;
+const getColor = (props) => {
+  if (props.$percent == 100 && props.$length === props.$idx - 1)
+    return props.$color;
+
+  if (props.$nextIdx === props.$idx) return 'var(--gray-500)';
+
+  if (props.$idx === 'join') return 'var(--orange-pri)';
+
+  if (props.$type === 'info' || props.$num !== props.$length)
+    return 'var(--gray-300)';
+
+  return props.$color;
+};
+
+const getBackgroundColor = (props) => {
+  if (
+    (props.$num !== props.$length && props.$type === 'add') ||
+    (props.$type === 'none' && props.$percent === 0)
+  )
+    return 'var(--gray-300)';
+
+  if (props.$type === 'add') return 'var(--jade-pri)';
+
+  if (props.id === 'join') return 'var(--orange-pri)';
+
+  if (props.$price <= props.$balance) return props.$color;
+
+  return 'var(--gray-300)';
+};
+
+const getOpacity = (props) => {
+  if (
+    props.$idx == props.$selected ||
+    (props.$percent == 100 && props.$length === props.$idx - 1)
+  )
+    return '1';
+
+  if (props.$joinPrice && props.$idx !== 'join') return '0';
+
+  if (
+    props.$idx === props.$nextIdx ||
+    props.$idx === 'join' ||
+    props.$num === props.$length
+  ) {
+    return '1';
+  }
+
+  return '0';
+};
+
+const PriceProgressBar = ({
+  type,
+  color,
+  giftList = [],
+  balance,
+  joinPrice,
+  percent = 0,
+}) => {
+  const maxPrice = giftList.length > 0 && giftList[giftList.length - 1].price;
   const nowPrice = maxPrice - balance;
-  const percent = Math.round(((maxPrice - balance) / maxPrice) * 100);
   const [nextPrice, setNextPrice] = useState({
     idx: null,
     price: null,
@@ -39,32 +94,40 @@ const PriceProgressBar = ({ type, color, giftList, balance, joinPrice }) => {
   // 2. 펀딩 참여 금액 입력 시
   // 3. 새로운 선물 등록 시
   const ProgressPoint = ({ it, idx, type }) => (
-    <SPointContainer price={it.price} max={maxPrice} onClick={handleOnClick}>
+    <SPointContainer
+      onClick={handleOnClick}
+      $price={it.price}
+      $max={maxPrice}
+      $length={giftList && giftList.length - 1}
+      $num={it.num && it.num}
+      $selected={selected}
+    >
       <SPointSpan
-        idx={idx === 'join' ? idx : idx + 1}
-        type={type}
-        color={color}
-        getColor={getColor}
-        getOpacity={getOpacity}
-        length={giftList && giftList.length - 1}
-        num={it.num && it.num}
-        joinPrice={joinPrice}
+        $idx={idx === 'join' ? idx : idx + 1}
+        $type={type}
+        $color={color}
+        $length={giftList && giftList.length - 1}
+        $num={it.num && it.num}
+        $joinPrice={joinPrice}
         $nextIdx={nextPrice.idx}
-        selected={selected}
-        percent={percent}
+        $selected={selected}
+        $percent={percent}
+        $getColor={getColor}
+        $getOpacity={getOpacity}
       >
-        {addComma(it.price)}원
+        {it.price?.toLocaleString()}원
       </SPointSpan>
       <SCircleDiv
-        id={idx + 1}
-        type={type}
-        color={color}
-        getBackgroundColor={getBackgroundColor}
-        length={giftList && giftList.length - 1}
-        num={it.num && it.num}
-        price={it.price}
-        balance={nowPrice}
+        id={idx && idx + 1}
         onClick={handleOnClick}
+        $type={type}
+        $color={color}
+        $length={giftList && giftList.length - 1}
+        $num={it.num ? it.num : 0}
+        $price={it.price}
+        $balance={nowPrice}
+        $percent={percent}
+        $getBackgroundColor={getBackgroundColor}
       />
     </SPointContainer>
   );
@@ -72,7 +135,7 @@ const PriceProgressBar = ({ type, color, giftList, balance, joinPrice }) => {
   return (
     <SContainer>
       <SSlider
-        class='progress'
+        className='progress'
         id='progress'
         value={percent}
         min='0'
@@ -127,13 +190,15 @@ const SPointContainer = styled.div`
   display: flex;
   position: absolute;
   left: ${(props) =>
-    props.price === 0
+    props.$price === 0
       ? '6px'
-      : `${(1 - (props.max - props.price) / props.max) * 226 + 6}px`};
+      : `${(1 - (props.$max - props.$price) / props.$max) * 226 + 6}px`};
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 8px;
+  z-index: ${(props) =>
+    props.$selected ? '990' : props.$length === props.$num ? '500' : '0'};
 `;
 const SPointSpan = styled.span`
   min-height: 15px;
@@ -142,19 +207,18 @@ const SPointSpan = styled.span`
 
   background: var(--white);
 
-  color: ${(props) => props.getColor(props)};
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 120%;
+  ${C2}
+  color: ${(props) => props.$getColor(props)};
   text-align: center;
 
   cursor: default;
   white-space: nowrap;
 
-  visibility: ${(props) => (props.type === 'none' ? 'hidden' : 'visible')};
-  opacity: ${(props) => getOpacity(props)};
+  visibility: ${(props) => (props.$type === 'none' ? 'hidden' : 'visible')};
+  opacity: ${(props) => props.$getOpacity(props)};
 
+  z-index: ${(props) =>
+    props.$selected ? '999' : props.$length === props.$num ? '500' : '100'};
   &:hover {
     opacity: 1;
     z-index: 999;
@@ -165,7 +229,7 @@ const SCircleDiv = styled.div`
   height: 14px;
 
   border-radius: 50%;
-  background-color: ${(props) => props.getBackgroundColor(props)};
+  background-color: ${(props) => props.$getBackgroundColor(props)};
 
   cursor: pointer;
 `;

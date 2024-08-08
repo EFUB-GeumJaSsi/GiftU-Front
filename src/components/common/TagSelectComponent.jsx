@@ -10,6 +10,7 @@
 // />
 
 import styled from 'styled-components';
+import { B3 } from '../../styles/font';
 
 const TagSelectComponent = ({ tags, selectedTag, onTagChange, color }) => {
   // color: [배경 색, 글꼴 색]
@@ -51,9 +52,7 @@ const SLayout = styled.div`
 
 const SInput = styled.input`
   display: none;
-
-  font-size: 14px;
-  font-weight: 500;
+  ${B3}
 `;
 
 const SLabel = styled.label`

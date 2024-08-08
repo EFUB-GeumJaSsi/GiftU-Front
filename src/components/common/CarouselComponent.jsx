@@ -4,26 +4,14 @@
 1. 캐러셀 props
 (1-1) pageLength - 캐러셀 총 페이지 개수
 (1-2) pageWidth - 캐러셀 한 페이지의 너비
-예시: <CarouselComponent pageLength={chopedDataList.length} pageWidth={335}>
+예시: <CarouselComponent pageLength={carouselFriendList.length / 2} pageWidth={335}>
 
 2. 캐러셀 내용
-(2-1) 부모 컴포넌트에서 작성합니다.
-(2-2) arrayChop 함수를 이용하여 캐러셀의 한 페이지에 들어갈 만큼씩 데이터를 자릅니다.
-(2-3) <CarouselComponent></CarouselComponent> 안에 map 함수를 이용하여 데이터를 나열합니다.
+(2-1) 부모 컴포넌트에서 <CarouselComponent></CarouselComponent> 안에 map 함수를 이용하여 데이터를 나열합니다.
       데이터가 홀수개일 경우를 대비하여 코드를 작성합니다.
-예시: FriendPage.jsx 파일을 참고하세요.
+예시: FriendPage.jsx을 참고하세요.
 */
 
-// array를 number개의 아이템씩 잘라 새로운 배열로 반환하는 함수
-const arrayChop = (array, number) => {
-  const result = [];
-  for (let i = 0; i < array.length; i += number) {
-    result.push(array.slice(i, i + number));
-  }
-  return result;
-};
-
-// CarouselComponent
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 
@@ -102,6 +90,12 @@ const SContentContainer = styled.div`
   display: flex;
   overflow-x: hidden;
   flex-flow: row nowrap;
+
+  // 스크롤바 비표시
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 const SPaginationFieldset = styled.fieldset`
   visibility: ${({ $pageLength }) =>
@@ -127,4 +121,3 @@ const SRadioInput = styled.input`
 `;
 
 export default CarouselComponent;
-export { arrayChop };

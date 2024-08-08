@@ -22,8 +22,14 @@ export const getAccessTokenKakao = async (code) => {
 export const postAccessTokenReissue = async () => {
   try {
     const response = await apiAuth.post(`/api/oauth/reissue`);
+    localStorage.setItem('token', response.data.accessToken);
+    localStorage.setItem('token-date', new Date());
     return response;
   } catch (error) {
+    console.error(error);
+    localStorage.removeItem('token');
+    localStorage.removeItem('token-date');
+    navigate('/login');
     throw error;
   }
 };

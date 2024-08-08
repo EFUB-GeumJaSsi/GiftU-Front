@@ -1,11 +1,18 @@
 import styled from 'styled-components';
+import { B1, B3 } from '../../styles/font';
+import useFormatDate from '../../hooks/useFormatDate';
+import icn_profile_default from '../../assets/common/profile_default.svg';
 
-const VerticalCard = ({ friendId, nickname, birthday, image }) => {
+const VerticalCard = ({ data = { nickname, birthday, userImageUrl } }) => {
+  const image = data.userImageUrl || icn_profile_default;
+
   return (
     <SLayout>
       <SImg src={image} />
-      <SB1>{nickname}</SB1>
-      <SB3>{birthday}</SB3>
+      <SNicknameSpan>{data.nickname}</SNicknameSpan>
+      <SBirthdaySpan>
+        {useFormatDate(data.birthday, '생일 정보 없음')}
+      </SBirthdaySpan>
     </SLayout>
   );
 };
@@ -28,26 +35,32 @@ const SLayout = styled.div`
 const SImg = styled.img`
   width: 80px;
   height: 80px;
+  margin-bottom: 8px;
+
   border-radius: 50%;
   background-color: #d9d9d9;
-  margin-bottom: 8px;
+
+  object-fit: cover;
+  // 드래그 방지
+  -webkit-user-drag: none;
+  -moz-user-drag: none;
+  -ms-user-drag: none;
+  user-drag: none;
 `;
-const SB1 = styled.p`
-  width: 80px;
+const SNicknameSpan = styled.span`
   overflow: hidden;
-  text-align: center;
+
+  width: 80px;
+
+  ${B1}
   color: var(--black);
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 140%;
   white-space: nowrap;
+  text-align: center;
   text-overflow: ellipsis;
 `;
-const SB3 = styled.p`
+const SBirthdaySpan = styled.span`
+  ${B3}
   color: var(--gray-500);
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 120%;
 `;
 
 export default VerticalCard;

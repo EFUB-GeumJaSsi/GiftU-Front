@@ -4,12 +4,13 @@
 // giftList(list): 가격대별 선물 리스트, 가격 오름차순 정렬
 // joinPrice(number): 펀딩 참여자가 참여한 금액
 
-const addComma = (price) => {
-  const commaPrice = price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  return commaPrice;
+// 선물 데이터 오름차순 정렬
+const sortGiftData = (array) => {
+  return array && array.sort((a, b) => a.price - b.price);
 };
 
 import styled from 'styled-components';
+import { T1, B3 } from '../../styles/font';
 import { useEffect, useState } from 'react';
 import PriceProgressBar from './PriceProgressBar';
 import DeleteBtn from './DeleteBtn';
@@ -18,53 +19,57 @@ import { ReactComponent as Fold } from '../../assets/FundingInfo/fold 1.svg';
 const FundingPercentage = ({
   type,
   color = 'var(--gray-400)',
-  nowMoney,
-  giftList,
+  nowMoney = 0,
+  giftList = [],
   joinPrice,
   setIsTrue,
+  giftData,
+  imageData,
 }) => {
-  const maxPrice = giftList && giftList[giftList.length - 1].price;
-  const percent = Math.round((nowMoney / maxPrice) * 100);
-  const balance = maxPrice - nowMoney;
+  const maxPrice = giftList.length > 0 && giftList[giftList.length - 1].price;
+  const percent = maxPrice ? Math.round((nowMoney / maxPrice) * 100) : 0;
+  const balance = nowMoney ? maxPrice - nowMoney : maxPrice;
   const [isClicked, setIsClicked] = useState(type === 'add' ? true : false);
+  const [list, setList] = useState(
+    type === 'add' ? addKeytoGiftData(giftData) : [],
+  );
+
+  // GiftAddPage 선물 정렬
+  function addKeytoGiftData(array) {
+    const addNum = [...array].map((it, idx) => {
+      return { ...it, num: idx, giftImage: imageData[idx] };
+    });
+    return sortGiftData(addNum);
+  }
 
   // GiftAddPage 삭제버튼핸들러
   const handleItemDelete = (e) => {
+    // 이벤트 버블링 방지
+    e.stopPropagation();
+
     const { id } = e.target;
-    const targetIdx = giftList.findIndex((it, idx) => idx === parseInt(id) - 1);
+    const targetIdx = list.findIndex((it, idx) => idx === parseInt(id) - 1);
 
     if (targetIdx >= 0) {
-      updateList(targetIdx, id);
+      const targetNum = list[targetIdx].num;
+
+      // splice 원본 배열 변경
+      giftData.splice(targetNum, 1);
+      imageData.splice(targetNum, 1);
+      setList(addKeytoGiftData(giftData));
     }
-  };
-
-  // GiftAddPage 삭제할 아이템 제외 리스트 정리
-  const updateList = (targetIdx, id) => {
-    const targetNum = giftList[targetIdx].num;
-
-    const newList = giftList.reduce((result, it, idx) => {
-      if (idx === parseInt(id) - 1) return result;
-      if (it.num >= targetNum) {
-        result.push({ ...it, num: it.num - 1 });
-      } else {
-        result.push(it);
-      }
-      return result;
-    }, []);
-
-    setList(newList);
   };
 
   // GiftAddPage 펀딩 만들기 버튼 활성화/비활성화 여부
   useEffect(() => {
     if (setIsTrue) {
-      if (giftList.length === 0) {
+      if (list && list.length === 0) {
         setIsTrue(false);
       } else {
         setIsTrue(true);
       }
     }
-  }, [setIsTrue, giftList]);
+  }, [setIsTrue, list]);
 
   const Text = () => {
     const EndedText = (
@@ -79,8 +84,8 @@ const FundingPercentage = ({
         <STitleSpan>{percent}% 달성</STitleSpan>
         <STextSpan>
           100% 달성까지{' '}
-          <SBoldTextSpan joinPrice={joinPrice}>
-            {addComma(balance)}원
+          <SBoldTextSpan $joinPrice={joinPrice}>
+            {balance?.toLocaleString()}원
           </SBoldTextSpan>{' '}
           남았어요
         </STextSpan>
@@ -88,9 +93,7 @@ const FundingPercentage = ({
     );
 
     const AddGiftText = (
-      <SSmallTextSpan>
-        총 {giftList ? giftList.length : 0}개의 선물
-      </SSmallTextSpan>
+      <SSmallTextSpan>총 {list ? list.length : 0}개의 선물</SSmallTextSpan>
     );
 
     return type === 'add'
@@ -100,12 +103,16 @@ const FundingPercentage = ({
         : OngoingText;
   };
 
-  const GiftItem = ({ it, idx }) => (
-    <SItemContainer idx={idx + 1} length={giftList.length}>
-      <SImg src={it.giftImageUrl} alt='img' />
+  const GiftItem = ({ it, idx, length }) => (
+    <SItemContainer $idx={idx + 1} $length={length}>
+      {it.giftImageUrl ? (
+        <SImg src={it.giftImageUrl} alt='img' />
+      ) : (
+        <SImg src={URL.createObjectURL(it.giftImage)} />
+      )}
       <SItemTextContainer>
         <SItemTextSpan>{it.giftName}</SItemTextSpan>
-        <SItemTextSpan>{addComma(it.price)}원</SItemTextSpan>
+        <SItemTextSpan>{it.price?.toLocaleString()}원</SItemTextSpan>
       </SItemTextContainer>
       {type === 'add' && <DeleteBtn id={idx + 1} onClick={handleItemDelete} />}
     </SItemContainer>
@@ -119,22 +126,30 @@ const FundingPercentage = ({
       <PriceProgressBar
         type={type}
         color={color}
-        giftList={giftList}
+        giftList={giftList.length > 0 ? giftList : list}
         joinPrice={joinPrice}
         balance={balance}
+        percent={percent}
       />
       <SButtonContainer onClick={() => setIsClicked(!isClicked)}>
-        <SBtn clicked={isClicked} color={color}>
-          가격대별 선물 보기
+        <SBtn $clicked={isClicked} $color={color}>
+          선물 상세 보기
         </SBtn>
-        <FoldBtn clicked={isClicked} color={color} />
+        <FoldBtn $clicked={isClicked} $color={color} />
       </SButtonContainer>
       {isClicked && (
         <SItemLayout>
-          {giftList.length === 0 ? (
+          {giftList.length > 0 ? (
+            giftList.map((it, idx) => (
+              <GiftItem key={idx} it={it} idx={idx} length={giftList.length} />
+            ))
+          ) : list && list.length === 0 ? (
             <SNoGiftSpan>추가된 선물이 없습니다</SNoGiftSpan>
           ) : (
-            giftList.map((it, idx) => <GiftItem key={idx} it={it} idx={idx} />)
+            list &&
+            list.map((it, idx) => (
+              <GiftItem key={idx} it={it} idx={idx} length={list.length} />
+            ))
           )}
         </SItemLayout>
       )}
@@ -159,29 +174,21 @@ const STextContainer = styled.div`
   margin: 0 24px;
 `;
 const STitleSpan = styled.span`
-  font-size: 17px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 120%;
+  ${T1}
 `;
 const STextSpan = styled.span`
+  ${B3}
   color: var(--gray-500);
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 120%;
 `;
 const SBoldTextSpan = styled(STextSpan)`
-  color: ${(props) => (props.joinPrice ? 'var(--orange-pri)' : 'var(--black)')};
+  color: ${(props) =>
+    props.$joinPrice ? 'var(--orange-pri)' : 'var(--black)'};
 `;
 const SSmallTextSpan = styled.span`
   margin-top: -4px;
 
+  ${B3}
   color: var(--gray-500);
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 120%;
 `;
 const SButtonContainer = styled.button`
   display: flex;
@@ -197,24 +204,18 @@ const SButtonContainer = styled.button`
   background-color: var(--white);
 `;
 const SBtn = styled.span`
-  color: ${(props) => (props.clicked ? props.color : 'var(--gray-400)')};
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 120%;
+  ${B3}
+  color: ${(props) => (props.$clicked ? props.$color : 'var(--gray-400)')};
 
   cursor: pointer;
 `;
 const FoldBtn = styled(Fold)`
-  fill: ${(props) => (props.clicked ? props.color : 'var(--gray-400)')};
+  fill: ${(props) => (props.$clicked ? props.$color : 'var(--gray-400)')};
 `;
 const SNoGiftSpan = styled.span`
+  ${B3}
   color: var(--gray-300);
   text-align: center;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 120%;
 `;
 const SItemLayout = styled.div`
   display: flex;
@@ -230,7 +231,7 @@ const SItemContainer = styled.div`
 
   height: 64px;
   border-bottom: ${(props) =>
-    props.idx !== props.length ? '1px solid var(--gray-300)' : '0'};
+    props.$idx !== props.$length ? '1px solid var(--gray-300)' : '0'};
 `;
 const SImg = styled.img`
   width: 48px;
@@ -245,12 +246,9 @@ const SItemTextContainer = styled.div`
   gap: 6px;
 `;
 const SItemTextSpan = styled.span`
+  ${B3}
   color: var(--black);
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 120%;
 `;
 
 export default FundingPercentage;
-export { addComma };
+export { sortGiftData };

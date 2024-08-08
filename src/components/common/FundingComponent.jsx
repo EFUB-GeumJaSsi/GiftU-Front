@@ -8,6 +8,7 @@ SFundingListContainer로 감싸고 map을 이용하면 됩니다.
 */
 
 import styled from 'styled-components';
+import { T1, B3 } from '../../styles/font';
 import { useNavigate } from 'react-router-dom';
 import TagComponent from './TagComponent';
 
@@ -64,9 +65,7 @@ const STitleSpan = styled.span`
   width: 140px;
   height: 40px;
 
-  font-size: 17px;
-  font-weight: 700;
-  line-height: 120%;
+  ${T1}
   text-overflow: ellipsis;
 
   -webkit-line-clamp: 2;
@@ -78,9 +77,7 @@ const STextContainer = styled.div`
   gap: 4px 8px;
 `;
 const SB3 = styled.span`
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 120%;
+  ${B3}
 `;
 const SBlackB3 = styled(SB3)`
   overflow: hidden;

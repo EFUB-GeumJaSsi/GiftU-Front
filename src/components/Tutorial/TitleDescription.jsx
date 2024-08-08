@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { T1, T2, B3 } from '../../styles/font';
 const TitleDescription = ({
   color,
   num,
@@ -31,14 +32,12 @@ const STitleContainer = styled.div`
   padding: 0px 8px 0px 8px;
 `;
 const SNumWrapper = styled.header`
-  font-weight: 700;
-  font-size: 17px;
+  ${T1}
   color: ${(props) =>
     props.color === 'orange' ? 'var(--orange-pri)' : 'var(--jade-pri)'};
 `;
 const STitleWrapper = styled.div`
-  font-weight: 600;
-  font-size: 16px;
+  ${T2}
 `;
 const STextWrapper = styled.div`
   display: flex;
@@ -47,8 +46,8 @@ const STextWrapper = styled.div`
   width: 307px;
   line-height: 19px;
   margin-bottom: 5px;
-  font-weight: 500;
-  font-size: 14px;
+
+  ${B3}
   color: var(--gray-500);
 `;
 

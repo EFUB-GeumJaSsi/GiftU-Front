@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { B0, B1, B2, B3 } from '../../styles/font';
 import DaumPostcode from 'react-daum-postcode';
 import { useState, useEffect, useContext } from 'react';
 import { useForm } from 'react-hook-form';
@@ -6,6 +6,7 @@ import { DataContext, PageContext } from './IndexPage';
 import BackHeaderComponent from '../../components/common/BackHeaderComponent';
 import ButtonComponent from '../../components/common/ButtonComponent';
 import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
+import { getValue } from '@testing-library/user-event/dist/utils';
 
 const FundingSetPage = () => {
   const { setCurrentPage } = useContext(PageContext);
@@ -24,9 +25,9 @@ const FundingSetPage = () => {
     formState: { errors, isValid },
   } = useForm({
     defaultValues: {
-      title: '',
-      content: '',
-      endDate: '',
+      fundingTitle: '',
+      fundingContent: '',
+      fundingEndDate: '',
       name: '',
       phoneNumber: '',
       addressNumber: '',
@@ -35,8 +36,8 @@ const FundingSetPage = () => {
     },
     mode: 'onChange',
   });
-  const title = watch('title');
-  const endDate = watch('endDate');
+  const fundingTitle = watch('fundingTitle');
+  const fundingEndDate = watch('fundingEndDate');
   const name = watch('name');
   const phoneNumber = watch('phoneNumber');
 
@@ -46,47 +47,53 @@ const FundingSetPage = () => {
     setIsOpen(false);
     setIsAddressOpen(true);
   };
+
   const toggleHandler = () => {
     setIsOpen((prevOpenState) => !prevOpenState);
   };
-  const handleFormSubmit = () => {
-    setFundingData({
-      fundingTitle: null,
-      fundingContent: null,
-      fundingEndDate: null,
-      name: null,
-      phoneNumber: null,
-      addressNumber: null,
-      addressDetail1: null,
-      addressDetail2: null,
-    });
+
+  const handleFormSubmit = (data) => {
+    setFundingData(data);
     setCurrentPage('PasswordSetPage');
   };
 
   useEffect(() => {
-    const today = new Date().toISOString().split('T')[0];
+    const today = new Date()
+      .toLocaleString('ko-KR', {
+        timeZone: 'Asia/Seoul',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+      .replace(/\./g, '')
+      .replace(/ /g, '-')
+      .replace(' ', '');
+
     setCurrentDate(today);
-    setValue('currentDate', today);
-  }, [setValue]);
+    console.log(today);
+  }, []);
 
   useEffect(() => {
     setIsButtonActive(
-      title !== '' && endDate !== '' && name !== '' && phoneNumber != '',
+      fundingTitle !== '' &&
+        fundingEndDate !== '' &&
+        name !== '' &&
+        phoneNumber != '',
     );
-  }, [title, endDate, name, phoneNumber]);
+  }, [fundingTitle, fundingEndDate, name, phoneNumber]);
 
   return (
     <SLayout>
       <BackHeaderComponent onClick={() => setCurrentPage('GiftAddPage')} />
-      <SForm onSubmit={handleFormSubmit}>
+      <SForm onSubmit={handleSubmit(handleFormSubmit)}>
         <fieldset>
-          <SLabel htmlFor='title'>
+          <SLabel htmlFor='fundingTitle'>
             <p>제목</p>
             <h5>*</h5>
           </SLabel>
           <STextInput
-            id='title'
-            {...register('title', {
+            id='fundingTitle'
+            {...register('fundingTitle', {
               required: '펀딩 제목을 작성해주세요',
               maxLength: {
                 value: 25,
@@ -96,17 +103,17 @@ const FundingSetPage = () => {
             type='text'
             placeholder='펀딩의 이름을 지어주세요 (최대 25자)'
           />
-          {errors.title && (
-            <SWarningWrapper>{errors.title.message}</SWarningWrapper>
+          {errors.fundingTitle && (
+            <SWarningWrapper>{errors.fundingTitle.message}</SWarningWrapper>
           )}
         </fieldset>
         <fieldset>
-          <SLabel htmlFor='content'>
+          <SLabel htmlFor='fundingContent'>
             <p>펀딩 소개</p>
           </SLabel>
-          <STextInput
-            id='content'
-            {...register('content', {
+          <STextArea
+            id='fundingContent'
+            {...register('fundingContent', {
               required: false,
               maxLength: {
                 value: 120,
@@ -115,8 +122,8 @@ const FundingSetPage = () => {
             })}
             placeholder='펀딩을 소개해 주세요'
           />
-          {errors.content && (
-            <SWarningWrapper>{errors.content.message}</SWarningWrapper>
+          {errors.fundingContent && (
+            <SWarningWrapper>{errors.fundingContent.message}</SWarningWrapper>
           )}
         </fieldset>
         <fieldset>
@@ -127,23 +134,21 @@ const FundingSetPage = () => {
           <SDateContainer>
             <SCurrentDateInput
               id='currentDate'
-              {...register('currentDate', { required: false })}
               type='date'
-              value={currentDate}
+              value={currentDate || ' '}
               readOnly
             />
             <SDateInput
-              {...register('endDate', {
+              {...register('fundingEndDate', {
                 required: '날짜를 입력해주세요',
                 validate: (value) =>
-                  value >= getValues('currentDate') ||
-                  '오늘 이후의 날짜를 선택해주세요.',
+                  value > currentDate || '오늘 이후의 날짜를 선택해주세요.',
               })}
               type='date'
             />
           </SDateContainer>
-          {errors.endDate && (
-            <SWarningWrapper>{errors.endDate.message}</SWarningWrapper>
+          {errors.fundingEndDate && (
+            <SWarningWrapper>{errors.fundingEndDate.message}</SWarningWrapper>
           )}
         </fieldset>
         <fieldset>
@@ -165,7 +170,7 @@ const FundingSetPage = () => {
               {...register('phoneNumber', {
                 required: '배송 정보를 입력하세요',
               })}
-              type='text'
+              type='tel'
               placeholder='휴대폰 번호를 -없이 입력해주세요'
             />
             <SAddressNumberContainer>
@@ -252,10 +257,7 @@ const SLabel = styled.label`
   margin-left: 8px;
   margin-bottom: 8px;
 
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 140%;
+  ${B1}
 
   h5 {
     margin-left: 8px;
@@ -270,26 +272,41 @@ const SInput = styled.input`
 `;
 const STextInput = styled(SInput)`
   width: 335px;
-  padding: 21px 24px;
+  padding: 21px 19px;
 
+  ${B2}
   color: var(--black);
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 140%;
   box-sizing: border-box;
 
   &:focus {
     border: 2px solid var(--jade-pri);
   }
 `;
+const STextArea = styled.textarea`
+  background-color: var(--gray-100);
+  border-radius: 16px;
+  width: 335px;
+  height: 180px;
+  padding: 21px 19px;
+  resize: none;
+
+  border: none;
+  ${B2}
+  color: var(--black);
+  box-sizing: border-box;
+
+  &:focus {
+    border: 2px solid var(--jade-pri);
+  }
+  outline: none;
+`;
+
 const SWarningWrapper = styled.div`
   margin-top: 8px;
   margin-left: 8px;
 
+  ${B3}
   color: var(--red);
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 120%;
 `;
 const SDateContainer = styled.div`
   display: grid;
@@ -300,12 +317,12 @@ const SDateContainer = styled.div`
 `;
 const SCurrentDateInput = styled(SInput)`
   width: 160px;
-  padding: 21px 22px;
+  padding: 19px 19px;
   box-sizing: border-box;
 `;
 const SDateInput = styled(SInput)`
   width: 160px;
-  padding: 21px 22px;
+  padding: 19px 19px;
   box-sizing: border-box;
 
   &:focus {
@@ -326,7 +343,7 @@ const SAddressNumberContainer = styled.div`
 `;
 const SAddressInput = styled(SInput)`
   width: 209px;
-  padding: 21px 34px 21px 28px;
+  padding: 21px 34px 21px 19px;
   box-sizing: border-box;
 `;
 const SButton = styled.button`
@@ -337,10 +354,8 @@ const SButton = styled.button`
   padding: 13px 15px 13px 16px;
 
   box-sizing: border-box;
+  ${B0}
   color: white;
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 140%;
   background-color: ${({ disabled }) =>
     disabled ? 'var(--gray-500)' : 'var(--jade-pri)'};
   border-radius: 16px;

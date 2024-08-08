@@ -18,6 +18,12 @@
   --gray-500: #909294;
 
   font-family: Pretendard;
+
+  /* 스크롤바 비표시 */
+  -ms-overflow-style: none;
+}
+::-webkit-scrollbar {
+  display: none;
 }
 * {
   font-family: Pretendard;
@@ -26,6 +32,11 @@
   width: 375px;
   height: 100svh;
   margin: 0 auto;
+}
+@media (max-width: 374px) {
+  #root {
+    width: 100svw;
+  }
 }
 
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css');

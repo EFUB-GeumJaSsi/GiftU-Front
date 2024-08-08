@@ -1,21 +1,24 @@
 import styled from 'styled-components';
+import { H1, H3, T1, B1, B3, C1 } from '../../styles/font';
 import { useState, useEffect } from 'react';
-import { arrayChop } from '../../components/common/CarouselComponent';
-import { postFriendRequest, getFriendList } from '../../api/friend.js';
+import {
+  postFriendRequest,
+  getFriendList,
+  getFriendParticipatedList,
+} from '../../api/friend.js';
+import NavComponent from '../../components/common/NavComponent';
 import CarouselComponent from '../../components/common/CarouselComponent';
 import BottomSheetComponent from '../../components/common/BottomSheetComponent';
 import ButtonComponent from '../../components/common/ButtonComponent';
-import ToastComponent from '../../components/common/ToastComponent.jsx';
+import ToastComponent from '../../components/common/ToastComponent';
 import VerticalCard from '../../components/Friend/VerticalCard';
 import HorizontalCard from '../../components/Friend/HorizontalCard';
 import { ReactComponent as IcnUnion } from '../../assets/Friend/icn_union.svg';
-import NavComponent from '../../components/common/NavComponent.jsx';
 
 const FriendPage = () => {
   // 친구 페이지 데이터
   const [friendList, setFriendList] = useState([]);
   const [carouselFriendList, setCarouselFriendList] = useState([]);
-  const chopedCarouselFriendList = arrayChop(carouselFriendList, 2).slice(0, 3);
   // 바텀시트 관련
   const [bottomSheetShow, setBottomSheetShow] = useState(false);
   const [email, setEmail] = useState('');
@@ -35,8 +38,10 @@ const FriendPage = () => {
   };
   const readCarouselFriendList = async () => {
     try {
-      // const response = await 개발 중
-      setCarouselFriendList();
+      const response = await getFriendParticipatedList();
+      const arr = response.data.slice(0, 6);
+      if (arr.length % 2 != 0) arr.push({});
+      setCarouselFriendList(arr);
     } catch (error) {
       console.error(error);
     }
@@ -62,47 +67,32 @@ const FriendPage = () => {
   // 최초 렌더링 시 데이터 read
   useEffect(() => {
     readFriendList();
+    readCarouselFriendList();
   }, []);
 
   return (
     <SLayout>
-      <SH1 as='header'>친구</SH1>
+      <SHeader>친구</SHeader>
       {carouselFriendList.length > 0 && (
         <SSection>
-          <ST1>나에게 선물한 친구</ST1>
+          <SH1>최근 내 펀딩에 참여한 친구</SH1>
           <CarouselComponent
-            pageLength={chopedCarouselFriendList.length}
+            pageLength={carouselFriendList.length / 2}
             pageWidth={335}
           >
-            {chopedCarouselFriendList.map((item, index) => (
-              <SPageContainer key={index}>
-                <VerticalCard
-                  friendId={item[0].friendId}
-                  nickname={item[0].nickname}
-                  birthday={item[0].birthday}
-                  image={item[0].userImageUrl}
-                />
-                {index === chopedCarouselFriendList.length - 1 &&
-                carouselFriendList.length % 2 !== 0 ? (
-                  <div style={{ visibility: 'hidden' }}>
-                    <VerticalCard />
-                  </div>
-                ) : (
-                  <VerticalCard
-                    friendId={item[1].friendId}
-                    nickname={item[1].nickname}
-                    birthday={item[1].birthday}
-                    image={item[1].userImageUrl}
-                  />
-                )}
-              </SPageContainer>
-            ))}
+            <SCarouselUl>
+              {carouselFriendList.map((item, index) => (
+                <li key={index}>
+                  {item.userId ? <VerticalCard data={item} /> : <></>}
+                </li>
+              ))}
+            </SCarouselUl>
           </CarouselComponent>
         </SSection>
       )}
       <SFriendSection>
         <STopContainer>
-          <ST1>내 친구</ST1>
+          <SH1>내 친구</SH1>
           <SAddBtn
             onClick={() => {
               setBottomSheetShow(true);
@@ -113,20 +103,15 @@ const FriendPage = () => {
           </SAddBtn>
         </STopContainer>
         {friendList.length ? (
-          <SUl>
+          <SFriendsUl>
             {friendList.map((item, index) => (
               <li key={index}>
-                <HorizontalCard
-                  friendId={item.friendId}
-                  nickname={item.nickname}
-                  birthday={item.birthday}
-                  image={item.userImageUrl}
-                />
+                <HorizontalCard data={item} />
               </li>
             ))}
-          </SUl>
+          </SFriendsUl>
         ) : (
-          <SGuideText>친구에게 초대 메시지를 보내보세요!</SGuideText>
+          <SEmptyP>친구에게 초대 메시지를 보내보세요!</SEmptyP>
         )}
       </SFriendSection>
       <NavComponent />
@@ -137,8 +122,8 @@ const FriendPage = () => {
         >
           <SBottomSheetContainer>
             <STextContainer>
-              <SH3>친구 추가</SH3>
-              <SB3>친구의 이메일 주소를 입력해 주세요</SB3>
+              <SH2>친구 추가</SH2>
+              <SRequestP>친구의 이메일 주소를 입력해 주세요</SRequestP>
             </STextContainer>
             <SForm onSubmit={handleFormSubmit}>
               <SInput
@@ -171,38 +156,6 @@ const FriendPage = () => {
   );
 };
 
-// 텍스트 스타일
-const SH1 = styled.h1`
-  color: var(--black);
-  font-size: 22px;
-  font-weight: 700;
-  line-height: 140%;
-`;
-const SH3 = styled.h3`
-  color: var(--black);
-  font-size: 20px;
-  font-weight: 600;
-`;
-const ST1 = styled.h1`
-  color: var(--black);
-  font-size: 17px;
-  font-weight: 700;
-  line-height: 120%;
-`;
-const SB1 = styled.p`
-  color: var(--gray-500);
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 140%;
-`;
-const SB3 = styled.p`
-  color: var(--gray-500);
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 120%;
-`;
-
-// 스타일 컴포넌트
 const SLayout = styled.div`
   display: flex;
   overflow-x: hidden;
@@ -215,11 +168,10 @@ const SLayout = styled.div`
   gap: 24px;
 
   box-sizing: border-box;
-  -ms-overflow-style: none;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
+`;
+const SHeader = styled.header`
+  ${H1}
+  color: var(--black);
 `;
 const SSection = styled.section`
   display: flex;
@@ -227,11 +179,26 @@ const SSection = styled.section`
 
   gap: 16px;
 `;
-const SPageContainer = styled.div`
+const SH1 = styled.h1`
+  ${T1}
+  color: var(--black);
+`;
+const SCarouselUl = styled.ul`
   display: flex;
   flex-flow: row nowrap;
 
-  gap: 15px;
+  li:nth-child(odd) {
+    margin-right: 15px;
+  }
+
+  li:nth-child(even) {
+    margin-right: 0;
+  }
+
+  li:last-child {
+    width: 160px;
+    height: 184px;
+  }
 `;
 const SFriendSection = styled(SSection)`
   flex-grow: 1;
@@ -246,10 +213,8 @@ const SAddBtn = styled.button`
   border-radius: 20px;
   background-color: var(--jade-pri);
 
+  ${C1}
   color: var(--white);
-  font-size: 12px;
-  font-weight: 600;
-  line-height: 120%;
 
   padding: 8px 12px 8px 8px;
   display: flex;
@@ -257,18 +222,21 @@ const SAddBtn = styled.button`
   align-items: center;
   gap: 8px;
 `;
-const SUl = styled.ul`
+const SFriendsUl = styled.ul`
   display: flex;
   flex-flow: column nowrap;
 
   gap: 16px;
 `;
-const SGuideText = styled(SB1)`
+const SEmptyP = styled.p`
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
   justify-content: center;
   flex-grow: 1;
+
+  ${B1}
+  color: var(--gray-500);
 `;
 const SBottomSheetContainer = styled.div`
   display: flex;
@@ -285,6 +253,14 @@ const STextContainer = styled.div`
 
   margin-left: 4px;
   gap: 12px;
+`;
+const SH2 = styled.h2`
+  ${H3}
+  color: var(--black);
+`;
+const SRequestP = styled.p`
+  ${B3}
+  color: var(--gray-500);
 `;
 const SForm = styled.form`
   display: flex;

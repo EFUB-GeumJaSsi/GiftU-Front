@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { B1, C2 } from '../../styles/font';
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
@@ -8,6 +9,8 @@ import {
 } from '../../api/funding';
 import { getUserInfo } from '../../api/user';
 import { getReview } from '../../api/review';
+import { postPassword } from '../../api/funding';
+import { sortGiftData } from '../../components/FundingInfo/FundingPercentage';
 import BackHeaderComponent from '../../components/common/BackHeaderComponent';
 import FundingSpan from '../../components/FundingInfo/FundingSpan';
 import TopFundingInfo from '../../components/FundingInfo/TopFundingInfo';
@@ -24,12 +27,15 @@ import {
 } from '../../components/FundingInfo/GoWriteButton';
 import PasswordComponent from '../../components/common/PasswordComponent';
 import ToastComponent from '../../components/common/ToastComponent';
+import ScrollToTop from '../../components/common/ScrollToTop';
+import { ReactComponent as IcnInfo } from '../../assets/Friend/icn_info.svg';
 
 const FundingInfoPage = () => {
   const navigate = useNavigate();
   const messageRef = useRef(null);
   const { fundingId } = useParams();
   const [data, setData] = useState({});
+  const [giftList, setGiftList] = useState([]);
   const [contributers, setContributers] = useState([]);
   const [contributed, setContributed] = useState({});
   const [review, setReview] = useState('');
@@ -40,6 +46,8 @@ const FundingInfoPage = () => {
   const [modalShow, setModalShow] = useState(false);
   const [bottomSheetShow, setBottomSheetShow] = useState(false);
   const [toastShow, setToastShow] = useState(false);
+  const [password, setPassword] = useState(['', '', '', '']);
+  const [errorMessage, setErrorMessage] = useState('');
 
   // 축하메시지 컴포넌트 포커싱
   const onFocusMessage = () => {
@@ -53,7 +61,8 @@ const FundingInfoPage = () => {
       const today = new Date();
       const endDate = new Date(fundingEndDate);
       const diff = Math.abs(endDate.getTime() - today.getTime());
-      setTag(`D-${Math.ceil(diff / (1000 * 60 * 60 * 24))}`);
+      const leftDays = Math.round(diff / (1000 * 60 * 60 * 24));
+      setTag(leftDays > 0 ? `D-${leftDays}` : 'D-day');
     } else {
       setIsEnd(true);
       setTag('종료');
@@ -96,17 +105,17 @@ const FundingInfoPage = () => {
     try {
       const res = await getFundingInfo(fundingId);
       const data = res.data;
-      console.log(data);
       data.contributers && setContributers(data.contributers);
       handleSetStatus(data.status, data.fundingEndDate);
       handleSetType(data.userId, data.contributers);
+      setGiftList(sortGiftData(data.giftList));
       setData(data);
     } catch (e) {
       console.log(e);
     }
   };
 
-  // 내가 쓴 리뷰 조회
+  // 리뷰 조회
   const readReview = async () => {
     try {
       const res = await getReview(data.fundingId);
@@ -120,7 +129,11 @@ const FundingInfoPage = () => {
   const delFunding = async () => {
     try {
       const res = await deleteFunding(data.fundingId);
-      navigate('/my/funding/open');
+      navigate(
+        '/my/funding/open',
+        { state: { info: true } },
+        { replace: true },
+      );
     } catch (e) {
       console.log(e);
     }
@@ -137,6 +150,29 @@ const FundingInfoPage = () => {
     }
   };
 
+  const readPassword = async () => {
+    try {
+      const res = await postPassword(data.fundingId, password.join(''));
+      return true;
+    } catch (e) {
+      console.log(e);
+      return false;
+    }
+  };
+
+  const handlePasswordSubmit = async (e) => {
+    e.preventDefault();
+    // 패스워드 확인하는 경우
+    const res = await readPassword();
+    if (res) {
+      setErrorMessage('');
+      setBottomSheetShow(false);
+    } else {
+      setPassword(['', '', '', '']);
+      setErrorMessage('비밀번호를 다시 입력해 주세요.');
+    }
+  };
+
   useEffect(() => {
     if (data.password) {
       setBottomSheetShow(true);
@@ -150,12 +186,12 @@ const FundingInfoPage = () => {
     }
   }, [fundingId]);
 
-  // 종료되었고 내가 개설한 펀딩이면 readReview()
+  // 종료되었고 리뷰 존재하면 readReview()
   useEffect(() => {
-    if (isEnd && funding === 'open' && data.existedReview) {
+    if (isEnd && data.existedReview) {
       readReview();
     }
-  }, [isEnd, funding, data.existedReview]);
+  }, [funding, isEnd, data.existedReview]);
 
   const Btn = () => {
     // 내가 참여한
@@ -165,6 +201,7 @@ const FundingInfoPage = () => {
           <ButtonComponent
             btnInfo={{ text: '참여 취소', width: '104px' }}
             onClick={delParticipation}
+            disabled={false}
           />
           <ButtonComponent
             btnInfo={{
@@ -172,7 +209,11 @@ const FundingInfoPage = () => {
               width: '223px',
               color: 'orange',
             }}
-            onClick={() => navigate('수정페이지 이동')}
+            onClick={() =>
+              navigate(`/funding/${fundingId}/message/edit`, {
+                state: { participationId: contributed.participationId },
+              })
+            }
           />
         </SBtnContainer>
       );
@@ -188,10 +229,10 @@ const FundingInfoPage = () => {
                 : ' 선물 후기 작성하기',
               color: 'jade',
             }}
-            onClick={
-              data.existedReview
-                ? () => navigate('후기 수정 페이지 이동')
-                : () => navigate('후기 작성 페이지 이동')
+            onClick={() =>
+              navigate(`/funding/${fundingId}/review/edit`, {
+                state: { contributers: contributers, reviewText: review },
+              })
             }
           />
         );
@@ -200,8 +241,10 @@ const FundingInfoPage = () => {
           <ButtonComponent
             btnInfo={{
               text: '개설 취소하기',
+              color: 'darkGray',
             }}
             onClick={() => setModalShow(true)}
+            disabled={false}
           />
         );
       }
@@ -210,13 +253,21 @@ const FundingInfoPage = () => {
     return (
       <ButtonComponent
         btnInfo={{ text: '선물하기', color: 'orange' }}
-        onClick={() => navigate(`/funding/${fundingId}/join`)}
+        onClick={() =>
+          navigate(`/funding/${fundingId}/join`, {
+            state: {
+              giftList: giftList,
+              nowMoney: data.nowMoney,
+            },
+          })
+        }
       />
     );
   };
 
   return (
     <>
+      <ScrollToTop />
       <BackHeaderComponent />
       <SLayout $isEnd={isEnd && funding !== 'open'}>
         {data.password && bottomSheetShow && funding === 'pre' ? (
@@ -249,11 +300,21 @@ const FundingInfoPage = () => {
                 price={contributed.contributionAmount}
                 wroteMessage={contributed.message}
                 onClick={onFocusMessage}
+                fundingId={fundingId}
+                contributed={contributed}
               />
             ) : (
               funding === 'open' &&
               !data.existedReview &&
-              isEnd && <GoWriteCommentButton color={color} />
+              isEnd &&
+              data.nowMoney >= giftList[0].price && (
+                <GoWriteCommentButton
+                  color={color}
+                  fundingId={fundingId}
+                  nowMoney={data.nowMoney}
+                  giftList={giftList}
+                />
+              )
             )}
             <FundingSpan
               color={color}
@@ -264,7 +325,7 @@ const FundingInfoPage = () => {
             <FundingPercentage
               type='info'
               color={color}
-              giftList={data.giftList}
+              giftList={giftList}
               nowMoney={data.nowMoney}
             />
             {funding === 'open' && <FundingParticipants list={contributers} />}
@@ -274,9 +335,11 @@ const FundingInfoPage = () => {
           </>
         )}
       </SLayout>
-      {!(isEnd && funding !== 'open') && funding && (
-        <BottomBackgroundComponent Button={<Btn />} />
-      )}
+      {!(isEnd && funding !== 'open') &&
+        funding &&
+        !(isEnd && data.nowMoney < giftList[0].price) && (
+          <BottomBackgroundComponent Button={<Btn />} />
+        )}
       {modalShow && (
         <Modal
           actionText='취소하기'
@@ -285,19 +348,22 @@ const FundingInfoPage = () => {
         >
           <SModalContainer>
             <SBigSpan>펀딩 개설을 취소하시겠어요?</SBigSpan>
-            <SSmallSpan>펀딩에 참여한 친구들에게 알림이 전송돼요</SSmallSpan>
+            <SSmallSpan>
+              <IcnInfo /> 펀딩에 참여한 친구들에게 알림이 전송돼요
+            </SSmallSpan>
           </SModalContainer>
         </Modal>
       )}
       {funding === 'pre' && bottomSheetShow && (
         <PasswordComponent
-          color='orange'
-          fundingId={fundingId}
-          name={data.nickname}
-          passwordExact={getPassword}
-          validPassword={() => setBottomSheetShow(false)}
-          action='back' // 바텀시트 cross 버튼 클릭 시 뒤로가기 + background 이벤트리스너 비활성화
           setBottomSheetShow={setBottomSheetShow}
+          color='orange'
+          password={password}
+          setPassword={setPassword}
+          passwordHandle={handlePasswordSubmit}
+          errorMessage={errorMessage}
+          name={data.nickname}
+          action='back' // 바텀시트 cross 버튼 클릭 시 뒤로가기 + background 이벤트리스너 비활성화
         />
       )}
       {toastShow && (
@@ -341,17 +407,17 @@ const SModalContainer = styled.div`
   padding: 32px 0 28px 0;
 `;
 const SBigSpan = styled.span`
+  ${B1}
   color: var(--black);
   text-align: center;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 140%;
 `;
 const SSmallSpan = styled(SBigSpan)`
+  display: flex;
+  align-items: center;
+
+  ${C2}
   color: var(--gray-500);
-  font-size: 12px;
-  line-height: 120%;
+  white-space: pre;
 `;
 
 export default FundingInfoPage;

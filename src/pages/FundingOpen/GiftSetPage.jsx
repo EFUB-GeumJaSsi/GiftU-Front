@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { B1, B2 } from '../../styles/font';
 import { useState, useContext } from 'react';
 import { DataContext, PageContext } from './IndexPage';
 import BackHeaderComponent from '../../components/common/BackHeaderComponent';
@@ -9,9 +10,9 @@ import icn_plus from '../../assets/FungingOpen/icn_plus.svg';
 
 const GiftSetPage = ({
   lastGiftData = {
-    giftName: null,
+    giftName: '',
     price: null,
-    giftUrl: null,
+    giftUrl: '',
   },
   lastImageData = null,
 }) => {
@@ -60,12 +61,24 @@ const GiftSetPage = ({
       <BackHeaderComponent />
       <SForm onSubmit={handleFormSubmit}>
         <fieldset>
+          <SLegend>상품</SLegend>
+          <SInput
+            type='text'
+            name='gift'
+            id='gift-name'
+            placeholder='상품명을 입력해 주세요'
+            value={name}
+            required={!name}
+            onChange={(event) => setName(event.target.value)}
+          />
+        </fieldset>
+        <fieldset>
           <SLegend>가격</SLegend>
           <PriceInputComponent
             name='gift'
             id='gift-price'
             maxLength='11'
-            placeholder='선물의 가격을 입력해 주세요'
+            placeholder='상품 가격을 입력해 주세요'
             required={!price}
             focusColor='var(--jade-pri)'
             price={price}
@@ -74,7 +87,7 @@ const GiftSetPage = ({
         </fieldset>
         <fieldset>
           <SLegend>링크</SLegend>
-          <SUrlInput
+          <SInput
             type='url'
             name='gift'
             id='gift-url'
@@ -106,8 +119,7 @@ const GiftSetPage = ({
             <ButtonComponent
               type='submit'
               btnInfo={
-                // name && price && url && imageFile
-                price && url && imageFile
+                name && price && url && imageFile
                   ? { text: '다음', color: 'jade', onClick: '' }
                   : { text: '선물 추가하기' }
               }
@@ -134,12 +146,20 @@ const SForm = styled.form`
 const SLegend = styled.legend`
   margin: 0 0 8px 8px;
 
+  ${B1}
   color: var(--black);
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 140%;
+
+  &::after {
+    content: '*';
+
+    position: relative;
+    top: 2px;
+    left: 8px;
+
+    color: var(--jade-pri);
+  }
 `;
-const SUrlInput = styled.input`
+const SInput = styled.input`
   width: 335px;
   padding: 21px 24px;
 
@@ -147,10 +167,9 @@ const SUrlInput = styled.input`
   border-radius: 16px;
   background-color: var(--gray-100);
 
+  ${B2}
   color: var(--black);
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 140%;
+  text-overflow: ellipsis;
 
   box-sizing: border-box;
 
@@ -160,9 +179,7 @@ const SUrlInput = styled.input`
 
   &::placeholder {
     color: var(--gray-400);
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 140%;
+    ${B2}
   }
 `;
 const SImageLabel = styled.label`

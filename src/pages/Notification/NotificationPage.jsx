@@ -1,155 +1,169 @@
 import styled from 'styled-components';
-import { useState } from 'react';
-import NotificationItem from '../../components/Notification/NotificationItem';
-import TagSelectComponent from '../../components/common/TagSelectComponent';
-import Modal from '../../components/common/ModalComponent';
-import { ReactComponent as IcnInfo } from '../../assets/Friend/icn_info.svg';
-import { ReactComponent as ProfileIcon } from '../../assets/common/profile_default.svg';
+import { H1 } from '../../styles/font';
+import { useState, useEffect } from 'react';
+import {
+  getAllNotice,
+  getFriendNotice,
+  getFundingNotice,
+} from '../../api/notice';
 import NavComponent from '../../components/common/NavComponent';
+import TagSelectComponent from '../../components/common/TagSelectComponent';
+import NotificationItem from '../../components/Notification/NotificationItem';
+
+// 알림 데이터 포맷팅
+const formatNoticeFriend = (data) => {
+  const notices = data.map((item) => {
+    return {
+      tag: 'friend',
+      id: item.friendTableId,
+      image: item.recieveUserImgUrl,
+      name: item.recieveUserNickname,
+      rawTime: item.updatedAt,
+    };
+  });
+  return notices;
+};
+const formatNoticeFundingDueDate = (data) => {
+  const now = data.now;
+  const notices = data.fundingDueDate.map((item) => {
+    return {
+      tag: 'fundingDueDate',
+      id: item.fundingId,
+      image: item.fundingImageUrl,
+      name: item.fundingTitle,
+      endDate: item.fundingEndDate,
+      rawTime: now,
+    };
+  });
+  return notices;
+};
+const formatNoticeFundingAchieve = (data) => {
+  const notices = data.fundingAchieve
+    .filter(
+      (item) =>
+        (item.percent >= 25 && item.percent <= 35) ||
+        (item.percent >= 50 && item.percent <= 60) ||
+        (item.percent >= 75 && item.percent <= 85),
+    )
+    .map((item) => {
+      return {
+        tag: 'fundingAchieve',
+        id: item.fundingId,
+        image: item.fundingImageUrl,
+        name: item.fundingTitle,
+        percent: item.percent,
+        rawTime: item.lastParticipateTime,
+      };
+    });
+  return notices;
+};
+// 알림 최신순 정렬
+const sortNotiLatest = (notiList) => {
+  return notiList
+    ? notiList.sort(
+        (a, b) => new Date(b.rawTime).getTime() - new Date(a.rawTime).getTime(),
+      )
+    : [];
+};
 
 const NotificationPage = () => {
-  const [modalShow, setModalShow] = useState(false);
-  const [modalContent, setModalContent] = useState(null);
   const [tag, setTag] = useState('전체');
+  const [notiList, setNotiList] = useState([]);
 
-  const tags = ['전체', '친구', '펀딩'];
-
-  const notifications = [
-    {
-      image: 'default',
-      name: '닉네임은여기까지입니다',
-      message: '님과 친구가 되었습니다',
-      time: '00분 전',
-      type: '친구',
-    },
-    {
-      image: 'default',
-      name: '펀딩 이름',
-      message: '펀딩이 종료되었습니다',
-      time: '00시간 전',
-      type: '펀딩',
-    },
-  ];
-
-  const friendNotiClick = (image, name) => {
-    setModalContent(
-      <SModalContainer>
-        {image === 'default' ? (
-          <StyledProfileIcon />
-        ) : (
-          <SImg src={image} alt='Profile' />
-        )}
-        <span>{name}</span>
-        <span style={{ color: 'var(--black)' }}>친구를 추가하시겠어요?</span>
-        <span style={{ fontSize: '12px' }}>
-          <IcnInfo /> 추가된 친구는 [내 친구]에서 확인할 수 있어요
-        </span>
-      </SModalContainer>,
-    );
-    setModalShow(true);
+  // API 연결
+  // 전체 알림 조회
+  const readNotiAll = async () => {
+    try {
+      const response = await getAllNotice();
+      const friendNotice = formatNoticeFriend(response.data.friendNotice);
+      const fundingDueDate = formatNoticeFundingDueDate(response.data);
+      const fundingAchieve = formatNoticeFundingAchieve(response.data);
+      const notiList = [...friendNotice, ...fundingDueDate, ...fundingAchieve];
+      setNotiList(sortNotiLatest(notiList));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  // 친구 알림 조회
+  const readNotiFriend = async () => {
+    try {
+      const response = await getFriendNotice();
+      const friendNotice = formatNoticeFriend(response.data);
+      const notiList = [...friendNotice];
+      setNotiList(sortNotiLatest(notiList));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  // 펀딩 알림 조회
+  const readNotiFunding = async () => {
+    try {
+      const response = await getFundingNotice();
+      const fundingDueDate = formatNoticeFundingDueDate(response.data);
+      const fundingAchieve = formatNoticeFundingAchieve(response.data);
+      const notiList = [...fundingDueDate, ...fundingAchieve];
+      setNotiList(sortNotiLatest(notiList));
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  const fundingNotiClick = () => {
-    window.location.href = '/'; // 나중에 이동할 주소 넣어야함
-  };
-
-  const filteredNotifications = notifications.filter((notification) => {
-    if (tag === '전체') return true;
-    if (tag === '친구' && notification.type === '친구') return true;
-    if (tag === '펀딩' && notification.type === '펀딩') return true;
-    return false;
-  });
+  useEffect(() => {
+    if (tag === '전체') {
+      readNotiAll();
+    } else if (tag === '친구') {
+      readNotiFriend();
+    } else if (tag === '펀딩') {
+      readNotiFunding();
+    }
+  }, [tag]);
 
   return (
     <SLayout>
       <SHeader>알림</SHeader>
-      <SItemContainer>
+      <SMain>
         <TagSelectComponent
-          tags={tags}
+          tags={['전체', '친구', '펀딩']}
           selectedTag={tag}
           onTagChange={setTag}
         />
-        <SBtnWrapper>
-          {filteredNotifications.map((notification, index) => (
-            <NotificationItem
-              key={index}
-              image={notification.image}
-              name={notification.name}
-              message={notification.message}
-              time={notification.time}
-              onClick={() =>
-                notification.type === '친구'
-                  ? friendNotiClick(notification.image, notification.name)
-                  : fundingNotiClick()
-              }
-            />
-          ))}
-        </SBtnWrapper>
-      </SItemContainer>
+        <SOl>
+          {notiList.map((item, index) => {
+            return (
+              <li key={index}>
+                <NotificationItem data={item} />
+              </li>
+            );
+          })}
+        </SOl>
+      </SMain>
       <NavComponent />
-      {modalShow && (
-        <Modal actionText='추가하기' setModalShow={setModalShow}>
-          {modalContent}
-        </Modal>
-      )}
     </SLayout>
   );
 };
 
-const SModalContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-
-  padding-top: 24px;
-  padding-bottom: 24px;
-
-  span {
-    display: flex;
-    align-items: center;
-    gap: 3px;
-
-    font-weight: 500;
-    font-size: 16px;
-    color: var(--gray-500);
-  }
-`;
-const StyledProfileIcon = styled(ProfileIcon)`
-  width: 56px;
-  height: 56px;
-
-  border-radius: 50%;
-  background-color: var(--gray-300);
-`;
 const SLayout = styled.div`
   display: flex;
   flex-flow: column nowrap;
 
+  width: fit-content;
   margin: 0 auto;
   padding: 40px 0 128px;
-  gap: 24px;
+  gap: 30px;
 `;
-
 const SHeader = styled.header`
-  padding-left: 28px;
-
+  ${H1}
   color: var(--black);
-  font-size: 22px;
-  font-weight: 700;
 `;
-
-const SItemContainer = styled.main`
+const SMain = styled.main`
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
-  gap: 16px;
+  gap: 22px;
 `;
-
-const SBtnWrapper = styled.div`
+const SOl = styled.ol`
   display: flex;
   flex-flow: column nowrap;
-  align-items: center;
 `;
 
 export default NotificationPage;
