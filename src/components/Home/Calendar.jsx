@@ -1,11 +1,12 @@
 import styled from 'styled-components';
+import { B1, B3, C2, H2 } from '../../styles/font';
 import { useState, useEffect } from 'react';
 import { startOfWeek, addDays } from 'date-fns';
+import { getCalendarFunding, getExistanceOfFunding } from '../../api/calendar';
 import BottomSheetComponent from '../common/BottomSheetComponent';
 import CarouselComponent from '../common/CarouselComponent';
 import CalendarFundingItem from './CalendarFundingItem';
 import { ReactComponent as TagIcon } from '../../assets/Home/tag_today.svg';
-import { getCalendarFunding, getExistanceOfFunding } from '../../api/calendar';
 
 const Calendar = () => {
   const [isFundingExist, setIsFundingExist] = useState({});
@@ -30,7 +31,15 @@ const Calendar = () => {
   const readIsExistance = async () => {
     try {
       const res = await getExistanceOfFunding(
-        date.toISOString().split('T')[0],
+        date
+          .toLocaleString('ko-KR', {
+            timeZone: 'Asia/Seoul',
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+          })
+          .replaceAll('.', '')
+          .replaceAll(' ', '-'),
         dates[dates.length - 1],
       );
       setIsFundingExist(res.data.existenceOfFundingOnDate);
@@ -51,8 +60,14 @@ const Calendar = () => {
 
   for (let i = 0; i < 14; i++) {
     dates[i] = addDays(startDate, i + 1)
-      .toISOString()
-      .split('T')[0];
+      .toLocaleString('ko-KR', {
+        timeZone: 'Asia/Seoul',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+      .replaceAll('.', '')
+      .replaceAll(' ', '-');
   }
 
   const handleOnClick = (e) => {
@@ -159,10 +174,8 @@ const SMonthSpan = styled.span`
   border-radius: 20px;
   background-color: var(--orange-pri);
 
+  ${B3}
   color: var(--white);
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 120%;
 `;
 const SDayWrapper = styled.div`
   display: flex;
@@ -172,11 +185,9 @@ const SDaySpan = styled.span`
   width: 15px;
   height: 14px;
 
+  ${C2}
   color: var(--gray-400);
   text-align: center;
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 120%;
 `;
 const SDateContainer = styled.div`
   display: grid;
@@ -197,11 +208,10 @@ const SDateSpan = styled.span`
   background-color: ${(props) =>
     props.$funding ? 'var(--orange-sec)' : 'var(--gray-200)'};
 
+  ${B1}
   text-align: center;
   color: ${(props) =>
     props.$funding ? 'var(--orange-pri)' : 'var(--gray-400)'};
-  font-size: 16px;
-  font-weight: 500;
 
   cursor: ${(props) => (props.$funding ? 'pointer' : 'default')};
 `;
@@ -220,9 +230,7 @@ const SBottomSheetContainer = styled.div`
   padding: 48px 20px 18px;
 `;
 const SSpan = styled.span`
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 140%;
+  ${H2}
 `;
 const SCarouselUl = styled.div`
   display: flex;

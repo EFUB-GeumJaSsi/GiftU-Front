@@ -5,6 +5,7 @@
 // 생략 시 뒤로가기 함수가 실행됩니다.
 
 import styled from 'styled-components';
+import { B3 } from '../../styles/font';
 import { useNavigate } from 'react-router-dom';
 import { ReactComponent as Back } from '../../assets/common/btn_back.svg';
 
@@ -46,10 +47,7 @@ const SSpan = styled.span`
 
   height: 17px;
 
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 120%;
+  ${B3}
 `;
 
 export default BackHeaderComponent;

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { B1 } from '../../styles/font';
 import { useState, useEffect } from 'react';
 import BackHeaderComponent from '../../components/common/BackHeaderComponent';
 import FundingParticipants from '../../components/FundingInfo/FundingParticipants';
@@ -54,7 +55,7 @@ const ReviewEditPage = () => {
 
   const handleFormSubmit = async () => {
     reviewText !== null ? updateReview(fundingId, reviewText) : createReview();
-    navigate(`/funding/${fundingId}`);
+    navigate(`/funding/${fundingId}`, { replace: true });
   };
   const Btn = (
     <ButtonComponent
@@ -109,9 +110,8 @@ const SForm = styled.form`
   height: 210px;
 `;
 const SLegend = styled.legend`
+  ${B1}
   color: var(--black);
-  font-size: 16px;
-  font-weight: 500;
 `;
 const STextarea = styled.textarea`
   display: flex;
@@ -124,9 +124,8 @@ const STextarea = styled.textarea`
   border-radius: 16px;
   background-color: var(--gray-100);
 
+  ${B1}
   color: var(--black);
-  font-weight: 500;
-  font-size: 16px;
 
   resize: none;
 

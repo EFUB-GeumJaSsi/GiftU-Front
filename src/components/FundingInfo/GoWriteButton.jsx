@@ -1,16 +1,21 @@
 import styled from 'styled-components';
+import { B0, B4 } from '../../styles/font';
 import { useNavigate } from 'react-router-dom';
 import { ReactComponent as Next } from '../../assets/FundingInfo/icn_back.svg';
 
 // 후기 작성
-const GoWriteCommentButton = ({ color, fundingId }) => {
+const GoWriteCommentButton = ({ color, fundingId, nowMoney, giftList }) => {
+  const navigate = useNavigate();
+  const maxPrice = giftList.length > 0 && giftList[giftList.length - 1].price;
+  const percent = maxPrice ? Math.round((nowMoney / maxPrice) * 100) : 0;
+
   return (
     <SLayout
       color={color}
       onClick={() => navigate(`/funding/${fundingId}/review/edit`)}
     >
       <SContainer>
-        <STextSpan>펀딩이 100% 달성되었어요</STextSpan>
+        <STextSpan>펀딩이 {percent}% 달성되었어요</STextSpan>
         <SBigTextSpan>선물해 준 친구들에게 마음을 전해볼까요?</SBigTextSpan>
       </SContainer>
       <NextBtn color={color} />
@@ -24,6 +29,8 @@ const GoWriteMessageButton = ({
   price,
   onClick,
   wroteMessage,
+  contributed,
+  fundingId,
   isEnd,
 }) => {
   const navigate = useNavigate();
@@ -32,7 +39,12 @@ const GoWriteMessageButton = ({
     <SLayout
       color={color}
       onClick={
-        wroteMessage ? onClick : () => navigate('축하 메시지 수정 페이지')
+        wroteMessage || isEnd
+          ? onClick
+          : () =>
+              navigate(`/funding/${fundingId}/message/edit`, {
+                state: { participationId: contributed.participationId },
+              })
       }
     >
       <SContainer>
@@ -71,12 +83,9 @@ const SContainer = styled.div`
   gap: 4px;
 `;
 const STextSpan = styled.span`
+  ${B4}
   color: ${(props) =>
     props.color === 'var(--orange-pri)' ? 'var(--gray-500)' : 'var(--white)'};
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 120%;
   text-align: left;
 
   cursor: pointer;
@@ -86,9 +95,7 @@ const SEmphaSpan = styled(STextSpan)`
   font-weight: 500;
 `;
 const SBigTextSpan = styled(STextSpan)`
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 140%;
+  ${B0}
 `;
 const NextBtn = styled(Next)`
   fill: ${(props) =>

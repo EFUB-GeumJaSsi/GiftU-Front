@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { C2 } from '../../styles/font';
 import { useEffect, useState } from 'react';
 
 const getColor = (props) => {
@@ -16,7 +17,10 @@ const getColor = (props) => {
 };
 
 const getBackgroundColor = (props) => {
-  if (props.$num !== props.$length && props.$type === 'add')
+  if (
+    (props.$num !== props.$length && props.$type === 'add') ||
+    (props.$type === 'none' && props.$percent === 0)
+  )
     return 'var(--gray-300)';
 
   if (props.$type === 'add') return 'var(--jade-pri)';
@@ -48,13 +52,16 @@ const getOpacity = (props) => {
   return '0';
 };
 
-const PriceProgressBar = ({ type, color, giftList, balance, joinPrice }) => {
-  const maxPrice =
-    giftList && giftList.length > 0 && giftList[giftList.length - 1].price;
+const PriceProgressBar = ({
+  type,
+  color,
+  giftList = [],
+  balance,
+  joinPrice,
+  percent = 0,
+}) => {
+  const maxPrice = giftList.length > 0 && giftList[giftList.length - 1].price;
   const nowPrice = maxPrice - balance;
-  const percent = balance
-    ? Math.round(((maxPrice - balance) / maxPrice) * 100)
-    : 0;
   const [nextPrice, setNextPrice] = useState({
     idx: null,
     price: null,
@@ -116,9 +123,10 @@ const PriceProgressBar = ({ type, color, giftList, balance, joinPrice }) => {
         $type={type}
         $color={color}
         $length={giftList && giftList.length - 1}
-        $num={it.num && it.num}
+        $num={it.num ? it.num : 0}
         $price={it.price}
         $balance={nowPrice}
+        $percent={percent}
         $getBackgroundColor={getBackgroundColor}
       />
     </SPointContainer>
@@ -199,11 +207,8 @@ const SPointSpan = styled.span`
 
   background: var(--white);
 
+  ${C2}
   color: ${(props) => props.$getColor(props)};
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 120%;
   text-align: center;
 
   cursor: default;

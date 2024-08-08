@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { B3 } from '../../styles/font';
 
 const FundingComment = ({ color, comment }) => {
   return (
@@ -23,21 +24,15 @@ const SContainer = styled.div`
   background: var(--gray-100);
 `;
 const STitleSpan = styled.span`
+  ${B3}
   color: var(--gray-400);
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 120%;
 `;
 const STextSpan = styled.p`
   width: 291px;
   max-height: 78px;
 
+  ${B3}
   color: var(--black);
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 140%;
 `;
 
 export default FundingComment;

@@ -12,6 +12,7 @@
 // 예시: <ToastComponent>삭제가 완료되었어요</ToastComponent>
 
 import styled from 'styled-components';
+import { B2 } from '../../styles/font';
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
@@ -46,10 +47,8 @@ const SLayout = styled.div`
   border-radius: 4px;
   background-color: rgba(0, 0, 0, 0.7);
 
+  ${B2}
   color: var(--white);
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 140%;
 
   transition: opacity 1s ease;
   transform: translate(-50%, -50%);
