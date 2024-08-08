@@ -57,7 +57,8 @@ const FundingInfoPage = () => {
       const today = new Date();
       const endDate = new Date(fundingEndDate);
       const diff = Math.abs(endDate.getTime() - today.getTime());
-      setTag(`D-${Math.ceil(diff / (1000 * 60 * 60 * 24))}`);
+      const leftDays = Math.round(diff / (1000 * 60 * 60 * 24));
+      setTag(leftDays > 0 ? `D-${leftDays}` : 'D-day');
     } else {
       setIsEnd(true);
       setTag('종료');
