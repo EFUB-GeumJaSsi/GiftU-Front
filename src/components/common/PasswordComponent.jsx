@@ -9,7 +9,7 @@ const PasswordComponent = ({
   color,
   password,
   setPassword,
-  passwordHandle,
+  passwordHandle = () => {},
   errorMessage,
   name,
   ...props

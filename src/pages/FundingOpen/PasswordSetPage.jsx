@@ -32,8 +32,6 @@ const PasswordSetPage = () => {
     return true;
   };
 
-  const handlePasswordSubmit = () => {};
-
   const handleFormSubmit = (data) => {
     const formattedData = {
       ...data,
@@ -109,7 +107,6 @@ const PasswordSetPage = () => {
               color='jade'
               password={password}
               setPassword={setPassword}
-              passwordHandle={handlePasswordSubmit}
             />
           )}
           <BottomBackgroundComponent
