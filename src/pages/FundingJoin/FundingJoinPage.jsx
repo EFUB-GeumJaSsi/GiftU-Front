@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { useContext, useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { DataContext, PageContext } from './IndexPage';
-import { addComma } from '../../components/FundingInfo/FundingPercentage';
 import BackHeaderComponent from '../../components/common/BackHeaderComponent';
 import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
 import ButtonComponent from '../../components/common/ButtonComponent';
@@ -88,7 +87,7 @@ const FundingJoinPage = () => {
             />
             {balance && contributionAmount > balance && (
               <SWarningSpan>
-                {addComma(balance)}원보다 적은 금액을 입력해 주세요
+                {balance?.toLocaleString()}원보다 적은 금액을 입력해 주세요
               </SWarningSpan>
             )}
           </SContainer>
@@ -161,13 +160,11 @@ const SForm = styled.form`
   justify-content: center;
   gap: 24px;
 `;
-
 const SContainer = styled.fieldset`
   display: flex;
   flex-direction: column;
   gap: 8px;
 `;
-
 const SLabel = styled.label`
   display: flex;
 `;

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { B1, C1, C2 } from '../../styles/font';
 import { useState } from 'react';
 import { deleteFriendItem } from '../../api/friend';
-import { formatDate } from './VerticalCard';
+import useFormatDate from '../../hooks/useFormatDate';
 import BottomModalComponent from '../../components/common/BottomModalComponent';
 import ModalComponent from '../common/ModalComponent';
 import ToastComponent from '../common/ToastComponent';
@@ -49,7 +49,9 @@ const HorizontalCard = ({
       <SImg src={image} />
       <STextContainer>
         <SNicknameSpan>{data.nickname}</SNicknameSpan>
-        <SBirthdaySpan>{formatDate(data.birthday)}</SBirthdaySpan>
+        <SBirthdaySpan>
+          {useFormatDate(data.birthday, '생일 정보 없음')}
+        </SBirthdaySpan>
       </STextContainer>
       <SMenuBtn
         onClick={() => {

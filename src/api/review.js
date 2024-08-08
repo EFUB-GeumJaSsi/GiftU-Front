@@ -17,9 +17,7 @@ export const postReview = async (fundingId, reviewContent) => {
 // 선물 후기 조회
 export const getReview = async (fundingId) => {
   try {
-    const response = await apiAuth.get(`/fundings/${fundingId}/review`, {
-      headers: { 'Content-Type': 'application/json' },
-    });
+    const response = await apiAuth.get(`/fundings/${fundingId}/review`);
     return response;
   } catch (error) {
     throw error;
@@ -43,9 +41,7 @@ export const patchReview = async (fundingId, reviewContent) => {
 // 선물 후기 삭제
 export const deleteReview = async (fundingId) => {
   try {
-    const response = await apiAuth.delete(`/fundings/${fundingId}/review`, {
-      headers: { 'Content-Type': 'application/json' },
-    });
+    const response = await apiAuth.delete(`/fundings/${fundingId}/review`);
     return response;
   } catch (error) {
     throw error;
