@@ -1,3 +1,4 @@
+import { styled } from 'styled-components';
 import { B0, B1, B2, B3 } from '../../styles/font';
 import DaumPostcode from 'react-daum-postcode';
 import { useState, useEffect, useContext } from 'react';
