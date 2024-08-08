@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { C2 } from '../../styles/font';
 import { useEffect, useState } from 'react';
 
 const getColor = (props) => {
@@ -206,11 +207,8 @@ const SPointSpan = styled.span`
 
   background: var(--white);
 
+  ${C2}
   color: ${(props) => props.$getColor(props)};
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 120%;
   text-align: center;
 
   cursor: default;

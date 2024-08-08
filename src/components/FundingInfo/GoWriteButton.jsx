@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { B0, B4 } from '../../styles/font';
 import { useNavigate } from 'react-router-dom';
 import { ReactComponent as Next } from '../../assets/FundingInfo/icn_back.svg';
 
@@ -82,12 +83,9 @@ const SContainer = styled.div`
   gap: 4px;
 `;
 const STextSpan = styled.span`
+  ${B4}
   color: ${(props) =>
     props.color === 'var(--orange-pri)' ? 'var(--gray-500)' : 'var(--white)'};
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 120%;
   text-align: left;
 
   cursor: pointer;
@@ -97,9 +95,7 @@ const SEmphaSpan = styled(STextSpan)`
   font-weight: 500;
 `;
 const SBigTextSpan = styled(STextSpan)`
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 140%;
+  ${B0}
 `;
 const NextBtn = styled(Next)`
   fill: ${(props) =>

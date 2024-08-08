@@ -1,15 +1,16 @@
 import styled from 'styled-components';
+import { B1, B2 } from '../../styles/font';
 import { useState, useEffect } from 'react';
 import BackHeaderComponent from '../../components/common/BackHeaderComponent';
 import ButtonComponent from '../../components/common/ButtonComponent';
 import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
 import { getCongratsMessage, patchCongratsMessage } from '../../api/funding';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 
 const MessageEditPage = () => {
-  const participationId = 19; //아직 연결 안함 본인 participationId 넣어야 작동됨
+  const location = useLocation();
+  const participationId = location.state?.participationId;
   const { fundingId } = useParams();
-  const [anony, setAnony] = useState();
   const [msgText, setMsgText] = useState('');
   const [name, setName] = useState('nickname');
   const handleInputChange = (e) => {
@@ -18,7 +19,6 @@ const MessageEditPage = () => {
   const handleRadioChange = (e) => {
     const selectedValue = e.target.value;
     setName(selectedValue);
-    setAnony(selectedValue === 'anony' ? true : false);
   };
   const readMessage = async (fundingId) => {
     try {
@@ -29,11 +29,11 @@ const MessageEditPage = () => {
       console.error(error);
     }
   };
-  const UpdateMessage = async (participationId, anony, msgText) => {
+  const UpdateMessage = async (participationId, anonymity, msgText) => {
     try {
       const response = await patchCongratsMessage(
         participationId,
-        anony,
+        anonymity,
         msgText,
       );
       console.log(response.data);
@@ -43,8 +43,9 @@ const MessageEditPage = () => {
   };
   const navigate = useNavigate();
   const handleClickChange = (e) => {
-    UpdateMessage(participationId, anony, msgText);
-    navigate(`/funding/${fundingId}`); //버튼 클릭시 이동할 주소
+    const anonymity = name === 'anony';
+    UpdateMessage(participationId, anonymity, msgText);
+    navigate(-1); //버튼 클릭시 이동할 주소
   };
   useEffect(() => {
     readMessage(fundingId);
@@ -127,10 +128,7 @@ const STextBox = styled.label`
 const STextWrapper = styled.span`
   margin-left: 8px;
 
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 140%;
+  ${B1}
 `;
 const SStarWrapper = styled(STextWrapper)`
   display: flex;
@@ -178,11 +176,8 @@ const SButtonWrapper = styled.label`
   background: ${(props) =>
     props.checked ? 'var(--orange-sec)' : 'var(--gray-100)'};
 
+  ${B2}
   color: ${(props) => (props.checked ? 'var(--black)' : 'var(--gray-400)')};
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 140%;
 
   cursor: pointer;
 `;
@@ -194,9 +189,8 @@ const SOptionalLegend = styled.legend`
   height: 22px;
   padding: 0px 8px 0px 8px;
 
+  ${B1}
   color: var(--black);
-  font-size: 16px;
-  font-weight: 500;
 `;
 const STextarea = styled.textarea`
   display: flex;
@@ -209,9 +203,8 @@ const STextarea = styled.textarea`
   border-radius: 16px;
   background-color: var(--gray-100);
 
+  ${B1}
   color: var(--black);
-  font-weight: 500;
-  font-size: 16px;
 
   resize: none;
 

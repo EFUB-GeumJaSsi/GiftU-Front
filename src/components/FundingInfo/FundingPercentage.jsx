@@ -10,6 +10,7 @@ const sortGiftData = (array) => {
 };
 
 import styled from 'styled-components';
+import { T1, B3 } from '../../styles/font';
 import { useEffect, useState } from 'react';
 import PriceProgressBar from './PriceProgressBar';
 import DeleteBtn from './DeleteBtn';
@@ -173,17 +174,11 @@ const STextContainer = styled.div`
   margin: 0 24px;
 `;
 const STitleSpan = styled.span`
-  font-size: 17px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 120%;
+  ${T1}
 `;
 const STextSpan = styled.span`
+  ${B3}
   color: var(--gray-500);
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 120%;
 `;
 const SBoldTextSpan = styled(STextSpan)`
   color: ${(props) =>
@@ -192,11 +187,8 @@ const SBoldTextSpan = styled(STextSpan)`
 const SSmallTextSpan = styled.span`
   margin-top: -4px;
 
+  ${B3}
   color: var(--gray-500);
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 120%;
 `;
 const SButtonContainer = styled.button`
   display: flex;
@@ -212,11 +204,8 @@ const SButtonContainer = styled.button`
   background-color: var(--white);
 `;
 const SBtn = styled.span`
+  ${B3}
   color: ${(props) => (props.$clicked ? props.$color : 'var(--gray-400)')};
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 120%;
 
   cursor: pointer;
 `;
@@ -224,12 +213,9 @@ const FoldBtn = styled(Fold)`
   fill: ${(props) => (props.$clicked ? props.$color : 'var(--gray-400)')};
 `;
 const SNoGiftSpan = styled.span`
+  ${B3}
   color: var(--gray-300);
   text-align: center;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 120%;
 `;
 const SItemLayout = styled.div`
   display: flex;
@@ -260,11 +246,8 @@ const SItemTextContainer = styled.div`
   gap: 6px;
 `;
 const SItemTextSpan = styled.span`
+  ${B3}
   color: var(--black);
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 120%;
 `;
 
 export default FundingPercentage;

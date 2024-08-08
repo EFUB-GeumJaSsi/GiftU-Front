@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { B1 } from '../../styles/font';
 import TagSelectComponent from '../common/TagSelectComponent';
 import FundingComponent from '../common/FundingComponent';
 
@@ -64,11 +65,8 @@ const SNoResultsWrapper = styled.div`
 
   width: 100%;
 
+  ${B1}
   background-color: var(--gray-100);
   color: var(--gray-500);
-
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 140%;
 `;
 export default List;

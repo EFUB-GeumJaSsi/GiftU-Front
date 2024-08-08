@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { C2 } from '../../styles/font';
 import { NavLink } from 'react-router-dom';
 import { ReactComponent as GreyHomeIcon } from '../../assets/common/NavigationBar/grey_icn_home.svg';
 import { ReactComponent as GreyFriendIcon } from '../../assets/common/NavigationBar/grey_icn_friend.svg';
@@ -86,10 +87,8 @@ const SNavLink = styled(NavLink)`
   }
 `;
 const SSpan = styled.span`
+  ${C2}
   color: ${({ $isActive }) => ($isActive ? 'var(--black)' : 'var(--gray-400)')};
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 120%;
 `;
 const SFundingOpenNavLink = styled(SNavLink)`
   justify-content: end;
@@ -98,9 +97,7 @@ const SFundingOpenNavLink = styled(SNavLink)`
   width: 80px;
 
   color: var(--gray-400);
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 120%;
+  ${C2}
 `;
 const SCircleWrapper = styled.div`
   display: flex;

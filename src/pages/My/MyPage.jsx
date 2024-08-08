@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { H1, C2, B2, B3 } from '../../styles/font';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import NavComponent from '../../components/common/NavComponent';
@@ -119,10 +120,8 @@ const SLayout = styled.div`
 const SHeader = styled.header`
   width: fit-content;
 
+  ${H1}
   color: var(--black);
-  font-size: 22px;
-  font-weight: 700;
-  line-height: 140%;
 `;
 const SProfileContainer = styled.div`
   display: flex;
@@ -141,7 +140,12 @@ const SImageWrapper = styled.div`
   width: 96px;
   height: 96px;
 
-  border-radius: 50%;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
 `;
 const SMyProfileContent = styled.div`
   display: flex;
@@ -172,9 +176,7 @@ const SMyEditBtn = styled.button`
   border-radius: 20px;
   background-color: var(--gray-300);
 
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 120%;
+  ${C2}
 `;
 const SNameWrapper = styled.div`
   margin-top: 56px;
@@ -203,18 +205,14 @@ const STextContainer = styled.div`
   gap: 24px;
 `;
 const SB3 = styled.p`
+  ${B3}
   color: var(--gray-400);
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 120%;
 `;
 const SBtn = styled.button`
   width: fit-content;
 
+  ${B2}
   color: var(--black);
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 140%;
 `;
 const SLine = styled.div`
   width: 335px;
@@ -225,10 +223,8 @@ const SLine = styled.div`
 const SDeleteAccountBtn = styled.button`
   margin: 90px 0 0 8px;
 
+  ${B3}
   color: var(--gray-400);
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 120%;
   text-decoration-line: underline;
 `;
 

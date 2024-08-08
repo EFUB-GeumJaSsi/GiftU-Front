@@ -20,6 +20,7 @@
 //       </ModalComponent>
 
 import styled from 'styled-components';
+import { B1 } from '../../styles/font';
 import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
@@ -109,8 +110,7 @@ const SButtonContainer = styled.div`
   border-top: 1px solid var(--gray-100);
 `;
 const SButton = styled.button`
-  font-size: 16px;
-  font-weight: 500;
+  ${B1}
 `;
 const SCancelButton = styled(SButton)`
   border-right: 1px solid var(--gray-100);

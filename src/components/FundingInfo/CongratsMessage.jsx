@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { B3 } from '../../styles/font';
 import { forwardRef } from 'react';
 
 const CongratsMessage = (props, ref) => {
@@ -37,20 +38,14 @@ const STitleSpan = styled.span`
   width: 97px;
   height: 17px;
 
+  ${B3}
   color: var(--gray-500);
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 120%;
 `;
 const STextSpan = styled.p`
   width: 190px;
 
+  ${B3}
   color: var(--black);
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 120%;
 `;
 
 export default forwardRef(CongratsMessage);

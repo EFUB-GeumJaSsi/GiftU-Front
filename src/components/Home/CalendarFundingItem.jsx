@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { B1, B4 } from '../../styles/font';
 import { useNavigate } from 'react-router-dom';
 
 const CalendarFundingItem = ({ data = {} }) => {
@@ -42,13 +43,10 @@ const STextContainer = styled.div`
   gap: 8px;
 `;
 const STitleWrapper = styled.span`
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 140%;
-
   width: 235px;
   height: 21px;
 
+  ${B1}
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -57,10 +55,8 @@ const STitleWrapper = styled.span`
   cursor: pointer;
 `;
 const SNameWrapper = styled.span`
+  ${B4}
   color: var(--gray-500);
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 120%;
 
   cursor: pointer;
 `;

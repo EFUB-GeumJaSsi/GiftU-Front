@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { B1, B3, T1 } from '../../styles/font';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SearchItem from '../../components/Search/SearchItem';
@@ -12,7 +13,9 @@ const SearchPage = () => {
   const onChange = (e) => {
     setSearch(e.target.value);
   };
-
+  const toHome = () => {
+    navigate('/');
+  };
   useEffect(() => {
     if (search) {
       readSearchList(search);
@@ -42,7 +45,7 @@ const SearchPage = () => {
           value={search}
           onChange={onChange}
         />
-        <SExitBtn>닫기</SExitBtn>
+        <SExitBtn onClick={toHome}>닫기</SExitBtn>
       </SHeader>
       {results.length === 0 ? (
         <SNoResultsP>검색 결과가 없어요</SNoResultsP>
@@ -97,10 +100,8 @@ const SInput = styled.input`
   background-repeat: no-repeat;
   background-position: 14px center;
 
+  ${B1}
   color: var(--black);
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 140%;
 
   box-sizing: border-box;
 
@@ -115,10 +116,8 @@ const SExitBtn = styled.button`
   padding: 8px;
   gap: 8px;
 
+  ${B1}
   color: var(--black);
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 140%;
 `;
 const SNoResultsP = styled.p`
   display: flex;
@@ -126,10 +125,8 @@ const SNoResultsP = styled.p`
   align-items: center;
   justify-content: center;
 
+  ${B1}
   color: var(--gray-500);
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 140%;
 `;
 const SOl = styled.ol`
   display: flex;
@@ -162,8 +159,7 @@ const SContentWrapper = styled.div`
 
   width: 187px;
 
-  font-weight: 500;
-  font-size: 14px;
+  ${B3}
 `;
 const STitleText = styled.text`
   display: -webkit-box;
@@ -173,8 +169,7 @@ const STitleText = styled.text`
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 
-  font-weight: 700;
-  font-size: 17px;
+  ${T1}
   overflow: hidden;
   text-overflow: ellipsis;
 `;
@@ -186,7 +181,6 @@ const SNameText = styled.text`
 const SDateText = styled(SNameText)``;
 const SBoldWrapper = styled.div`
   color: var(--gray-500);
-  font-weight: 500;
 `;
 
 export default SearchPage;

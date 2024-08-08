@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { B1, B2, B3 } from '../../styles/font';
 import { useContext, useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { DataContext, PageContext } from './IndexPage';
@@ -171,10 +172,7 @@ const SLabel = styled.label`
 const STextSpan = styled.span`
   margin-left: 8px;
 
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 140%;
+  ${B1}
 `;
 const SStarSpan = styled(STextSpan)`
   display: flex;
@@ -188,11 +186,8 @@ const SStarSpan = styled(STextSpan)`
 const SWarningSpan = styled.span`
   margin-left: 8px;
 
+  ${B3}
   color: var(--red);
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 120%;
 `;
 const STextarea = styled.textarea`
   height: 132px;
@@ -202,10 +197,7 @@ const STextarea = styled.textarea`
   border: 0;
   background: var(--gray-100);
 
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 140%;
+  ${B2}
 
   resize: none;
 
@@ -253,12 +245,8 @@ const SButtonWrapper = styled.label`
   border-radius: 16px;
   background: ${(props) =>
     props.checked ? 'var(--orange-sec)' : 'var(--gray-100)'};
-
+  ${B2}
   color: ${(props) => (props.checked ? 'var(--black)' : 'var(--gray-400)')};
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 140%;
 
   cursor: pointer;
 `;
