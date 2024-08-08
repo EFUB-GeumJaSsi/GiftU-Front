@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { addComma } from '../../components/FundingInfo/FundingPercentage';
 import { getFundingInfo, postFundingJoin } from '../../api/funding';
 import BackHeaderComponent from '../../components/common/BackHeaderComponent';
 import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
@@ -19,7 +18,7 @@ const FundingJoinPage = () => {
   const [name, setName] = useState('nickname');
   const [message, setMessage] = useState('');
   const [isDone, setIsDone] = useState(false);
-  
+
   // 축하메시지 set
   const handleMessageChange = (e) => {
     setMessage(e.target.value);
@@ -101,7 +100,7 @@ const FundingJoinPage = () => {
             />
             {balance && contributionAmount > balance && (
               <SWarningSpan>
-                {addComma(balance)}원보다 적은 금액을 입력해 주세요
+                {balance?.toLocaleString()}원보다 적은 금액을 입력해 주세요
               </SWarningSpan>
             )}
           </SContainer>

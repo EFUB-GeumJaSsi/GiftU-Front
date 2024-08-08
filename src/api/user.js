@@ -3,9 +3,7 @@ import { apiAuth } from './api';
 // 유저 조회
 export const getUserInfo = async () => {
   try {
-    const response = await apiAuth.get(`/users`, {
-      headers: { 'content-type': 'multipart/form-data' },
-    });
+    const response = await apiAuth.get(`/users`);
     return response;
   } catch (error) {
     throw error;
@@ -16,7 +14,7 @@ export const getUserInfo = async () => {
 export const patchUserInfo = async (userData) => {
   try {
     const response = await apiAuth.patch(`/users`, userData, {
-      headers: { 'content-type': 'multipart/form-data' },
+      headers: { 'Content-type': 'multipart/form-data' },
     });
     return response;
   } catch (error) {
@@ -30,6 +28,7 @@ export const deleteUser = async () => {
     const response = await apiAuth.delete(`/users`, {
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     });
+    localStorage.clear();
     return response;
   } catch (error) {
     throw error;

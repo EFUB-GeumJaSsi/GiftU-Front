@@ -4,11 +4,6 @@
 // giftList(list): 가격대별 선물 리스트, 가격 오름차순 정렬
 // joinPrice(number): 펀딩 참여자가 참여한 금액
 
-const addComma = (price) => {
-  const commaPrice = price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  return commaPrice;
-};
-
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import PriceProgressBar from './PriceProgressBar';
@@ -88,7 +83,7 @@ const FundingPercentage = ({
         <STextSpan>
           100% 달성까지{' '}
           <SBoldTextSpan $joinPrice={joinPrice}>
-            {addComma(balance)}원
+            {balance?.toLocaleString()}원
           </SBoldTextSpan>{' '}
           남았어요
         </STextSpan>
@@ -115,7 +110,7 @@ const FundingPercentage = ({
       )}
       <SItemTextContainer>
         <SItemTextSpan>{it.giftName}</SItemTextSpan>
-        <SItemTextSpan>{addComma(it.price)}원</SItemTextSpan>
+        <SItemTextSpan>{it.price?.toLocaleString()}원</SItemTextSpan>
       </SItemTextContainer>
       {type === 'add' && <DeleteBtn id={idx + 1} onClick={handleItemDelete} />}
     </SItemContainer>
@@ -270,4 +265,3 @@ const SItemTextSpan = styled.span`
 `;
 
 export default FundingPercentage;
-export { addComma };
