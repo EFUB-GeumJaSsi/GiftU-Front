@@ -86,7 +86,9 @@ const NotificationItem = ({ data }) => {
       case 'friend':
         return `님이 친구 요청을 보냈습니다`;
       case 'fundingDueDate':
-        return `펀딩 종료 ${formatDday(data.endDate)}일 전`;
+        return formatDday(data.endDate) === 0
+          ? '오늘 펀딩 종료'
+          : `펀딩 종료 ${formatDday(data.endDate)}일 전`;
       case 'fundingAchieve':
         return `펀딩 ${Number(data.percent).toFixed(1)}% 달성`;
     }
