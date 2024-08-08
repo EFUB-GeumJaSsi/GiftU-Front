@@ -3,7 +3,6 @@ import { T1, B3 } from '../../styles/font';
 import { ReactComponent as ProfileDefault } from '../../assets/common/profile_default.svg';
 
 const FundingParticipants = ({ list = [] }) => {
-  console.log(list);
   const participantItem = (it, idx) => (
     <SItemContainer key={idx}>
       {it.userImageUrl && !it.anonymous ? (
