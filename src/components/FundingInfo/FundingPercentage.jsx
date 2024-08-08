@@ -184,8 +184,7 @@ const STextSpan = styled.span`
   color: var(--gray-500);
 `;
 const SBoldTextSpan = styled(STextSpan)`
-  color: ${(props) =>
-    props.$joinPrice ? 'var(--orange-pri)' : 'var(--black)'};
+  color: ${(props) => (props.$joinPrice ? 'var(--orange-pri)' : 'var(--black)')};
 `;
 const SSmallTextSpan = styled.span`
   margin-top: -4px;
