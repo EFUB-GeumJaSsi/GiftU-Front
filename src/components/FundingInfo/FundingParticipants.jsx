@@ -3,14 +3,15 @@ import { T1, B3 } from '../../styles/font';
 import { ReactComponent as ProfileDefault } from '../../assets/common/profile_default.svg';
 
 const FundingParticipants = ({ list = [] }) => {
+  console.log(list);
   const participantItem = (it, idx) => (
     <SItemContainer key={idx}>
-      {it.userImageUrl ? (
+      {it.userImageUrl && !it.anonymous ? (
         <SImg src={it.userImageUrl} alt='profile' />
       ) : (
         <SProfileDefault alt='default' />
       )}
-      <SNameSpan>{it.nickname}</SNameSpan>
+      <SNameSpan>{it.anonymous ? '익명' : it.nickname}</SNameSpan>
     </SItemContainer>
   );
 
