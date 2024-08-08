@@ -18,6 +18,7 @@ const OAuthRedirectPage = () => {
       } else {
         navigate('/', { replace: true }); // 재로그인 시, 홈 페이지로 이동
       }
+      location.reload(true);
       return;
     } catch (error) {
       console.error(error);
