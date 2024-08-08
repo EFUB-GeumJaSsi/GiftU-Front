@@ -59,19 +59,9 @@ const FundingSetPage = () => {
   };
 
   useEffect(() => {
-    const today = new Date()
-      .toLocaleString('ko-KR', {
-        timeZone: 'Asia/Seoul',
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-      })
-      .replace(/\./g, '')
-      .replace(/ /g, '-')
-      .replace(' ', '');
-
+    const today = new Date().toISOString().split('T')[0];
     setCurrentDate(today);
-    console.log(today);
+    console.log(currentDate);
   }, []);
 
   useEffect(() => {
