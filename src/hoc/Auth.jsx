@@ -26,7 +26,6 @@ const Auth = ({ Page, option }) => {
           const response = await postAccessTokenReissue();
         } catch (error) {
           console.error(error);
-          navigate('/login');
           return;
         }
       }
