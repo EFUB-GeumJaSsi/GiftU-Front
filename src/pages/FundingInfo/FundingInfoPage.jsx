@@ -313,6 +313,8 @@ const FundingInfoPage = () => {
                   fundingId={fundingId}
                   nowMoney={data.nowMoney}
                   giftList={giftList}
+                  contributers={contributers}
+                  review={review}
                 />
               )
             )}

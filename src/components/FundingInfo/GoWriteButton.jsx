@@ -4,7 +4,14 @@ import { useNavigate } from 'react-router-dom';
 import { ReactComponent as Next } from '../../assets/FundingInfo/icn_back.svg';
 
 // 후기 작성
-const GoWriteCommentButton = ({ color, fundingId, nowMoney, giftList }) => {
+const GoWriteCommentButton = ({
+  color,
+  fundingId,
+  nowMoney,
+  giftList,
+  contributers,
+  review,
+}) => {
   const navigate = useNavigate();
   const maxPrice = giftList.length > 0 && giftList[giftList.length - 1].price;
   const percent = maxPrice ? Math.round((nowMoney / maxPrice) * 100) : 0;
@@ -12,7 +19,11 @@ const GoWriteCommentButton = ({ color, fundingId, nowMoney, giftList }) => {
   return (
     <SLayout
       color={color}
-      onClick={() => navigate(`/funding/${fundingId}/review/edit`)}
+      onClick={() =>
+        navigate(`/funding/${fundingId}/review/edit`, {
+          state: { contributers: contributers, reviewText: review },
+        })
+      }
     >
       <SContainer>
         <STextSpan>펀딩이 {percent}% 달성되었어요</STextSpan>
