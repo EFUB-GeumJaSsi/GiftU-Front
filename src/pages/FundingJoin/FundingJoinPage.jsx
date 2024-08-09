@@ -82,9 +82,6 @@ const FundingJoinPage = () => {
   // 참여 가능한 금액 입력 시 결제 버튼 활성화
   useEffect(() => {
     contributionAmount <= balance ? setIsDone(true) : setIsDone(false);
-    if (imp_success) {
-      console.log(contributionAmount);
-    }
   }, [contributionAmount, balance, imp_success]);
 
   useEffect(() => {
@@ -93,12 +90,15 @@ const FundingJoinPage = () => {
     }
   }, [giftList]);
 
+  useEffect(() => {
+    sessionStorage.clear();
+  }, [navigate]);
+
   return (
     <>
       <ScrollToTop />
       <BackHeaderComponent
         onClick={() => {
-          sessionStorage.clear();
           navigate(`/funding/${fundingId}`, { replace: true });
         }}
       />
