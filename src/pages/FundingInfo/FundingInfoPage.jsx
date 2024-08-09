@@ -62,7 +62,19 @@ const FundingInfoPage = () => {
       const endDate = new Date(fundingEndDate);
       const diff = Math.abs(endDate.getTime() - today.getTime());
       const leftDays = Math.ceil(diff / (1000 * 60 * 60 * 24));
-      setTag(leftDays === 1 ? 'D-day' : `D-${leftDays - 1}`);
+      setTag(
+        today
+          .toLocaleString('ko-KR', {
+            timeZone: 'Asia/Seoul',
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+          })
+          .replaceAll('.', '')
+          .replaceAll(' ', '-') === fundingEndDate
+          ? 'D-day'
+          : `D-${leftDays}`,
+      );
     } else {
       setIsEnd(true);
       setTag('종료');
