@@ -59,7 +59,7 @@ const Calendar = () => {
   };
 
   for (let i = 0; i < 14; i++) {
-    dates[i] = addDays(startDate, i + 1)
+    dates[i] = addDays(startDate, i)
       .toLocaleString('ko-KR', {
         timeZone: 'Asia/Seoul',
         year: 'numeric',
