@@ -1,26 +1,41 @@
 import styled from 'styled-components';
 import { B1, B2, B3 } from '../../styles/font';
 import { useContext, useEffect, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import {
+  useLocation,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from 'react-router-dom';
 import { DataContext, PageContext } from './IndexPage';
+import { getFundingInfo } from '../../api/funding';
 import BackHeaderComponent from '../../components/common/BackHeaderComponent';
 import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
 import ButtonComponent from '../../components/common/ButtonComponent';
 import FundingPercentage from '../../components/FundingInfo/FundingPercentage';
 import PriceInputComponent from '../../components/common/PriceInputComponent';
 import ScrollToTop from '../../components/common/ScrollToTop';
+import ToastComponent from '../../components/common/ToastComponent';
 
 const FundingJoinPage = () => {
   const { setCurrentPage } = useContext(PageContext);
-  const { fundingJoinData, setFundingJoinData } = useContext(DataContext);
+  const {
+    fundingJoinData,
+    setFundingJoinData,
+    errorMsg,
+    toastShow,
+    setToastShow,
+  } = useContext(DataContext);
   const { fundingId } = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const imp_success = searchParams.get('imp_success');
+  const navigate = useNavigate();
   const location = useLocation();
   const [giftList, setGiftList] = useState(location.state?.giftList);
   const [nowMoney, setNowMoney] = useState(location.state?.nowMoney);
   const [balance, setBalance] = useState(
     giftList && giftList[giftList.length - 1].price - nowMoney,
   );
-
   const [contributionAmount, setContributionAmount] = useState(
     fundingJoinData.contributionAmount,
   );
@@ -40,6 +55,19 @@ const FundingJoinPage = () => {
     setName(e.target.value);
   };
 
+  // 펀딩 상세 정보 조회
+  const readFundingInfo = async () => {
+    try {
+      const res = await getFundingInfo(fundingId);
+      const data = res.data;
+      setGiftList(data.giftList);
+      setNowMoney(data.nowMoney);
+      setBalance(data.giftList[data.giftList.length - 1].price - data.nowMoney);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   // 결제하기 버튼 핸들러
   const handleClickPayment = () => {
     setFundingJoinData({
@@ -54,12 +82,26 @@ const FundingJoinPage = () => {
   // 참여 가능한 금액 입력 시 결제 버튼 활성화
   useEffect(() => {
     contributionAmount <= balance ? setIsDone(true) : setIsDone(false);
-  }, [contributionAmount, balance]);
+  }, [contributionAmount, balance, imp_success]);
+
+  useEffect(() => {
+    if (!giftList) {
+      readFundingInfo();
+    }
+  }, [giftList]);
+
+  useEffect(() => {
+    sessionStorage.clear();
+  }, [navigate]);
 
   return (
     <>
       <ScrollToTop />
-      <BackHeaderComponent />
+      <BackHeaderComponent
+        onClick={() => {
+          navigate(`/funding/${fundingId}`, { replace: true });
+        }}
+      />
       <SLayout>
         <FundingPercentage
           type='info'
@@ -143,6 +185,9 @@ const FundingJoinPage = () => {
           )
         }
       />
+      {toastShow && (
+        <ToastComponent setToastShow={setToastShow}>{errorMsg}</ToastComponent>
+      )}
     </>
   );
 };

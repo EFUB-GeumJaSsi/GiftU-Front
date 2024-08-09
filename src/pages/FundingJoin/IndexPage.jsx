@@ -1,24 +1,37 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { postFundingJoin } from '../../api/funding';
 import FundingJoinPage from './FundingJoinPage';
 import CompletePage from './CompletePage';
 import PaymentLandingPage from './PaymentLandingPage';
+import HomePage from '../Home/HomePage';
 
 // 데이터 관리
 const DataContext = createContext();
 const DataProvider = ({ children }) => {
-  const [fundingJoinData, setFundingJoinData] = useState({
-    fundingId: null,
-    contributionAmount: null,
-    anonymity: null,
-    message: '',
-  });
+  const sessionData = JSON.parse(sessionStorage.getItem('fundingData'));
+  const [fundingJoinData, setFundingJoinData] = useState(
+    sessionData
+      ? sessionData
+      : {
+          fundingId: null,
+          contributionAmount: null,
+          anonymity: null,
+          message: '',
+        },
+  );
+  const [errorMsg, setErrorMsg] = useState('');
+  const [toastShow, setToastShow] = useState(false);
 
   return (
     <DataContext.Provider
       value={{
         fundingJoinData,
         setFundingJoinData,
+        errorMsg,
+        setErrorMsg,
+        toastShow,
+        setToastShow,
       }}
     >
       {children}
@@ -29,7 +42,11 @@ const DataProvider = ({ children }) => {
 // 페이지 관리
 const PageContext = createContext();
 const PageProvider = ({ children }) => {
-  const [currentPage, setCurrentPage] = useState('FundingJoinPage');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const imp_success = searchParams.get('imp_success');
+  const [currentPage, setCurrentPage] = useState(
+    imp_success ? 'PaymentLandingPage' : 'FundingJoinPage',
+  );
 
   return (
     <PageContext.Provider value={{ currentPage, setCurrentPage }}>
@@ -65,11 +82,13 @@ const PageRenderer = () => {
     case 'CompletePage':
       const res = createFundingJoin();
       if (res) {
+        sessionStorage.clear();
         return <CompletePage />;
       } else {
         return <FundingJoinPage />;
       }
     default:
+      sessionStorage.clear();
       return <HomePage />;
   }
 };
