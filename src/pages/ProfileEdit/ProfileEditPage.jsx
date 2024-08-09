@@ -58,10 +58,10 @@ const ProfileEditPage = () => {
         birthday: userData.birthday,
       };
       const formData = new FormData();
-      if (imageFile) {
-        formData.append('userImage', imageFile);
+      if (!imageFile) {
+        formData.append('userImage', userData.userImageUrl);
       } else {
-        formData.append(userData.userImageUrl);
+        formData.append('userImage', imageFile);
       }
       formData.append(
         'userUpdateRequestDto',
