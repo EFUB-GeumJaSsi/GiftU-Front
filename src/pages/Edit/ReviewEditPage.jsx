@@ -17,7 +17,6 @@ const ReviewEditPage = () => {
   const [contributers, setContributers] = useState(
     location.state?.contributers,
   );
-  const isFull = reviewText ? true : '';
   const navigate = useNavigate();
   const handleInputChange = (e) => {
     setReviewText(e.target.value);
@@ -48,7 +47,7 @@ const ReviewEditPage = () => {
   };
   const Btn = (
     <ButtonComponent
-      disabled={!isFull}
+      disabled={!reviewText}
       btnInfo={{
         text: '완료',
         width: '335px',
