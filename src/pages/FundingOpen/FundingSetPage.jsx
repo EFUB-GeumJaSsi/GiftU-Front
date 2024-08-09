@@ -74,7 +74,6 @@ const FundingSetPage = () => {
       .replace(' ', '');
 
     setCurrentDate(today);
-    console.log(today);
   }, []);
 
   useEffect(() => {
