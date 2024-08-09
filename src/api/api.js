@@ -6,10 +6,11 @@ const api = axios.create({
 });
 
 // 인증이 필요한 요청
-const accessToken = localStorage.getItem('token');
+const token = JSON.parse(localStorage.getItem('token'));
+const auth = token ? `${token.grantType} ${token.accessToken}` : null;
 const apiAuth = axios.create({
   baseURL: `${process.env.REACT_APP_SERVER_URL}`,
-  headers: { Authorization: `Bearer ${accessToken}` },
+  headers: { Authorization: auth },
   withCredentials: true,
 });
 
