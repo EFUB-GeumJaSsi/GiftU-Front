@@ -23,8 +23,6 @@ const DataProvider = ({ children }) => {
   const [errorMsg, setErrorMsg] = useState('');
   const [toastShow, setToastShow] = useState(false);
 
-  console.log(fundingJoinData);
-
   return (
     <DataContext.Provider
       value={{
