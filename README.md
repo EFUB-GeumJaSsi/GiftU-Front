@@ -1,17 +1,3 @@
-<style>
-  td {
-    text-align: center;
-  }
-  .accordion {
-    text-align: left;
-    vertical-align: top;
-
-    ol, ul {
-      padding-left: 1.2em;
-    }
-  }
-</style>
-
 # GiftU-Front
 
 ![리드미 대표사진](https://github.com/user-attachments/assets/e23d2a0f-46c7-4c02-80a7-bfd12cf502fb)
@@ -38,51 +24,51 @@
 
 <table>
   <tr height="160px">
-    <td width="300px">
+    <td width="300px" align="center">
       <a href="https://github.com/hyerinxx">
         <img height="150px" width="150px" src="https://avatars.githubusercontent.com/hyerinxx" />
       </a>
     </td>
-    <td width="300px">
+    <td width="300px" align="center">
       <a href="https://github.com/rwaeng">
         <img height="150px" width="150px" src="https://avatars.githubusercontent.com/rwaeng" />
       </a>
     </td>
-    <td width="300px">
+    <td width="300px" align="center">
       <a href="https://github.com/sj0919">
         <img height="150px" width="150px" src="https://avatars.githubusercontent.com/sj0919" />
       </a>
     </td>
-    <td width="300px">
+    <td width="300px" align="center">
       <a href="https://github.com/ch9968">
         <img height="150px" width="150px" src="https://avatars.githubusercontent.com/ch9968" />
       </a>
     </td>
   </tr>
   <tr height="30px">
-    <td>
+    <td align="center">
       <a href="https://github.com/hyerinxx">
         <b>성혜린 (팀장)</b>
       </a>
     </td>
-    <td>
+    <td align="center">
       <a href="https://github.com/rwaeng">
         <b>조아령</b>
       </a>
     </td>
-    <td>
+    <td align="center">
       <a href="https://github.com/sj0919">
         <b>이승진</b>
       </a>
     </td>
-    <td>
+    <td align="center">
       <a href="https://github.com/ch9968">
         <b>이찬희</b>
       </a>
     </td>
   </tr>
   <tr>
-    <td class="accordion">
+    <td valign="top">
       <details>
         <summary>담당 파트</summary>
         <ol type="I">
@@ -156,7 +142,7 @@
         </ol>
       </details>
     </td>
-    <td class="accordion">
+    <td valign="top">
       <details>
         <summary>담당 파트</summary>
         <ol type="I">
@@ -222,7 +208,7 @@
         </ol>
       </details>
     </td>
-    <td class="accordion">
+    <td valign="top">
       <details>
         <summary>담당 파트</summary>
         <ol type="I">
@@ -280,7 +266,7 @@
         </ol>
       </details>
     </td>
-    <td class="accordion">
+    <td valign="top">
       <details>
         <summary>담당 파트</summary>
         <ol type="I">
