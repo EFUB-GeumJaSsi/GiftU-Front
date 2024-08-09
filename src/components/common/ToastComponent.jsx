@@ -21,7 +21,7 @@ const ToastComponent = ({ setToastShow, children }) => {
 
   useEffect(() => {
     setTimeout(() => setToastOpen(false), 2000);
-    setTimeout(() => setToastShow(false), 1000);
+    setTimeout(() => setToastShow(false), 2500);
   }, []);
 
   return createPortal(
@@ -40,9 +40,10 @@ const SLayout = styled.div`
   left: 50%;
   z-index: 9999;
 
-  width: 260px;
+  min-width: 260px;
   height: 30px;
   margin: auto;
+  padding: 4px 15px;
 
   border-radius: 4px;
   background-color: rgba(0, 0, 0, 0.7);
@@ -50,9 +51,10 @@ const SLayout = styled.div`
   ${B2}
   color: var(--white);
 
-  transition: opacity 1s ease;
+  transition: opacity 2.5s ease;
   transform: translate(-50%, -50%);
 
+  box-sizing: border-box;
   // 드래그 및 선택 방지
   -webkit-user-select: none;
   -moz-user-select: none;
