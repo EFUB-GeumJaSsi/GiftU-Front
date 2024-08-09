@@ -5,12 +5,12 @@ import { ReactComponent as ProfileDefault } from '../../assets/common/profile_de
 const FundingParticipants = ({ list = [] }) => {
   const participantItem = (it, idx) => (
     <SItemContainer key={idx}>
-      {it.userImageUrl ? (
+      {it.userImageUrl && !it.anonymous ? (
         <SImg src={it.userImageUrl} alt='profile' />
       ) : (
         <SProfileDefault alt='default' />
       )}
-      <SNameSpan>{it.nickname}</SNameSpan>
+      <SNameSpan>{it.anonymous ? '익명' : it.nickname}</SNameSpan>
     </SItemContainer>
   );
 
@@ -21,7 +21,10 @@ const FundingParticipants = ({ list = [] }) => {
         {list.length > 0 && (
           <STextSpan>
             가장 많이 기여한 사람은{' '}
-            <SBoldTextSpan>{list[0].nickname}</SBoldTextSpan> 님이에요
+            <SBoldTextSpan>
+              {list[0].anonymous ? '익명' : list[0].nickname}
+            </SBoldTextSpan>{' '}
+            님이에요
           </STextSpan>
         )}
       </STextContainer>
