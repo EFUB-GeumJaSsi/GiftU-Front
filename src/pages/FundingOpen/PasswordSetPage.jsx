@@ -11,7 +11,7 @@ import { ReactComponent as OrangeLocker } from '../../assets/PasswordSet/icn_btn
 import { ReactComponent as BlueLocker } from '../../assets/PasswordSet/icn_btn_yes.svg';
 
 const PasswordSetPage = () => {
-  const { setCurrentPage } = useContext(PageContext);
+  const { setCurrentPage, setDir } = useContext(PageContext);
   const { setFundingData } = useContext(DataContext);
   const [password, setPassword] = useState(['', '', '', '']);
 
@@ -42,7 +42,7 @@ const PasswordSetPage = () => {
       ...prevData,
       ...formattedData,
     }));
-    setCurrentPage('CompletePage');
+    setDir(false);
   };
 
   useEffect(() => {

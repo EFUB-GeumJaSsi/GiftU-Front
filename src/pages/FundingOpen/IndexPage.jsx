@@ -35,76 +35,70 @@ const DataProvider = ({ children }) => {
 const PageContext = createContext();
 const PageProvider = ({ children }) => {
   const [currentPage, setCurrentPage] = useState('GiftSetPage');
+  const [dir, setDir] = useState(true);
 
   return (
-    <PageContext.Provider value={{ currentPage, setCurrentPage }}>
+    <PageContext.Provider value={{ currentPage, setCurrentPage, dir, setDir }}>
       {children}
     </PageContext.Provider>
   );
 };
 
 const PageRenderer = () => {
-  const { currentPage, setCurrentPage } = useContext(PageContext);
+  const { currentPage, setCurrentPage, dir } = useContext(PageContext);
   const { fundingData, giftData, imageData } = useContext(DataContext);
-  const [setToastShow] = useState(false);
+  const [toastShow, setToastShow] = useState(false);
+
+  const handleFundingSubmission = async () => {
+    const request = { ...fundingData, gifts: giftData };
+    try {
+      const response = await postFunding(request, imageData);
+      console.log('펀딩 생성 성공', response.data);
+      setCurrentPage('CompletePage');
+    } catch (error) {
+      console.error('펀딩 생성 오류', error);
+      setCurrentPage('HomePage');
+      setToastShow(true);
+    }
+  };
 
   useEffect(() => {
-    if (currentPage === 'CompletePage') {
-      const handleFundingSubmission = async () => {
-        const request = { ...fundingData, gifts: giftData };
-        try {
-          const response = await postFunding(request, imageData);
-          console.log('펀딩 생성 성공', response.data);
-        } catch (error) {
-          console.error('펀딩 생성 오류', error);
-          setCurrentPage('HomePage');
-          setToastShow(true);
-        }
-      };
-
+    if (dir === false) {
       handleFundingSubmission();
     }
-  }, [currentPage]);
+  }, [dir]);
 
-  switch (currentPage) {
-    case 'GiftSetPage':
-      return <GiftSetPage />;
-    case 'GiftSetPage-back':
-      return (
+  return (
+    <>
+      {currentPage === 'GiftSetPage' && <GiftSetPage />}
+      {currentPage === 'GiftSetPage-back' && (
         <GiftSetPage
           lastGiftData={giftData[giftData.length - 1]}
           lastImageData={imageData[imageData.length - 1]}
         />
-      );
-    case 'GiftAddPage':
-      return <GiftAddPage />;
-    case 'FundingSetPage':
-      return <FundingSetPage />;
-    case 'PasswordSetPage':
-      return <PasswordSetPage />;
-    case 'CompletePage':
-      return <CompletePage />;
-    default:
-      return <HomePage />;
-  }
-};
+      )}
+      {currentPage === 'GiftAddPage' && <GiftAddPage />}
+      {currentPage === 'FundingSetPage' && <FundingSetPage />}
+      {currentPage === 'PasswordSetPage' && <PasswordSetPage />}
+      {currentPage === 'CompletePage' && <CompletePage />}
+      {currentPage === 'HomePage' && <HomePage />}
 
-const IndexPage = () => {
-  const [toastShow, setToastShow] = useState(false);
-
-  return (
-    <>
-      <DataProvider>
-        <PageProvider>
-          <PageRenderer />
-        </PageProvider>
-      </DataProvider>
       {toastShow && (
         <ToastComponent setToastShow={setToastShow}>
           펀딩 개설에 실패했어요.
         </ToastComponent>
       )}
     </>
+  );
+};
+
+const IndexPage = () => {
+  return (
+    <DataProvider>
+      <PageProvider>
+        <PageRenderer />
+      </PageProvider>
+    </DataProvider>
   );
 };
 
