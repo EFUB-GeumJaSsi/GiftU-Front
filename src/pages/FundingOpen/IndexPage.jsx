@@ -34,15 +34,16 @@ const DataProvider = ({ children }) => {
 const PageContext = createContext();
 const PageProvider = ({ children }) => {
   const [currentPage, setCurrentPage] = useState('GiftSetPage');
+  const [dir, setDir] = useState(true);
 
   return (
-    <PageContext.Provider value={{ currentPage, setCurrentPage }}>
+    <PageContext.Provider value={{ currentPage, setCurrentPage, dir, setDir }}>
       {children}
     </PageContext.Provider>
   );
 };
 const PageRenderer = () => {
-  const { currentPage } = useContext(PageContext);
+  const { currentPage, setCurrentPage, dir } = useContext(PageContext);
   const { fundingData, giftData, imageData } = useContext(DataContext);
 
   const handleFundingSubmission = async () => {
@@ -50,16 +51,22 @@ const PageRenderer = () => {
     try {
       const response = await postFunding(request, imageData);
       console.log('펀딩 생성 성공', response.data);
+      setCurrentPage('CompletePage');
     } catch (error) {
       console.error('펀딩 생성 오류', error);
+      setCurrentPage('HomePage');
+
+      setTimeout(() => {
+        alert('펀딩 생성에 실패했어요. 펀딩을 다시 만들어주세요.');
+      }, 0);
     }
   };
 
   useEffect(() => {
-    if (currentPage === 'CompletePage') {
+    if (dir === false) {
       handleFundingSubmission();
     }
-  }, [currentPage]);
+  }, [dir]);
 
   switch (currentPage) {
     case 'GiftSetPage':
