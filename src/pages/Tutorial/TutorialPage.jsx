@@ -21,7 +21,7 @@ const TutorialPage = () => {
           color='jade'
           num='01'
           title='원하는 선물 선택하기'
-          description='금액대별로 원하는 선물을 추가할 수 있어요'
+          description='갖고 싶은 선물을 원하는 만큼 추가할 수 있어요'
           component={() => (
             <SWhiteContainer>
               <Slider />

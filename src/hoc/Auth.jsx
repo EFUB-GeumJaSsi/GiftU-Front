@@ -19,13 +19,15 @@ const Auth = ({ Page, option }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   const checkIsLogin = async () => {
-    const accessToken = localStorage.getItem('token');
-    if (accessToken) {
-      const accessTokenDate = new Date(localStorage.getItem('token-date'));
-      const now = new Date();
-      if (now.getTime() - accessTokenDate.getTime() > 3480000) {
-        // 엑세스 토큰 발급 시각으로부터 58분이 지났는가?
-        const response = await postAccessTokenReissue();
+    const token = JSON.parse(localStorage.getItem('token'));
+    if (token) {
+      if (new Date().getTime() > token.expiresIn) {
+        try {
+          const response = await postAccessTokenReissue();
+        } catch (error) {
+          console.error(error);
+          return;
+        }
       }
       setIsLogin(true);
     } else {

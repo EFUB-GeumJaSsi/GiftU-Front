@@ -51,9 +51,19 @@ const FriendPage = () => {
       const response = await postFriendRequest(email);
       setToastContent('친구 요청이 전송되었습니다.');
     } catch (error) {
+      const { response } = error;
+      if (!response) return console.error(error);
+      const { code, message } = response.data;
+
+      switch (code) {
+        case 'USER_NOT_FOUND_BY_EMAIL':
+        case 'SELF_FRIEND_REQUEST_NOT_ALLOWED':
+        case 'DUPLICATE_FRIEND_REQUEST':
+          setToastContent(message);
+          return;
+      }
+
       console.error(error);
-      // 에러 코드에 따라 토스트 에러 메시지 설정
-      // setToastContent('');
     }
   };
   // handle 함수
@@ -69,6 +79,9 @@ const FriendPage = () => {
     readFriendList();
     readCarouselFriendList();
   }, []);
+  useEffect(() => {
+    setToastContent(null);
+  }, [toastShow]);
 
   return (
     <SLayout>

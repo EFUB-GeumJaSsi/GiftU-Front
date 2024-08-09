@@ -12,8 +12,15 @@ export const getAccessTokenKakao = async (code) => {
     const response = await api.get(`/api/oauth/kakao`, {
       params: { code: code },
     });
+    const token = {
+      accessToken: response.data.accessToken,
+      grantType: response.data.grantType,
+      expiresIn: new Date().getTime() + response.data.expiresIn,
+    };
+    localStorage.setItem('token', JSON.stringify(token));
     return response;
   } catch (error) {
+    localStorage.removeItem('token');
     throw error;
   }
 };
@@ -22,14 +29,15 @@ export const getAccessTokenKakao = async (code) => {
 export const postAccessTokenReissue = async () => {
   try {
     const response = await apiAuth.post(`/api/oauth/reissue`);
-    localStorage.setItem('token', response.data.accessToken);
-    localStorage.setItem('token-date', new Date());
+    const token = {
+      accessToken: response.data.accessToken,
+      grantType: response.data.grantType,
+      expiresIn: new Date().getTime() + response.data.expiresIn,
+    };
+    localStorage.setItem('token', JSON.stringify(token));
     return response;
   } catch (error) {
-    console.error(error);
     localStorage.removeItem('token');
-    localStorage.removeItem('token-date');
-    navigate('/login');
     throw error;
   }
 };
