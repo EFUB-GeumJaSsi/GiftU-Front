@@ -269,7 +269,12 @@ const FundingInfoPage = () => {
     <>
       <ScrollToTop />
       <BackHeaderComponent />
-      <SLayout $isEnd={isEnd && funding !== 'open'}>
+      <SLayout
+        $isEnd={
+          (isEnd && funding !== 'open') ||
+          (isEnd && data.nowMoney < giftList[0].price)
+        }
+      >
         {data.password && bottomSheetShow && funding === 'pre' ? (
           <>
             <TopFundingInfo
