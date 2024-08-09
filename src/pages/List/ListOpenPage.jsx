@@ -54,7 +54,7 @@ const ListOpenPage = () => {
       />
       {toastShow && (
         <ToastComponent setToastShow={setToastShow}>
-          펀딩 참여가 취소되었어요
+          펀딩 개설이 취소되었어요
         </ToastComponent>
       )}
     </SLayout>
