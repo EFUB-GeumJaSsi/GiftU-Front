@@ -5,17 +5,18 @@ import BackHeaderComponent from '../../components/common/BackHeaderComponent';
 import FundingParticipants from '../../components/FundingInfo/FundingParticipants';
 import ButtonComponent from '../../components/common/ButtonComponent';
 import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
-import { postReview, getReview, patchReview } from '../../api/review';
+import { postReview, patchReview } from '../../api/review';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 
 const ReviewEditPage = () => {
   const { fundingId } = useParams();
   const location = useLocation();
   const [reviewText, setReviewText] = useState(location.state?.reviewText);
+  const existedReview = location.state?.reviewText;
+
   const [contributers, setContributers] = useState(
     location.state?.contributers,
   );
-  const isFull = reviewText ? true : false;
   const navigate = useNavigate();
   const handleInputChange = (e) => {
     setReviewText(e.target.value);
@@ -24,25 +25,12 @@ const ReviewEditPage = () => {
   const createReview = async () => {
     try {
       const response = await postReview(fundingId, reviewText);
+      window.location.reload();
       console.log(response.data);
     } catch (error) {
       console.error(error);
     }
   };
-
-  const readReview = async (fundingId) => {
-    try {
-      const response = await getReview(fundingId);
-      setReviewText(response.data.reviewContent);
-      console.log(response.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  useEffect(() => {
-    reviewText === null && readReview(fundingId);
-  }, [fundingId]);
 
   const updateReview = async (fundingId, reviewText) => {
     try {
@@ -54,12 +42,12 @@ const ReviewEditPage = () => {
   };
 
   const handleFormSubmit = async () => {
-    reviewText !== null ? updateReview(fundingId, reviewText) : createReview();
+    existedReview === '' ? createReview() : updateReview(fundingId, reviewText);
     navigate(`/funding/${fundingId}`, { replace: true });
   };
   const Btn = (
     <ButtonComponent
-      disabled={!isFull}
+      disabled={!reviewText}
       btnInfo={{
         text: '완료',
         width: '335px',

@@ -164,6 +164,8 @@ const SMain = styled.main`
 const SOl = styled.ol`
   display: flex;
   flex-flow: column nowrap;
+
+  width: 335px;
 `;
 
 export default NotificationPage;
