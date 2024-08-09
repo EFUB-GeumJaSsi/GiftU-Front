@@ -56,7 +56,7 @@ const PasswordSetPage = () => {
       <SLayout>
         <BackHeaderComponent
           onClick={() => {
-            setCurrentPage('GiftSetPage');
+            setCurrentPage('FundingSetPage');
           }}
         />
         <form onSubmit={handleSubmit(handleFormSubmit)}>

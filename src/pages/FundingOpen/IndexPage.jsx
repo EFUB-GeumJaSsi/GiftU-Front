@@ -5,6 +5,7 @@ import FundingSetPage from './FundingSetPage';
 import PasswordSetPage from './PasswordSetPage';
 import CompletePage from './CompletePage';
 import HomePage from '../Home/HomePage';
+import ToastComponent from '../../components/common/ToastComponent';
 import { postFunding } from '../../api/funding';
 
 // 데이터 관리
@@ -42,9 +43,11 @@ const PageProvider = ({ children }) => {
     </PageContext.Provider>
   );
 };
+
 const PageRenderer = () => {
   const { currentPage, setCurrentPage, dir } = useContext(PageContext);
   const { fundingData, giftData, imageData } = useContext(DataContext);
+  const [toastShow, setToastShow] = useState(false);
 
   const handleFundingSubmission = async () => {
     const request = { ...fundingData, gifts: giftData };
@@ -55,10 +58,7 @@ const PageRenderer = () => {
     } catch (error) {
       console.error('펀딩 생성 오류', error);
       setCurrentPage('HomePage');
-
-      setTimeout(() => {
-        alert('펀딩 생성에 실패했어요. 펀딩을 다시 만들어주세요.');
-      }, 0);
+      setToastShow(true);
     }
   };
 
@@ -68,27 +68,28 @@ const PageRenderer = () => {
     }
   }, [dir]);
 
-  switch (currentPage) {
-    case 'GiftSetPage':
-      return <GiftSetPage />;
-    case 'GiftSetPage-back':
-      return (
+  return (
+    <>
+      {currentPage === 'GiftSetPage' && <GiftSetPage />}
+      {currentPage === 'GiftSetPage-back' && (
         <GiftSetPage
           lastGiftData={giftData[giftData.length - 1]}
-          lastImageData={imageData[imageData.length - 1]}
+          lastImageData={imageData[giftData.length - 1]}
         />
-      );
-    case 'GiftAddPage':
-      return <GiftAddPage />;
-    case 'FundingSetPage':
-      return <FundingSetPage />;
-    case 'PasswordSetPage':
-      return <PasswordSetPage />;
-    case 'CompletePage':
-      return <CompletePage />;
-    default:
-      return <HomePage />;
-  }
+      )}
+      {currentPage === 'GiftAddPage' && <GiftAddPage />}
+      {currentPage === 'FundingSetPage' && <FundingSetPage />}
+      {currentPage === 'PasswordSetPage' && <PasswordSetPage />}
+      {currentPage === 'CompletePage' && <CompletePage />}
+      {currentPage === 'HomePage' && <HomePage />}
+
+      {toastShow && (
+        <ToastComponent setToastShow={setToastShow}>
+          펀딩 개설에 실패했어요.
+        </ToastComponent>
+      )}
+    </>
+  );
 };
 
 const IndexPage = () => {
