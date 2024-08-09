@@ -74,7 +74,7 @@ const PageRenderer = () => {
       {currentPage === 'GiftSetPage-back' && (
         <GiftSetPage
           lastGiftData={giftData[giftData.length - 1]}
-          lastImageData={imageData[giftData.length - 1]}
+          lastImageData={imageData[imageData.length - 1]}
         />
       )}
       {currentPage === 'GiftAddPage' && <GiftAddPage />}
