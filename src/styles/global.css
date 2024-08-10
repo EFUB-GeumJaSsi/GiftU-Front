@@ -17,6 +17,8 @@
   --gray-400: #bbbcc0;
   --gray-500: #909294;
 
+  background-color: var(--white);
+
   font-family: Pretendard;
 
   /* 스크롤바 비표시 */

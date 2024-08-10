@@ -44,7 +44,7 @@ const Calendar = () => {
       );
       setIsFundingExist(res.data.existenceOfFundingOnDate);
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   };
 
@@ -54,7 +54,7 @@ const Calendar = () => {
       const res = await getCalendarFunding(date);
       return res.data.fundings;
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   };
 

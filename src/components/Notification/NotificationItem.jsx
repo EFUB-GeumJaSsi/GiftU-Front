@@ -12,7 +12,6 @@ const createFriendAccept = async (friendTableId) => {
   try {
     const response = await postFriendAccept(friendTableId);
     location.reload(true);
-    console.log(response.data);
   } catch (error) {
     console.error(error);
   }
@@ -22,7 +21,6 @@ const createFriendReject = async (friendTableId) => {
   try {
     const response = await postFriendReject(friendTableId);
     location.reload(true);
-    console.log(response.data);
   } catch (error) {
     console.error(error);
   }
