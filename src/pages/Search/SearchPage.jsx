@@ -29,7 +29,6 @@ const SearchPage = () => {
     try {
       const response = await getSearch(search);
       setResults(Array.isArray(response.data) ? response.data : []);
-      console.log(response.data);
     } catch (error) {
       console.error(error);
     }

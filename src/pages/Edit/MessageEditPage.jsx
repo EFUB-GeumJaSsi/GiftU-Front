@@ -36,7 +36,6 @@ const MessageEditPage = () => {
         anonymity,
         msgText,
       );
-      console.log(response.data);
     } catch (error) {
       console.error(error);
     }
@@ -95,7 +94,7 @@ const MessageEditPage = () => {
           </SButtonContainer>
         </SFieldset>
         <SFieldset>
-          <SOptionalLegend>축하메세지</SOptionalLegend>
+          <SOptionalLegend>축하메시지</SOptionalLegend>
           <STextarea onChange={handleInputChange} value={msgText} />
         </SFieldset>
       </SForm>

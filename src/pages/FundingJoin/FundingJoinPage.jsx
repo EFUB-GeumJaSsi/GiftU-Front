@@ -64,7 +64,7 @@ const FundingJoinPage = () => {
       setNowMoney(data.nowMoney);
       setBalance(data.giftList[data.giftList.length - 1].price - data.nowMoney);
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   };
 

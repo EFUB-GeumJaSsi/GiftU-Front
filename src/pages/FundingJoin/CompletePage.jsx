@@ -18,7 +18,7 @@ const CompletePage = () => {
 
   return (
     <SLayout>
-      <BackHeaderComponent />
+      <BackHeaderComponent onClick={() => navigate('/', { replace: true })} />
       <SMain>
         <IcnGift />
         <SH3>{'펀딩 참여가 완료되었어요!'}</SH3>
