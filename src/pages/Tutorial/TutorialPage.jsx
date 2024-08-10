@@ -91,7 +91,7 @@ const TutorialPage = () => {
               <SBoldWrapper>60% 달성</SBoldWrapper>
               <STextWrapper>
                 100% 달성까지
-                <span style={{ color: 'var( --black)' }}>84000원 </span>
+                <span style={{ color: 'var( --black)' }}> 84000원 </span>
                 남았어요!
               </STextWrapper>
               <Slider2></Slider2>
@@ -106,7 +106,7 @@ const TutorialPage = () => {
           color='orange'
           num='02'
           title='펀딩 소개하기'
-          description='메세지는 닉네임, 익명으로 전달할 수 있어요'
+          description='메시지는 닉네임, 익명으로 전달할 수 있어요'
           component={() => (
             <SWhiteContainer>
               <STextWrapper>둥둥</STextWrapper>민지~~생일 축하해!!

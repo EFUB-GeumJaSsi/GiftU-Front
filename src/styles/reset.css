@@ -141,6 +141,8 @@ button {
 input {
   border: none;
   outline: none;
+  -webkit-appearance: none;
+  -webkit-border-radius: 0;
 }
 input[type='submit'] {
   cursor: pointer;
