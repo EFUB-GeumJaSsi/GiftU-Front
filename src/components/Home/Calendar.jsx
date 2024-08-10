@@ -73,8 +73,8 @@ const Calendar = () => {
   const handleOnClick = (e) => {
     const { id } = e.target;
     const newSelectedDate = {
-      month: dates[id].split('-')[1],
-      date: dates[id].split('-')[2],
+      month: (dates[id] || '').split('-')[1],
+      date: (dates[id] || '').split('-')[2],
       day: days[id % 7],
     };
 
