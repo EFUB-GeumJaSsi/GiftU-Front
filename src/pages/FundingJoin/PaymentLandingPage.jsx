@@ -22,7 +22,7 @@ const PaymentLandingPage = () => {
       const res = await getUserInfo();
       return res.data;
     } catch {
-      console.log(e);
+      console.error(e);
     }
   };
 
@@ -71,7 +71,7 @@ const PaymentLandingPage = () => {
       );
       await setCurrentPage('CompletePage');
     } catch (e) {
-      console.log(e);
+      console.error(e);
       // 결제 취소
       // 새로운 주소로 이동...
     }

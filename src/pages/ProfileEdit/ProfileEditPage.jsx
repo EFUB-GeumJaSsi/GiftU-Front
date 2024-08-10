@@ -41,7 +41,6 @@ const ProfileEditPage = () => {
       setValue('nickname', userData.nickname);
       setValue('email', userData.email);
       setValue('birthday', format(new Date(userData.birthday), 'yyyy-MM-dd'));
-      console.log(response.data);
       if (userData.userImageUrl) {
         setImagePreview(userData.userImageUrl);
       }
@@ -69,7 +68,6 @@ const ProfileEditPage = () => {
       );
 
       const response = await patchUserInfo(formData);
-      console.log(response.data);
     } catch (error) {
       console.error(error);
     }

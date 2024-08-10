@@ -31,7 +31,6 @@ const FriendPage = () => {
     try {
       const response = await getFriendList();
       setFriendList(response.data.friends);
-      console.log(response.data);
     } catch (error) {
       console.error(error);
     }
