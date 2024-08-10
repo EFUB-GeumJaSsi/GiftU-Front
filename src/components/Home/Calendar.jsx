@@ -87,7 +87,7 @@ const Calendar = () => {
     const newSelectedFundingList = await readFundingList(date);
 
     const arr = newSelectedFundingList;
-    if (arr.length % 2 != 0) arr.push({});
+    if (arr && arr.length % 2 != 0) arr.push({});
     setSelectedFundingList(arr);
   };
 
