@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { H1, C2, B2, B3 } from '../../styles/font';
+import { H1, C2, B2, B3, B4 } from '../../styles/font';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import NavComponent from '../../components/common/NavComponent';
@@ -80,7 +80,7 @@ const MyPage = () => {
             친구
             <span>
               <span style={{ color: 'var(--jade-pri)' }}>
-                {user.friendCount}
+                {user.friendCount || 0}
               </span>
               명
             </span>
@@ -178,7 +178,7 @@ const SMyEditBtn = styled.button`
 
   border-radius: 20px;
   background-color: var(--gray-300);
-
+  color: var(--black);
   ${C2}
 `;
 const SNameWrapper = styled.div`
@@ -195,10 +195,8 @@ const SMyFriendBtn = styled.button`
 
   border-radius: 20px;
   border: 1px solid var(--gray-100);
-
-  p {
-    color: var(--jade-pri);
-  }
+  color: var(--black);
+  ${B4}
 `;
 const STextContainer = styled.div`
   display: flex;
