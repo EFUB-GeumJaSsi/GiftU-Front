@@ -283,7 +283,8 @@ const FundingInfoPage = () => {
       <BackHeaderComponent />
       <SLayout
         $isEnd={
-          (isEnd && funding !== 'open') || data.nowMoney < giftList[0].price
+          (isEnd && funding !== 'open') ||
+          (isEnd && data.nowMoney < giftList[0].price)
         }
       >
         {data.password && bottomSheetShow && funding === 'pre' ? (
@@ -355,7 +356,7 @@ const FundingInfoPage = () => {
       </SLayout>
       {!(isEnd && funding !== 'open') &&
         funding &&
-        !(data.nowMoney < giftList[0].price) && (
+        !(isEnd && data.nowMoney < giftList[0].price) && (
           <BottomBackgroundComponent Button={<Btn />} />
         )}
       {modalShow && (
