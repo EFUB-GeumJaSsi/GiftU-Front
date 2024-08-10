@@ -1,21 +1,22 @@
 import styled from 'styled-components';
 import { B1, B3 } from '../../styles/font';
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { format } from 'date-fns';
+import { getUserInfo, patchUserInfo } from '../../api/user';
 import BackHeaderComponent from '../../components/common/BackHeaderComponent';
 import ButtonComponent from '../../components/common/ButtonComponent';
 import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
 import { ReactComponent as Camera } from '../../assets/common/camera.svg';
 import { ReactComponent as ProfileIcon } from '../../assets/common/profile_default.svg';
-import { getUserInfo, patchUserInfo } from '../../api/user';
 
 const ProfileEditPage = () => {
-  const [currentDate, setCurrentDate] = useState('');
+  const navigate = useNavigate();
+  const location = useLocation();
+  const isNewUser = location.state?.isNewUser;
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
-  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -37,13 +38,10 @@ const ProfileEditPage = () => {
     try {
       const response = await getUserInfo();
       const userData = response.data;
-
       setValue('nickname', userData.nickname);
       setValue('email', userData.email);
       setValue('birthday', format(new Date(userData.birthday), 'yyyy-MM-dd'));
-      if (userData.userImageUrl) {
-        setImagePreview(userData.userImageUrl);
-      }
+      if (userData.userImageUrl) setImagePreview(userData.userImageUrl);
     } catch (error) {
       console.error(error);
     }
@@ -57,40 +55,21 @@ const ProfileEditPage = () => {
         birthday: userData.birthday,
       };
       const formData = new FormData();
-      if (!imageFile) {
-        formData.append('userImage', userData.userImageUrl);
-      } else {
-        formData.append('userImage', imageFile);
-      }
       formData.append(
         'userUpdateRequestDto',
         new Blob([JSON.stringify(data)], { type: 'application/json' }),
       );
-
-      const response = await patchUserInfo(formData);
+      !!imageFile
+        ? formData.append('userImage', imageFile)
+        : formData.append('userImage', userData.userImageUrl);
+      await patchUserInfo(formData);
     } catch (error) {
       console.error(error);
     }
   };
-
-  useEffect(() => {
-    const today = new Date().toISOString().split('T')[0];
-    setCurrentDate(today);
-    setValue('currentDate', today);
-  }, [setValue]);
-
-  const birthday = watch('birthday');
-
-  useEffect(() => {
-    if (birthday) {
-      setValue('birthday', format(new Date(birthday), 'yyyy-MM-dd'));
-    }
-  }, [birthday, setValue]);
-
   const handleInfoChange = (e) => {
     setValue(e.target.name, e.target.value);
   };
-
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -101,28 +80,26 @@ const ProfileEditPage = () => {
   const handleSubmitChange = async (userData) => {
     try {
       await updateUserInfo(userData);
-      navigate('/my');
+      isNewUser ? navigate('/') : navigate('/my');
     } catch (error) {
       console.error(error);
     }
   };
 
-  const Btn = (
-    <ButtonComponent
-      type='submit'
-      disabled={!isValid}
-      btnInfo={{
-        text: '저장',
-        width: '335px',
-        color: isValid ? 'jade' : 'gray',
-      }}
-      onClick={handleSubmit(handleSubmitChange)}
-    ></ButtonComponent>
-  );
-
   useEffect(() => {
     readUserInfo();
   }, []);
+
+  useEffect(() => {
+    const today = new Date().toISOString().split('T')[0];
+    setValue('currentDate', today);
+  }, [setValue]);
+
+  const birthday = watch('birthday');
+  useEffect(() => {
+    if (birthday)
+      setValue('birthday', format(new Date(birthday), 'yyyy-MM-dd'));
+  }, [birthday, setValue]);
 
   return (
     <SLayout>
@@ -202,7 +179,20 @@ const ProfileEditPage = () => {
           )}
         </fieldset>
       </SForm>
-      <BottomBackgroundComponent Button={Btn} />
+      <BottomBackgroundComponent
+        Button={
+          <ButtonComponent
+            type='submit'
+            disabled={!isValid}
+            btnInfo={{
+              text: '저장',
+              width: '335px',
+              color: isValid ? 'jade' : 'gray',
+            }}
+            onClick={handleSubmit(handleSubmitChange)}
+          />
+        }
+      />
     </SLayout>
   );
 };
@@ -215,14 +205,12 @@ const SLayout = styled.div`
 
   padding-bottom: 88px;
 `;
-
 const SImageContainer = styled.div`
   position: relative;
   width: 96px;
   height: 96px;
   margin: 0 auto;
 `;
-
 const SImgWrapper = styled.img`
   width: 96px;
   height: 96px;
@@ -235,7 +223,6 @@ const StyledProfileIcon = styled(ProfileIcon)`
   height: 96px;
   border-radius: 50%;
 `;
-
 const SImageLabel = styled.label`
   display: flex;
   align-items: center;
@@ -247,11 +234,9 @@ const SImageLabel = styled.label`
 
   cursor: pointer;
 `;
-
 const SImageInput = styled.input`
   display: none;
 `;
-
 const SForm = styled.form`
   display: flex;
   flex-flow: column nowrap;
@@ -259,7 +244,6 @@ const SForm = styled.form`
   margin: 32px auto;
   gap: 24px;
 `;
-
 const SFieldset = styled.fieldset`
   display: flex;
   flex-direction: column;
@@ -268,13 +252,11 @@ const SFieldset = styled.fieldset`
 
   width: 335px;
 `;
-
 const SLegend = styled.legend`
   margin: 0 0 8px 8px;
 
   color: var(--gray-400);
 `;
-
 const STextarea = styled.textarea`
   display: flex;
   justify-content: center;
@@ -298,7 +280,6 @@ const STextarea = styled.textarea`
     outline: none;
   }
 `;
-
 const SInput = styled.input`
   border-radius: 16px;
   background-color: var(--gray-100);
@@ -307,20 +288,17 @@ const SInput = styled.input`
     color: var(--gray-400);
   }
 `;
-
 const SInputContainer = styled.div`
   display: flex;
   align-items: center;
   margin-top: 3px;
   width: 100%;
 `;
-
 const SDateInput = styled(SInput)`
   padding: 22px 20px 20px 20px;
   width: 335px;
   box-sizing: border-box;
 `;
-
 const SWarningWrapper = styled.div`
   margin-top: 8px;
   margin-left: 8px;
