@@ -98,7 +98,12 @@ const MyPage = () => {
         <SB3>튜토리얼</SB3>
         <SBtn onClick={handleTutorial}>튜토리얼 보기</SBtn>
       </STextContainer>
-      <SLogoutBtn onClick={() => localStorage.removeItem('token')}>
+      <SLogoutBtn
+        onClick={() => {
+          localStorage.removeItem('token');
+          location.reload();
+        }}
+      >
         로그아웃
       </SLogoutBtn>
       <SDeleteAccountBtn onClick={handleAccountDelete}>
