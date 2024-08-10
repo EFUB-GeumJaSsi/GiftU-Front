@@ -98,6 +98,9 @@ const MyPage = () => {
         <SB3>튜토리얼</SB3>
         <SBtn onClick={handleTutorial}>튜토리얼 보기</SBtn>
       </STextContainer>
+      <SLogoutBtn onClick={() => localStorage.removeItem('token')}>
+        로그아웃
+      </SLogoutBtn>
       <SDeleteAccountBtn onClick={handleAccountDelete}>
         회원탈퇴
       </SDeleteAccountBtn>
@@ -221,11 +224,15 @@ const SLine = styled.div`
   background-color: var(--gray-200);
 `;
 const SDeleteAccountBtn = styled.button`
-  margin: 90px 0 0 8px;
+  margin: 5px 0 0 8px;
 
   ${B3}
   color: var(--gray-400);
   text-decoration-line: underline;
+`;
+
+const SLogoutBtn = styled(SDeleteAccountBtn)`
+  margin-top: 50px;
 `;
 
 export default MyPage;
