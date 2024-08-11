@@ -376,45 +376,37 @@ $ npm start
 ## 📁 디렉토리 구조
 
 ```
-src
-├─App.js
-├─index.js
-├─global.css
-├─reset.css
-├─api
-├─assets
-│  ├─common
-│  │  ├─Bottomsheet
-│  │  └─NavigationBar
-│  ├─Friend
-│  ├─FundingInfo
-│  ├─FundingJoin
-│  ├─FungingOpen
-│  ├─Home
-│  ├─Login
-│  ├─PasswordSet
-│  └─Tutorial
-├─components
-│  ├─common
-│  ├─Friend
-│  ├─FundingInfo
-│  ├─Home
-│  ├─Notification
-│  └─Tutorial
-└─pages
-    ├─Edit
-    ├─Friend
-    ├─FundingInfo
-    ├─FundingJoin
-    ├─FundingOpen
-    ├─Home
-    ├─List
-    ├─Login
-    ├─My
-    ├─Notification
-    ├─ProfileEdit
-    ├─Search
-    └─Tutorial
+📦src
+├─ 📂api               # API 호출 로직 관리
+├─ 📂assets            # 이미지 파일 (페이지, 컴포넌트별 분류)
+├─ 📂components
+│  ├─ 📂common         # nav, button 등 공통 컴포넌트
+│  ├─ 📂Friend         # 친구 페이지 컴포넌트
+│  ├─ 📂FundingInfo    # 펀딩 상세 페이지 컴포넌트
+│  ├─ 📂Home           # 홈 페이지 컴포넌트
+│  ├─ 📂List           # 목록 페이지 컴포넌트
+│  ├─ 📂Notification   # 알림 페이지 컴포넌트
+│  ├─ 📂Search         # 검색 페이지 컴포넌트
+│  └─ 📂Tutorial       # 튜토리얼 페이지 컴포넌트
+├─ 📂hoc               # 고차 컴포넌트 (라우팅 접근 권한 인증/인가 HOC)
+├─ 📂hooks             # 커스텀 Hook
+├─ 📂pages
+│  ├─ 📂Edit           # 축하메시지 작성 페이지, 선물후기 작성 페이지 관련
+│  ├─ 📂Friend         # 친구 페이지 관련
+│  ├─ 📂FundingInfo    # 펀딩 상세 페이지 관련
+│  ├─ 📂FundingJoin    # 펀딩 참여 페이지 관련
+│  ├─ 📂FundingOpen    # 펀딩 개설 페이지 관련
+│  ├─ 📂Home           # 홈 페이지 관련
+│  ├─ 📂List           # 내가 만든 펀딩 목록 페이지, 내가 참여한 펀딩 목록 페이지 관련
+│  ├─ 📂Login          # 로그인 페이지 관련
+│  ├─ 📂My             # 마이 페이지 관련
+│  ├─ 📂Notification   # 알림 페이지 관련
+│  ├─ 📂ProfileEdit    # 프로필 편집 페이지 관련
+│  ├─ 📂Search         # 검색 페이지 관련
+│  └─ 📂Tutorial       # 튜토리얼 페이지 관련
+├─ 📂styles            # 공통 스타일 관련
+├─📜App.js
+└─📜index.js
 ```
 
 <br>
