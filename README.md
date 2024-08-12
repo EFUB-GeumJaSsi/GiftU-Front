@@ -1,16 +1,14 @@
-# GiftU-Front
+# 🎁 GiftU Frontend
 
 ![리드미 대표사진](https://github.com/user-attachments/assets/e23d2a0f-46c7-4c02-80a7-bfd12cf502fb)
 
-<br />
+### 선물 펀딩 서비스 &lt;GiftU&gt;
 
-## 프로젝트 개요
+🔗 [GiftU 바로가기](https://gift-u.netlify.app) <br>
 
-**선물 펀딩 서비스 &lt;GiftU&gt;**<br>
-
-🎁 이화여대 웹 개발 동아리 EFUB 4기 SWS 2팀 <br>
-✨ 기획 기간: 2024.03.12 ~ 2024.04.09
-✨ 개발 기간: 2024.07.02 ~ 2024.08.10
+✨ 기획: 2024.03.12 ~ 2024.04.09 <br>
+✨ 디자인: 2024.05.21 ~ 2024.06.30 <br>
+✨ 개발: 2024.07.02 ~ 2024.08.10
 
 ✔️ 갖고 싶은 선물을 원하는 만큼 등록하여 펀딩을 열고, 축하메시지와 함께 부담 없는 금액으로 펀딩에 참여하고, 모인 금액에 맞는 선물을 받고, 감사함을 후기로 남깁니다.
 
@@ -20,7 +18,7 @@
 
 <br>
 
-## 팀원 소개
+## ⭐️ 팀원 소개
 
 <table>
   <tr height="160px">
@@ -144,9 +142,9 @@
             기타
             <ul>
               <li>프로젝트 초기 세팅</li>
-              <li>Axios 인스턴스 생성</li>
-              <li>API 요청 Hook 컨벤션 정리</li>
-              <li>라우팅 path 관리 및 접근 권한 인증/인가 HOC</li>
+              <li>Axios 인스턴스 관리</li>
+              <li>API 요청 로직 관리</li>
+              <li>라우팅 path 관리 및 접근 권한 인증/인가 HOC 작업</li>
               <li>Context API 조건부 렌더링 및 데이터 관리</li>
               <li>배포</li>
               <li>README 작성</li>
@@ -346,9 +344,28 @@
 
 <br>
 
-## 배포 주소
+## ⚙️ 스택
 
-🔗 [GiftU 바로가기](https://gift-u.netlify.app/)
+#### Config & Package Management
+<img src="https://img.shields.io/badge/npm-CB3837?style=for-the-badge&logo=npm&logoColor=white" />
+
+#### Core Technologies
+<img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" />
+<img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black" />
+
+#### Styling
+<img src="https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white" />
+
+#### Data Handling
+<img src="https://img.shields.io/badge/axios-5A29E4?style=for-the-badge&logo=axios&logoColor=white">
+<img src="https://img.shields.io/badge/React_Hook_Form-EC5990?style=for-the-badge&logo=ReactHookForm&logoColor=white">
+<img src="https://img.shields.io/badge/date--fns-770C56?style=for-the-badge&logo=date-fns&logoColor=white">
+
+#### Utilities
+<img src="https://img.shields.io/badge/react--daum--postcode-FFCD00?style=for-the-badge&logo=kakao&logoColor=black" />
+
+#### Deployment
+<img src="https://img.shields.io/badge/Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white">
 
 <br>
 
@@ -360,31 +377,6 @@ $ cd GiftU-Front
 $ npm install
 $ npm start
 ```
-
-<br>
-
-## ⚙️ 스택
-
-**Config**
-
-<img src="https://img.shields.io/badge/npm-CB3837?style=for-the-badge&logo=npm&logoColor=white" />
-
-**Development**
-
-<img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black" />
-<img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" />
-<img src="https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white" />
-
-**Deploy**
-
-<img src="https://img.shields.io/badge/Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white">
-
-**Collaboration**
-
-<img src="https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&logo=discord&logoColor=white" />
-<img src="https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=notion&logoColor=white" />
-<img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white" />
-<img src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white" />
 
 <br>
 
