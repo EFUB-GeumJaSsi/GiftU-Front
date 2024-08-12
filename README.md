@@ -1,5 +1,7 @@
 # 🎁 GiftU Frontend
 
+이화여자대학교 웹 개발 동아리 EFUB 4기 SWS 2팀 &lt;GiftU&gt; 프론트엔드 레포지토리입니다.
+
 ![리드미 대표사진](https://github.com/user-attachments/assets/e23d2a0f-46c7-4c02-80a7-bfd12cf502fb)
 
 ### 선물 펀딩 서비스 &lt;GiftU&gt;
