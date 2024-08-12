@@ -48,7 +48,7 @@
   <tr height="30px">
     <td align="center">
       <a href="https://github.com/hyerinxx">
-        <b>성혜린 (팀장)</b>
+        <b>성혜린</b>
       </a>
     </td>
     <td align="center">
@@ -65,6 +65,21 @@
       <a href="https://github.com/ch9968">
         <b>이찬희</b>
       </a>
+    </td>
+  </tr>
+  <tr height="30px">
+    <td align="center">
+      Product Manager <br>
+      Frontend Lead
+    </td>
+    <td align="center">
+      Frontend Lead
+    </td>
+    <td align="center">
+      Frontend Intern
+    </td>
+    <td align="center">
+      Frontend Intern
     </td>
   </tr>
   <tr>
