@@ -41,7 +41,6 @@ const SLayout = styled.div`
   z-index: 9999;
 
   min-width: 260px;
-  height: 30px;
   margin: auto;
   padding: 4px 15px;
 
