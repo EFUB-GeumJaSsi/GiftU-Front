@@ -58,47 +58,32 @@ const formatDday = (endDate) => {
 const NotificationItem = ({ data }) => {
   const navigate = useNavigate();
   const [dialogShow, setDialogShow] = useState(false);
-
-  const handleNotiClick = () => {
-    switch (data.tag) {
-      case 'friend':
-        return setDialogShow(true);
-      case 'fundingDueDate':
-        return navigate(`/funding/${data.id}`);
-      case 'fundingAchieve':
-        return navigate(`/funding/${data.id}`);
-    }
+  const handleNotiClick = {
+    friend: () => setDialogShow(true),
+    fundingDueDate: () => navigate(`/funding/${data.id}`),
+    fundingAchieve: () => navigate(`/funding/${data.id}`),
   };
-  const image = () => {
-    switch (data.tag) {
-      case 'friend':
-        return data.image || icn_profile_default;
-      case 'fundingDueDate':
-        return data.image;
-      case 'fundingAchieve':
-        return data.image;
-    }
+  const image = {
+    friend: data.image || icn_profile_default,
+    fundingDueDate: data.image,
+    fundingAchieve: data.image,
   };
-  const message = () => {
-    switch (data.tag) {
-      case 'friend':
-        return `님이 친구 요청을 보냈습니다`;
-      case 'fundingDueDate':
-        return formatDday(data.endDate) === 0
-          ? '펀딩 오늘 종료'
-          : `펀딩 종료 ${formatDday(data.endDate)}일 전`;
-      case 'fundingAchieve':
-        return `펀딩 ${Number(data.percent).toFixed(1)}% 달성`;
-    }
+  const message = {
+    friend: `님이 친구 요청을 보냈습니다`,
+    fundingDueDate:
+      formatDday(data.endDate) === 0
+        ? '펀딩 오늘 종료'
+        : `펀딩 종료 ${formatDday(data.endDate)}일 전`,
+    fundingAchieve: `펀딩 ${Number(data.percent).toFixed(1)}% 달성`,
   };
 
   return (
     <>
-      <SNotiContainer onClick={handleNotiClick}>
-        <SNotiImg src={image()} />
+      <SNotiContainer onClick={handleNotiClick[data.tag]}>
+        <SNotiImg src={image[data.tag]} />
         <SNotiTextContainer>
           <SNotiNameSpan>{data.name} </SNotiNameSpan>
-          <SNotiMessageSpan>{message()}</SNotiMessageSpan>
+          <SNotiMessageSpan>{message[data.tag]}</SNotiMessageSpan>
           <SNotiTimeSpan>{formatNotiTime(data.rawTime)}</SNotiTimeSpan>
         </SNotiTextContainer>
       </SNotiContainer>
@@ -111,7 +96,7 @@ const NotificationItem = ({ data }) => {
           setDialogShow={setDialogShow}
         >
           <SDialogContainer>
-            <SDialogImg src={image()} />
+            <SDialogImg src={image[data.tag]} />
             <SDialogNameSpan>{data.name}</SDialogNameSpan>
             <SDialogHeadingSpan>친구를 추가하시겠어요?</SDialogHeadingSpan>
             <SDialogBodySpan>
