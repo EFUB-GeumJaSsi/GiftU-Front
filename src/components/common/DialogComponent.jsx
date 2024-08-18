@@ -27,7 +27,7 @@ import { createPortal } from 'react-dom';
 const DialogComponent = ({
   actionText,
   onClickAction,
-  cancelText,
+  cancelText = '돌아가기',
   onClickCancel,
   setDialogShow,
   children,
@@ -58,7 +58,7 @@ const DialogComponent = ({
               if (onClickCancel) onClickCancel();
             }}
           >
-            {cancelText ? cancelText : '돌아가기'}
+            {cancelText}
           </SCancelButton>
           <SActionButton
             onClick={() => {
