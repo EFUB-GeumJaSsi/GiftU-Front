@@ -101,7 +101,7 @@ const PageRenderer = () => {
       {Page()}
       {toastShow && (
         <ToastComponent setToastShow={setToastShow}>
-          펀딩 개설에 실패했어요.
+          {`펀딩 개설을 실패했어요.\n다시 시도해 주세요.`}
         </ToastComponent>
       )}
     </>
