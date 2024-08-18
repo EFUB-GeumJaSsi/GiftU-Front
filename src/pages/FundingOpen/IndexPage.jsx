@@ -56,7 +56,7 @@ const PageRenderer = () => {
       const response = await postFunding(request, imageData);
       setCurrentPage('CompletePage');
     } catch (error) {
-      console.error('펀딩 생성 오류', error);
+      console.error('펀딩 개설 오류', error);
       setToastShow(true);
       setCurrentPage('HomePage');
       window.history.replaceState(null, null, '/home');
