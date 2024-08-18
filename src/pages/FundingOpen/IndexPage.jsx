@@ -59,6 +59,7 @@ const PageRenderer = () => {
       console.error('펀딩 생성 오류', error);
       setToastShow(true);
       setCurrentPage('HomePage');
+      window.history.replaceState(null, null, '/home');
     }
   };
 
