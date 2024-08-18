@@ -49,6 +49,7 @@ const SLayout = styled.div`
 
   ${B2}
   color: var(--white);
+  white-space: pre-line;
 
   transition: opacity 2.5s ease;
   transform: translate(-50%, -50%);
