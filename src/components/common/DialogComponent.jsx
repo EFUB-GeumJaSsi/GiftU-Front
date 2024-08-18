@@ -1,60 +1,60 @@
-// 모달 컴포넌트 사용법
+// 컴포넌트 사용법
 //
-// 1. 모달 열기/닫기 제어
-// (1-1) 부모 컴포넌트에 추가: const [modalShow, setModalShow] = useState(false);
-// (1-2) 부모 컴포넌트에 추가: {modalShow && (<ModalComponent></ModalComponent>)}
+// 1. 열기/닫기 제어
+// (1-1) 부모 컴포넌트에 추가: const [dialogShow, setDialogShow] = useState(false);
+// (1-2) 부모 컴포넌트에 추가: {dialogShow && (<DialogComponent></DialogComponent>)}
 //
-// 2. 모달 props
+// 2. props
 // (2-1) actionText - 오른쪽 버튼의 텍스트
 // (2-2) onClickAction - 오른쪽 버튼을 click할 경우 실행하는 function
 // (2-3) cancelText - 왼쪽 버튼의 텍스트 (미지정 시 '돌아가기')
 // (2-4) onClickCancel - 왼쪽 버튼을 click할 경우 실행하는 function (미지정 시 모달만 닫음)
-// (2-5) setModalShow - 1-1의 setModalShow
-// 예시: <ModalComponent actionText='취소하기' onClickAction={api function} setModalShow={setModalShow}>
+// (2-5) setDialogShow - 1-1의 setDialogShow
+// 예시: <DialogComponent actionText='취소하기' onClickAction={api function} setDialogShow={setDialogShow}>
 //
-// 3. 모달 내용
-// (3-1) 부모 컴포넌트에서 <ModalComponent></ModalComponent> 안에 작성합니다.
-// 예시: <ModalComponent>
+// 3. 내용
+// (3-1) 부모 컴포넌트에서 <DialogComponent></DialogComponent> 안에 작성합니다.
+// 예시: <DialogComponent>
 //         <span>펀딩 개설을 취소하시겠어요?</span>
 //         <small>펀딩에 참여한 친구들에게 알림이 전송돼요</small>
-//       </ModalComponent>
+//       </DialogComponent>
 
 import styled from 'styled-components';
 import { B1 } from '../../styles/font';
 import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
-const ModalComponent = ({
+const DialogComponent = ({
   actionText,
   onClickAction,
   cancelText,
   onClickCancel,
-  setModalShow,
+  setDialogShow,
   children,
 }) => {
   useEffect(() => {
-    // 모달 열기 시 스크롤 방지
+    // 열기 시 스크롤 방지
     document.body.style.cssText = `
       position: fixed;
       top: -${window.scrollY}px;
       width: 100%;
     `;
     return () => {
-      // 모달 닫기 시 이전 상태로 복원
+      // 닫기 시 이전 상태로 복원
       const scrollY = document.body.style.top;
       document.body.style.cssText = '';
       window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
     };
   }, []);
 
-  const ModalUI = (
+  const DialogUI = (
     <SBackgroundDiv>
       <SSection>
         <SContentContainer>{children}</SContentContainer>
         <SButtonContainer>
           <SCancelButton
             onClick={() => {
-              setModalShow(false);
+              setDialogShow(false);
               if (onClickCancel) onClickCancel();
             }}
           >
@@ -62,7 +62,7 @@ const ModalComponent = ({
           </SCancelButton>
           <SActionButton
             onClick={() => {
-              setModalShow(false);
+              setDialogShow(false);
               onClickAction();
             }}
           >
@@ -73,7 +73,7 @@ const ModalComponent = ({
     </SBackgroundDiv>
   );
 
-  return createPortal(ModalUI, document.getElementById('modal'));
+  return createPortal(DialogUI, document.getElementById('modal'));
 };
 
 const SBackgroundDiv = styled.div`
@@ -121,4 +121,4 @@ const SActionButton = styled(SButton)`
   color: var(--red);
 `;
 
-export default ModalComponent;
+export default DialogComponent;

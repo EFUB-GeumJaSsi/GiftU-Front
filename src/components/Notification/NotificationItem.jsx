@@ -3,7 +3,7 @@ import { B1, B2, C2 } from '../../styles/font';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { postFriendAccept, postFriendReject } from '../../api/friend';
-import Modal from '../../components/common/ModalComponent';
+import DialogComponent from '../../components/common/DialogComponent';
 import icn_profile_default from '../../assets/common/profile_default.svg';
 import icn_info from '../../assets/Friend/icn_info.svg';
 
@@ -57,12 +57,12 @@ const formatDday = (endDate) => {
 
 const NotificationItem = ({ data }) => {
   const navigate = useNavigate();
-  const [modalShow, setModalShow] = useState(false);
+  const [dialogShow, setDialogShow] = useState(false);
 
   const handleNotiClick = () => {
     switch (data.tag) {
       case 'friend':
-        return setModalShow(true);
+        return setDialogShow(true);
       case 'fundingDueDate':
         return navigate(`/funding/${data.id}`);
       case 'fundingAchieve':
@@ -102,23 +102,23 @@ const NotificationItem = ({ data }) => {
           <SNotiTimeSpan>{formatNotiTime(data.rawTime)}</SNotiTimeSpan>
         </SNotiTextContainer>
       </SNotiContainer>
-      {modalShow && (
-        <Modal
+      {dialogShow && (
+        <DialogComponent
           cancelText='거절하기'
           onClickCancel={() => createFriendReject(data.id)}
           actionText='추가하기'
           onClickAction={() => createFriendAccept(data.id)}
-          setModalShow={setModalShow}
+          setDialogShow={setDialogShow}
         >
-          <SModalContainer>
-            <SModalImg src={image()} />
-            <SModalNameSpan>{data.name}</SModalNameSpan>
-            <SModalHeadingSpan>친구를 추가하시겠어요?</SModalHeadingSpan>
-            <SModalBodySpan>
+          <SDialogContainer>
+            <SDialogImg src={image()} />
+            <SDialogNameSpan>{data.name}</SDialogNameSpan>
+            <SDialogHeadingSpan>친구를 추가하시겠어요?</SDialogHeadingSpan>
+            <SDialogBodySpan>
               추가된 친구는 [내 친구]에서 확인할 수 있어요
-            </SModalBodySpan>
-          </SModalContainer>
-        </Modal>
+            </SDialogBodySpan>
+          </SDialogContainer>
+        </DialogComponent>
       )}
     </>
   );
@@ -179,8 +179,8 @@ const SNotiTimeSpan = styled.span`
   color: var(--gray-500);
 `;
 
-// Modal
-const SModalContainer = styled.div`
+// Dialog
+const SDialogContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -189,21 +189,21 @@ const SModalContainer = styled.div`
   padding-top: 24px;
   padding-bottom: 24px;
 `;
-const SModalImg = styled.img`
+const SDialogImg = styled.img`
   width: 40px;
   height: 40px;
 
   background-color: var(--gray-300);
   border-radius: 50%;
 `;
-const SModalNameSpan = styled(SNameSpan)`
+const SDialogNameSpan = styled(SNameSpan)`
   color: var(--gray-500);
 `;
-const SModalHeadingSpan = styled.span`
+const SDialogHeadingSpan = styled.span`
   ${B1}
   color: var(--black);
 `;
-const SModalBodySpan = styled.span`
+const SDialogBodySpan = styled.span`
   ${C2}
   color: var(--gray-500);
 

@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { deleteFriendItem } from '../../api/friend';
 import useFormatDate from '../../hooks/useFormatDate';
 import BottomModalComponent from '../../components/common/BottomModalComponent';
-import ModalComponent from '../common/ModalComponent';
+import DialogComponent from '../common/DialogComponent';
 import ToastComponent from '../common/ToastComponent';
 import icn_profile_default from '../../assets/common/profile_default.svg';
 import icn_birth from '../../assets/Friend/icn_birth.svg';
@@ -18,7 +18,7 @@ const HorizontalCard = ({
 
   const [bottomModalShow, setBottomModalShow] = useState(false);
   const [bottomModalOpen, setBottomModalOpen] = useState(false);
-  const [modalShow, setModalShow] = useState(false);
+  const [dialogShow, setDialogShow] = useState(false);
   const [toastShow, setToastShow] = useState(false);
   const [toastContent, setToastContent] = useState(null);
 
@@ -77,24 +77,24 @@ const HorizontalCard = ({
           </SBtnContainer>
         </BottomModalComponent>
       )}
-      {modalShow && (
-        <ModalComponent
+      {dialogShow && (
+        <DialogComponent
           actionText='삭제하기'
           onClickAction={handleDeleteClick}
-          setModalShow={setModalShow}
+          setDialogShow={setDialogShow}
         >
-          <SModalContainer>
+          <SDialogContainer>
             <SInfoContainer>
               <SImg src={image} />
-              <SModalNicknameSpan>{data.nickname}</SModalNicknameSpan>
+              <SDialogNicknameSpan>{data.nickname}</SDialogNicknameSpan>
             </SInfoContainer>
             <SWarnContainer>
               <SWarnH2>친구를 삭제하시겠어요?</SWarnH2>
               <SWarnP>친구와 주고받은 선물 기록이 사라져요.</SWarnP>
               <SWarnP>나중에 다시 친구로 추가할 수 있어요.</SWarnP>
             </SWarnContainer>
-          </SModalContainer>
-        </ModalComponent>
+          </SDialogContainer>
+        </DialogComponent>
       )}
       {toastShow && (
         <ToastComponent setToastShow={setToastShow}>
@@ -195,7 +195,7 @@ const SCancelBtn = styled(SHorizontalBtn)`
 
   color: var(--black);
 `;
-const SModalContainer = styled.div`
+const SDialogContainer = styled.div`
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
@@ -210,7 +210,7 @@ const SInfoContainer = styled.div`
 
   gap: 8px;
 `;
-const SModalNicknameSpan = styled(SNicknameSpan)`
+const SDialogNicknameSpan = styled(SNicknameSpan)`
   text-align: center;
   width: 160px;
   color: var(--gray-500);
