@@ -31,6 +31,11 @@ const BottomSheetComponent = ({
 }) => {
   const navigate = useNavigate();
   const [bottomSheetOpen, setBottomSheetOpen] = useState(false);
+  const closeButtonUI = {
+    bar: SBarButton,
+    cross: SCrossButton,
+  };
+  const CloseButton = closeButtonUI[closeButton];
 
   const handleBottomSheetClose = () => {
     switch (action) {
@@ -41,14 +46,6 @@ const BottomSheetComponent = ({
       case 'back':
         navigate(-1); // 페이지 뒤로가기
         break;
-    }
-  };
-  const renderCloseButton = () => {
-    switch (closeButton) {
-      case 'bar':
-        return <SBarButton onClick={handleBottomSheetClose} />;
-      case 'cross':
-        return <SCrossButton onClick={handleBottomSheetClose} />;
     }
   };
 
@@ -67,7 +64,7 @@ const BottomSheetComponent = ({
           event.stopPropagation();
         }}
       >
-        {renderCloseButton()}
+        <CloseButton onClick={handleBottomSheetClose} />
         <article>{children}</article>
       </SSection>
     </SlideUpModalComponent>
