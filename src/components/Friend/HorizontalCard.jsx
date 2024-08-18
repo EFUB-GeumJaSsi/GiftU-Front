@@ -3,7 +3,7 @@ import { B1, C1, C2 } from '../../styles/font';
 import { useState } from 'react';
 import { deleteFriendItem } from '../../api/friend';
 import useFormatDate from '../../hooks/useFormatDate';
-import BottomModalComponent from '../../components/common/BottomModalComponent';
+import SlideUpModalComponent from '../../components/common/SlideUpModalComponent';
 import DialogComponent from '../common/DialogComponent';
 import ToastComponent from '../common/ToastComponent';
 import icn_profile_default from '../../assets/common/profile_default.svg';
@@ -16,8 +16,8 @@ const HorizontalCard = ({
 }) => {
   const image = data.userImageUrl || icn_profile_default;
 
-  const [bottomModalShow, setBottomModalShow] = useState(false);
-  const [bottomModalOpen, setBottomModalOpen] = useState(false);
+  const [slideUpModalShow, setSlideUpModalShow] = useState(false);
+  const [slideUpModalOpen, setSlideUpModalOpen] = useState(false);
   const [dialogShow, setDialogShow] = useState(false);
   const [toastShow, setToastShow] = useState(false);
   const [toastContent, setToastContent] = useState(null);
@@ -35,9 +35,9 @@ const HorizontalCard = ({
     }
   };
   // handle 함수
-  const handleBottomModalClose = () => {
-    setBottomModalOpen(false); // 바텀모달 닫기 애니메이션 효과
-    setTimeout(() => setBottomModalShow(false), 300); // 애니메이션 후 언마운트
+  const handleSlideUpModalClose = () => {
+    setSlideUpModalOpen(false); // 닫기 애니메이션 효과
+    setTimeout(() => setSlideUpModalShow(false), 300); // 애니메이션 후 언마운트
   };
   const handleDeleteClick = () => {
     delFriend(data.friendId);
@@ -55,27 +55,27 @@ const HorizontalCard = ({
       </STextContainer>
       <SMenuBtn
         onClick={() => {
-          setBottomModalShow(true);
-          setBottomModalOpen(true);
+          setSlideUpModalShow(true);
+          setSlideUpModalOpen(true);
         }}
       />
-      {bottomModalShow && (
-        <BottomModalComponent
-          setBottomModalShow={setBottomModalShow}
-          parentOpen={bottomModalOpen}
+      {slideUpModalShow && (
+        <SlideUpModalComponent
+          setSlideUpModalShow={setSlideUpModalShow}
+          parentOpen={slideUpModalOpen}
         >
           <SBtnContainer>
             <SDeleteBtn
               onClick={() => {
-                handleBottomModalClose();
+                handleSlideUpModalClose();
                 setDialogShow(true);
               }}
             >
               삭제하기
             </SDeleteBtn>
-            <SCancelBtn onClick={handleBottomModalClose}>취소</SCancelBtn>
+            <SCancelBtn onClick={handleSlideUpModalClose}>취소</SCancelBtn>
           </SBtnContainer>
-        </BottomModalComponent>
+        </SlideUpModalComponent>
       )}
       {dialogShow && (
         <DialogComponent

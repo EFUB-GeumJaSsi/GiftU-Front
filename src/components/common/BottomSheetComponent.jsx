@@ -20,7 +20,7 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import BottomModalComponent from './BottomModalComponent';
+import SlideUpModalComponent from './SlideUpModalComponent';
 import icn_cross from '../../assets/common/Bottomsheet/cross.svg';
 
 const BottomSheetComponent = ({
@@ -57,9 +57,9 @@ const BottomSheetComponent = ({
   }, []);
 
   return (
-    <BottomModalComponent
+    <SlideUpModalComponent
       backgroundAction={action === 'transition'}
-      setBottomModalShow={setBottomSheetShow}
+      setSlideUpModalShow={setBottomSheetShow}
       parentOpen={bottomSheetOpen}
     >
       <SSection
@@ -70,7 +70,7 @@ const BottomSheetComponent = ({
         {renderCloseButton()}
         <article>{children}</article>
       </SSection>
-    </BottomModalComponent>
+    </SlideUpModalComponent>
   );
 };
 
