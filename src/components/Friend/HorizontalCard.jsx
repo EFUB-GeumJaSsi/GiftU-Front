@@ -64,7 +64,7 @@ const HorizontalCard = ({
           setSlideUpModalShow={setSlideUpModalShow}
           parentOpen={slideUpModalOpen}
         >
-          <SBtnContainer>
+          <SSlideUpModalContainer>
             <SDeleteBtn
               onClick={() => {
                 handleSlideUpModalClose();
@@ -74,7 +74,7 @@ const HorizontalCard = ({
               삭제하기
             </SDeleteBtn>
             <SCancelBtn onClick={handleSlideUpModalClose}>취소</SCancelBtn>
-          </SBtnContainer>
+          </SSlideUpModalContainer>
         </SlideUpModalComponent>
       )}
       {dialogShow && (
@@ -170,7 +170,7 @@ const SMenuBtn = styled.button`
 
   background-image: url(${btn_delete});
 `;
-const SBtnContainer = styled.div`
+const SSlideUpModalContainer = styled.div`
   display: flex;
   flex-flow: column nowrap;
 
