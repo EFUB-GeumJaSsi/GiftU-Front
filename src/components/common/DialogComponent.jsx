@@ -8,7 +8,7 @@
 // (2-1) actionText - 오른쪽 버튼의 텍스트
 // (2-2) onClickAction - 오른쪽 버튼을 click할 경우 실행하는 function
 // (2-3) cancelText - 왼쪽 버튼의 텍스트 (미지정 시 '돌아가기')
-// (2-4) onClickCancel - 왼쪽 버튼을 click할 경우 실행하는 function (미지정 시 모달만 닫음)
+// (2-4) onClickCancel - 왼쪽 버튼을 click할 경우 실행하는 function (미지정 시 다이얼로그만 닫음)
 // (2-5) setDialogShow - 1-1의 setDialogShow
 // 예시: <DialogComponent actionText='취소하기' onClickAction={api function} setDialogShow={setDialogShow}>
 //

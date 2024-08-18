@@ -68,7 +68,7 @@ const HorizontalCard = ({
             <SDeleteBtn
               onClick={() => {
                 handleBottomModalClose();
-                setModalShow(true);
+                setDialogShow(true);
               }}
             >
               삭제하기
