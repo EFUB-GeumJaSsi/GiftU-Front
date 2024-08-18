@@ -1,8 +1,8 @@
 // const [tag, setTag] = useState('전체');
 // const tags = ['전체', '친구', '펀딩'] ''안에 카테고리 입력;
 
-//TagSelectComponent가 필요한 곳에 아래와 같이 작성해서 사용
-// <TagSelectComponent
+//TagFilterComponent가 필요한 곳에 아래와 같이 작성해서 사용
+// <TagFilterComponent
 //  tags={tags}
 //  selectedTag={tag}
 //  onTagChange={setTag}
@@ -12,7 +12,7 @@
 import styled from 'styled-components';
 import { B3 } from '../../styles/font';
 
-const TagSelectComponent = ({ tags, selectedTag, onTagChange, color }) => {
+const TagFilterComponent = ({ tags, selectedTag, onTagChange, color }) => {
   // color: [배경 색, 글꼴 색]
   const btnColor = {
     orange: ['var(--orange-pri)', 'var(--gray-300)'],
@@ -67,4 +67,4 @@ const SLabel = styled.label`
   cursor: pointer;
 `;
 
-export default TagSelectComponent;
+export default TagFilterComponent;
