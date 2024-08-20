@@ -7,6 +7,7 @@ import {
   useParams,
   useSearchParams,
 } from 'react-router-dom';
+import useSortGiftData from '../../hooks/useSortGiftData';
 import { DataContext, PageContext } from './IndexPage';
 import { getFundingInfo } from '../../api/funding';
 import BackHeaderComponent from '../../components/common/BackHeaderComponent';
@@ -60,7 +61,7 @@ const FundingJoinPage = () => {
     try {
       const res = await getFundingInfo(fundingId);
       const data = res.data;
-      setGiftList(data.giftList);
+      setGiftList(useSortGiftData(data.giftList));
       setNowMoney(data.nowMoney);
       setBalance(data.giftList[data.giftList.length - 1].price - data.nowMoney);
     } catch (e) {
