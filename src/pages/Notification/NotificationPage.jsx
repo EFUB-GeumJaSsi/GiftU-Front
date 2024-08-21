@@ -128,13 +128,15 @@ const NotificationPage = () => {
           onTagChange={setTag}
         />
         <SOl>
-          {notiList.map((item, index) => {
-            return (
+          {notiList.length > 0 ? (
+            notiList.map((item, index) => (
               <li key={index}>
                 <NotificationItem data={item} />
               </li>
-            );
-          })}
+            ))
+          ) : (
+            <SNoNotification>알림이 없습니다</SNoNotification>
+          )}
         </SOl>
       </SMain>
       <NavComponent />
@@ -167,5 +169,10 @@ const SOl = styled.ol`
 
   width: 335px;
 `;
-
+const SNoNotification = styled.div`
+  font-size: 16px;
+  color: var(--gray-500);
+  text-align: center;
+  margin-top: 20px;
+`;
 export default NotificationPage;
