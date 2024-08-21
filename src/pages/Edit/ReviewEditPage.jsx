@@ -26,7 +26,6 @@ const ReviewEditPage = () => {
     try {
       const response = await postReview(fundingId, reviewText);
       window.location.reload();
-      console.log(response.data);
     } catch (error) {
       console.error(error);
     }
@@ -35,7 +34,6 @@ const ReviewEditPage = () => {
   const updateReview = async (fundingId, reviewText) => {
     try {
       const response = await patchReview(fundingId, reviewText);
-      console.log(response.data);
     } catch (error) {
       console.error(error);
     }

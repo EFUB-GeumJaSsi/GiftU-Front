@@ -108,7 +108,7 @@ const FundingInfoPage = () => {
       setFunding('pre');
       setColor('var(--orange-pri)');
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   };
 
@@ -123,7 +123,7 @@ const FundingInfoPage = () => {
       setGiftList(useSortGiftData(data.giftList));
       setData(data);
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   };
 
@@ -133,7 +133,7 @@ const FundingInfoPage = () => {
       const res = await getReview(data.fundingId);
       setReview(res.data.reviewContent);
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   };
 
@@ -147,7 +147,7 @@ const FundingInfoPage = () => {
         { replace: true },
       );
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   };
 
@@ -158,7 +158,7 @@ const FundingInfoPage = () => {
       window.location.reload();
       setToastShow(true);
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   };
 
@@ -167,7 +167,7 @@ const FundingInfoPage = () => {
       const res = await postPassword(data.fundingId, password.join(''));
       return true;
     } catch (e) {
-      console.log(e);
+      console.error(e);
       return false;
     }
   };

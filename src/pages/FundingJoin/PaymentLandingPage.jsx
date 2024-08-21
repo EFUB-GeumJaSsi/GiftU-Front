@@ -22,7 +22,7 @@ const PaymentLandingPage = () => {
       const res = await getUserInfo();
       return res.data;
     } catch {
-      console.log(e);
+      console.error(e);
     }
   };
 
@@ -71,9 +71,12 @@ const PaymentLandingPage = () => {
       );
       await setCurrentPage('CompletePage');
     } catch (e) {
-      console.log(e);
+      console.error(e);
       // 결제 취소
       // 새로운 주소로 이동...
+      setErrorMsg('결제를 다시 시도해주세요.');
+      setToastShow(true);
+      setCurrentPage('FundingJoinPage');
     }
   };
 
@@ -86,7 +89,7 @@ const PaymentLandingPage = () => {
     }
     if (imp_success === 'false') {
       setErrorMsg(error_msg.split(' | ')[1]);
-      setToastShow(true);
+      error_msg && setToastShow(true);
       setCurrentPage('FundingJoinPage');
       return navigate(`/funding/${fundingJoinData.fundingId}/join`, {
         replace: true,
