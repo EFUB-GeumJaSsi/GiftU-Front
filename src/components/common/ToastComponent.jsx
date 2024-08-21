@@ -49,6 +49,7 @@ const SLayout = styled.div`
 
   ${B2}
   color: var(--white);
+  text-align: center;
   white-space: pre-line;
 
   transition: opacity 2.5s ease;
