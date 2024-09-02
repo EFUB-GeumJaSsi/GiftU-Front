@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 import { B1 } from '../../styles/font';
-import TagSelectComponent from '../common/TagSelectComponent';
+import TagFilterComponent from '../common/TagFilterComponent';
 import FundingComponent from '../common/FundingComponent';
 
 const List = ({ tags, selectedTag, onTagChange, openList, color }) => {
   return (
     <SLayout>
       <SNotiItemWrapper>
-        <TagSelectComponent
+        <TagFilterComponent
           tags={tags}
           selectedTag={selectedTag}
           onTagChange={onTagChange}

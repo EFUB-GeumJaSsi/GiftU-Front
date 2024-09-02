@@ -7,7 +7,7 @@ import {
   getFundingNotice,
 } from '../../api/notice';
 import NavComponent from '../../components/common/NavComponent';
-import TagSelectComponent from '../../components/common/TagSelectComponent';
+import TagFilterComponent from '../../components/common/TagFilterComponent';
 import NotificationItem from '../../components/Notification/NotificationItem';
 
 // 알림 데이터 포맷팅
@@ -122,7 +122,7 @@ const NotificationPage = () => {
     <SLayout>
       <SHeader>알림</SHeader>
       <SMain>
-        <TagSelectComponent
+        <TagFilterComponent
           tags={['전체', '친구', '펀딩']}
           selectedTag={tag}
           onTagChange={setTag}

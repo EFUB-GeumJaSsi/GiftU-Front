@@ -3,8 +3,8 @@ import { B1, C1, C2 } from '../../styles/font';
 import { useState } from 'react';
 import { deleteFriendItem } from '../../api/friend';
 import useFormatDate from '../../hooks/useFormatDate';
-import BottomModalComponent from '../../components/common/BottomModalComponent';
-import ModalComponent from '../common/ModalComponent';
+import SlideUpModalComponent from '../../components/common/SlideUpModalComponent';
+import DialogComponent from '../common/DialogComponent';
 import ToastComponent from '../common/ToastComponent';
 import icn_profile_default from '../../assets/common/profile_default.svg';
 import icn_birth from '../../assets/Friend/icn_birth.svg';
@@ -16,9 +16,9 @@ const HorizontalCard = ({
 }) => {
   const image = data.userImageUrl || icn_profile_default;
 
-  const [bottomModalShow, setBottomModalShow] = useState(false);
-  const [bottomModalOpen, setBottomModalOpen] = useState(false);
-  const [modalShow, setModalShow] = useState(false);
+  const [slideUpModalShow, setSlideUpModalShow] = useState(false);
+  const [slideUpModalOpen, setSlideUpModalOpen] = useState(false);
+  const [dialogShow, setDialogShow] = useState(false);
   const [toastShow, setToastShow] = useState(false);
   const [toastContent, setToastContent] = useState(null);
 
@@ -35,9 +35,9 @@ const HorizontalCard = ({
     }
   };
   // handle 함수
-  const handleBottomModalClose = () => {
-    setBottomModalOpen(false); // 바텀모달 닫기 애니메이션 효과
-    setTimeout(() => setBottomModalShow(false), 300); // 애니메이션 후 언마운트
+  const handleSlideUpModalClose = () => {
+    setSlideUpModalOpen(false); // 닫기 애니메이션 효과
+    setTimeout(() => setSlideUpModalShow(false), 300); // 애니메이션 후 언마운트
   };
   const handleDeleteClick = () => {
     delFriend(data.friendId);
@@ -55,46 +55,46 @@ const HorizontalCard = ({
       </STextContainer>
       <SMenuBtn
         onClick={() => {
-          setBottomModalShow(true);
-          setBottomModalOpen(true);
+          setSlideUpModalShow(true);
+          setSlideUpModalOpen(true);
         }}
       />
-      {bottomModalShow && (
-        <BottomModalComponent
-          setBottomModalShow={setBottomModalShow}
-          parentOpen={bottomModalOpen}
+      {slideUpModalShow && (
+        <SlideUpModalComponent
+          setSlideUpModalShow={setSlideUpModalShow}
+          parentOpen={slideUpModalOpen}
         >
-          <SBtnContainer>
+          <SSlideUpModalContainer>
             <SDeleteBtn
               onClick={() => {
-                handleBottomModalClose();
-                setModalShow(true);
+                handleSlideUpModalClose();
+                setDialogShow(true);
               }}
             >
               삭제하기
             </SDeleteBtn>
-            <SCancelBtn onClick={handleBottomModalClose}>취소</SCancelBtn>
-          </SBtnContainer>
-        </BottomModalComponent>
+            <SCancelBtn onClick={handleSlideUpModalClose}>취소</SCancelBtn>
+          </SSlideUpModalContainer>
+        </SlideUpModalComponent>
       )}
-      {modalShow && (
-        <ModalComponent
+      {dialogShow && (
+        <DialogComponent
           actionText='삭제하기'
           onClickAction={handleDeleteClick}
-          setModalShow={setModalShow}
+          setDialogShow={setDialogShow}
         >
-          <SModalContainer>
+          <SDialogContainer>
             <SInfoContainer>
               <SImg src={image} />
-              <SModalNicknameSpan>{data.nickname}</SModalNicknameSpan>
+              <SDialogNicknameSpan>{data.nickname}</SDialogNicknameSpan>
             </SInfoContainer>
             <SWarnContainer>
               <SWarnH2>친구를 삭제하시겠어요?</SWarnH2>
               <SWarnP>친구와 주고받은 선물 기록이 사라져요.</SWarnP>
               <SWarnP>나중에 다시 친구로 추가할 수 있어요.</SWarnP>
             </SWarnContainer>
-          </SModalContainer>
-        </ModalComponent>
+          </SDialogContainer>
+        </DialogComponent>
       )}
       {toastShow && (
         <ToastComponent setToastShow={setToastShow}>
@@ -170,7 +170,7 @@ const SMenuBtn = styled.button`
 
   background-image: url(${btn_delete});
 `;
-const SBtnContainer = styled.div`
+const SSlideUpModalContainer = styled.div`
   display: flex;
   flex-flow: column nowrap;
 
@@ -195,7 +195,7 @@ const SCancelBtn = styled(SHorizontalBtn)`
 
   color: var(--black);
 `;
-const SModalContainer = styled.div`
+const SDialogContainer = styled.div`
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
@@ -210,7 +210,7 @@ const SInfoContainer = styled.div`
 
   gap: 8px;
 `;
-const SModalNicknameSpan = styled(SNicknameSpan)`
+const SDialogNicknameSpan = styled(SNicknameSpan)`
   text-align: center;
   width: 160px;
   color: var(--gray-500);
