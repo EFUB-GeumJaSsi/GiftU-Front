@@ -52,13 +52,34 @@ const FundingSetPage = () => {
   };
 
   const handleFormSubmit = (data) => {
-    setFundingData(data);
+    const SetData = {
+      ...data,
+      phoneNumber: data.phoneNumber.replace(/-/g, ''),
+    };
+    setFundingData(SetData);
     setCurrentPage('PasswordSetPage');
   };
 
   const handlePhoneNumberChange = (e) => {
-    const value = e.target.value.replace(/-/g, '');
+    let value = e.target.value;
+    value = value.replace(/[^0-9]/gi, '');
     setValue('phoneNumber', value);
+  };
+
+  const handlePhoneNumberKeyDown = (e) => {
+    if (e.key === 'Backspace') {
+      let value = e.target.value;
+      value = value.replace(/[^0-9]/gi, '');
+      value = value.slice(0, -1);
+      setValue('phoneNumber', value);
+    }
+  };
+
+  const autoHypen = (value) => {
+    return value
+      .replace(/[^0-9]/g, '')
+      .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/, '$1-$2-$3')
+      .replace(/(\-{1,2})$/g, '');
   };
 
   useEffect(() => {
@@ -174,8 +195,10 @@ const FundingSetPage = () => {
                 required: '배송 정보를 입력하세요',
                 onChange: handlePhoneNumberChange,
               })}
+              value={phoneNumber ? autoHypen(phoneNumber) : ''}
               type='tel'
               placeholder='휴대폰 번호를 -없이 입력해주세요'
+              onKeyDown={handlePhoneNumberKeyDown}
             />
             <SAddressNumberContainer>
               <SAddressInput

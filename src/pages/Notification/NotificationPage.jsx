@@ -7,7 +7,7 @@ import {
   getFundingNotice,
 } from '../../api/notice';
 import NavComponent from '../../components/common/NavComponent';
-import TagSelectComponent from '../../components/common/TagSelectComponent';
+import TagFilterComponent from '../../components/common/TagFilterComponent';
 import NotificationItem from '../../components/Notification/NotificationItem';
 
 // 알림 데이터 포맷팅
@@ -122,19 +122,21 @@ const NotificationPage = () => {
     <SLayout>
       <SHeader>알림</SHeader>
       <SMain>
-        <TagSelectComponent
+        <TagFilterComponent
           tags={['전체', '친구', '펀딩']}
           selectedTag={tag}
           onTagChange={setTag}
         />
         <SOl>
-          {notiList.map((item, index) => {
-            return (
+          {notiList.length > 0 ? (
+            notiList.map((item, index) => (
               <li key={index}>
                 <NotificationItem data={item} />
               </li>
-            );
-          })}
+            ))
+          ) : (
+            <SNoNotification>알림이 없습니다</SNoNotification>
+          )}
         </SOl>
       </SMain>
       <NavComponent />
@@ -167,5 +169,10 @@ const SOl = styled.ol`
 
   width: 335px;
 `;
-
+const SNoNotification = styled.div`
+  font-size: 16px;
+  color: var(--gray-500);
+  text-align: center;
+  margin-top: 20px;
+`;
 export default NotificationPage;

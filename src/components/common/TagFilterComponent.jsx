@@ -1,24 +1,30 @@
-// const [tag, setTag] = useState('전체');
-// const tags = ['전체', '친구', '펀딩'] ''안에 카테고리 입력;
+/*
+const [tag, setTag] = useState('전체');
+const tags = ['전체', '친구', '펀딩'] ''안에 카테고리 입력;
 
-//TagSelectComponent가 필요한 곳에 아래와 같이 작성해서 사용
-// <TagSelectComponent
-//  tags={tags}
-//  selectedTag={tag}
-//  onTagChange={setTag}
-//  color='아무것도 입력 안하면 jade임. orange 필요하면 orange라고 입력'
-// />
+TagFilterComponent가 필요한 곳에 아래와 같이 작성해서 사용
+  <TagFilterComponent
+    tags={tags}
+    selectedTag={tag}
+    onTagChange={setTag}
+    color='아무것도 입력 안하면 jade임. orange 필요하면 orange라고 입력'
+  />
+*/
 
 import styled from 'styled-components';
 import { B3 } from '../../styles/font';
 
-const TagSelectComponent = ({ tags, selectedTag, onTagChange, color }) => {
-  // color: [배경 색, 글꼴 색]
-  const btnColor = {
+const TagFilterComponent = ({
+  tags,
+  selectedTag,
+  onTagChange,
+  color = 'jade',
+}) => {
+  const tagColor = {
     orange: ['var(--orange-pri)', 'var(--gray-300)'],
     jade: ['var(--jade-pri)', 'var(--gray-300)'],
   };
-  const selectedColor = btnColor[color] || btnColor['jade'];
+
   return (
     <SLayout>
       {tags.map((tag, index) => (
@@ -33,7 +39,7 @@ const TagSelectComponent = ({ tags, selectedTag, onTagChange, color }) => {
           <SLabel
             htmlFor={tag}
             selected={selectedTag === tag}
-            color={selectedColor}
+            color={tagColor[color]}
           >
             {tag}
           </SLabel>
@@ -49,12 +55,10 @@ const SLayout = styled.div`
   justify-content: center;
   gap: 10px;
 `;
-
 const SInput = styled.input`
   display: none;
   ${B3}
 `;
-
 const SLabel = styled.label`
   padding: 6px 16px 6px 16px;
 
@@ -67,4 +71,4 @@ const SLabel = styled.label`
   cursor: pointer;
 `;
 
-export default TagSelectComponent;
+export default TagFilterComponent;

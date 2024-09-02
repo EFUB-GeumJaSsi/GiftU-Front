@@ -36,7 +36,10 @@ const TutorialPage = () => {
           component={() => (
             <SWhiteContainer>
               <SSecond1Wrapper>민지 생일선물 사주기</SSecond1Wrapper>
-              <SSecond2Wrapper>나한테 필요한 건 바로 "에어팟"</SSecond2Wrapper>
+              <SSecond2Wrapper>
+                나한테 필요한 건 바로 &nbsp;
+                <STextWrapper> "에어팟"</STextWrapper>
+              </SSecond2Wrapper>
             </SWhiteContainer>
           )}
         ></TitleDescription>
@@ -96,7 +99,7 @@ const TutorialPage = () => {
               </STextWrapper>
               <Slider2></Slider2>
               <SPriceBtnContainer>
-                가격대별 선물 보기
+                선물 상세보기
                 <Drop />
               </SPriceBtnContainer>
             </SWhiteContainer>
@@ -156,6 +159,8 @@ const SSecond1Wrapper = styled.div`
 `;
 const SSecond2Wrapper = styled.div`
   ${B3}
+  display:flex;
+  flex-direction: row;
   color: var(--gray-400);
 `;
 const SContainer = styled.div`
