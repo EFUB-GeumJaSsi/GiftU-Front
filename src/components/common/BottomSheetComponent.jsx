@@ -20,7 +20,7 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import BottomModalComponent from './BottomModalComponent';
+import SlideUpModalComponent from './SlideUpModalComponent';
 import icn_cross from '../../assets/common/Bottomsheet/cross.svg';
 
 const BottomSheetComponent = ({
@@ -31,6 +31,11 @@ const BottomSheetComponent = ({
 }) => {
   const navigate = useNavigate();
   const [bottomSheetOpen, setBottomSheetOpen] = useState(false);
+  const closeButtonUI = {
+    bar: SBarButton,
+    cross: SCrossButton,
+  };
+  const CloseButton = closeButtonUI[closeButton];
 
   const handleBottomSheetClose = () => {
     switch (action) {
@@ -43,23 +48,15 @@ const BottomSheetComponent = ({
         break;
     }
   };
-  const renderCloseButton = () => {
-    switch (closeButton) {
-      case 'bar':
-        return <SBarButton onClick={handleBottomSheetClose} />;
-      case 'cross':
-        return <SCrossButton onClick={handleBottomSheetClose} />;
-    }
-  };
 
   useEffect(() => {
     setBottomSheetOpen(true); // 바텀시트 열기 애니메이션 효과
   }, []);
 
   return (
-    <BottomModalComponent
+    <SlideUpModalComponent
       backgroundAction={action === 'transition'}
-      setBottomModalShow={setBottomSheetShow}
+      setSlideUpModalShow={setBottomSheetShow}
       parentOpen={bottomSheetOpen}
     >
       <SSection
@@ -67,10 +64,10 @@ const BottomSheetComponent = ({
           event.stopPropagation();
         }}
       >
-        {renderCloseButton()}
+        <CloseButton onClick={handleBottomSheetClose} />
         <article>{children}</article>
       </SSection>
-    </BottomModalComponent>
+    </SlideUpModalComponent>
   );
 };
 

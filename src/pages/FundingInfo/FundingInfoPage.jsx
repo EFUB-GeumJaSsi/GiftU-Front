@@ -20,7 +20,7 @@ import FundingParticipants from '../../components/FundingInfo/FundingParticipant
 import FundingComment from '../../components/FundingInfo/FundingComment';
 import BottomBackgroundComponent from '../../components/common/BottomBackgroundComponent';
 import ButtonComponent from '../../components/common/ButtonComponent';
-import Modal from '../../components/common/ModalComponent';
+import DialogComponent from '../../components/common/DialogComponent';
 import {
   GoWriteCommentButton,
   GoWriteMessageButton,
@@ -43,7 +43,7 @@ const FundingInfoPage = () => {
   const [funding, setFunding] = useState('');
   const [tag, setTag] = useState('');
   const [color, setColor] = useState('');
-  const [modalShow, setModalShow] = useState(false);
+  const [dialogShow, setDialogShow] = useState(false);
   const [bottomSheetShow, setBottomSheetShow] = useState(false);
   const [toastShow, setToastShow] = useState(false);
   const [toastOpen, setToastOpen] = useState(false);
@@ -256,7 +256,7 @@ const FundingInfoPage = () => {
               text: '개설 취소하기',
               color: 'darkGray',
             }}
-            onClick={() => setModalShow(true)}
+            onClick={() => setDialogShow(true)}
             disabled={false}
           />
         );
@@ -367,19 +367,19 @@ const FundingInfoPage = () => {
         !(isEnd && data.nowMoney < giftList[0].price) && (
           <BottomBackgroundComponent Button={<Btn />} />
         )}
-      {modalShow && (
-        <Modal
+      {dialogShow && (
+        <DialogComponent
           actionText='취소하기'
           onClickAction={delFunding}
-          setModalShow={setModalShow}
+          setDialogShow={setDialogShow}
         >
-          <SModalContainer>
+          <SDialogContainer>
             <SBigSpan>펀딩 개설을 취소하시겠어요?</SBigSpan>
             <SSmallSpan>
               <IcnInfo /> 펀딩에 참여한 친구들에게 알림이 전송돼요
             </SSmallSpan>
-          </SModalContainer>
-        </Modal>
+          </SDialogContainer>
+        </DialogComponent>
       )}
       {funding === 'pre' && bottomSheetShow && (
         <PasswordComponent
@@ -430,7 +430,7 @@ const SBtnContainer = styled.div`
   display: flex;
   gap: 8px;
 `;
-const SModalContainer = styled.div`
+const SDialogContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;

@@ -41,7 +41,6 @@ const SLayout = styled.div`
   z-index: 9999;
 
   min-width: 260px;
-  height: 30px;
   margin: auto;
   padding: 4px 15px;
 
@@ -50,6 +49,8 @@ const SLayout = styled.div`
 
   ${B2}
   color: var(--white);
+  text-align: center;
+  white-space: pre-line;
 
   transition: opacity 2.5s ease;
   transform: translate(-50%, -50%);
