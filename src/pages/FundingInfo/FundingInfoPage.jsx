@@ -46,6 +46,7 @@ const FundingInfoPage = () => {
   const [dialogShow, setDialogShow] = useState(false);
   const [bottomSheetShow, setBottomSheetShow] = useState(false);
   const [toastShow, setToastShow] = useState(false);
+  const [toastOpen, setToastOpen] = useState(false);
   const [password, setPassword] = useState(['', '', '', '']);
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -264,14 +265,21 @@ const FundingInfoPage = () => {
     // 미참여
     return (
       <ButtonComponent
-        btnInfo={{ text: '선물하기', color: 'orange' }}
-        onClick={() =>
-          navigate(`/funding/${fundingId}/join`, {
-            state: {
-              giftList: giftList,
-              nowMoney: data.nowMoney,
-            },
-          })
+        btnInfo={
+          data.nowMoney == giftList[giftList.length - 1].price
+            ? { text: '선물하기' }
+            : { text: '선물하기', color: 'orange' }
+        }
+        onClick={
+          data.nowMoney == giftList[giftList.length - 1].price
+            ? () => setToastOpen(true)
+            : () =>
+                navigate(`/funding/${fundingId}/join`, {
+                  state: {
+                    giftList: giftList,
+                    nowMoney: data.nowMoney,
+                  },
+                })
         }
       />
     );
@@ -388,6 +396,11 @@ const FundingInfoPage = () => {
       {toastShow && (
         <ToastComponent setToastShow={setToastShow}>
           펀딩 참여가 취소되었어요
+        </ToastComponent>
+      )}
+      {toastOpen && (
+        <ToastComponent setToastShow={setToastOpen}>
+          {`목표 금액이 달성되어\n지금은 선물할 수 없어요`}
         </ToastComponent>
       )}
     </>
